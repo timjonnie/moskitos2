@@ -735,7 +735,7 @@ h1,h2,h3{letter-spacing:-.01em}
   <header class="band">
     <div class="wrap">
       <div class="crest">
-        <div class="badge" aria-hidden="true"><span>M2</span></div>
+        <div class="badge" aria-hidden="true"><span>F2</span></div>
         <div>
           <h1>Moskitos 2</h1>
           <p id="subline">HSG DJK Marpingen-SC Alsweiler · Damen Oberliga Saar</p>
@@ -772,7 +772,7 @@ h1,h2,h3{letter-spacing:-.01em}
 <div id="tip" hidden=""></div>
 <div class="login" id="login" hidden="">
   <form id="loginForm" autocomplete="on">
-    <div class="crest"><div class="badge" aria-hidden="true"><span>M2</span></div><div><h1>Moskitos 2</h1><p>Spielanalyse · Anmeldung</p></div></div>
+    <div class="crest"><div class="badge" aria-hidden="true"><span>F2</span></div><div><h1>Moskitos 2</h1><p>Spielanalyse · Anmeldung</p></div></div>
     <label for="lgUser">Benutzername<input type="text" id="lgUser" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required=""></label>
     <label for="lgPass">Passwort<input type="password" id="lgPass" name="password" autocomplete="current-password" required=""></label>
     <label class="chk" for="lgKeep"><input type="checkbox" id="lgKeep"> Auf diesem Gerät angemeldet bleiben</label>
@@ -2092,7 +2092,7 @@ function box(x,X,Y,W,H,fill,stroke,r){rrect(x,X,Y,W,H,r==null?18:r);x.fillStyle=
 function tx(x,s,X,Y,o){o=o||{};s=String(s);x.font=`${o.w||400} ${o.size||26}px ${o.font||FB}`;x.fillStyle=o.color||PAL.ink;x.textAlign=o.align||"left";x.textBaseline="alphabetic";
   if(o.ls){x.letterSpacing=o.ls+"px"}else{x.letterSpacing="0px"}
   if(o.max){while(x.measureText(s).width>o.max&&s.length>2)s=s.slice(0,-2)+"…"}x.fillText(s,X,Y);x.letterSpacing="0px";return x.measureText(s).width}
-function badge(x,X,Y){x.save();x.translate(X,Y);x.transform(1,0,-0.14,1,0,0);box(x,0,0,92,92,PAL.accent,null,18);x.restore();tx(x,"M2",X+40,Y+64,{font:FD,w:800,size:44,color:"#fff",align:"center"})}
+function badge(x,X,Y){x.save();x.translate(X,Y);x.transform(1,0,-0.14,1,0,0);box(x,0,0,92,92,PAL.accent,null,18);x.restore();tx(x,"F2",X+40,Y+64,{font:FD,w:800,size:44,color:"#fff",align:"center"})}
 function header(x,eyebrow,title,sub,h){h=h||230;x.fillStyle=PAL.band;x.fillRect(0,0,CW,h);badge(x,PADX,56);
   tx(x,eyebrow.toUpperCase(),PADX+124,78,{w:700,size:22,color:PAL.accent,ls:3});tx(x,title.toUpperCase(),PADX+124,138,{font:FD,w:800,size:60,color:PAL.bandInk,max:CW-PADX*2-124});
   tx(x,sub,PADX+124,180,{w:500,size:24,color:PAL.bandMuted,max:CW-PADX*2-124});return h}
