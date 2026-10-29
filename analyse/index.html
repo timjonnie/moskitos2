@@ -4,12 +4,17 @@
      like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=5e82070f-a7c2-4627-b3d4-b2f9fb89e973
      Netlify hosting facts for this site: static/SSR served via Netlify Edge. --><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><title>Moskitos 2 Spielanalyse</title>
 <script>window.MKSite=(function(){
+  try{var th=localStorage.getItem("mk2theme");if(th)document.documentElement.setAttribute("data-theme",th)}catch(e){}
   var site=/^https?:$/.test(location.protocol)&&/\/(analyse|training)\/(index\.html)?$/.test(location.pathname);
   function clear(){["mk2key","mk2tkey"].forEach(function(k){try{sessionStorage.removeItem(k);localStorage.removeItem(k)}catch(e){}})}
   if(site){document.addEventListener("DOMContentLoaded",function(){
-    var f=document.querySelector("footer");if(!f||f.querySelector(".mk-home"))return;
-    var a=document.createElement("a");a.className="mk-home";a.href="../";a.textContent="← Zur Übersicht";
-    a.style.cssText="color:inherit;font-weight:600;margin-right:14px;text-decoration:none";f.insertBefore(a,f.firstChild);
+    if(document.querySelector(".mk-back"))return;
+    var bar=document.createElement("a");bar.className="mk-back";bar.href="../";
+    bar.innerHTML='<span aria-hidden="true" style="color:#F6C98B;font-size:17px;line-height:1">&#8592;</span> Team-Board';
+    bar.style.cssText="display:flex;align-items:center;gap:8px;background:#1B2A4A;color:#fff;text-decoration:none;font:500 14px Lexend,'Segoe UI',system-ui,sans-serif;padding:8px 16px;border-bottom:1px solid rgba(255,255,255,.12)";
+    document.body.insertBefore(bar,document.body.firstChild);
+    var f=document.querySelector("footer");if(f&&!f.querySelector(".mk-home")){var a=document.createElement("a");a.className="mk-home";a.href="../";a.textContent="← Team-Board";
+      a.style.cssText="color:inherit;font-weight:600;margin-right:14px;text-decoration:none";f.insertBefore(a,f.firstChild)}
   })}
   return {site:site,
     redirect:function(m){if(!site)return false;clear();location.replace("../?ziel="+m);return true},
