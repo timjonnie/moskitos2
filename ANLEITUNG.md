@@ -6,7 +6,7 @@ Eine Adresse für alles: `https://DEINNAME.github.io/moskitos2/`
 
 | Adresse | Inhalt |
 |---|---|
-| `/moskitos2/` | Startseite mit nächstem Spiel und den drei Bereichen |
+| `/moskitos2/` | Anmeldung und Startseite mit nächstem/letztem Spiel, Saisonzahlen, Trend, Tabelle |
 | `/moskitos2/training/` | Trainertool (Kader, ZN, SR, Übungen, Training) |
 | `/moskitos2/analyse/` | Spielanalyse mit Erfassung und Gegner-Reiter |
 | `/moskitos2/analyse/#gegner` | direkt zur Gegneranalyse |
@@ -68,6 +68,46 @@ moskitos2/
     - **Spielanalyse** öffnen → anmelden → Reiter **Gegner** ansehen.
 12. Den Link an Lucas und die Mannschaft schicken. Die Netlify-Seiten bleiben vorerst online,
     bis alles zwei, drei Wochen problemlos läuft.
+
+## Ein Login für alles (ab Version 2.0 der Startseite)
+
+- Angemeldet wird nur noch auf der Startseite. Benutzername und Passwort sind die bisherigen.
+- Die Startseite öffnet damit Training und Analyse gleichzeitig. Wer nur für ein Modul freigeschaltet ist,
+  sieht das andere ausgegraut. Die Rollen (Admin, Trainer, Spielerin) gelten in den Modulen wie bisher.
+- Wer ein Modul direkt aufruft, ohne angemeldet zu sein, landet automatisch auf der Anmeldung und danach im Modul.
+- „Abmelden“ in einem Modul oder auf der Startseite meldet überall ab.
+- Damit das in beiden Tools klappt, sollten Benutzername und Passwort in Training und Analyse gleich sein.
+  Unterschiedliche Passwörter gehen auch, dann öffnet die Startseite nur das Modul, zu dem das Passwort passt.
+
+## Verwaltung im Team-Board (ab Version 3.0)
+
+Zugänge, Rollen und Spielerinnenprofile werden nur noch im Team-Board gepflegt (Bereich „Verwaltung“, nur für Admins).
+
+| Rolle | sieht |
+|---|---|
+| Admin | alles, inkl. Verwaltung |
+| Trainer | Team-Board, Training, Spielanalyse, Gegner, Profilansicht aller Spielerinnen |
+| Spielerin | eigenes Dashboard mit allen eigenen Werten (Überblick, Verlauf, Plus/Minus, jedes Spiel im Detail, Einsätze, nächste Spiele mit Status), das Gesamtbild der Mannschaft und die Gegneranalyse – keine Daten anderer Spielerinnen, keine Rankings |
+
+So funktioniert es:
+1. Verwaltung öffnen → Zugänge anlegen oder ändern, Spielerinnen zuordnen, Namensabgleich prüfen.
+2. „Speichern und Dateien erzeugen“ → es wird `team-board-update.zip` heruntergeladen.
+3. ZIP entpacken und den Inhalt ins Repo hochladen: `board.json` in die oberste Ebene,
+   `analyse/index.html` und `training/index.html` in ihre Ordner.
+4. Profile und Teamdaten werden bei jedem Speichern neu aus Training und Analyse berechnet.
+   Nach einem Spieltag also: Analyse exportieren und hochladen, dann in der Verwaltung einmal speichern.
+
+Wichtig:
+- Passwort nur eintragen bei neuen Zugängen, bei Passwortänderung oder wenn sich Rolle bzw. Zuordnung ändert.
+- Spielerinnen bekommen keinen Zugang zu Training und Analyse. Ihre Profile sind einzeln verschlüsselt:
+  Jede Spielerin kann technisch nur ihr eigenes Profil öffnen.
+- Vor dem ersten Speichern zuerst die neuen Dateien aus dem Update-Paket hochladen, damit die Verwaltung
+  auf dem aktuellen Stand der Module aufbaut.
+
+## Als App aufs Handy
+
+- iPhone (Safari): Teilen → „Zum Home-Bildschirm“.
+- Android (Chrome): Menü ⋮ → „App installieren“ bzw. „Zum Startbildschirm hinzufügen“.
 
 ## So geht es im Alltag weiter
 
