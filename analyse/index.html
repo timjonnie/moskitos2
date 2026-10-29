@@ -3,6 +3,19 @@
 <!-- This site is hosted on Netlify. Anyone can build and deploy a site
      like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=5e82070f-a7c2-4627-b3d4-b2f9fb89e973
      Netlify hosting facts for this site: static/SSR served via Netlify Edge. --><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><title>Moskitos 2 Spielanalyse</title>
+<script>window.MKSite=(function(){
+  var site=/^https?:$/.test(location.protocol)&&/\/(analyse|training)\/(index\.html)?$/.test(location.pathname);
+  function clear(){["mk2key","mk2tkey"].forEach(function(k){try{sessionStorage.removeItem(k);localStorage.removeItem(k)}catch(e){}})}
+  if(site){document.addEventListener("DOMContentLoaded",function(){
+    var f=document.querySelector("footer");if(!f||f.querySelector(".mk-home"))return;
+    var a=document.createElement("a");a.className="mk-home";a.href="../";a.textContent="← Zur Übersicht";
+    a.style.cssText="color:inherit;font-weight:600;margin-right:14px;text-decoration:none";f.insertBefore(a,f.firstChild);
+  })}
+  return {site:site,
+    redirect:function(m){if(!site)return false;clear();location.replace("../?ziel="+m);return true},
+    logout:function(){if(!site)return false;clear();location.replace("../");return true}};
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Saira+Condensed:wght@600;700;800&amp;display=swap">
@@ -346,7 +359,7 @@ select.sel,input.inp{font:inherit;font-size:14px;padding:8px 10px;border-radius:
   <main class="wrap" id="main">
     <div class="panel empty"><h2>Bitte im Browser öffnen</h2><p>Die Spieldaten sind in dieser Datei enthalten, aber verschlüsselt. Sie erscheinen erst nach der Anmeldung – und die funktioniert nur in einem richtigen Browser (Safari, Chrome, Edge), nicht in einer Vorschau wie der Claude-App, WhatsApp oder der iPhone-Dateien-App.</p><p><b>Am PC:</b> Datei speichern und doppelklicken. <b>Am Handy:</b> den Netlify-Link öffnen, den dein Trainer verschickt.</p></div>
   </main>
-  <footer class="site-foot"><div class="wrap"><span>Moskitos 2 · Spielanalyse</span><span>Version 2.3 · letzte Aktualisierung 28.10.2026</span></div></footer>
+  <footer class="site-foot"><div class="wrap"><span>Moskitos 2 · Spielanalyse</span><span>Version 2.4 · letzte Aktualisierung 29.10.2026</span></div></footer>
 </div>
 <div id="tip" hidden=""></div>
 <div class="login" id="login" hidden="">
@@ -1926,7 +1939,7 @@ document.addEventListener("click",async e=>{
       await S.db.doc("settings/aliases").set({map:D.aliases||{}});
       if(D.access&&D.access.users&&D.access.users.length)await S.db.doc("settings/access").set(Object.assign({},S.access,{users:D.access.users}));
       S.syncPending=null;toast("Stand aus der Datei übernommen")}catch(err){toast("Übernehmen fehlgeschlagen.")}render();return}
-  if(a==="logout"){try{sessionStorage.removeItem("mk2key")}catch(x){}try{localStorage.removeItem("mk2key")}catch(x){}location.reload();return}
+  if(a==="logout"){if(window.MKSite&&MKSite.logout())return;try{sessionStorage.removeItem("mk2key")}catch(x){}try{localStorage.removeItem("mk2key")}catch(x){}location.reload();return}
   if(a==="saveall"){act.disabled=true;let n=0;for(let i=0;i<S.pending.length;i++){if(S.pending[i].game&&await saveGame(i))n++}S.pending=S.pending.filter(p=>!p.saved);toast(`${n} Spiel${n===1?"":"e"} gespeichert`);render();return}
   if(a==="alias"){const x=$("#alFrom").value,y=$("#alTo").value;if(!x||!y||x===y){toast("Bitte zwei verschiedene Namen wählen.");return}
     try{await Store.setAliases(Object.assign({},S.aliases,{[x]:y}));toast(`„${x}“ zählt jetzt als ${y}`)}catch(err){toast("Zuordnung konnte nicht gespeichert werden.")}return}
@@ -2013,7 +2026,7 @@ if(window.__MOSKITO_LOCKED__){
   if(!(window.crypto&&crypto.subtle)){$("#login").hidden=false;$("#lgMsg").textContent="Dieser Browser unterstützt die Anmeldung nicht. Bitte die Datei in Safari oder Chrome öffnen.";}
   else{
     let saved=null;try{saved=sessionStorage.getItem("mk2key")||localStorage.getItem("mk2key")}catch(x){}
-    const showLogin=()=>{$("#login").hidden=false;setTimeout(()=>{const i=$("#lgUser");if(i)i.focus()},50)};
+    const showLogin=()=>{if(window.MKSite&&MKSite.redirect("analyse"))return;$("#login").hidden=false;setTimeout(()=>{const i=$("#lgUser");if(i)i.focus()},50)};
     let sv=null;try{sv=saved&&JSON.parse(saved)}catch(x){}
     if(sv&&sv.k&&sv.u){tryKey(b64d(sv.k),L,sv.u).catch(()=>{try{sessionStorage.removeItem("mk2key");localStorage.removeItem("mk2key")}catch(x){}showLogin()})}else showLogin();
   }
