@@ -122,8 +122,14 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
 .steps{ margin:8px 0 0 18px; padding:0; font-size:14.5px; }
 .steps li{ margin:4px 0; }
 
-.tiles.single{ grid-template-columns:1fr !important; }
+
 @media (max-width:520px){ .tiles.single .tile{ text-align:left; display:flex; align-items:center; justify-content:space-between; } .tiles.single .tile .go{ margin:0; } .tiles.single .tile h3{ display:flex; align-items:center; justify-content:space-between; width:100%; font-size:16px; } }
+
+@media (max-width:520px){ .tiles{ grid-template-columns:repeat(auto-fit,minmax(95px,1fr)) !important; } }
+.kpi .tag{ font-size:11px; }
+#auswView .row{ grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); }
+.row>*{ min-width:0; } #auswView{ min-width:0; overflow-x:hidden; } #auswView table{ font-size:13.5px; }
+.ga-legend{ display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12.5px; color:var(--muted); margin-top:6px; } .ga-legend i{ display:inline-block; width:11px; height:11px; margin-right:5px; vertical-align:-1px; border-radius:2px; }
 
 /* Gegneranalyse */
 .ga .ga-head h2{ text-transform:none; letter-spacing:-.01em; color:var(--ink); font-weight:600; }
@@ -193,6 +199,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
         <a class="tile" id="tTraining" href="training/"><h3>Training<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h3><p>Kader, Zeitnehmer, SR-Kosten, Übungen, Trainingsplanung</p></a>
         <a class="tile" id="tAnalyse" href="analyse/"><h3>Spielanalyse<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h3><p>Spiele, Spielerinnen, Statistiken, Erfassung</p></a>
         <a class="tile" id="tGegner" href="#gegner"><h3>Gegner<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h3><p>Profile aus den offiziellen Spielberichten</p></a>
+        <a class="tile" id="tMine" href="#auswertung" hidden><h3>Meine Auswertung<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h3><p>Alle eigenen Werte, Grafiken und Spiele</p></a>
       </nav>
       <div style="height:12px"></div>
       <div class="quick" id="quick"></div>
@@ -201,6 +208,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     <section class="panel" id="meBox" hidden style="margin-bottom:12px">
       <div class="profile-head"><div class="avatar" id="meAv"></div><div><h2 style="margin:0">Mein Dashboard</h2><div class="big" id="meName" style="margin:0"></div><div class="sub" id="meSub"></div></div></div>
       <div id="meFacts"></div>
+      <a class="more" href="#auswertung">Komplette Auswertung mit allen Grafiken →</a>
       <h2 style="margin-top:14px">Meine nächsten Spiele</h2>
       <ul class="list" id="meNext"></ul>
     </section>
@@ -260,13 +268,17 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
 
     <p class="note" id="stand"></p>
     </div>
+    <div id="auswView" hidden>
+      <a class="more" href="#" id="avBack" style="margin:0 0 12px">← Zurück zum Team-Board</a>
+      <div id="avRoot"></div>
+    </div>
     <div id="gegnerView" hidden>
       <a class="more" href="#" id="gvBack" style="margin:0 0 12px">← Zurück zum Team-Board</a>
       <div id="gaRoot"></div>
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 3.1 · letzte Aktualisierung 29.10.2026</footer>
+<footer class="wrap">Team-Board · Version 3.2 · letzte Aktualisierung 29.10.2026</footer>
 
 <script>
 /* Spielbericht-PDF (handball360 / DHB) auslesen. Erwartet pdf.js-Textelemente {s,x,y,p}. */
@@ -766,7 +778,7 @@ function goalBars(vals,labels){if(!vals.length)return"";var W=320,H=80,pad=6,bw=
   return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tore je Spiel">'+s+'</svg>'}
 
 /* ---------- Team-Board aufbauen ---------- */
-var PUB=null,BOARD=null,TEAM=null,ADMIN=null;
+var PUB=null,BOARD=null,TEAM=null,ADMIN=null,MY_P=null,CUR_P=null;
 async function showDash(){
   SES=session();if(!SES){showLogin();return}
   ADMIN=null;AD=null;TEAM=null;BOARD=null;
@@ -776,7 +788,7 @@ async function showDash(){
   $("login").hidden=true;$("dash").hidden=false;$("who").hidden=false;
   $("whoName").textContent=SES.u+(SES.role?" · "+(ROLES[SES.role]||SES.role):"");
   $("tilesWrap").hidden=false;$("tTraining").hidden=!isCoach();$("tAnalyse").hidden=!isCoach();
-  $("tAnalyse").classList.toggle("off",!a);$("tTraining").classList.toggle("off",!t);document.querySelector(".tiles").classList.toggle("single",!isCoach());
+  $("tAnalyse").classList.toggle("off",!a);$("tTraining").classList.toggle("off",!t);$("tMine").hidden=!(SES.role==="spielerin");
   $("lastLink").hidden=!isCoach();
   $("adminBox").hidden=!isAdmin();
   var q="";
@@ -878,6 +890,89 @@ function profileHtml(P){
       '<div style="margin-top:8px">'+(x.t==="f"?kvTable(g,FL,Object.keys(FL)):kvTable(g,GL,Object.keys(GL)))+'</div></details>'}).join("")}
   if(!n&&!K.length)h='<p class="sub">Noch keine Spiele mit Statistik.</p>'+h;
   return h}
+/* ---------- Komplette persönliche Auswertung (ohne Vergleich mit anderen) ---------- */
+function sgnv(v){return (v>0?"+":"")+v}
+function divz(a,b){return b?a/b:null}
+function pctv(v){return v==null?"–":Math.round(v*100)+" %"}
+function gLabel(g){return dd(g.date)}
+function gOpp(g){return shortName(g.opp||"")}
+function spark(vals,zero){var v=vals.map(function(x){return x==null?0:x});if(v.length<2)return"";var W=90,H=28,mn=Math.min.apply(null,v.concat(zero?[0]:[])),mx=Math.max.apply(null,v.concat(zero?[0]:[]));if(mx===mn)mx=mn+1;
+  var pts=v.map(function(x,i){return (i/(v.length-1)*W).toFixed(1)+","+(H-2-(x-mn)/(mx-mn)*(H-4)).toFixed(1)}).join(" ");
+  return '<svg viewBox="0 0 '+W+' '+H+'" width="64" height="24" style="flex:none" aria-hidden="true"><polyline points="'+pts+'" fill="none" stroke="'+cssv("--accent")+'" stroke-width="2" stroke-linejoin="round"/></svg>'}
+function chartFrame(G,body,H,legend){var n=G.length,W=Math.max(320,n*58),pad=34;var s="";
+  G.forEach(function(g,i){var x=pad+(i+0.5)*(W-pad-8)/n;s+='<text x="'+x+'" y="'+(H-16)+'" text-anchor="middle" font-size="11" fill="'+cssv("--ink")+'">'+esc(gLabel(g))+'</text><text x="'+x+'" y="'+(H-3)+'" text-anchor="middle" font-size="10" fill="'+cssv("--muted")+'">'+esc(gOpp(g).slice(0,12))+'</text>'});
+  return '<div style="overflow-x:auto"><svg viewBox="0 0 '+W+' '+H+'" style="min-width:'+Math.min(W,560)+'px;width:100%;height:auto;display:block" role="img">'+body(W,pad)+s+'</svg></div>'+(legend?'<div class="ga-legend">'+legend+'</div>':"")}
+function lg(items){return items.map(function(i){return '<span><i style="background:'+i[1]+'"></i>'+i[0]+'</span>'}).join("")}
+function cDiverge(G,vals){var H=190,mx=Math.max.apply(null,vals.map(Math.abs).concat([3]));
+  return chartFrame(G,function(W,pad){var n=G.length,cw=(W-pad-8)/n,mid=(H-34)/2+4,s='<line x1="'+pad+'" x2="'+(W-8)+'" y1="'+mid+'" y2="'+mid+'" stroke="'+cssv("--ink")+'"/>';
+    vals.forEach(function(v,i){var h=Math.abs(v)/mx*(mid-14),x=pad+i*cw+cw*0.22,w=cw*0.56;s+='<rect x="'+x+'" y="'+(v>=0?mid-h:mid)+'" width="'+w+'" height="'+Math.max(h,1.5)+'" rx="2" fill="'+(v>=0?cssv("--good"):cssv("--bad"))+'"/>';
+      s+='<text x="'+(x+w/2)+'" y="'+(v>=0?mid-h-4:mid+h+12)+'" text-anchor="middle" font-size="11" font-weight="600" fill="'+cssv("--ink")+'">'+sgnv(v)+'</text>'});return s},H)}
+function cLines(G,series,max){var H=200;
+  return chartFrame(G,function(W,pad){var n=G.length,cw=(W-pad-8)/n,top=10,bot=H-34,s="";
+    [0,.25,.5,.75,1].forEach(function(t){var y=bot-t*(bot-top);s+='<line x1="'+pad+'" x2="'+(W-8)+'" y1="'+y+'" y2="'+y+'" stroke="'+cssv("--line")+'"/><text x="'+(pad-5)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="'+cssv("--muted")+'">'+Math.round(t*max*100)+'</text>'});
+    series.forEach(function(se){var pts=[];se.v.forEach(function(v,i){if(v==null)return;var x=pad+(i+0.5)*cw,y=bot-Math.min(v,max)/max*(bot-top);pts.push([x,y,v])});
+      if(pts.length>1)s+='<polyline points="'+pts.map(function(p){return p[0].toFixed(1)+","+p[1].toFixed(1)}).join(" ")+'" fill="none" stroke="'+se.c+'" stroke-width="2.5" stroke-linejoin="round"/>';
+      pts.forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="'+se.c+'"><title>'+se.n+': '+Math.round(p[2]*100)+' %</title></circle>'})});return s},H,lg(series.map(function(se){return [se.n,se.c]})))}
+function cBars(G,series,stacked){var H=200,mx=1;
+  G.forEach(function(g,i){var t=0;series.forEach(function(se){t=stacked?t+se.v[i]:Math.max(t,se.v[i])});mx=Math.max(mx,t)});
+  return chartFrame(G,function(W,pad){var n=G.length,cw=(W-pad-8)/n,top=14,bot=H-34,s="";
+    G.forEach(function(g,i){var x0=pad+i*cw,acc=0;
+      if(stacked){var w=cw*0.5,x=x0+cw*0.25;series.forEach(function(se){var v=se.v[i],h=v/mx*(bot-top);if(v>0)s+='<rect x="'+x+'" y="'+(bot-acc-h)+'" width="'+w+'" height="'+h+'" fill="'+se.c+'"><title>'+se.n+': '+v+'</title></rect>';acc+=h});
+        var tot=series.reduce(function(a,se){return a+se.v[i]},0);s+='<text x="'+(x+w/2)+'" y="'+(bot-acc-4)+'" text-anchor="middle" font-size="11" font-weight="600" fill="'+cssv("--ink")+'">'+tot+'</text>'}
+      else{var bw=cw*0.72/series.length;series.forEach(function(se,k){var v=se.v[i],h=v/mx*(bot-top),x=x0+cw*0.14+k*bw;s+='<rect x="'+x+'" y="'+(bot-h)+'" width="'+(bw-2)+'" height="'+Math.max(h,1)+'" rx="1.5" fill="'+se.c+'"><title>'+se.n+': '+v+'</title></rect>';
+        if(v>0)s+='<text x="'+(x+(bw-2)/2)+'" y="'+(bot-h-3)+'" text-anchor="middle" font-size="10" fill="'+cssv("--ink")+'">'+v+'</text>'})}});
+    s+='<line x1="'+pad+'" x2="'+(W-8)+'" y1="'+bot+'" y2="'+bot+'" stroke="'+cssv("--line")+'"/>';return s},H,lg(series.map(function(se){return [se.n,se.c]})))}
+function tile(l,grp,v,foot,sp){return '<div class="kpi"><div style="display:flex;justify-content:space-between;gap:6px"><span class="tag" style="text-transform:uppercase;letter-spacing:.05em">'+l+'</span><span class="tag">'+grp+'</span></div>'+
+  '<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px"><b style="white-space:nowrap">'+v+'</b>'+(sp||"")+'</div><span>'+foot+'</span></div>'}
+function zoneBlock(K){var Z=[["Dist","Distanz"],["Wing","Außen"],["Center","Zentral"],["7","7m / TGS"]];
+  return '<div style="display:grid;gap:10px;margin-top:6px">'+Z.map(function(z){var a=sum(K,"s"+z[0]),c=sum(K,"c"+z[0]),t=a+c,w=t?a/t*100:0;
+    return '<div><div style="display:flex;justify-content:space-between;font-size:14px"><span>'+z[1]+'</span><span>'+a+' von '+t+' · <b>'+pctv(divz(a,t))+'</b></span></div>'+
+      '<div style="display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--panel-2);margin-top:4px"><div style="width:'+w+'%;background:'+cssv("--s1")+'"></div><div style="flex:1;background:'+cssv("--opp")+'"></div></div></div>'}).join("")+
+    '</div><div class="ga-legend"><span><i style="background:'+cssv("--s1")+'"></i>gehalten</span><span><i style="background:'+cssv("--opp")+'"></i>Gegentor</span></div>'}
+function fullAnalysis(P){
+  var G=(P.games||[]).map(function(g){return Object.assign({date:g.date,opp:g.opp,us:g.us,them:g.them},g.f||g)}).sort(function(a,b){return a.date.localeCompare(b.date)});
+  var K=(P.gk||[]).map(function(g){return Object.assign({date:g.date,opp:g.opp,us:g.us,them:g.them},g.g||g)}).sort(function(a,b){return a.date.localeCompare(b.date)});
+  var apps=P.apps?(P.apps.liga+P.apps.test):0,isGk=K.length>G.length;
+  var h='<div class="panel" style="margin-bottom:12px"><div class="profile-head"><div class="avatar">'+esc((P.name||"").split(" ").map(function(w){return w[0]}).join("").slice(0,2).toUpperCase())+'</div><div><h2 style="margin:0">Persönliche Auswertung</h2><div class="big" style="margin:0">'+esc(P.name||"")+'</div>'+
+    '<div class="sub">'+(isGk?"Torhüterin":"Feldspielerin")+(P.nr?" · #"+esc(P.nr):"")+(P.pos?" · "+esc(P.pos):"")+' · '+(G.length||K.length)+' Spiele mit Aktionen'+(apps?' · '+apps+'× im Kader':'')+'</div></div></div></div>';
+  if(G.length){var plus=sum(G,"plus"),minus=sum(G,"minus"),total=sum(G,"total"),goals=sum(G,"goals"),miss=sum(G,"miss"),g7=sum(G,"goals7"),m7=sum(G,"miss7"),n=G.length;
+    var effs=G.map(function(g){return g.eff!=null?+g.eff:divz(+g.plus||0,(+g.plus||0)+(+g.minus||0))}),wq=G.map(function(g){return divz(+g.goals||0,(+g.goals||0)+(+g.miss||0))});
+    h+='<h2>Feldspiel</h2><div class="kpis" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">'+
+      tile("Plus-Minus","Gesamt",sgnv(total),"Ø "+(total>=0?"+":"")+fmt(total/n)+" je Spiel",spark(G.map(function(g){return +g.total||0}),true))+
+      tile("Effektivität","Gesamt",pctv(divz(plus,plus+minus)),"Handlungseffektivität: positive Aktionen je Aktion",spark(effs))+
+      tile("Tore","Angriff",goals,"Ø "+fmt(goals/n)+" je Spiel · davon 7m: "+g7,spark(G.map(function(g){return +g.goals||0})))+
+      tile("Wurfquote","Angriff",pctv(divz(goals,goals+miss)),goals+" Tore aus "+(goals+miss)+" Würfen",spark(wq))+
+      tile("7m","Angriff",g7+m7?g7+"/"+(g7+m7):"–",g7+m7?pctv(divz(g7,g7+m7))+" verwandelt":"keine 7m geworfen","")+
+      tile("Assists","Angriff",sum(G,"assists"),"Ø "+fmt(sum(G,"assists")/n)+" je Spiel",spark(G.map(function(g){return +g.assists||0})))+
+      tile("Ballverluste","Angriff",sum(G,"tech")+sum(G,"pass"),sum(G,"tech")+" techn. Fehler · "+sum(G,"pass")+" Fehlpässe",spark(G.map(function(g){return (+g.tech||0)+(+g.pass||0)})))+
+      tile("Ballgewinne","Abwehr",sum(G,"steals"),"Ø "+fmt(sum(G,"steals")/n)+" je Spiel",spark(G.map(function(g){return +g.steals||0})))+
+      tile("Herausgeholt","Angriff",sum(G,"won7")+sum(G,"won2min"),sum(G,"won7")+"× 7m · "+sum(G,"won2min")+"× 2 Min.",spark(G.map(function(g){return (+g.won7||0)+(+g.won2min||0)})))+
+      tile("Abwehrfehler","Abwehr",sum(G,"lost1v1")+sum(G,"caused7")+sum(G,"pen"),"1:1 verloren "+sum(G,"lost1v1")+" · 7m "+sum(G,"caused7")+" · 2 Min. "+sum(G,"pen"),spark(G.map(function(g){return (+g.lost1v1||0)+(+g.caused7||0)+(+g.pen||0)})))+'</div>';
+    h+='<div class="row" style="margin-top:12px">'+
+      '<section class="panel"><h2>Plus-Minus je Spiel</h2><p class="sub" style="margin:0 0 6px">Positive minus negative Aktionen</p>'+cDiverge(G,G.map(function(g){return +g.total||0}))+'</section>'+
+      '<section class="panel"><h2>Quoten je Spiel</h2><p class="sub" style="margin:0 0 6px">Handlungseffektivität und Wurfquote in %</p>'+cLines(G,[{n:"Handlungseffektivität",c:cssv("--s1"),v:effs},{n:"Wurfquote",c:cssv("--accent"),v:wq}],1)+'</section>'+
+      '<section class="panel"><h2>Tore, Assists, Ballgewinne</h2><p class="sub" style="margin:0 0 6px">Je Spiel</p>'+cBars(G,[{n:"Tore",c:cssv("--s1"),v:G.map(function(g){return +g.goals||0})},{n:"Assists",c:cssv("--accent"),v:G.map(function(g){return +g.assists||0})},{n:"Ballgewinne",c:cssv("--s3"),v:G.map(function(g){return +g.steals||0})}])+'</section>'+
+      '<section class="panel"><h2>Fehler je Spiel</h2><p class="sub" style="margin:0 0 6px">Fehlwürfe, technische Fehler, Fehlpässe</p>'+cBars(G,[{n:"Fehlwürfe",c:cssv("--s1"),v:G.map(function(g){return +g.miss||0})},{n:"Techn. Fehler",c:cssv("--accent"),v:G.map(function(g){return +g.tech||0})},{n:"Fehlpässe",c:cssv("--s3"),v:G.map(function(g){return +g.pass||0})}],true)+'</section></div>';
+    h+='<section class="panel" style="margin-bottom:12px"><h2>Plus und Minus der Saison</h2><div class="row"><div><table>'+POSF.map(function(k){return '<tr><td>'+FL[k]+'</td><td class="n ok">'+sum(G,k)+'</td></tr>'}).join("")+'</table></div><div><table>'+NEGF.map(function(k){return '<tr><td>'+FL[k]+'</td><td class="n warn">'+sum(G,k)+'</td></tr>'}).join("")+'</table></div></div></section>';
+    h+='<section class="panel" style="margin-bottom:12px"><h2>Alle Spiele</h2><p class="sub" style="margin:0 0 6px">Zeile antippen für alle Werte des Spiels</p><div style="overflow-x:auto"><table><tr><th>Spiel</th><th class="n">+/−</th><th class="n">Handl.-Eff.</th><th class="n">Tore</th><th class="n">Würfe</th><th class="n">Wurfquote</th><th class="n">Assists</th><th class="n">Ballgew.</th><th class="n">Techn. F.</th><th class="n">Fehlpässe</th><th class="n">Aktionen</th></tr>'+
+      G.slice().reverse().map(function(g,i){var id="fg"+i;return '<tr style="cursor:pointer" data-toggle="'+id+'"><td>'+dd(g.date)+' '+esc(gOpp(g))+(g.us!=null?' <span class="tag">'+g.us+':'+g.them+'</span>':'')+'</td><td class="n '+((+g.total||0)>=0?"ok":"warn")+'">'+sgnv(+g.total||0)+'</td><td class="n">'+pctv(g.eff!=null?+g.eff:null)+'</td><td class="n">'+(g.goals||0)+(g.goals7?' <span class="tag">('+g.goals7+'×7m)</span>':'')+'</td><td class="n">'+((+g.goals||0)+(+g.miss||0))+'</td><td class="n">'+pctv(divz(+g.goals||0,(+g.goals||0)+(+g.miss||0)))+'</td><td class="n">'+(g.assists||0)+'</td><td class="n">'+(g.steals||0)+'</td><td class="n">'+(g.tech||0)+'</td><td class="n">'+(g.pass||0)+'</td><td class="n">'+(g.actions!=null?g.actions:"–")+'</td></tr>'+
+        '<tr id="'+id+'" hidden><td colspan="11" style="background:var(--panel-2)">'+kvTable(g,FL,Object.keys(FL))+'</td></tr>'}).join("")+'</table></div></section>'}
+  if(K.length){var sv=sum(K,"saves"),cc=sum(K,"conceded"),kt=sum(K,"total"),kp=sum(K,"plus"),km=sum(K,"minus"),qq=K.map(function(g){return divz(+g.saves||0,(+g.saves||0)+(+g.conceded||0))});
+    h+='<h2>Tor</h2><div class="kpis" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">'+
+      tile("Paradenquote","Tor",pctv(divz(sv,sv+cc)),sv+" Paraden bei "+(sv+cc)+" Würfen",spark(qq))+
+      tile("Paraden","Tor",sv,"Ø "+fmt(sv/K.length)+" je Spiel",spark(K.map(function(g){return +g.saves||0})))+
+      tile("Gegentore","Tor",cc,"Ø "+fmt(cc/K.length)+" je Spiel",spark(K.map(function(g){return +g.conceded||0})))+
+      tile("Plus-Minus","Gesamt",sgnv(kt),"Handlungseff. "+pctv(divz(kp,kp+km)),spark(K.map(function(g){return +g.total||0}),true))+
+      tile("Torhüterin im Aufbau","Gesamt",sum(K,"assists"),"Assists · "+sum(K,"passErr")+" Fehlpässe","")+'</div>';
+    h+='<div class="row" style="margin-top:12px"><section class="panel"><h2>Paradenquote je Spiel</h2>'+cLines(K,[{n:"Paradenquote",c:cssv("--s1"),v:qq}],1)+'</section>'+
+      '<section class="panel"><h2>Paraden und Gegentore</h2>'+cBars(K,[{n:"Paraden",c:cssv("--s1"),v:K.map(function(g){return +g.saves||0})},{n:"Gegentore",c:cssv("--opp"),v:K.map(function(g){return +g.conceded||0})}])+'</section>'+
+      '<section class="panel"><h2>Wurfpositionen gesamt</h2>'+zoneBlock(K)+'</section></div>';
+    h+='<section class="panel" style="margin-bottom:12px"><h2>Alle Spiele im Tor</h2><div style="overflow-x:auto"><table><tr><th>Spiel</th><th class="n">Paraden</th><th class="n">Gegentore</th><th class="n">Quote</th><th class="n">+/−</th></tr>'+
+      K.slice().reverse().map(function(g,i){var id="kg"+i;return '<tr style="cursor:pointer" data-toggle="'+id+'"><td>'+dd(g.date)+' '+esc(gOpp(g))+'</td><td class="n">'+(g.saves||0)+'</td><td class="n">'+(g.conceded||0)+'</td><td class="n">'+pctv(divz(+g.saves||0,(+g.saves||0)+(+g.conceded||0)))+'</td><td class="n">'+sgnv(+g.total||0)+'</td></tr><tr id="'+id+'" hidden><td colspan="5" style="background:var(--panel-2)">'+kvTable(g,GL,Object.keys(GL))+'</td></tr>'}).join("")+'</table></div></section>'}
+  if(!G.length&&!K.length)h+='<div class="panel"><p class="sub">Noch keine Spiele mit Statistik.</p></div>';
+  h+='<section class="panel"><h2>Einsätze und nächste Spiele</h2><div class="facts">'+fact(P.apps?P.apps.liga:0,"Einsätze Liga")+fact(P.apps?P.apps.test:0,"Testspiele")+'</div><ul class="list">'+nextHtml(P)+'</ul></section>';
+  return h}
+document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("[data-toggle]");if(!t)return;var r=document.getElementById(t.dataset.toggle);if(r)r.hidden=!r.hidden});
 function nextHtml(P){var heute=new Date().toISOString().slice(0,10),n=((P&&P.next)||[]).filter(function(g){return g.date>=heute}).slice(0,5);
   if(!n.length)return '<li><span class="sub">Keine geplanten Spiele.</span></li>';
   return n.map(function(g){var s=STATUS[g.status]||["Noch nicht geplant","st-n"];return '<li><span>'+dd(g.date)+(g.time?" "+esc(g.time):"")+' · '+(g.home===false?"bei ":"gegen ")+esc(g.opponent)+'</span><span class="status '+s[1]+'">'+s[0]+'</span></li>'}).join("")}
@@ -887,7 +982,7 @@ async function renderMe(){
   try{if(box)P=await open_(b64d(SES.b.own),box)}catch(e){P=null}
   var name=(P&&P.name)||SES.u;$("meName").textContent=name;$("meAv").textContent=name.split(" ").map(function(w){return w[0]}).join("").slice(0,2).toUpperCase();
   $("meSub").textContent=P?[P.nr?"#"+P.nr:"",P.pos||""].filter(Boolean).join(" · "):"";
-  $("meFacts").innerHTML=profileHtml(P);
+  $("meFacts").innerHTML=profileHtml(P);MY_P=P;
   $("meNext").innerHTML=nextHtml(P);$("meBox").hidden=false;
 }
 async function fillCoachProfile(){
@@ -896,7 +991,8 @@ async function fillCoachProfile(){
   sel.innerHTML='<option value="">Spielerin wählen …</option>'+ids.map(function(id){return '<option value="'+esc(id)+'">'+esc(ps[id].name)+'</option>'}).join("");
   sel.onchange=async function(){var id=sel.value,out=$("cpOut");if(!id){out.innerHTML="";return}
     var P=null;try{P=await open_(b64d(ADMIN.pk[id]),BOARD.profiles[id])}catch(e){}
-    out.innerHTML=profileHtml(P)+'<h2 style="margin-top:12px">Nächste Spiele</h2><ul class="list">'+nextHtml(P)+'</ul>'};
+    out.innerHTML='<button class="btn primary" type="button" id="cpFull" style="margin-bottom:6px">Komplette Auswertung ansehen</button>'+profileHtml(P)+'<h2 style="margin-top:12px">Nächste Spiele</h2><ul class="list">'+nextHtml(P)+'</ul>';
+    $("cpFull").onclick=function(){CUR_P=P;location.hash="auswertung"}};
   $("coachProfile").hidden=false;
 }
 function newSince(){
@@ -1039,9 +1135,12 @@ function mountGegner(){
     sc.textContent=JSON.stringify(PUB);document.body.appendChild(sc);GA_MOUNTED=true}
   window.MKOpp.mount($("gaRoot"));
 }
-function route(){var g=location.hash==="#gegner"&&!$("dash").hidden;$("gegnerView").hidden=!g;$("boardView").hidden=g;
-  if(g){mountGegner();window.scrollTo(0,0)}else if(window.MKOpp)window.MKOpp.unmount()}
+function route(){var on=!$("dash").hidden,g=on&&location.hash==="#gegner",a=on&&location.hash==="#auswertung";
+  $("gegnerView").hidden=!g;$("auswView").hidden=!a;$("boardView").hidden=g||a;
+  if(g){mountGegner();window.scrollTo(0,0)}else if(window.MKOpp)window.MKOpp.unmount();
+  if(a){var P=isCoach()?CUR_P:MY_P;$("avRoot").innerHTML=P?fullAnalysis(P):'<div class="panel"><p class="sub">'+(isCoach()?"Bitte zuerst unter „Profilansicht prüfen“ eine Spielerin wählen.":"Für dein Profil liegen noch keine Daten vor.")+'</p></div>';window.scrollTo(0,0)}}
 window.addEventListener("hashchange",route);
+$("avBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
 $("gvBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
 
 /* ---------- Allgemein ---------- */
