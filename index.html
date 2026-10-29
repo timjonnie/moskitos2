@@ -4,49 +4,51 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Moskitos 2</title>
+<title>Team-Board · Moskitos 2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#eef0f3; --panel:#ffffff; --panel-2:#f6f7f9; --ink:#141821; --muted:#5b6271; --line:#dde1e7;
-  --accent:#d24e19; --accent-soft:#fbe6dc; --band:#141821; --band-ink:#f4f5f7; --band-muted:#a9b0bd;
-  --good:#1d8a4a; --good-soft:#dff2e6; --bad:#c9372f; --bad-soft:#fbe3e1; --draw:#8a6d00; --draw-soft:#f6edc8;
-  --font-display:"Saira Condensed","Arial Narrow",system-ui,sans-serif;
-  --font-body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --bg:#F7F5F1; --panel:#FFFFFF; --panel-2:#F5F1EA; --ink:#0E1B2C; --muted:#556677; --line:#E4DED4;
+  --accent:#C2410C; --accent-soft:#FBE6DA; --wood:#F6C98B; --band:#1B2A4A; --band-ink:#FFFFFF; --band-muted:#C9D2DD;
+  --good:#1d7a45; --good-soft:#dff2e6; --bad:#b4372f; --bad-soft:#fbe3e1; --draw:#8a6d00; --draw-soft:#f6edc8;
+  --font-display:"Lexend","Segoe UI",system-ui,sans-serif;
+  --font-body:"Lexend","Segoe UI",system-ui,sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0e1117; --panel:#161a22; --panel-2:#1c212b; --ink:#eef0f4; --muted:#a2a9b6; --line:#2a303c;
-  --accent:#f0692f; --accent-soft:#3a2216; --band:#06080c; --good:#47b874; --good-soft:#16301f; --bad:#ef6b6b; --bad-soft:#3a1a1a;
+  --bg:#0E1B2C; --panel:#16243A; --panel-2:#1D2D47; --ink:#EEF1F5; --muted:#A3AFBD; --line:#273852;
+  --accent:#EA6A2E; --accent-soft:#3a2216; --band:#1B2A4A; --good:#47b874; --good-soft:#16301f; --bad:#ef6b6b; --bad-soft:#3a1a1a;
   --draw:#e0b84a; --draw-soft:#33290d; color-scheme:dark } }
-:root[data-theme="dark"]{ --bg:#0e1117; --panel:#161a22; --panel-2:#1c212b; --ink:#eef0f4; --muted:#a2a9b6; --line:#2a303c;
-  --accent:#f0692f; --accent-soft:#3a2216; --band:#06080c; --good:#47b874; --good-soft:#16301f; --bad:#ef6b6b; --bad-soft:#3a1a1a;
+:root[data-theme="dark"]{ --bg:#0E1B2C; --panel:#16243A; --panel-2:#1D2D47; --ink:#EEF1F5; --muted:#A3AFBD; --line:#273852;
+  --accent:#EA6A2E; --accent-soft:#3a2216; --band:#1B2A4A; --good:#47b874; --good-soft:#16301f; --bad:#ef6b6b; --bad-soft:#3a1a1a;
   --draw:#e0b84a; --draw-soft:#33290d; color-scheme:dark }
 :root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
 *,*::before,*::after{ box-sizing:inherit; }
 html{ min-height:100%; }
-body{ margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 var(--font-body); }
+body{ margin:0; background:var(--bg); color:var(--ink); font:300 15.5px/1.55 var(--font-body); }
+b,strong{ font-weight:600; }
 [hidden]{ display:none !important; }
 header{ background:var(--band); color:var(--band-ink); border-bottom:4px solid var(--accent); }
 .wrap{ max-width:920px; margin:0 auto; padding:0 16px; }
 header .wrap{ padding-top:22px; padding-bottom:18px; display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-.kicker{ color:var(--band-muted); font-size:13px; letter-spacing:.05em; text-transform:uppercase; }
-h1{ font:800 clamp(38px,9vw,58px)/1 var(--font-display); margin:4px 0 0; }
-.who{ color:var(--band-muted); font-size:14px; display:flex; gap:10px; align-items:center; }
-.who button{ font:600 14px var(--font-body); color:var(--band-ink); background:transparent; border:1px solid var(--band-muted); border-radius:8px; padding:6px 12px; cursor:pointer; }
+.kicker{ color:var(--wood); font-size:14px; font-weight:300; }
+h1{ font:700 clamp(32px,8vw,50px)/1.05 var(--font-display); margin:6px 0 0; letter-spacing:-.02em; }
+h1::after{ content:"."; color:var(--accent); }
+.who{ color:var(--band-muted); font-size:14px; font-weight:300; display:flex; gap:10px; align-items:center; }
+.who button{ font:400 14px var(--font-body); color:var(--band-ink); background:transparent; border:1px solid var(--band-muted); border-radius:8px; padding:6px 12px; cursor:pointer; }
 main{ padding:18px 0 36px; }
-h2{ font:700 14px var(--font-display); text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 8px; }
+h2{ font:600 13px var(--font-display); text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 8px; }
 .panel{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; }
 .row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:12px; margin-bottom:12px; }
-.big{ font:700 clamp(24px,6vw,32px)/1.1 var(--font-display); margin:2px 0 4px; }
+.big{ font:600 clamp(21px,5.2vw,27px)/1.2 var(--font-display); margin:2px 0 4px; letter-spacing:-.01em; }
 .sub{ color:var(--muted); font-size:14.5px; }
-.chip{ display:inline-block; min-width:26px; text-align:center; font:700 13px/24px var(--font-display); border-radius:6px; padding:0 6px; margin-right:4px; }
+.chip{ display:inline-block; min-width:26px; text-align:center; font:600 12.5px/24px var(--font-display); border-radius:6px; padding:0 6px; margin-right:4px; }
 .S{ background:var(--good-soft); color:var(--good); } .N{ background:var(--bad-soft); color:var(--bad); } .U{ background:var(--draw-soft); color:var(--draw); }
 .facts{ display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin-top:12px; }
 .fact{ background:var(--panel-2); border-radius:8px; padding:8px 10px; }
-.fact b{ display:block; font:700 22px/1.1 var(--font-display); }
+.fact b{ display:block; font:600 19px/1.2 var(--font-display); }
 .fact .chip{ min-width:20px; font-size:12px; line-height:20px; margin:2px 2px 0 0; padding:0 4px; }
 .fact span{ font-size:12.5px; color:var(--muted); }
 .list{ margin:10px 0 0; padding:0; list-style:none; font-size:14.5px; }
@@ -56,7 +58,7 @@ a.more{ display:inline-block; margin-top:12px; color:var(--accent); font-weight:
 a.more:hover{ text-decoration:underline; }
 .kpis{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:8px; }
 .kpi{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
-.kpi b{ display:block; font:800 30px/1 var(--font-display); color:var(--accent); }
+.kpi b{ display:block; font:700 26px/1.1 var(--font-display); color:var(--accent); }
 .kpi span{ font-size:13px; color:var(--muted); }
 .trend svg{ width:100%; height:auto; display:block; margin-top:8px; }
 table{ width:100%; border-collapse:collapse; font-size:14.5px; }
@@ -65,28 +67,29 @@ td{ padding:5px 6px; border-bottom:1px solid var(--line); }
 td.n,th.n{ text-align:right; font-variant-numeric:tabular-nums; }
 tr.own td{ background:var(--accent-soft); font-weight:700; }
 .tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:12px; }
-.tile{ display:block; background:var(--panel); border:1px solid var(--line); border-left:5px solid var(--accent); border-radius:10px; padding:14px 16px; color:inherit; text-decoration:none; transition:transform .12s ease; }
+.tile{ display:block; background:var(--band); color:var(--band-ink) !important; border:0; border-bottom:4px solid var(--accent); border-radius:10px; padding:14px 16px; color:inherit; text-decoration:none; transition:transform .12s ease; }
 .tile:hover{ transform:translateY(-2px); }
 .tile:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
-.tile h3{ font:700 24px/1.1 var(--font-display); margin:0 0 4px; }
-.tile p{ margin:0; color:var(--muted); font-size:14px; }
-.tile.off{ border-left-color:var(--line); opacity:.6; pointer-events:none; }
+.tile h3{ font:600 20px/1.2 var(--font-display); margin:0 0 4px; }
+.tile p{ margin:0; color:var(--band-muted); font-size:13.5px; }
+.tile.off{ border-bottom-color:var(--line); opacity:.45; pointer-events:none; }
 .note{ color:var(--muted); font-size:13px; margin-top:14px; }
 .login{ max-width:380px; margin:28px auto; }
 .login label{ display:block; font-weight:600; font-size:14px; margin:12px 0 4px; }
 .login input[type=text],.login input[type=password]{ width:100%; font:16px var(--font-body); padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:var(--panel); color:var(--ink); }
 .login .keep{ display:flex; gap:8px; align-items:center; margin-top:12px; font-size:14px; color:var(--muted); font-weight:400; }
-.login button{ width:100%; margin-top:16px; font:700 17px var(--font-body); color:#fff; background:var(--accent); border:0; border-radius:8px; padding:12px; cursor:pointer; }
+.login button{ width:100%; margin-top:16px; font:600 16px var(--font-body); color:#fff; background:var(--accent); border:0; border-radius:8px; padding:12px; cursor:pointer; }
 .login button:disabled{ opacity:.6; cursor:default; }
 .login .msg{ color:var(--bad); min-height:22px; margin-top:10px; font-size:14px; }
 input:focus-visible,button:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
 footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
+@media (max-width:520px){ .tiles{ grid-template-columns:repeat(3,1fr); gap:8px; } .tile{ padding:12px 10px; text-align:center; } .tile h3{ font-size:15px; margin:0; } .tile p{ display:none; } }
 @media (prefers-reduced-motion: reduce){ .tile{ transition:none; } .tile:hover{ transform:none; } }
 </style>
 </head>
 <body>
 <header><div class="wrap">
-  <div><div class="kicker">Oberliga Frauen · Saison 2026/27</div><h1>Moskitos 2</h1></div>
+  <div><div class="kicker">Team-Board · Oberliga Frauen 2026/27</div><h1>Moskitos 2</h1></div>
   <div class="who" id="who" hidden><span id="whoName"></span><button type="button" id="logout">Abmelden</button></div>
 </div></header>
 
@@ -102,10 +105,17 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
       <button type="submit" id="lgBtn">Anmelden</button>
       <div class="msg" id="lgMsg" role="alert"></div>
     </form>
-    <p class="note">Ein Login für Training, Spielanalyse und Gegner. Es gelten eure bisherigen Zugangsdaten und Rollen.</p>
+    <p class="note">Ein Login für das ganze Team-Board: Training, Spielanalyse und Gegner. Es gelten eure bisherigen Zugangsdaten und Rollen.</p>
   </section>
 
   <div id="dash" hidden>
+    <h2>Bereiche</h2>
+    <nav class="tiles" aria-label="Bereiche">
+      <a class="tile" id="tTraining" href="training/"><h3>Training</h3><p>Kader, Zeitnehmer, SR-Kosten, Übungen, Trainingsplanung</p></a>
+      <a class="tile" id="tAnalyse" href="analyse/"><h3>Spielanalyse</h3><p>Spiele, Spielerinnen, Statistiken, Erfassung</p></a>
+      <a class="tile" id="tGegner" href="analyse/#gegner"><h3>Gegner</h3><p>Profile aus den offiziellen Spielberichten</p></a>
+    </nav>
+    <div style="height:16px"></div>
     <div class="row">
       <section class="panel" id="nextBox" hidden>
         <h2>Nächstes Spiel</h2>
@@ -141,16 +151,10 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
       </section>
     </div>
 
-    <h2 style="margin-top:6px">Bereiche</h2>
-    <nav class="tiles" aria-label="Bereiche">
-      <a class="tile" id="tTraining" href="training/"><h3>Training</h3><p>Kader, Zeitnehmer, SR-Kosten, Übungen, Trainingsplanung</p></a>
-      <a class="tile" id="tAnalyse" href="analyse/"><h3>Spielanalyse</h3><p>Spiele, Spielerinnen, Statistiken, Erfassung</p></a>
-      <a class="tile" id="tGegner" href="analyse/#gegner"><h3>Gegner</h3><p>Profile aus den offiziellen Spielberichten</p></a>
-    </nav>
     <p class="note" id="stand"></p>
   </div>
 </main>
-<footer class="wrap">Moskitos 2 · Version 2.0 · letzte Aktualisierung 29.10.2026</footer>
+<footer class="wrap">Team-Board · Version 2.1 · letzte Aktualisierung 29.10.2026</footer>
 
 <script>
 (function(){
