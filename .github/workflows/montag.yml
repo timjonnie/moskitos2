@@ -1,0 +1,23 @@
+name: Spielberichte Montag
+on:
+  schedule:
+    - cron: "0 5 * * 1"   # jeden Montag 05:00 UTC = 06:00 MEZ / 07:00 MESZ
+  workflow_dispatch: {}    # zusätzlich per Knopfdruck startbar
+permissions:
+  contents: write
+jobs:
+  abruf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: npm install --no-save pdfjs-dist@3.11.174
+      - run: node spielberichte_abruf.js
+      - name: Änderungen speichern
+        run: |
+          git config user.name "Gegneranalyse-Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add gegner_daten.json
+          git diff --cached --quiet || git commit -m "Spielberichte $(date +%d.%m.%Y)"
+          git push
