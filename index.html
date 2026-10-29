@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Team-Board · Moskitos 2</title>
+<meta name="theme-color" content="#1B2A4A">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Team-Board">
+<link rel="icon" href="icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -70,7 +76,10 @@ tr.own td{ background:var(--accent-soft); font-weight:700; }
 .tile{ display:block; background:var(--band); color:var(--band-ink) !important; border:0; border-bottom:4px solid var(--accent); border-radius:10px; padding:14px 16px; color:inherit; text-decoration:none; transition:transform .12s ease; }
 .tile:hover{ transform:translateY(-2px); }
 .tile:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
+.tile{ position:relative; padding-right:52px !important; }
 .tile h3{ font:600 20px/1.2 var(--font-display); margin:0 0 4px; }
+.tile .go{ position:absolute; right:14px; top:50%; transform:translateY(-50%); width:28px; height:28px; border-radius:50%; background:var(--accent); color:#fff; display:grid; place-items:center; transition:transform .12s ease; }
+.tile:hover .go{ transform:translateY(-50%) translateX(3px); }
 .tile p{ margin:0; color:var(--band-muted); font-size:13.5px; }
 .tile.off{ border-bottom-color:var(--line); opacity:.45; pointer-events:none; }
 .note{ color:var(--muted); font-size:13px; margin-top:14px; }
@@ -83,14 +92,44 @@ tr.own td{ background:var(--accent-soft); font-weight:700; }
 .login .msg{ color:var(--bad); min-height:22px; margin-top:10px; font-size:14px; }
 input:focus-visible,button:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
 footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
-@media (max-width:520px){ .tiles{ grid-template-columns:repeat(3,1fr); gap:8px; } .tile{ padding:12px 10px; text-align:center; } .tile h3{ font-size:15px; margin:0; } .tile p{ display:none; } }
+@media (max-width:520px){ .tiles{ grid-template-columns:repeat(3,1fr); gap:8px; } .tile{ padding:12px 8px 10px !important; text-align:center; } .tile h3{ font-size:14.5px; margin:0; } .tile p{ display:none; } .tile .go{ position:static; transform:none; margin:6px auto 0; width:22px; height:22px; } .tile:hover .go{ transform:translateX(3px); } }
 @media (prefers-reduced-motion: reduce){ .tile{ transition:none; } .tile:hover{ transform:none; } }
+
+.hbtns{ display:flex; gap:8px; align-items:center; }
+.iconbtn{ font:400 14px var(--font-body); color:var(--band-ink); background:transparent; border:1px solid var(--band-muted); border-radius:8px; padding:6px 10px; cursor:pointer; line-height:1; }
+.banner{ background:var(--accent-soft); border:1px solid var(--accent); color:var(--ink); border-radius:10px; padding:10px 14px; margin-bottom:12px; font-size:14.5px; display:flex; justify-content:space-between; gap:10px; align-items:center; }
+.banner button{ background:none; border:0; color:var(--muted); font-size:18px; cursor:pointer; padding:0 4px; }
+.quick{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px; }
+.qbtn{ display:inline-flex; align-items:center; gap:6px; background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:8px 14px; color:var(--ink); text-decoration:none; font-size:14px; font-weight:400; cursor:pointer; font-family:var(--font-body); }
+.qbtn:hover{ border-color:var(--accent); }
+.qbtn .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); }
+.profile-head{ display:flex; gap:14px; align-items:center; }
+.avatar{ width:52px; height:52px; border-radius:50%; background:var(--band); color:#fff; display:grid; place-items:center; font:600 20px var(--font-display); flex:none; }
+.bars svg{ width:100%; height:auto; display:block; margin-top:8px; }
+.status{ display:inline-block; font-size:12.5px; border-radius:6px; padding:1px 8px; }
+.st-x{ background:var(--good-soft); color:var(--good); } .st-o{ background:var(--bad-soft); color:var(--bad); } .st-q{ background:var(--draw-soft); color:var(--draw); } .st-n{ background:var(--panel-2); color:var(--muted); }
+/* Verwaltung */
+.admin h3{ font:600 17px var(--font-display); margin:18px 0 8px; }
+.admin table td,.admin table th{ white-space:nowrap; }
+.admin input[type=text],.admin input[type=password],.admin select{ font:14px var(--font-body); padding:7px 9px; border:1px solid var(--line); border-radius:8px; background:var(--panel); color:var(--ink); max-width:100%; }
+.admin input[type=text]{ width:130px; } .admin input[type=password]{ width:140px; }
+.btn{ font:600 14px var(--font-body); border-radius:8px; padding:9px 14px; cursor:pointer; border:1px solid var(--line); background:var(--panel); color:var(--ink); }
+.btn.primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
+.btn.small{ padding:5px 10px; font-weight:400; font-size:13px; }
+.btn:disabled{ opacity:.55; cursor:default; }
+.tag{ font-size:12px; color:var(--muted); }
+.ok{ color:var(--good); } .warn{ color:var(--bad); }
+.steps{ margin:8px 0 0 18px; padding:0; font-size:14.5px; }
+.steps li{ margin:4px 0; }
 </style>
 </head>
 <body>
 <header><div class="wrap">
   <div><div class="kicker">Team-Board · Oberliga Frauen 2026/27</div><h1>Moskitos 2</h1></div>
-  <div class="who" id="who" hidden><span id="whoName"></span><button type="button" id="logout">Abmelden</button></div>
+  <div class="hbtns">
+    <button type="button" class="iconbtn" id="themeBtn" aria-label="Hell oder dunkel">◐</button>
+    <div class="who" id="who" hidden><span id="whoName"></span><button type="button" id="logout">Abmelden</button></div>
+  </div>
 </div></header>
 
 <main class="wrap">
@@ -105,17 +144,32 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
       <button type="submit" id="lgBtn">Anmelden</button>
       <div class="msg" id="lgMsg" role="alert"></div>
     </form>
-    <p class="note">Ein Login für das ganze Team-Board: Training, Spielanalyse und Gegner. Es gelten eure bisherigen Zugangsdaten und Rollen.</p>
+    <p class="note">Ein Login für das ganze Team-Board.</p>
   </section>
 
   <div id="dash" hidden>
-    <h2>Bereiche</h2>
-    <nav class="tiles" aria-label="Bereiche">
-      <a class="tile" id="tTraining" href="training/"><h3>Training</h3><p>Kader, Zeitnehmer, SR-Kosten, Übungen, Trainingsplanung</p></a>
-      <a class="tile" id="tAnalyse" href="analyse/"><h3>Spielanalyse</h3><p>Spiele, Spielerinnen, Statistiken, Erfassung</p></a>
-      <a class="tile" id="tGegner" href="analyse/#gegner"><h3>Gegner</h3><p>Profile aus den offiziellen Spielberichten</p></a>
-    </nav>
-    <div style="height:16px"></div>
+    <div class="banner" id="newBanner" hidden><span id="newTxt"></span><button type="button" id="newClose" aria-label="Hinweis schließen">×</button></div>
+
+    <div id="tilesWrap">
+      <h2>Bereiche</h2>
+      <nav class="tiles" aria-label="Bereiche">
+        <a class="tile" id="tTraining" href="training/"><h3>Training<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h3><p>Kader, Zeitnehmer, SR-Kosten, Übungen, Trainingsplanung</p></a>
+        <a class="tile" id="tAnalyse" href="analyse/"><h3>Spielanalyse<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h3><p>Spiele, Spielerinnen, Statistiken, Erfassung</p></a>
+        <a class="tile" id="tGegner" href="analyse/#gegner"><h3>Gegner<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h3><p>Profile aus den offiziellen Spielberichten</p></a>
+      </nav>
+      <div style="height:12px"></div>
+      <div class="quick" id="quick"></div>
+    </div>
+
+    <section class="panel" id="meBox" hidden style="margin-bottom:12px">
+      <div class="profile-head"><div class="avatar" id="meAv"></div><div><h2 style="margin:0">Mein Profil</h2><div class="big" id="meName" style="margin:0"></div><div class="sub" id="meSub"></div></div></div>
+      <div id="meFacts"></div>
+      <div class="bars" id="meBars"></div>
+      <div class="sub" id="meBarsTxt" style="margin-top:4px"></div>
+      <h2 style="margin-top:14px">Meine nächsten Spiele</h2>
+      <ul class="list" id="meNext"></ul>
+    </section>
+
     <div class="row">
       <section class="panel" id="nextBox" hidden>
         <h2>Nächstes Spiel</h2>
@@ -130,7 +184,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
         <div class="big" id="lastTitle"></div>
         <div class="sub" id="lastWhen"></div>
         <ul class="list" id="lastScorers"></ul>
-        <a class="more" href="analyse/">Zur Spielanalyse →</a>
+        <a class="more" id="lastLink" href="analyse/">Zur Spielanalyse →</a>
       </section>
     </div>
 
@@ -143,6 +197,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
         <div id="form"></div>
         <div id="trend"></div>
         <div class="sub" id="trendTxt" style="margin-top:6px"></div>
+        <div id="teamStats"></div>
       </section>
       <section class="panel">
         <h2>Tabelle</h2>
@@ -151,98 +206,165 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
       </section>
     </div>
 
+    <section class="panel" id="planBox" hidden style="margin-top:12px">
+      <h2>Termine</h2>
+      <ul class="list" id="planList"></ul>
+    </section>
+
+    <section class="panel admin" id="coachProfile" hidden style="margin-top:12px">
+      <h2>Profilansicht prüfen</h2>
+      <p class="sub" style="margin:0 0 8px">So sieht eine Spielerin ihr Profil. Nur für Trainer sichtbar.</p>
+      <select id="cpSel" aria-label="Spielerin wählen"></select>
+      <div id="cpOut" style="margin-top:10px"></div>
+    </section>
+
+    <section class="panel admin" id="adminBox" hidden style="margin-top:12px">
+      <h2>Verwaltung</h2>
+      <div id="adminBody"><p class="sub">Zugänge, Rollen und Spielerinnenprofile für das ganze Team-Board.</p><button class="btn primary" id="adminOpen" type="button">Verwaltung öffnen</button></div>
+    </section>
+
     <p class="note" id="stand"></p>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 2.1 · letzte Aktualisierung 29.10.2026</footer>
+<footer class="wrap">Team-Board · Version 3.0 · letzte Aktualisierung 29.10.2026</footer>
 
 <script>
 (function(){
 "use strict";
-var OWN="Moskitos 2", KEYS={analyse:"mk2key",training:"mk2tkey"}, MODS=[["analyse","analyse/index.html",/window\.__MOSKITO_LOCKED__=(\{[\s\S]*?\});/],["training","training/index.html",/window\.__MK2T_LOCKED__=(\{[\s\S]*?\});/]];
+var OWN="Moskitos 2", ITER=310000;
+var KEYS={analyse:"mk2key",training:"mk2tkey",board:"mk2b"};
+var MODS={analyse:{file:"analyse/index.html",re:/window\.__MOSKITO_LOCKED__=(\{[\s\S]*?\});/},training:{file:"training/index.html",re:/window\.__MK2T_LOCKED__=(\{[\s\S]*?\});/}};
+var ROLES={admin:"Admin",trainer:"Trainer",spielerin:"Spielerin"};
+var STATUS={x:["Dabei","st-x"],"?":["Offen","st-q"],o:["Absage","st-o"],"-":["Nicht nominiert","st-n"]};
 var $=function(id){return document.getElementById(id)};
-var TE=new TextEncoder();
+var TE=new TextEncoder(),TD=new TextDecoder();
 function b64d(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
 function b64e(u8){var s="";for(var i=0;i<u8.length;i+=8192)s+=String.fromCharCode.apply(null,u8.subarray(i,i+8192));return btoa(s)}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function norm(u){return String(u||"").trim().toLowerCase()}
+function rnd(n){return crypto.getRandomValues(new Uint8Array(n))}
+
+/* ---------- Kryptografie (gleiches Verfahren wie in den Modulen) ---------- */
 async function sha(s){var d=new Uint8Array(await crypto.subtle.digest("SHA-256",TE.encode("moskitos2:"+s)));return Array.from(d).map(function(b){return b.toString(16).padStart(2,"0")}).join("")}
-async function unlockKey(user,pw,L){var h=await sha(user);var e=(L.users||[]).filter(function(x){return x.h===h})[0];if(!e)throw new Error("auth");
-  var base=await crypto.subtle.importKey("raw",TE.encode(pw),"PBKDF2",false,["deriveKey"]);
-  var k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64d(e.salt),iterations:e.iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+async function kek(pw,salt,iter,use){var base=await crypto.subtle.importKey("raw",TE.encode(pw),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt:salt,iterations:iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,use)}
+async function wrap(user,pw,bytes){var salt=rnd(16),iv=rnd(12),k=await kek(pw,salt,ITER,["encrypt"]);
+  var wk=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv:iv,additionalData:TE.encode(user)},k,bytes));
+  return {salt:b64e(salt),iter:ITER,iv:b64e(iv),wk:b64e(wk)}}
+async function unwrap(user,pw,e){var k=await kek(pw,b64d(e.salt),e.iter,["decrypt"]);
   return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(e.iv),additionalData:TE.encode(user)},k,b64d(e.wk)))}
-function stored(m){try{var v=sessionStorage.getItem(KEYS[m])||localStorage.getItem(KEYS[m]);return v?JSON.parse(v):null}catch(e){return null}}
+async function seal(raw,obj){var key=await crypto.subtle.importKey("raw",raw,"AES-GCM",false,["encrypt"]),iv=rnd(12);
+  var ct=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv:iv},key,TE.encode(JSON.stringify(obj))));return {iv:b64e(iv),ct:b64e(ct)}}
+async function open_(raw,box){var key=await crypto.subtle.importKey("raw",raw,"AES-GCM",false,["decrypt"]);
+  return JSON.parse(TD.decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(box.iv)},key,b64d(box.ct))))}
+
+/* ---------- Sitzung ---------- */
+function get(k){try{var v=sessionStorage.getItem(k)||localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
 function clearAll(){Object.keys(KEYS).forEach(function(m){try{sessionStorage.removeItem(KEYS[m]);localStorage.removeItem(KEYS[m])}catch(e){}})}
 function ziel(){var z=new URLSearchParams(location.search).get("ziel");return z==="analyse"||z==="training"?z:null}
+var SES=null; // {u, role, pid, b:bundle}
+function session(){var b=get(KEYS.board);if(b&&b.u)return b;var a=get(KEYS.analyse)||get(KEYS.training);return a?{u:a.u,role:a.role||"trainer",legacy:true}:null}
+function isCoach(){return SES&&(SES.role==="admin"||SES.role==="trainer")}
+function isAdmin(){return SES&&SES.role==="admin"}
+
+async function fetchText(f){var r=await fetch(f,{cache:"no-cache"});if(!r.ok)throw new Error("http");return r.text()}
+async function fetchBoard(){try{var r=await fetch("board.json",{cache:"no-cache"});return r.ok?await r.json():null}catch(e){return null}}
 
 async function doLogin(ev){
   ev.preventDefault();
-  var u=$("lgUser").value.trim().toLowerCase(), pw=$("lgPass").value, btn=$("lgBtn"), msg=$("lgMsg");
+  var u=norm($("lgUser").value),pw=$("lgPass").value,btn=$("lgBtn"),msg=$("lgMsg");
   if(!u||!pw)return;
   if(!(window.crypto&&crypto.subtle)){msg.textContent="Dieser Browser unterstützt die Anmeldung nicht. Bitte Safari oder Chrome verwenden.";return}
   btn.disabled=true;btn.textContent="Anmeldung läuft …";msg.textContent="";
-  var store=$("lgKeep").checked?localStorage:sessionStorage, ok=0;
-  await Promise.all(MODS.map(async function(m){
-    try{var html=await (await fetch(m[1],{cache:"no-cache"})).text();var mm=html.match(m[2]);if(!mm)return;
-      var raw=await unlockKey(u,pw,JSON.parse(mm[1]));store.setItem(KEYS[m[0]],JSON.stringify({u:u,k:b64e(raw)}));ok++;}catch(e){}
-  }));
+  var store=$("lgKeep").checked?localStorage:sessionStorage,ok=false;
+  try{
+    var board=await fetchBoard(),h=await sha(u),e=board&&(board.users||[]).filter(function(x){return x.h===h})[0];
+    if(e){try{var bundle=JSON.parse(TD.decode(await unwrap(u,pw,e)));
+      store.setItem(KEYS.board,JSON.stringify({u:u,role:bundle.role,pid:bundle.pid||null,b:bundle}));
+      if(bundle.mods){if(bundle.mods.analyse)store.setItem(KEYS.analyse,JSON.stringify({u:u,k:bundle.mods.analyse}));if(bundle.mods.training)store.setItem(KEYS.training,JSON.stringify({u:u,k:bundle.mods.training}))}
+      ok=true}catch(x){}}
+    if(!ok){ // bisherige Zugänge der Module (vor Einrichtung der Verwaltung)
+      var role=null;
+      for(var m in MODS){try{var html=await fetchText(MODS[m].file),mm=html.match(MODS[m].re);if(!mm)continue;var L=JSON.parse(mm[1]);
+        var ent=(L.users||[]).filter(function(x){return x.h===h})[0];if(!ent)continue;var raw=await unwrap(u,pw,ent);
+        store.setItem(KEYS[m],JSON.stringify({u:u,k:b64e(raw)}));ok=true;
+        if(!role){try{var D=await open_(raw,L);var me=((D.access&&D.access.users)||[]).filter(function(x){return x.u===u})[0];role=me&&me.role}catch(x){}}
+      }catch(x){}}
+      if(ok){var keep={u:u,role:(role==="admin"||role==="trainer")?role:"trainer",legacy:true};
+        ["analyse","training"].forEach(function(m){var v=store.getItem(KEYS[m]);if(v){var o=JSON.parse(v);o.role=keep.role;store.setItem(KEYS[m],JSON.stringify(o))}})}
+    }
+  }catch(err){}
   btn.disabled=false;btn.textContent="Anmelden";
   if(!ok){msg.textContent="Benutzername oder Passwort ist falsch.";$("lgPass").value="";$("lgPass").focus();return}
   $("lgPass").value="";
-  var z=ziel(); if(z&&stored(z)){location.replace(z+"/");return}
+  var z=ziel();if(z&&get(KEYS[z])){location.replace(z+"/");return}
   showDash();
 }
 function showLogin(){$("dash").hidden=true;$("who").hidden=true;$("login").hidden=false;setTimeout(function(){$("lgUser").focus()},50)}
-function showDash(){
-  var a=stored("analyse"),t=stored("training"),who=(a||t||{}).u||"";
-  $("login").hidden=true;$("dash").hidden=false;$("who").hidden=false;$("whoName").textContent=who;
-  $("tAnalyse").classList.toggle("off",!a);$("tGegner").classList.toggle("off",!a);$("tTraining").classList.toggle("off",!t);
-  if(!a)$("tAnalyse").querySelector("p").textContent="Für dieses Login nicht freigeschaltet";
-  if(!t)$("tTraining").querySelector("p").textContent="Für dieses Login nicht freigeschaltet";
-  loadData();
-}
-$("lgForm").addEventListener("submit",doLogin);
-$("logout").addEventListener("click",function(){clearAll();showLogin()});
 
-/* ---------- Kennzahlen aus den Spielberichten ---------- */
+/* ---------- Kennzahlen aus den Spielberichten (öffentlich) ---------- */
 var GOAL={goal:1,pen_goal:1};
 function dd(iso){return iso.slice(8,10)+"."+iso.slice(5,7)+"."}
 function fmt(x){return x.toFixed(1).replace(".",",")}
-function res(g,team){var i=g.home===team?0:1;return {gf:g.score[i],ga:g.score[1-i],hf:g.ht[i],ha:g.ht[1-i],opp:i===0?g.away:g.home,home:i===0,side:i===0?"home":"away"}}
+function pct(x){return Math.round(x*100)+" %"}
+function res(g,team){var i=g.home===team?0:1;return {gf:g.score[i],ga:g.score[1-i],hf:g.ht[i],ha:g.ht[1-i],opp:i===0?g.away:g.home,side:i===0?"home":"away"}}
 function letter(r){return r.gf>r.ga?"S":r.gf<r.ga?"N":"U"}
-function table(games){
-  var T={};function t(n){return T[n]||(T[n]={team:n,sp:0,s:0,u:0,n:0,tf:0,ta:0})}
+function shortName(n){if(n===OWN)return n;var s=n.split("/")[0].replace(/^(HSG|TV|HF|HG|HC|ASC|SG)\s+/,"");return s==="TVA"?"Saarbrücken":s}
+function table(games){var T={};function t(n){return T[n]||(T[n]={team:n,sp:0,s:0,u:0,n:0,tf:0,ta:0})}
   games.forEach(function(g){var h=t(g.home),a=t(g.away);h.sp++;a.sp++;h.tf+=g.score[0];h.ta+=g.score[1];a.tf+=g.score[1];a.ta+=g.score[0];
     if(g.score[0]>g.score[1]){h.s++;a.n++}else if(g.score[0]<g.score[1]){a.s++;h.n++}else{h.u++;a.u++}});
-  return Object.keys(T).map(function(k){var x=T[k];x.p=2*x.s+x.u;x.d=x.tf-x.ta;return x}).sort(function(a,b){return b.p-a.p||b.d-a.d||b.tf-a.tf||a.team.localeCompare(b.team,"de")});
-}
+  return Object.keys(T).map(function(k){var x=T[k];x.p=2*x.s+x.u;x.d=x.tf-x.ta;return x}).sort(function(a,b){return b.p-a.p||b.d-a.d||b.tf-a.tf||a.team.localeCompare(b.team,"de")})}
 function scorers(g,side,n){var c={};g.events.forEach(function(e){if(e.side===side&&GOAL[e.type]&&e.nr!=null)c[e.nr]=(c[e.nr]||0)+1});
   var ro=(g.roster||{})[side]||{};return Object.keys(c).map(function(nr){return {nr:nr,name:ro[nr]||("Nr. "+nr),t:c[nr]}}).sort(function(a,b){return b.t-a.t}).slice(0,n)}
-function teamProfile(games,team){
-  var gs=games.filter(function(g){return g.home===team||g.away===team}).sort(function(a,b){return a.date.localeCompare(b.date)});
+function teamProfile(games,team){var gs=games.filter(function(g){return g.home===team||g.away===team}).sort(function(a,b){return a.date.localeCompare(b.date)});
   var n=gs.length,gf=0,ga=0,form=[],tor={},names={};
   gs.forEach(function(g){var r=res(g,team);gf+=r.gf;ga+=r.ga;form.push(letter(r));var ro=(g.roster||{})[r.side]||{};
     g.events.forEach(function(e){if(e.side===r.side&&GOAL[e.type]&&e.nr!=null){tor[e.nr]=(tor[e.nr]||0)+1;names[e.nr]=ro[e.nr]||names[e.nr]}})});
   var top=Object.keys(tor).map(function(nr){return {nr:nr,name:names[nr]||("Nr. "+nr),t:tor[nr]}}).sort(function(a,b){return b.t-a.t}).slice(0,3);
-  return {n:n,gf:gf,ga:ga,form:form,top:top,games:gs};
-}
-function shortName(n){if(n===OWN)return n;var s=n.split("/")[0].replace(/^(HSG|TV|HF|HG|HC|ASC|SG)\s+/,"");return s==="TVA"?"Saarbrücken":s}
+  return {n:n,gf:gf,ga:ga,form:form,top:top,games:gs}}
 function chips(f){return f.map(function(l){return '<span class="chip '+l+'">'+l+'</span>'}).join("")}
-function trendSvg(rs){
-  if(!rs.length)return"";var W=320,H=90,pad=6,bw=(W-2*pad)/rs.length,mx=Math.max.apply(null,rs.map(function(r){return Math.abs(r.gf-r.ga)}).concat([4]));
-  var cs=getComputedStyle(document.documentElement),good=cs.getPropertyValue("--good").trim(),bad=cs.getPropertyValue("--bad").trim(),line=cs.getPropertyValue("--line").trim(),mu=cs.getPropertyValue("--muted").trim();
-  var mid=H/2-6,s='<line x1="0" x2="'+W+'" y1="'+mid+'" y2="'+mid+'" stroke="'+line+'"/>';
-  rs.forEach(function(r,i){var d=r.gf-r.ga,h=Math.abs(d)/mx*(H/2-14),x=pad+i*bw+bw*0.18,w=bw*0.64;
-    s+='<rect x="'+x+'" y="'+(d>=0?mid-h:mid)+'" width="'+w+'" height="'+Math.max(h,1.5)+'" rx="2" fill="'+(d>=0?good:bad)+'"><title>'+esc(r.opp)+' '+r.gf+':'+r.ga+'</title></rect>';
-    s+='<text x="'+(x+w/2)+'" y="'+(H-2)+'" text-anchor="middle" font-size="10" fill="'+mu+'">'+(d>0?"+":"")+d+'</text>'});
-  return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tordifferenz je Spiel">'+s+'</svg>';
+function cssv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function diffBars(vals,labels){if(!vals.length)return"";var W=320,H=90,pad=6,bw=(W-2*pad)/vals.length,mx=Math.max.apply(null,vals.map(Math.abs).concat([4]));
+  var mid=H/2-6,s='<line x1="0" x2="'+W+'" y1="'+mid+'" y2="'+mid+'" stroke="'+cssv("--line")+'"/>';
+  vals.forEach(function(d,i){var h=Math.abs(d)/mx*(H/2-14),x=pad+i*bw+bw*0.18,w=bw*0.64;
+    s+='<rect x="'+x+'" y="'+(d>=0?mid-h:mid)+'" width="'+w+'" height="'+Math.max(h,1.5)+'" rx="2" fill="'+(d>=0?cssv("--good"):cssv("--bad"))+'"><title>'+esc(labels[i])+'</title></rect>';
+    s+='<text x="'+(x+w/2)+'" y="'+(H-2)+'" text-anchor="middle" font-size="10" fill="'+cssv("--muted")+'">'+(d>0?"+":"")+d+'</text>'});
+  return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Verlauf je Spiel">'+s+'</svg>'}
+function goalBars(vals,labels){if(!vals.length)return"";var W=320,H=80,pad=6,bw=(W-2*pad)/vals.length,mx=Math.max.apply(null,vals.concat([3]));var s="";
+  vals.forEach(function(v,i){var h=v/mx*(H-24),x=pad+i*bw+bw*0.2,w=bw*0.6;
+    s+='<rect x="'+x+'" y="'+(H-14-h)+'" width="'+w+'" height="'+Math.max(h,1.5)+'" rx="2" fill="'+cssv("--accent")+'"><title>'+esc(labels[i])+'</title></rect>';
+    s+='<text x="'+(x+w/2)+'" y="'+(H-2)+'" text-anchor="middle" font-size="10" fill="'+cssv("--muted")+'">'+v+'</text>'});
+  return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tore je Spiel">'+s+'</svg>'}
+
+/* ---------- Team-Board aufbauen ---------- */
+var PUB=null,BOARD=null,TEAM=null,ADMIN=null;
+async function showDash(){
+  SES=session();if(!SES){showLogin();return}
+  var a=get(KEYS.analyse),t=get(KEYS.training);
+  $("login").hidden=true;$("dash").hidden=false;$("who").hidden=false;
+  $("whoName").textContent=SES.u+(SES.role?" · "+(ROLES[SES.role]||SES.role):"");
+  $("tilesWrap").hidden=!isCoach();
+  $("tAnalyse").classList.toggle("off",!a);$("tGegner").classList.toggle("off",!a);$("tTraining").classList.toggle("off",!t);
+  $("lastLink").hidden=!isCoach();$("nextLink").hidden=!isCoach();
+  $("adminBox").hidden=!isAdmin();
+  var q="";
+  if(isCoach()){q+=a?'<a class="qbtn" href="analyse/#erfassung"><span class="dot"></span>Spiel erfassen</a>':"";
+    q+=t?'<a class="qbtn" href="training/"><span class="dot"></span>Kader fürs nächste Spiel</a>':"";
+    q+=isAdmin()?'<button class="qbtn" type="button" id="qAdmin"><span class="dot"></span>Zugänge verwalten</button>':""}
+  $("quick").innerHTML=q;if($("qAdmin"))$("qAdmin").onclick=function(){$("adminBox").scrollIntoView({behavior:"smooth"});openAdmin()};
+  var res2=await Promise.all([fetch("gegner_daten.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),fetchBoard()]);
+  PUB=res2[0];BOARD=res2[1];TEAM=null;
+  if(BOARD&&SES.b){try{TEAM=await open_(b64d(SES.b.team),BOARD.team)}catch(e){TEAM=null}}
+  if(PUB)renderPublic(PUB);
+  renderTeam();
+  await renderMe();
+  if(isCoach()&&BOARD&&SES.b&&SES.b.admin){try{ADMIN=await open_(b64d(SES.b.admin),BOARD.admin);fillCoachProfile()}catch(e){ADMIN=null}}
+  newSince();
 }
-function loadData(){
-  fetch("gegner_daten.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).then(function(d){if(d)render(d)}).catch(function(){});
-}
-function render(d){
-  var games=(d.games||[]).filter(function(g){return g.score&&g.events}), heute=new Date().toISOString().slice(0,10);
-  var tab=table(games), me=teamProfile(games,OWN), rs=me.games.map(function(g){return Object.assign(res(g,OWN),{date:g.date,g:g})});
-  var pos=tab.findIndex(function(x){return x.team===OWN})+1, row=tab[pos-1]||{p:0,s:0,u:0,n:0,d:0,sp:0};
+function renderPublic(d){
+  var games=(d.games||[]).filter(function(g){return g.score&&g.events}),heute=new Date().toISOString().slice(0,10);
+  var tab=table(games),me=teamProfile(games,OWN),rs=me.games.map(function(g){return Object.assign(res(g,OWN),{g:g})});
+  var pos=tab.findIndex(function(x){return x.team===OWN})+1,row=tab[pos-1]||{p:0,s:0,u:0,n:0,d:0,sp:0};
   var k=[[pos?pos+".":"–","Platz von "+tab.length],[row.p+":"+(2*row.sp-row.p),"Punkte"],[row.s+"–"+row.u+"–"+row.n,"Siege–Unent.–Niederl."],
          [me.n?fmt(me.gf/me.n):"–","Ø Tore"],[me.n?fmt(me.ga/me.n):"–","Ø Gegentore"],[(row.d>0?"+":"")+row.d,"Tordifferenz"]];
   $("kpis").innerHTML=k.map(function(x){return '<div class="kpi"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
@@ -250,10 +372,11 @@ function render(d){
   if(last){var g=last.g,l=letter(last);
     $("lastTitle").innerHTML='<span class="chip '+l+'">'+l+'</span> '+esc(g.home)+' '+g.score[0]+':'+g.score[1]+' '+esc(g.away);
     $("lastWhen").textContent=dd(g.date)+(g.st?" · "+g.st+". Spieltag":"")+" · Halbzeit "+g.ht[0]+":"+g.ht[1];
-    $("lastScorers").innerHTML=scorers(g,last.side,4).map(function(p){return '<li><span>#'+p.nr+' '+esc(p.name)+'</span><b>'+p.t+'</b></li>'}).join("");
+    // Torschützinnen der eigenen Mannschaft nur für Trainer
+    $("lastScorers").innerHTML=isCoach()?scorers(g,last.side,4).map(function(p){return '<li><span>#'+p.nr+' '+esc(p.name)+'</span><b>'+p.t+'</b></li>'}).join(""):"";
     $("lastBox").hidden=false}
   var f=(d.fixtures||[]).filter(function(x){return x.date>=heute}).sort(function(a,b){return a.date.localeCompare(b.date)})[0];
-  if(f){var opp=f.home===OWN?f.away:f.home, op=teamProfile(games,opp), opos=tab.findIndex(function(x){return x.team===opp})+1;
+  if(f){var opp=f.home===OWN?f.away:f.home,op=teamProfile(games,opp),opos=tab.findIndex(function(x){return x.team===opp})+1;
     var tage=Math.round((new Date(f.date+"T12:00:00")-new Date(heute+"T12:00:00"))/864e5);
     $("nextTitle").textContent=(f.home===OWN?"gegen ":"bei ")+opp;
     $("nextWhen").textContent=f.label+(tage===0?" · heute":tage===1?" · morgen":" · in "+tage+" Tagen");
@@ -264,17 +387,195 @@ function render(d){
     if(prev.length){var p=prev[prev.length-1];$("nextScorers").insertAdjacentHTML("afterbegin",'<li><span>Hinspiel</span><b>'+esc(p.home)+' '+p.score[0]+':'+p.score[1]+' '+esc(p.away)+'</b></li>')}
     $("nextLink").textContent="Gegneranalyse "+opp+" →";$("nextBox").hidden=false}
   $("form").innerHTML=rs.length?'<div class="sub" style="margin-bottom:4px">Letzte Spiele</div>'+chips(rs.slice(-5).map(letter)):"";
-  $("trend").innerHTML=trendSvg(rs);
+  $("trend").innerHTML=diffBars(rs.map(function(r){return r.gf-r.ga}),rs.map(function(r){return r.opp+" "+r.gf+":"+r.ga}));
   if(rs.length>=2){var h1=rs.slice(0,Math.ceil(rs.length/2)),h2=rs.slice(Math.ceil(rs.length/2));
     var avg=function(a,key){return a.reduce(function(s,r){return s+r[key]},0)/a.length};
     var d1=avg(h1,"gf")-avg(h1,"ga"),d2=avg(h2,"gf")-avg(h2,"ga"),hz=rs.reduce(function(s,r){return s+(r.hf-r.ha)},0),z2=rs.reduce(function(s,r){return s+((r.gf-r.hf)-(r.ga-r.ha))},0);
     $("trendTxt").textContent="Tordifferenz pro Spiel zuletzt "+(d2>=0?"+":"")+fmt(d2)+" (davor "+(d1>=0?"+":"")+fmt(d1)+"). 1. Halbzeit gesamt "+(hz>=0?"+":"")+hz+", 2. Halbzeit "+(z2>=0?"+":"")+z2+"."}
   $("table").innerHTML='<tr><th class="n">#</th><th>Mannschaft</th><th class="n">Sp</th><th class="n">Tore</th><th class="n">Diff</th><th class="n">Pkt</th></tr>'+
     tab.map(function(x,i){return '<tr class="'+(x.team===OWN?"own":"")+'"><td class="n">'+(i+1)+'</td><td title="'+esc(x.team)+'">'+esc(shortName(x.team))+'</td><td class="n">'+x.sp+'</td><td class="n">'+x.tf+':'+x.ta+'</td><td class="n">'+(x.d>0?"+":"")+x.d+'</td><td class="n">'+x.p+':'+(2*x.sp-x.p)+'</td></tr>'}).join("");
-  $("stand").textContent="Datenstand: "+games.length+" Spielberichte, zuletzt aktualisiert am "+(d.updated||"–")+". Neue Berichte kommen jeden Montag automatisch.";
+  $("stand").textContent="Datenstand: "+games.length+" Spielberichte, zuletzt aktualisiert am "+(d.updated||"–")+". Neue Berichte kommen jeden Montag automatisch."+(TEAM&&TEAM.builtAt?" Team-Daten vom "+new Date(TEAM.builtAt).toLocaleDateString("de-DE")+".":"");
 }
+function renderTeam(){
+  var box=$("teamStats");box.innerHTML="";if(!TEAM)return;var s=TEAM.stats||{};
+  if(s.games){var f=[[fmt(s.goals/s.games),"Ø Tore (eigene Erfassung)"],[s.shots?pct(s.goals/s.shots):"–","Wurfquote Team"],[s.pa?s.pg+"/"+s.pa:"–","7m Team"],[fmt(s.tech/s.games),"Ø Technische Fehler"]];
+    if(s.gkShots)f.push([pct(s.saves/s.gkShots),"Paradenquote"]);
+    box.innerHTML='<div class="facts">'+f.map(function(x){return '<div class="fact"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("")+'</div>'}
+  var heute=new Date().toISOString().slice(0,10),items=[];
+  (TEAM.upcoming||[]).forEach(function(g){if(g.date>=heute)items.push({d:g.date,t:g.time,txt:(g.home===false?"bei ":g.home===true?"gegen ":"")+g.opponent+(g.comp&&g.comp!=="Liga"?" ("+g.comp+")":""),k:"Spiel"})});
+  (TEAM.sessions||[]).forEach(function(x){if(x.date>=heute)items.push({d:x.date,t:x.time,txt:"Training"+(x.focus?" · "+x.focus:""),k:"Training"})});
+  items.sort(function(a,b){return (a.d+(a.t||"")).localeCompare(b.d+(b.t||""))});items=items.slice(0,6);
+  if(items.length){$("planList").innerHTML=items.map(function(i){return '<li><span>'+dd(i.d)+(i.t?" "+esc(i.t):"")+' · '+esc(i.txt)+'</span><span class="tag">'+i.k+'</span></li>'}).join("");$("planBox").hidden=false}
+}
+function profileHtml(P){
+  if(!P)return '<p class="sub">Für dieses Profil liegen noch keine Daten vor.</p>';
+  var t=P.tot||{},f=[];
+  f.push([P.games.length,"Spiele mit Statistik"]);
+  if(t.goals!=null&&P.games.length){f.push([t.goals,"Tore"],[fmt(t.goals/P.games.length),"Ø Tore"]);if(t.shots)f.push([pct(t.goals/t.shots),"Wurfquote"]);if(t.pa)f.push([t.pg+"/"+t.pa,"7m"]);f.push([t.assists||0,"Assists"])}
+  if(P.gk&&P.gk.length){var sv=P.gk.reduce(function(s,g){return s+g.saves},0),cc=P.gk.reduce(function(s,g){return s+g.conceded},0);f.push([sv,"Paraden"]);if(sv+cc)f.push([pct(sv/(sv+cc)),"Paradenquote"])}
+  f.push([P.apps?P.apps.liga:0,"Einsätze Liga"]);
+  var h='<div class="facts">'+f.map(function(x){return '<div class="fact"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("")+'</div>';
+  if(P.games.length)h+='<div class="bars">'+goalBars(P.games.map(function(g){return g.goals}),P.games.map(function(g){return dd(g.date)+" "+g.opp+": "+g.goals+" Tore"}))+'</div><div class="sub" style="margin-top:4px">Tore je Spiel, ältestes links</div>';
+  return h}
+function nextHtml(P){var heute=new Date().toISOString().slice(0,10),n=((P&&P.next)||[]).filter(function(g){return g.date>=heute}).slice(0,5);
+  if(!n.length)return '<li><span class="sub">Keine geplanten Spiele.</span></li>';
+  return n.map(function(g){var s=STATUS[g.status]||["Noch nicht geplant","st-n"];return '<li><span>'+dd(g.date)+(g.time?" "+esc(g.time):"")+' · '+(g.home===false?"bei ":"gegen ")+esc(g.opponent)+'</span><span class="status '+s[1]+'">'+s[0]+'</span></li>'}).join("")}
+async function renderMe(){
+  $("meBox").hidden=true;if(!(SES&&SES.role==="spielerin"&&BOARD&&SES.b&&SES.b.own&&SES.pid))return;
+  var box=BOARD.profiles&&BOARD.profiles[SES.pid],P=null;
+  try{if(box)P=await open_(b64d(SES.b.own),box)}catch(e){P=null}
+  var name=(P&&P.name)||SES.u;$("meName").textContent=name;$("meAv").textContent=name.split(" ").map(function(w){return w[0]}).join("").slice(0,2).toUpperCase();
+  $("meSub").textContent=P?[P.nr?"#"+P.nr:"",P.pos||""].filter(Boolean).join(" · "):"";
+  $("meFacts").innerHTML=profileHtml(P);$("meBars").innerHTML="";$("meBarsTxt").textContent="";
+  $("meNext").innerHTML=nextHtml(P);$("meBox").hidden=false;
+}
+async function fillCoachProfile(){
+  if(!ADMIN)return;var sel=$("cpSel"),ps=ADMIN.players||{};
+  var ids=Object.keys(ps).sort(function(a,b){return ps[a].name.localeCompare(ps[b].name,"de")});
+  sel.innerHTML='<option value="">Spielerin wählen …</option>'+ids.map(function(id){return '<option value="'+esc(id)+'">'+esc(ps[id].name)+'</option>'}).join("");
+  sel.onchange=async function(){var id=sel.value,out=$("cpOut");if(!id){out.innerHTML="";return}
+    var P=null;try{P=await open_(b64d(ADMIN.pk[id]),BOARD.profiles[id])}catch(e){}
+    out.innerHTML=profileHtml(P)+'<h2 style="margin-top:12px">Nächste Spiele</h2><ul class="list">'+nextHtml(P)+'</ul>'};
+  $("coachProfile").hidden=false;
+}
+function newSince(){
+  try{var key="mk2seen_"+SES.u,old=JSON.parse(localStorage.getItem(key)||"null");
+    var now={r:PUB?(PUB.games||[]).length:0,a:TEAM?(TEAM.results||[]).length:0};
+    if(old){var parts=[];if(now.r>old.r)parts.push((now.r-old.r)+" neue"+(now.r-old.r===1?"r Spielbericht":" Spielberichte"));
+      if(now.a>old.a)parts.push((now.a-old.a)+" neue Spielanalyse"+(now.a-old.a===1?"":"n"));
+      if(parts.length){$("newTxt").textContent="Neu seit deinem letzten Besuch: "+parts.join(", ")+".";$("newBanner").hidden=false}}
+    localStorage.setItem(key,JSON.stringify(now))}catch(e){}
+}
+$("newClose").onclick=function(){$("newBanner").hidden=true};
 
-if(stored("analyse")||stored("training")){var z=ziel();if(z&&stored(z)){location.replace(z+"/")}else showDash()}else showLogin();
+/* ---------- Verwaltung ---------- */
+var AD=null; // Arbeitsstand der Verwaltung
+async function loadModule(m){var key=get(KEYS[m]);if(!key)throw new Error("Für "+(m==="analyse"?"die Spielanalyse":"das Training")+" fehlt dein Zugang.");
+  var html=await fetchText(MODS[m].file),mm=html.match(MODS[m].re);if(!mm)throw new Error("Datei "+MODS[m].file+" nicht lesbar.");
+  var L=JSON.parse(mm[1]),raw=b64d(key.k),D=await open_(raw,L);return {html:html,json:mm[1],L:L,raw:raw,D:D}}
+function nameKey(n){return String(n||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function suggest(name,players){var k=nameKey(name),ids=Object.keys(players),parts=k.split(" "),last=parts[parts.length-1],first=parts[0]||"";
+  var ex=ids.filter(function(id){return nameKey(players[id].name)===k});if(ex.length===1)return ex[0];
+  var ln=ids.filter(function(id){var p=nameKey(players[id].name).split(" ");return p[p.length-1]===last});
+  if(ln.length===1)return ln[0];
+  var li=ln.filter(function(id){return nameKey(players[id].name)[0]===first[0]});if(li.length===1)return li[0];
+  return ""}
+async function openAdmin(){
+  var body=$("adminBody");body.innerHTML='<p class="sub">Daten werden geladen und entschlüsselt …</p>';
+  try{
+    var A=await loadModule("analyse"),T=await loadModule("training");
+    var players={};var tp=(T.D.data&&T.D.data.players)||{};Object.keys(tp).forEach(function(id){var p=tp[id];if(p&&p.name)players[id]={name:p.name,nr:p.nr||"",pos:p.pos||"",active:p.active!==false}});
+    var prev=null;if(BOARD&&SES.b&&SES.b.admin){try{prev=await open_(b64d(SES.b.admin),BOARD.admin)}catch(e){prev=null}}
+    var accounts=[];
+    if(prev&&prev.accounts){accounts=prev.accounts.map(function(a){return Object.assign({},a)})}
+    else{var seen={};[A,T].forEach(function(M){((M.D.access&&M.D.access.users)||[]).forEach(function(u){if(seen[u.u])return;seen[u.u]=1;accounts.push({u:u.u,role:u.role==="admin"?"admin":"trainer",pid:"",isNew:true})})})}
+    var aliases=A.D.aliases||{},names={};(A.D.games||[]).forEach(function(g){(g.players||[]).concat(g.goalies||[]).forEach(function(p){var n=(p.name||"").trim();n=aliases[n]||n;if(n)names[n]=1})});
+    var map=Object.assign({},(prev&&prev.map)||{});Object.keys(names).forEach(function(n){if(!(n in map))map[n]=suggest(n,players)});
+    AD={A:A,T:T,players:players,accounts:accounts,map:map,names:Object.keys(names).sort(function(a,b){return a.localeCompare(b,"de")}),prev:prev};
+    drawAdmin();
+  }catch(e){body.innerHTML='<p class="warn">'+esc(e.message||"Laden fehlgeschlagen.")+'</p><button class="btn" id="adminOpen" type="button">Erneut versuchen</button>';$("adminOpen").onclick=openAdmin}
+}
+function playerOptions(sel){var ps=AD.players;return '<option value="">–</option>'+Object.keys(ps).sort(function(a,b){return ps[a].name.localeCompare(ps[b].name,"de")}).map(function(id){return '<option value="'+esc(id)+'"'+(id===sel?" selected":"")+'>'+esc(ps[id].name)+(ps[id].active?"":" (inaktiv)")+'</option>'}).join("")}
+function drawAdmin(){
+  var b=$("adminBody"),h="";
+  h+='<h3>1. Zugänge</h3><p class="sub" style="margin:0 0 8px">Trainer und Admins öffnen Training und Analyse. Spielerinnen sehen nur ihr Profil und das Gesamtbild der Mannschaft. Passwort nur eintragen bei neuen Zugängen oder wenn es sich ändern soll.</p>';
+  h+='<div style="overflow-x:auto"><table><tr><th>Benutzername</th><th>Rolle</th><th>Spielerin</th><th>Passwort</th><th></th></tr>';
+  AD.accounts.forEach(function(a,i){h+='<tr><td><input type="text" data-f="u" data-i="'+i+'" value="'+esc(a.u)+'" autocapitalize="none"></td>'+
+    '<td><select data-f="role" data-i="'+i+'">'+Object.keys(ROLES).map(function(r){return '<option value="'+r+'"'+(a.role===r?" selected":"")+'>'+ROLES[r]+'</option>'}).join("")+'</select></td>'+
+    '<td><select data-f="pid" data-i="'+i+'"'+(a.role==="spielerin"?"":" disabled")+'>'+playerOptions(a.pid)+'</select></td>'+
+    '<td><input type="password" data-f="pw" data-i="'+i+'" placeholder="'+(a.wrap?"unverändert":"neu vergeben")+'" autocomplete="new-password"></td>'+
+    '<td><button class="btn small" type="button" data-del="'+i+'">Entfernen</button></td></tr>'});
+  h+='</table></div><div class="quick" style="margin-top:8px"><button class="btn small" type="button" id="addAcc">+ Zugang</button><button class="btn small" type="button" id="addAll">+ Zugänge für alle aktiven Spielerinnen</button></div>';
+  h+='<h3>2. Namensabgleich</h3><p class="sub" style="margin:0 0 8px">Namen aus der Spielanalyse den Spielerinnen aus dem Kader zuordnen. Vorschläge sind vorausgefüllt, bitte prüfen.</p>';
+  h+='<div style="overflow-x:auto"><table><tr><th>Name in der Analyse</th><th>Spielerin im Kader</th><th></th></tr>';
+  AD.names.forEach(function(n){var v=AD.map[n]||"";h+='<tr><td>'+esc(n)+'</td><td><select data-map="'+esc(n)+'">'+playerOptions(v)+'</select></td><td>'+(v?'<span class="ok">✓</span>':'<span class="warn">offen</span>')+'</td></tr>'});
+  h+='</table></div>';
+  h+='<h3>3. Speichern</h3><p class="sub" style="margin:0 0 8px">Erzeugt eine ZIP-Datei mit board.json, analyse/index.html und training/index.html. Den Inhalt ins Repo hochladen, die alten Dateien werden ersetzt.</p>';
+  h+='<button class="btn primary" type="button" id="adminSave">Speichern und Dateien erzeugen</button><div id="adminMsg" class="sub" style="margin-top:10px"></div>';
+  b.innerHTML=h;
+  b.querySelectorAll("[data-f]").forEach(function(el){el.onchange=el.oninput=function(){var a=AD.accounts[+el.dataset.i],f=el.dataset.f;
+    if(f==="u")a.u=norm(el.value);else if(f==="role"){a.role=el.value;if(a.role!=="spielerin")a.pid="";drawAdmin()}else if(f==="pid")a.pid=el.value;else if(f==="pw")a.pw=el.value}});
+  b.querySelectorAll("[data-del]").forEach(function(el){el.onclick=function(){var a=AD.accounts[+el.dataset.del];if(a.u===SES.u){alertMsg("Den eigenen Zugang kannst du hier nicht entfernen.");return}AD.accounts.splice(+el.dataset.del,1);drawAdmin()}});
+  b.querySelectorAll("[data-map]").forEach(function(el){el.onchange=function(){AD.map[el.dataset.map]=el.value;drawAdmin()}});
+  $("addAcc").onclick=function(){AD.accounts.push({u:"",role:"spielerin",pid:"",isNew:true});drawAdmin()};
+  $("addAll").onclick=function(){var have={};AD.accounts.forEach(function(a){if(a.pid)have[a.pid]=1});var n=0;
+    Object.keys(AD.players).forEach(function(id){var p=AD.players[id];if(!p.active||have[id])return;var u=nameKey(p.name).split(" ")[0]||"spielerin";var base=u,k=2;while(AD.accounts.some(function(a){return a.u===u}))u=base+(k++);
+      AD.accounts.push({u:u,role:"spielerin",pid:id,isNew:true});n++});drawAdmin();alertMsg(n+" Zugänge angelegt. Bitte für jede ein Passwort eintragen.")};
+  $("adminSave").onclick=saveAdmin;
+}
+function alertMsg(t){var m=$("adminMsg");if(m)m.textContent=t}
+
+/* Profile und Teamdaten aus den entschlüsselten Modulen berechnen */
+function buildData(){
+  var A=AD.A.D,T=AD.T.D.data||{},aliases=A.aliases||{},map=AD.map,canon=function(n){n=(n||"").trim();return aliases[n]||n};
+  var heute=new Date().toISOString().slice(0,10),prof={},stats={games:0,goals:0,shots:0,pg:0,pa:0,tech:0,saves:0,gkShots:0},results=[];
+  function P(pid){var p=AD.players[pid]||{};return prof[pid]||(prof[pid]={pid:pid,name:p.name||"",nr:p.nr||"",pos:p.pos||"",games:[],gk:[],tot:{goals:0,shots:0,pg:0,pa:0,assists:0},apps:{liga:0,test:0},next:[]})}
+  Object.keys(AD.players).forEach(P);
+  (A.games||[]).slice().sort(function(a,b){return (a.date||"").localeCompare(b.date||"")}).forEach(function(g){
+    stats.games++;results.push({date:g.date,opp:g.opponent,home:g.home,us:g.score&&g.score.us,them:g.score&&g.score.them});
+    (g.players||[]).forEach(function(p){var gl=+p.goals||0,ms=+p.miss||0;stats.goals+=gl;stats.shots+=gl+ms;stats.pg+=+p.goals7||0;stats.pa+=(+p.goals7||0)+(+p.miss7||0);stats.tech+=(+p.tech||0)+(+p.pass||0);
+      var pid=map[canon(p.name)];if(!pid)return;var x=P(pid);
+      x.games.push({date:g.date,opp:g.opponent,goals:gl,miss:ms,g7:+p.goals7||0,m7:+p.miss7||0,assists:+p.assists||0,steals:+p.steals||0,tech:+p.tech||0});
+      x.tot.goals+=gl;x.tot.shots+=gl+ms;x.tot.pg+=+p.goals7||0;x.tot.pa+=(+p.goals7||0)+(+p.miss7||0);x.tot.assists+=+p.assists||0});
+    (g.goalies||[]).forEach(function(p){var sv=+p.saves||0,cc=+p.conceded||0;stats.saves+=sv;stats.gkShots+=sv+cc;var pid=map[canon(p.name)];if(!pid)return;P(pid).gk.push({date:g.date,opp:g.opponent,saves:sv,conceded:cc})})});
+  var tg=Object.keys(T.games||{}).map(function(id){return T.games[id]}).sort(function(a,b){return (a.date+(a.time||"")).localeCompare(b.date+(b.time||""))});
+  tg.forEach(function(g){var sq=g.squad||{};
+    if(g.date<=heute)Object.keys(sq).forEach(function(pid){if(sq[pid]==="x"&&prof[pid]){if(g.comp==="Test")prof[pid].apps.test++;else prof[pid].apps.liga++}});
+    if(g.date>=heute)Object.keys(prof).forEach(function(pid){prof[pid].next.push({date:g.date,time:g.time||"",opponent:g.opponent,home:g.home,comp:g.comp,status:sq[pid]||null})})});
+  var upcoming=tg.filter(function(g){return g.date>=heute}).map(function(g){return {date:g.date,time:g.time||"",opponent:g.opponent,home:g.home,comp:g.comp,venue:g.venue||""}});
+  var sessions=Object.keys(T.sessions||{}).map(function(id){var s=T.sessions[id];return {date:s.date,time:s.time||"",focus:s.focus||""}}).filter(function(s){return s.date>=heute}).sort(function(a,b){return (a.date+a.time).localeCompare(b.date+b.time)}).slice(0,10);
+  return {team:{builtAt:new Date().toISOString(),stats:stats,results:results,upcoming:upcoming,sessions:sessions},profiles:prof};
+}
+async function rebuildModule(M,coaches){
+  var users=[],inner=[],old=(M.D.access&&M.D.access.users)||[];
+  for(var i=0;i<coaches.length;i++){var a=coaches[i],e;
+    if(a.pw)e=await wrap(a.u,a.pw,M.raw);else{var o=old.filter(function(x){return x.u===a.u})[0];if(!o)throw new Error("Für "+a.u+" fehlt ein Passwort.");e={salt:o.salt,iter:o.iter,iv:o.iv,wk:o.wk}}
+    inner.push({u:a.u,role:a.role,salt:e.salt,iter:e.iter,iv:e.iv,wk:e.wk});users.push({h:await sha(a.u),salt:e.salt,iter:e.iter,iv:e.iv,wk:e.wk})}
+  var D=Object.assign({},M.D,{access:{users:inner}}),sealed=await seal(M.raw,D);
+  var locked={v:M.L.v,iv:sealed.iv,ct:sealed.ct,users:users},js=JSON.stringify(locked).replace(/</g,"\\u003c");
+  return M.html.replace(M.json,function(){return js});
+}
+function loadZip(){return window.JSZip?Promise.resolve():new Promise(function(ok,no){var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";s.onload=ok;s.onerror=function(){no(new Error("ZIP-Bibliothek konnte nicht geladen werden."))};document.head.appendChild(s)})}
+async function saveAdmin(){
+  var btn=$("adminSave");btn.disabled=true;alertMsg("Wird erstellt … das dauert pro Passwort etwa eine Sekunde.");
+  try{
+    var acc=AD.accounts.filter(function(a){return a.u}),seen={};
+    acc.forEach(function(a){if(seen[a.u])throw new Error("Benutzername doppelt: "+a.u);seen[a.u]=1;if(a.role==="spielerin"&&!a.pid)throw new Error("Bitte für "+a.u+" eine Spielerin zuordnen.")});
+    if(!acc.some(function(a){return a.role==="admin"}))throw new Error("Mindestens ein Zugang muss Admin sein.");
+    var prev=AD.prev,teamKey=prev?b64d(prev.teamKey):rnd(32),adminKey=prev?b64d(prev.adminKey):rnd(32),pk=Object.assign({},(prev&&prev.pk)||{});
+    Object.keys(AD.players).forEach(function(id){if(!pk[id])pk[id]=b64e(rnd(32))});
+    var data=buildData(),board={v:1,users:[],team:await seal(teamKey,data.team),profiles:{},admin:null};
+    for(var id in data.profiles)board.profiles[id]=await seal(b64d(pk[id]),data.profiles[id]);
+    var modA=b64e(AD.A.raw),modT=b64e(AD.T.raw),outAcc=[];
+    for(var i=0;i<acc.length;i++){var a=acc[i],coach=a.role!=="spielerin";
+      var bundle={u:a.u,role:a.role,pid:coach?null:a.pid,team:b64e(teamKey)};
+      if(coach){bundle.admin=a.role==="admin"||a.role==="trainer"?b64e(adminKey):undefined;bundle.mods={analyse:modA,training:modT}}else bundle.own=pk[a.pid];
+      var sig=JSON.stringify([a.role,a.pid||""]),e;
+      if(a.pw)e=await wrap(a.u,a.pw,TE.encode(JSON.stringify(bundle)));
+      else if(a.wrap&&a.sig===sig)e=a.wrap;
+      else throw new Error("Für "+a.u+" bitte ein Passwort eintragen"+(a.wrap?" (Rolle oder Zuordnung geändert).":"."));
+      board.users.push(Object.assign({h:await sha(a.u)},e));outAcc.push({u:a.u,role:a.role,pid:a.pid||"",wrap:e,sig:sig})}
+    var adminData={accounts:outAcc,map:AD.map,pk:pk,teamKey:b64e(teamKey),adminKey:b64e(adminKey),players:AD.players,savedAt:new Date().toISOString()};
+    board.admin=await seal(adminKey,adminData);
+    var coaches=acc.filter(function(a){return a.role!=="spielerin"});
+    var htmlA=await rebuildModule(AD.A,coaches),htmlT=await rebuildModule(AD.T,coaches);
+    await loadZip();var z=new JSZip();z.file("board.json",JSON.stringify(board));z.file("analyse/index.html",htmlA);z.file("training/index.html",htmlT);
+    var blob=await z.generateAsync({type:"blob"}),url=URL.createObjectURL(blob),l=document.createElement("a");l.href=url;l.download="team-board-update.zip";document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(url)},5000);
+    AD.accounts.forEach(function(a){a.pw=""});AD.prev=adminData;AD.accounts=outAcc.map(function(a){return Object.assign({},a)});drawAdmin();
+    alertMsg("Fertig: team-board-update.zip wurde heruntergeladen. Entpacken und den Inhalt ins Repo hochladen. Danach gelten die neuen Zugänge.");
+  }catch(e){alertMsg(e.message||"Speichern fehlgeschlagen.");btn.disabled=false}
+}
+$("adminOpen").onclick=openAdmin;
+
+/* ---------- Allgemein ---------- */
+function applyTheme(){var t=null;try{t=localStorage.getItem("mk2theme")}catch(e){}if(t)document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}
+$("themeBtn").onclick=function(){var cur=document.documentElement.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  var nx=cur==="dark"?"light":"dark";try{localStorage.setItem("mk2theme",nx)}catch(e){}applyTheme();if(PUB)renderPublic(PUB)};
+applyTheme();
+$("lgForm").addEventListener("submit",doLogin);
+$("logout").addEventListener("click",function(){clearAll();SES=null;showLogin()});
+if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register("sw.js").catch(function(){});
+if(session()){var z=ziel();if(z&&get(KEYS[z])){location.replace(z+"/")}else showDash()}else showLogin();
 })();
 </script>
 </body>
