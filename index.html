@@ -7,91 +7,270 @@
 <title>Moskitos 2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#eef0f3; --panel:#ffffff; --panel-2:#f6f7f9; --ink:#141821; --muted:#5b6271; --line:#dde1e7;
   --accent:#d24e19; --accent-soft:#fbe6dc; --band:#141821; --band-ink:#f4f5f7; --band-muted:#a9b0bd;
+  --good:#1d8a4a; --good-soft:#dff2e6; --bad:#c9372f; --bad-soft:#fbe3e1; --draw:#8a6d00; --draw-soft:#f6edc8;
   --font-display:"Saira Condensed","Arial Narrow",system-ui,sans-serif;
   --font-body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#0e1117; --panel:#161a22; --panel-2:#1c212b; --ink:#eef0f4; --muted:#a2a9b6; --line:#2a303c;
-  --accent:#f0692f; --accent-soft:#3a2216; --band:#06080c; color-scheme:dark } }
+  --accent:#f0692f; --accent-soft:#3a2216; --band:#06080c; --good:#47b874; --good-soft:#16301f; --bad:#ef6b6b; --bad-soft:#3a1a1a;
+  --draw:#e0b84a; --draw-soft:#33290d; color-scheme:dark } }
 :root[data-theme="dark"]{ --bg:#0e1117; --panel:#161a22; --panel-2:#1c212b; --ink:#eef0f4; --muted:#a2a9b6; --line:#2a303c;
-  --accent:#f0692f; --accent-soft:#3a2216; --band:#06080c; color-scheme:dark }
+  --accent:#f0692f; --accent-soft:#3a2216; --band:#06080c; --good:#47b874; --good-soft:#16301f; --bad:#ef6b6b; --bad-soft:#3a1a1a;
+  --draw:#e0b84a; --draw-soft:#33290d; color-scheme:dark }
 :root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
 *,*::before,*::after{ box-sizing:inherit; }
-html{ height:100%; }
-body{ margin:0; min-height:100%; background:var(--bg); color:var(--ink); font:16px/1.5 var(--font-body); }
+html{ min-height:100%; }
+body{ margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 var(--font-body); }
+[hidden]{ display:none !important; }
 header{ background:var(--band); color:var(--band-ink); border-bottom:4px solid var(--accent); }
-.wrap{ max-width:880px; margin:0 auto; padding:0 18px; }
-header .wrap{ padding-top:26px; padding-bottom:22px; }
-.kicker{ color:var(--band-muted); font-size:14px; letter-spacing:.04em; text-transform:uppercase; }
-h1{ font:800 clamp(40px,10vw,64px)/1 var(--font-display); margin:4px 0 0; letter-spacing:.01em; }
-main{ padding:22px 0 40px; }
-.next{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:18px; }
-.next .lbl{ font:700 14px var(--font-display); color:var(--accent); text-transform:uppercase; letter-spacing:.05em; }
-.next .match{ font:700 clamp(22px,5.5vw,30px)/1.15 var(--font-display); margin:4px 0 2px; }
-.next .when{ color:var(--muted); }
-.next a{ display:inline-block; margin-top:10px; color:var(--accent); font-weight:600; text-decoration:none; }
-.next a:hover{ text-decoration:underline; }
-.grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
-.card{ display:block; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:18px; color:inherit; text-decoration:none; border-left:5px solid var(--accent); transition:transform .12s ease, box-shadow .12s ease; }
-.card:hover{ transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.08); }
-.card:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
-.card h2{ font:700 26px/1.1 var(--font-display); margin:0 0 6px; }
-.card p{ margin:0; color:var(--muted); font-size:15px; }
-.note{ color:var(--muted); font-size:13.5px; margin-top:18px; }
-footer{ color:var(--muted); font-size:13px; padding:0 0 28px; }
-@media (prefers-reduced-motion: reduce){ .card{ transition:none; } .card:hover{ transform:none; } }
+.wrap{ max-width:920px; margin:0 auto; padding:0 16px; }
+header .wrap{ padding-top:22px; padding-bottom:18px; display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.kicker{ color:var(--band-muted); font-size:13px; letter-spacing:.05em; text-transform:uppercase; }
+h1{ font:800 clamp(38px,9vw,58px)/1 var(--font-display); margin:4px 0 0; }
+.who{ color:var(--band-muted); font-size:14px; display:flex; gap:10px; align-items:center; }
+.who button{ font:600 14px var(--font-body); color:var(--band-ink); background:transparent; border:1px solid var(--band-muted); border-radius:8px; padding:6px 12px; cursor:pointer; }
+main{ padding:18px 0 36px; }
+h2{ font:700 14px var(--font-display); text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 8px; }
+.panel{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; }
+.row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:12px; margin-bottom:12px; }
+.big{ font:700 clamp(24px,6vw,32px)/1.1 var(--font-display); margin:2px 0 4px; }
+.sub{ color:var(--muted); font-size:14.5px; }
+.chip{ display:inline-block; min-width:26px; text-align:center; font:700 13px/24px var(--font-display); border-radius:6px; padding:0 6px; margin-right:4px; }
+.S{ background:var(--good-soft); color:var(--good); } .N{ background:var(--bad-soft); color:var(--bad); } .U{ background:var(--draw-soft); color:var(--draw); }
+.facts{ display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin-top:12px; }
+.fact{ background:var(--panel-2); border-radius:8px; padding:8px 10px; }
+.fact b{ display:block; font:700 22px/1.1 var(--font-display); }
+.fact .chip{ min-width:20px; font-size:12px; line-height:20px; margin:2px 2px 0 0; padding:0 4px; }
+.fact span{ font-size:12.5px; color:var(--muted); }
+.list{ margin:10px 0 0; padding:0; list-style:none; font-size:14.5px; }
+.list li{ display:flex; justify-content:space-between; gap:8px; padding:4px 0; border-bottom:1px solid var(--line); }
+.list li:last-child{ border-bottom:0; }
+a.more{ display:inline-block; margin-top:12px; color:var(--accent); font-weight:600; text-decoration:none; }
+a.more:hover{ text-decoration:underline; }
+.kpis{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:8px; }
+.kpi{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+.kpi b{ display:block; font:800 30px/1 var(--font-display); color:var(--accent); }
+.kpi span{ font-size:13px; color:var(--muted); }
+.trend svg{ width:100%; height:auto; display:block; margin-top:8px; }
+table{ width:100%; border-collapse:collapse; font-size:14.5px; }
+th{ text-align:left; color:var(--muted); font-weight:600; font-size:12.5px; padding:4px 6px; border-bottom:2px solid var(--ink); }
+td{ padding:5px 6px; border-bottom:1px solid var(--line); }
+td.n,th.n{ text-align:right; font-variant-numeric:tabular-nums; }
+tr.own td{ background:var(--accent-soft); font-weight:700; }
+.tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:12px; }
+.tile{ display:block; background:var(--panel); border:1px solid var(--line); border-left:5px solid var(--accent); border-radius:10px; padding:14px 16px; color:inherit; text-decoration:none; transition:transform .12s ease; }
+.tile:hover{ transform:translateY(-2px); }
+.tile:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
+.tile h3{ font:700 24px/1.1 var(--font-display); margin:0 0 4px; }
+.tile p{ margin:0; color:var(--muted); font-size:14px; }
+.tile.off{ border-left-color:var(--line); opacity:.6; pointer-events:none; }
+.note{ color:var(--muted); font-size:13px; margin-top:14px; }
+.login{ max-width:380px; margin:28px auto; }
+.login label{ display:block; font-weight:600; font-size:14px; margin:12px 0 4px; }
+.login input[type=text],.login input[type=password]{ width:100%; font:16px var(--font-body); padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:var(--panel); color:var(--ink); }
+.login .keep{ display:flex; gap:8px; align-items:center; margin-top:12px; font-size:14px; color:var(--muted); font-weight:400; }
+.login button{ width:100%; margin-top:16px; font:700 17px var(--font-body); color:#fff; background:var(--accent); border:0; border-radius:8px; padding:12px; cursor:pointer; }
+.login button:disabled{ opacity:.6; cursor:default; }
+.login .msg{ color:var(--bad); min-height:22px; margin-top:10px; font-size:14px; }
+input:focus-visible,button:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
+footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
+@media (prefers-reduced-motion: reduce){ .tile{ transition:none; } .tile:hover{ transform:none; } }
 </style>
 </head>
 <body>
 <header><div class="wrap">
-  <div class="kicker">Oberliga Frauen · Saison 2026/27</div>
-  <h1>Moskitos 2</h1>
+  <div><div class="kicker">Oberliga Frauen · Saison 2026/27</div><h1>Moskitos 2</h1></div>
+  <div class="who" id="who" hidden><span id="whoName"></span><button type="button" id="logout">Abmelden</button></div>
 </div></header>
+
 <main class="wrap">
-  <section class="next" id="next" hidden>
-    <div class="lbl">Nächstes Spiel</div>
-    <div class="match" id="nextMatch"></div>
-    <div class="when" id="nextWhen"></div>
-    <a href="analyse/#gegner" id="nextLink">Gegner ansehen →</a>
+  <section class="panel login" id="login" hidden>
+    <h2>Anmelden</h2>
+    <form id="lgForm" autocomplete="on">
+      <label for="lgUser">Benutzername</label>
+      <input type="text" id="lgUser" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+      <label for="lgPass">Passwort</label>
+      <input type="password" id="lgPass" autocomplete="current-password" required>
+      <label class="keep"><input type="checkbox" id="lgKeep"> Auf diesem Gerät angemeldet bleiben</label>
+      <button type="submit" id="lgBtn">Anmelden</button>
+      <div class="msg" id="lgMsg" role="alert"></div>
+    </form>
+    <p class="note">Ein Login für Training, Spielanalyse und Gegner. Es gelten eure bisherigen Zugangsdaten und Rollen.</p>
   </section>
-  <nav class="grid" aria-label="Bereiche">
-    <a class="card" href="training/">
-      <h2>Training</h2>
-      <p>Kader, Zeitnehmer, SR-Kosten, Übungen und Trainingsplanung</p>
-    </a>
-    <a class="card" href="analyse/">
-      <h2>Spielanalyse</h2>
-      <p>Spiele, Spielerinnen, Statistiken und Spielerfassung</p>
-    </a>
-    <a class="card" href="analyse/#gegner">
-      <h2>Gegner</h2>
-      <p>Gegneranalyse aus den offiziellen Spielberichten, jeden Montag aktualisiert</p>
-    </a>
-  </nav>
-  <p class="note" id="stand"></p>
+
+  <div id="dash" hidden>
+    <div class="row">
+      <section class="panel" id="nextBox" hidden>
+        <h2>Nächstes Spiel</h2>
+        <div class="big" id="nextTitle"></div>
+        <div class="sub" id="nextWhen"></div>
+        <div class="facts" id="nextFacts"></div>
+        <ul class="list" id="nextScorers"></ul>
+        <a class="more" id="nextLink" href="analyse/#gegner">Zur Gegneranalyse →</a>
+      </section>
+      <section class="panel" id="lastBox" hidden>
+        <h2>Letztes Spiel</h2>
+        <div class="big" id="lastTitle"></div>
+        <div class="sub" id="lastWhen"></div>
+        <ul class="list" id="lastScorers"></ul>
+        <a class="more" href="analyse/">Zur Spielanalyse →</a>
+      </section>
+    </div>
+
+    <h2 style="margin-top:6px">Saison</h2>
+    <div class="kpis" id="kpis"></div>
+
+    <div class="row" style="margin-top:12px">
+      <section class="panel trend">
+        <h2>Form und Trend</h2>
+        <div id="form"></div>
+        <div id="trend"></div>
+        <div class="sub" id="trendTxt" style="margin-top:6px"></div>
+      </section>
+      <section class="panel">
+        <h2>Tabelle</h2>
+        <div style="overflow-x:auto"><table id="table"></table></div>
+        <div class="sub" style="margin-top:6px;font-size:12.5px">Aus den Spielberichten berechnet, Nachholspiele noch offen.</div>
+      </section>
+    </div>
+
+    <h2 style="margin-top:6px">Bereiche</h2>
+    <nav class="tiles" aria-label="Bereiche">
+      <a class="tile" id="tTraining" href="training/"><h3>Training</h3><p>Kader, Zeitnehmer, SR-Kosten, Übungen, Trainingsplanung</p></a>
+      <a class="tile" id="tAnalyse" href="analyse/"><h3>Spielanalyse</h3><p>Spiele, Spielerinnen, Statistiken, Erfassung</p></a>
+      <a class="tile" id="tGegner" href="analyse/#gegner"><h3>Gegner</h3><p>Profile aus den offiziellen Spielberichten</p></a>
+    </nav>
+    <p class="note" id="stand"></p>
+  </div>
 </main>
-<footer class="wrap">Version 1.0 · Zugang zu den Bereichen mit eurem bisherigen Login</footer>
+<footer class="wrap">Moskitos 2 · Version 2.0 · letzte Aktualisierung 29.10.2026</footer>
+
 <script>
 (function(){
-  fetch("gegner_daten.json", {cache:"no-store"}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
-    if(!d) return;
-    var heute = new Date().toISOString().slice(0,10);
-    var f = (d.fixtures||[]).filter(function(x){ return x.date >= heute; }).sort(function(a,b){ return a.date.localeCompare(b.date); })[0];
-    if(f){
-      var gegner = f.home === "Moskitos 2" ? f.away : f.home;
-      document.getElementById("nextMatch").textContent = f.home + " – " + f.away;
-      document.getElementById("nextWhen").textContent = f.label;
-      document.getElementById("nextLink").textContent = gegner + " ansehen →";
-      document.getElementById("next").hidden = false;
-    }
-    if(d.updated) document.getElementById("stand").textContent = "Spielberichte: " + (d.games||[]).length + ", zuletzt aktualisiert am " + d.updated + ".";
-  }).catch(function(){});
+"use strict";
+var OWN="Moskitos 2", KEYS={analyse:"mk2key",training:"mk2tkey"}, MODS=[["analyse","analyse/index.html",/window\.__MOSKITO_LOCKED__=(\{[\s\S]*?\});/],["training","training/index.html",/window\.__MK2T_LOCKED__=(\{[\s\S]*?\});/]];
+var $=function(id){return document.getElementById(id)};
+var TE=new TextEncoder();
+function b64d(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
+function b64e(u8){var s="";for(var i=0;i<u8.length;i+=8192)s+=String.fromCharCode.apply(null,u8.subarray(i,i+8192));return btoa(s)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+async function sha(s){var d=new Uint8Array(await crypto.subtle.digest("SHA-256",TE.encode("moskitos2:"+s)));return Array.from(d).map(function(b){return b.toString(16).padStart(2,"0")}).join("")}
+async function unlockKey(user,pw,L){var h=await sha(user);var e=(L.users||[]).filter(function(x){return x.h===h})[0];if(!e)throw new Error("auth");
+  var base=await crypto.subtle.importKey("raw",TE.encode(pw),"PBKDF2",false,["deriveKey"]);
+  var k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64d(e.salt),iterations:e.iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+  return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(e.iv),additionalData:TE.encode(user)},k,b64d(e.wk)))}
+function stored(m){try{var v=sessionStorage.getItem(KEYS[m])||localStorage.getItem(KEYS[m]);return v?JSON.parse(v):null}catch(e){return null}}
+function clearAll(){Object.keys(KEYS).forEach(function(m){try{sessionStorage.removeItem(KEYS[m]);localStorage.removeItem(KEYS[m])}catch(e){}})}
+function ziel(){var z=new URLSearchParams(location.search).get("ziel");return z==="analyse"||z==="training"?z:null}
+
+async function doLogin(ev){
+  ev.preventDefault();
+  var u=$("lgUser").value.trim().toLowerCase(), pw=$("lgPass").value, btn=$("lgBtn"), msg=$("lgMsg");
+  if(!u||!pw)return;
+  if(!(window.crypto&&crypto.subtle)){msg.textContent="Dieser Browser unterstützt die Anmeldung nicht. Bitte Safari oder Chrome verwenden.";return}
+  btn.disabled=true;btn.textContent="Anmeldung läuft …";msg.textContent="";
+  var store=$("lgKeep").checked?localStorage:sessionStorage, ok=0;
+  await Promise.all(MODS.map(async function(m){
+    try{var html=await (await fetch(m[1],{cache:"no-cache"})).text();var mm=html.match(m[2]);if(!mm)return;
+      var raw=await unlockKey(u,pw,JSON.parse(mm[1]));store.setItem(KEYS[m[0]],JSON.stringify({u:u,k:b64e(raw)}));ok++;}catch(e){}
+  }));
+  btn.disabled=false;btn.textContent="Anmelden";
+  if(!ok){msg.textContent="Benutzername oder Passwort ist falsch.";$("lgPass").value="";$("lgPass").focus();return}
+  $("lgPass").value="";
+  var z=ziel(); if(z&&stored(z)){location.replace(z+"/");return}
+  showDash();
+}
+function showLogin(){$("dash").hidden=true;$("who").hidden=true;$("login").hidden=false;setTimeout(function(){$("lgUser").focus()},50)}
+function showDash(){
+  var a=stored("analyse"),t=stored("training"),who=(a||t||{}).u||"";
+  $("login").hidden=true;$("dash").hidden=false;$("who").hidden=false;$("whoName").textContent=who;
+  $("tAnalyse").classList.toggle("off",!a);$("tGegner").classList.toggle("off",!a);$("tTraining").classList.toggle("off",!t);
+  if(!a)$("tAnalyse").querySelector("p").textContent="Für dieses Login nicht freigeschaltet";
+  if(!t)$("tTraining").querySelector("p").textContent="Für dieses Login nicht freigeschaltet";
+  loadData();
+}
+$("lgForm").addEventListener("submit",doLogin);
+$("logout").addEventListener("click",function(){clearAll();showLogin()});
+
+/* ---------- Kennzahlen aus den Spielberichten ---------- */
+var GOAL={goal:1,pen_goal:1};
+function dd(iso){return iso.slice(8,10)+"."+iso.slice(5,7)+"."}
+function fmt(x){return x.toFixed(1).replace(".",",")}
+function res(g,team){var i=g.home===team?0:1;return {gf:g.score[i],ga:g.score[1-i],hf:g.ht[i],ha:g.ht[1-i],opp:i===0?g.away:g.home,home:i===0,side:i===0?"home":"away"}}
+function letter(r){return r.gf>r.ga?"S":r.gf<r.ga?"N":"U"}
+function table(games){
+  var T={};function t(n){return T[n]||(T[n]={team:n,sp:0,s:0,u:0,n:0,tf:0,ta:0})}
+  games.forEach(function(g){var h=t(g.home),a=t(g.away);h.sp++;a.sp++;h.tf+=g.score[0];h.ta+=g.score[1];a.tf+=g.score[1];a.ta+=g.score[0];
+    if(g.score[0]>g.score[1]){h.s++;a.n++}else if(g.score[0]<g.score[1]){a.s++;h.n++}else{h.u++;a.u++}});
+  return Object.keys(T).map(function(k){var x=T[k];x.p=2*x.s+x.u;x.d=x.tf-x.ta;return x}).sort(function(a,b){return b.p-a.p||b.d-a.d||b.tf-a.tf||a.team.localeCompare(b.team,"de")});
+}
+function scorers(g,side,n){var c={};g.events.forEach(function(e){if(e.side===side&&GOAL[e.type]&&e.nr!=null)c[e.nr]=(c[e.nr]||0)+1});
+  var ro=(g.roster||{})[side]||{};return Object.keys(c).map(function(nr){return {nr:nr,name:ro[nr]||("Nr. "+nr),t:c[nr]}}).sort(function(a,b){return b.t-a.t}).slice(0,n)}
+function teamProfile(games,team){
+  var gs=games.filter(function(g){return g.home===team||g.away===team}).sort(function(a,b){return a.date.localeCompare(b.date)});
+  var n=gs.length,gf=0,ga=0,form=[],tor={},names={};
+  gs.forEach(function(g){var r=res(g,team);gf+=r.gf;ga+=r.ga;form.push(letter(r));var ro=(g.roster||{})[r.side]||{};
+    g.events.forEach(function(e){if(e.side===r.side&&GOAL[e.type]&&e.nr!=null){tor[e.nr]=(tor[e.nr]||0)+1;names[e.nr]=ro[e.nr]||names[e.nr]}})});
+  var top=Object.keys(tor).map(function(nr){return {nr:nr,name:names[nr]||("Nr. "+nr),t:tor[nr]}}).sort(function(a,b){return b.t-a.t}).slice(0,3);
+  return {n:n,gf:gf,ga:ga,form:form,top:top,games:gs};
+}
+function shortName(n){if(n===OWN)return n;var s=n.split("/")[0].replace(/^(HSG|TV|HF|HG|HC|ASC|SG)\s+/,"");return s==="TVA"?"Saarbrücken":s}
+function chips(f){return f.map(function(l){return '<span class="chip '+l+'">'+l+'</span>'}).join("")}
+function trendSvg(rs){
+  if(!rs.length)return"";var W=320,H=90,pad=6,bw=(W-2*pad)/rs.length,mx=Math.max.apply(null,rs.map(function(r){return Math.abs(r.gf-r.ga)}).concat([4]));
+  var cs=getComputedStyle(document.documentElement),good=cs.getPropertyValue("--good").trim(),bad=cs.getPropertyValue("--bad").trim(),line=cs.getPropertyValue("--line").trim(),mu=cs.getPropertyValue("--muted").trim();
+  var mid=H/2-6,s='<line x1="0" x2="'+W+'" y1="'+mid+'" y2="'+mid+'" stroke="'+line+'"/>';
+  rs.forEach(function(r,i){var d=r.gf-r.ga,h=Math.abs(d)/mx*(H/2-14),x=pad+i*bw+bw*0.18,w=bw*0.64;
+    s+='<rect x="'+x+'" y="'+(d>=0?mid-h:mid)+'" width="'+w+'" height="'+Math.max(h,1.5)+'" rx="2" fill="'+(d>=0?good:bad)+'"><title>'+esc(r.opp)+' '+r.gf+':'+r.ga+'</title></rect>';
+    s+='<text x="'+(x+w/2)+'" y="'+(H-2)+'" text-anchor="middle" font-size="10" fill="'+mu+'">'+(d>0?"+":"")+d+'</text>'});
+  return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tordifferenz je Spiel">'+s+'</svg>';
+}
+function loadData(){
+  fetch("gegner_daten.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).then(function(d){if(d)render(d)}).catch(function(){});
+}
+function render(d){
+  var games=(d.games||[]).filter(function(g){return g.score&&g.events}), heute=new Date().toISOString().slice(0,10);
+  var tab=table(games), me=teamProfile(games,OWN), rs=me.games.map(function(g){return Object.assign(res(g,OWN),{date:g.date,g:g})});
+  var pos=tab.findIndex(function(x){return x.team===OWN})+1, row=tab[pos-1]||{p:0,s:0,u:0,n:0,d:0,sp:0};
+  var k=[[pos?pos+".":"–","Platz von "+tab.length],[row.p+":"+(2*row.sp-row.p),"Punkte"],[row.s+"–"+row.u+"–"+row.n,"Siege–Unent.–Niederl."],
+         [me.n?fmt(me.gf/me.n):"–","Ø Tore"],[me.n?fmt(me.ga/me.n):"–","Ø Gegentore"],[(row.d>0?"+":"")+row.d,"Tordifferenz"]];
+  $("kpis").innerHTML=k.map(function(x){return '<div class="kpi"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
+  var last=rs[rs.length-1];
+  if(last){var g=last.g,l=letter(last);
+    $("lastTitle").innerHTML='<span class="chip '+l+'">'+l+'</span> '+esc(g.home)+' '+g.score[0]+':'+g.score[1]+' '+esc(g.away);
+    $("lastWhen").textContent=dd(g.date)+(g.st?" · "+g.st+". Spieltag":"")+" · Halbzeit "+g.ht[0]+":"+g.ht[1];
+    $("lastScorers").innerHTML=scorers(g,last.side,4).map(function(p){return '<li><span>#'+p.nr+' '+esc(p.name)+'</span><b>'+p.t+'</b></li>'}).join("");
+    $("lastBox").hidden=false}
+  var f=(d.fixtures||[]).filter(function(x){return x.date>=heute}).sort(function(a,b){return a.date.localeCompare(b.date)})[0];
+  if(f){var opp=f.home===OWN?f.away:f.home, op=teamProfile(games,opp), opos=tab.findIndex(function(x){return x.team===opp})+1;
+    var tage=Math.round((new Date(f.date+"T12:00:00")-new Date(heute+"T12:00:00"))/864e5);
+    $("nextTitle").textContent=(f.home===OWN?"gegen ":"bei ")+opp;
+    $("nextWhen").textContent=f.label+(tage===0?" · heute":tage===1?" · morgen":" · in "+tage+" Tagen");
+    var ff=[[opos?opos+".":"–","Tabellenplatz"],[op.n?fmt(op.gf/op.n)+" : "+fmt(op.ga/op.n):"–","Ø Tore : Gegentore"],[op.form.length?chips(op.form.slice(-5)):"–","Form"]];
+    $("nextFacts").innerHTML=ff.map(function(x){return '<div class="fact"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
+    $("nextScorers").innerHTML=op.top.map(function(p){return '<li><span>#'+p.nr+' '+esc(p.name)+'</span><span>'+p.t+' Tore · Ø '+fmt(p.t/op.n)+'</span></li>'}).join("");
+    var prev=games.filter(function(g){return (g.home===OWN&&g.away===opp)||(g.away===OWN&&g.home===opp)});
+    if(prev.length){var p=prev[prev.length-1];$("nextScorers").insertAdjacentHTML("afterbegin",'<li><span>Hinspiel</span><b>'+esc(p.home)+' '+p.score[0]+':'+p.score[1]+' '+esc(p.away)+'</b></li>')}
+    $("nextLink").textContent="Gegneranalyse "+opp+" →";$("nextBox").hidden=false}
+  $("form").innerHTML=rs.length?'<div class="sub" style="margin-bottom:4px">Letzte Spiele</div>'+chips(rs.slice(-5).map(letter)):"";
+  $("trend").innerHTML=trendSvg(rs);
+  if(rs.length>=2){var h1=rs.slice(0,Math.ceil(rs.length/2)),h2=rs.slice(Math.ceil(rs.length/2));
+    var avg=function(a,key){return a.reduce(function(s,r){return s+r[key]},0)/a.length};
+    var d1=avg(h1,"gf")-avg(h1,"ga"),d2=avg(h2,"gf")-avg(h2,"ga"),hz=rs.reduce(function(s,r){return s+(r.hf-r.ha)},0),z2=rs.reduce(function(s,r){return s+((r.gf-r.hf)-(r.ga-r.ha))},0);
+    $("trendTxt").textContent="Tordifferenz pro Spiel zuletzt "+(d2>=0?"+":"")+fmt(d2)+" (davor "+(d1>=0?"+":"")+fmt(d1)+"). 1. Halbzeit gesamt "+(hz>=0?"+":"")+hz+", 2. Halbzeit "+(z2>=0?"+":"")+z2+"."}
+  $("table").innerHTML='<tr><th class="n">#</th><th>Mannschaft</th><th class="n">Sp</th><th class="n">Tore</th><th class="n">Diff</th><th class="n">Pkt</th></tr>'+
+    tab.map(function(x,i){return '<tr class="'+(x.team===OWN?"own":"")+'"><td class="n">'+(i+1)+'</td><td title="'+esc(x.team)+'">'+esc(shortName(x.team))+'</td><td class="n">'+x.sp+'</td><td class="n">'+x.tf+':'+x.ta+'</td><td class="n">'+(x.d>0?"+":"")+x.d+'</td><td class="n">'+x.p+':'+(2*x.sp-x.p)+'</td></tr>'}).join("");
+  $("stand").textContent="Datenstand: "+games.length+" Spielberichte, zuletzt aktualisiert am "+(d.updated||"–")+". Neue Berichte kommen jeden Montag automatisch.";
+}
+
+if(stored("analyse")||stored("training")){var z=ziel();if(z&&stored(z)){location.replace(z+"/")}else showDash()}else showLogin();
 })();
 </script>
 </body>
