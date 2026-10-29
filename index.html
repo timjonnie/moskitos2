@@ -278,7 +278,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 3.2 · letzte Aktualisierung 29.10.2026</footer>
+<footer class="wrap">Team-Board · Version 3.3 · letzte Aktualisierung 29.10.2026</footer>
 
 <script>
 /* Spielbericht-PDF (handball360 / DHB) auslesen. Erwartet pdf.js-Textelemente {s,x,y,p}. */
@@ -867,15 +867,15 @@ function pctBars(vals,labels){if(!vals.length)return"";var W=320,H=80,pad=6,bw=(
 function kvTable(obj,labels,keys){return '<table>'+keys.filter(function(k){return obj[k]!=null}).map(function(k){var v=obj[k];if(k==="eff")v=pct(+v||0);return '<tr><td>'+labels[k]+'</td><td class="n">'+v+'</td></tr>'}).join("")+'</table>'}
 function profileHtml(P){
   if(!P)return '<p class="sub">Für dieses Profil liegen noch keine Daten vor.</p>';
-  var G=(P.games||[]).map(function(g){return Object.assign({date:g.date,opp:g.opp,us:g.us,them:g.them},g.f||g)}),K=(P.gk||[]).map(function(g){return Object.assign({date:g.date,opp:g.opp,us:g.us,them:g.them},g.g||g)});
-  var h="",n=G.length;
-  if(n){var goals=sum(G,"goals"),miss=sum(G,"miss"),g7=sum(G,"goals7"),m7=sum(G,"miss7"),effs=G.map(function(g){return +g.eff||0});
+  var NP=normProfile(P),G=NP.G,K=NP.K;
+  var h=NP.old?'<div class="banner">Ältere Datenstände: bitte Verwaltung einmal speichern.</div>':"",n=G.length;
+  if(n){var goals=sum(G,"goals"),miss=sum(G,"miss"),g7=sum(G,"goals7"),m7=sum(G,"miss7"),pl=sum(G,"plus"),mi=sum(G,"minus"),effs=G.map(function(g){return g.eff||0});
     h+='<h2 style="margin-top:14px">Überblick Feldspiel</h2><div class="facts">'+
-      fact(n,"Spiele mit Statistik")+fact(goals,"Tore")+fact(fmt(goals/n),"Ø Tore pro Spiel")+fact(goals+miss?pct(goals/(goals+miss)):"–","Wurfquote")+
-      fact(g7+m7?g7+"/"+(g7+m7):"–","7m verwandelt")+fact(pct(effs.reduce(function(a,b){return a+b},0)/n),"Ø Effektivität")+
+      fact(n,"Spiele mit Aktionen")+fact(goals,"Tore")+fact(fmt(goals/n),"Ø Tore pro Spiel")+fact(goals+miss?pct(goals/(goals+miss)):"–","Wurfquote")+
+      fact(g7+m7?g7+"/"+(g7+m7):"–","7m verwandelt")+fact(pl+mi?pct(pl/(pl+mi)):"–","Handlungseffektivität")+
       fact((sum(G,"total")>0?"+":"")+sum(G,"total"),"Bilanz +/−")+fact(sum(G,"assists"),"Assists")+fact(sum(G,"steals"),"Ballgewinne")+'</div>';
     h+='<div class="row" style="margin-top:10px"><div><div class="sub">Tore je Spiel</div><div class="bars">'+goalBars(G.map(function(g){return +g.goals||0}),G.map(function(g){return dd(g.date)+" "+g.opp}))+'</div></div>'+
-       '<div><div class="sub">Effektivität je Spiel (%)</div><div class="bars">'+pctBars(effs,G.map(function(g){return dd(g.date)+" "+g.opp}))+'</div></div></div>';
+       '<div><div class="sub">Handlungseffektivität je Spiel (%)</div><div class="bars">'+pctBars(effs,G.map(function(g){return dd(g.date)+" "+g.opp}))+'</div></div></div>';
     h+='<h2 style="margin-top:6px">Plus und Minus der Saison</h2><div class="row"><div><table>'+POSF.map(function(k){return '<tr><td>'+FL[k]+'</td><td class="n ok">'+sum(G,k)+'</td></tr>'}).join("")+'</table></div>'+
        '<div><table>'+NEGF.map(function(k){return '<tr><td>'+FL[k]+'</td><td class="n warn">'+sum(G,k)+'</td></tr>'}).join("")+'</table></div></div>'}
   if(K.length){var sv=sum(K,"saves"),cc=sum(K,"conceded");
@@ -929,14 +929,39 @@ function zoneBlock(K){var Z=[["Dist","Distanz"],["Wing","Außen"],["Center","Zen
     return '<div><div style="display:flex;justify-content:space-between;font-size:14px"><span>'+z[1]+'</span><span>'+a+' von '+t+' · <b>'+pctv(divz(a,t))+'</b></span></div>'+
       '<div style="display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--panel-2);margin-top:4px"><div style="width:'+w+'%;background:'+cssv("--s1")+'"></div><div style="flex:1;background:'+cssv("--opp")+'"></div></div></div>'}).join("")+
     '</div><div class="ga-legend"><span><i style="background:'+cssv("--s1")+'"></i>gehalten</span><span><i style="background:'+cssv("--opp")+'"></i>Gegentor</span></div>'}
+/* Gleiche Formeln wie in der Spielanalyse */
+var FK=["goals","goals7","miss","miss7","tech","pass","steals","assists","won7","won2min","caused7","pen","lost1v1"];
+var GKK=["saves","conceded","sDist","sWing","sCenter","s7","cDist","cWing","cCenter","c7","assists","passErr","na"];
+function fplus(c){return c.goals*3+c.assists+c.steals*2+c.won7+c.won2min}
+function fminus(c){return c.miss+c.tech*2+c.pass*2+c.lost1v1*2+c.pen}
+function factions(c){return c.goals+c.assists+c.steals+c.won7+c.won2min+c.miss+c.tech+c.pass+c.lost1v1+c.pen}
+function gsaves(c){return c.sDist+c.sWing+c.sCenter+c.s7} function gconc(c){return c.cDist+c.cWing+c.cCenter+c.c7}
+function gplus(c){return gsaves(c)*3+c.sCenter+c.s7+c.assists*2} function gminus(c){return c.sWing*2+gconc(c)+c.cWing+c.cCenter}
+function gactions(c){return gsaves(c)+c.assists+gconc(c)+c.passErr}
+function normProfile(P){
+  var old=false,byF={},byK={};
+  (P&&P.games||[]).forEach(function(e){var src=e.f;if(!src){old=true;src={goals:e.goals,miss:e.miss,goals7:e.g7,miss7:e.m7,assists:e.assists,steals:e.steals,tech:e.tech}}
+    var key=e.date+"|"+e.opp,x=byF[key];if(!x){x=byF[key]={date:e.date,opp:e.opp,us:e.us,them:e.them};FK.forEach(function(k){x[k]=0});x._pl=0;x._mi=0;x._ac=0;x._has=false}
+    var c={};FK.forEach(function(k){c[k]=+src[k]||0;x[k]+=c[k]});
+    var pl=src.plus!=null?+src.plus:fplus(c),mi=src.minus!=null?+src.minus:fminus(c),ac=src.actions!=null?+src.actions:factions(c);
+    x._pl+=pl;x._mi+=mi;x._ac+=ac});
+  (P&&P.gk||[]).forEach(function(e){var src=e.g;if(!src){old=true;src={saves:e.saves,conceded:e.conceded}}
+    var key=e.date+"|"+e.opp,x=byK[key];if(!x){x=byK[key]={date:e.date,opp:e.opp,us:e.us,them:e.them};GKK.forEach(function(k){x[k]=0});x._pl=0;x._mi=0;x._ac=0}
+    var c={};GKK.forEach(function(k){c[k]=+src[k]||0;x[k]+=c[k]});
+    if(!src.sDist&&!src.cDist&&src.saves!=null){c.sDist=c.sDist||0}
+    var pl=src.plus!=null?+src.plus:gplus(c),mi=src.minus!=null?+src.minus:gminus(c),ac=src.actions!=null?+src.actions:(gactions(c)||(c.saves+c.conceded));
+    x._pl+=pl;x._mi+=mi;x._ac+=ac});
+  function fin(x){x.plus=x._pl;x.minus=x._mi;x.total=x._pl-x._mi;x.actions=x._ac;x.eff=x._pl+x._mi?x._pl/(x._pl+x._mi):null;return x}
+  var sort=function(a,b){return a.date.localeCompare(b.date)};
+  var allF=Object.keys(byF).map(function(k){return fin(byF[k])}).sort(sort),allK=Object.keys(byK).map(function(k){return fin(byK[k])}).sort(sort);
+  return {G:allF.filter(function(x){return x.actions>0}),K:allK.filter(function(x){return x.actions>0}),kader:Math.max(allF.length,allK.length),old:old}}
 function fullAnalysis(P){
-  var G=(P.games||[]).map(function(g){return Object.assign({date:g.date,opp:g.opp,us:g.us,them:g.them},g.f||g)}).sort(function(a,b){return a.date.localeCompare(b.date)});
-  var K=(P.gk||[]).map(function(g){return Object.assign({date:g.date,opp:g.opp,us:g.us,them:g.them},g.g||g)}).sort(function(a,b){return a.date.localeCompare(b.date)});
-  var apps=P.apps?(P.apps.liga+P.apps.test):0,isGk=K.length>G.length;
+  var NP=normProfile(P),G=NP.G,K=NP.K;
+  var apps=NP.kader,isGk=K.length>G.length;
   var h='<div class="panel" style="margin-bottom:12px"><div class="profile-head"><div class="avatar">'+esc((P.name||"").split(" ").map(function(w){return w[0]}).join("").slice(0,2).toUpperCase())+'</div><div><h2 style="margin:0">Persönliche Auswertung</h2><div class="big" style="margin:0">'+esc(P.name||"")+'</div>'+
-    '<div class="sub">'+(isGk?"Torhüterin":"Feldspielerin")+(P.nr?" · #"+esc(P.nr):"")+(P.pos?" · "+esc(P.pos):"")+' · '+(G.length||K.length)+' Spiele mit Aktionen'+(apps?' · '+apps+'× im Kader':'')+'</div></div></div></div>';
+    '<div class="sub">'+(isGk?"Torhüterin":"Feldspielerin")+(P.nr?" · #"+esc(P.nr):"")+(P.pos?" · "+esc(P.pos):"")+' · '+(G.length||K.length)+' Spiele mit Aktionen'+(apps?' · '+apps+'× im Kader':'')+'</div></div></div></div>'+(NP.old?'<div class="banner">Diese Auswertung stammt noch aus einem älteren Datenstand. Bitte die Verwaltung einmal speichern, dann stimmen alle Werte mit der Spielanalyse überein.</div>':'');
   if(G.length){var plus=sum(G,"plus"),minus=sum(G,"minus"),total=sum(G,"total"),goals=sum(G,"goals"),miss=sum(G,"miss"),g7=sum(G,"goals7"),m7=sum(G,"miss7"),n=G.length;
-    var effs=G.map(function(g){return g.eff!=null?+g.eff:divz(+g.plus||0,(+g.plus||0)+(+g.minus||0))}),wq=G.map(function(g){return divz(+g.goals||0,(+g.goals||0)+(+g.miss||0))});
+    var effs=G.map(function(g){return g.eff}),wq=G.map(function(g){return divz(+g.goals||0,(+g.goals||0)+(+g.miss||0))});
     h+='<h2>Feldspiel</h2><div class="kpis" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">'+
       tile("Plus-Minus","Gesamt",sgnv(total),"Ø "+(total>=0?"+":"")+fmt(total/n)+" je Spiel",spark(G.map(function(g){return +g.total||0}),true))+
       tile("Effektivität","Gesamt",pctv(divz(plus,plus+minus)),"Handlungseffektivität: positive Aktionen je Aktion",spark(effs))+
@@ -955,7 +980,7 @@ function fullAnalysis(P){
       '<section class="panel"><h2>Fehler je Spiel</h2><p class="sub" style="margin:0 0 6px">Fehlwürfe, technische Fehler, Fehlpässe</p>'+cBars(G,[{n:"Fehlwürfe",c:cssv("--s1"),v:G.map(function(g){return +g.miss||0})},{n:"Techn. Fehler",c:cssv("--accent"),v:G.map(function(g){return +g.tech||0})},{n:"Fehlpässe",c:cssv("--s3"),v:G.map(function(g){return +g.pass||0})}],true)+'</section></div>';
     h+='<section class="panel" style="margin-bottom:12px"><h2>Plus und Minus der Saison</h2><div class="row"><div><table>'+POSF.map(function(k){return '<tr><td>'+FL[k]+'</td><td class="n ok">'+sum(G,k)+'</td></tr>'}).join("")+'</table></div><div><table>'+NEGF.map(function(k){return '<tr><td>'+FL[k]+'</td><td class="n warn">'+sum(G,k)+'</td></tr>'}).join("")+'</table></div></div></section>';
     h+='<section class="panel" style="margin-bottom:12px"><h2>Alle Spiele</h2><p class="sub" style="margin:0 0 6px">Zeile antippen für alle Werte des Spiels</p><div style="overflow-x:auto"><table><tr><th>Spiel</th><th class="n">+/−</th><th class="n">Handl.-Eff.</th><th class="n">Tore</th><th class="n">Würfe</th><th class="n">Wurfquote</th><th class="n">Assists</th><th class="n">Ballgew.</th><th class="n">Techn. F.</th><th class="n">Fehlpässe</th><th class="n">Aktionen</th></tr>'+
-      G.slice().reverse().map(function(g,i){var id="fg"+i;return '<tr style="cursor:pointer" data-toggle="'+id+'"><td>'+dd(g.date)+' '+esc(gOpp(g))+(g.us!=null?' <span class="tag">'+g.us+':'+g.them+'</span>':'')+'</td><td class="n '+((+g.total||0)>=0?"ok":"warn")+'">'+sgnv(+g.total||0)+'</td><td class="n">'+pctv(g.eff!=null?+g.eff:null)+'</td><td class="n">'+(g.goals||0)+(g.goals7?' <span class="tag">('+g.goals7+'×7m)</span>':'')+'</td><td class="n">'+((+g.goals||0)+(+g.miss||0))+'</td><td class="n">'+pctv(divz(+g.goals||0,(+g.goals||0)+(+g.miss||0)))+'</td><td class="n">'+(g.assists||0)+'</td><td class="n">'+(g.steals||0)+'</td><td class="n">'+(g.tech||0)+'</td><td class="n">'+(g.pass||0)+'</td><td class="n">'+(g.actions!=null?g.actions:"–")+'</td></tr>'+
+      G.slice().reverse().map(function(g,i){var id="fg"+i;return '<tr style="cursor:pointer" data-toggle="'+id+'"><td>'+dd(g.date)+' '+esc(gOpp(g))+(g.us!=null?' <span class="tag">'+g.us+':'+g.them+'</span>':'')+'</td><td class="n '+((+g.total||0)>=0?"ok":"warn")+'">'+sgnv(+g.total||0)+'</td><td class="n">'+pctv(g.eff)+'</td><td class="n">'+(g.goals||0)+(g.goals7?' <span class="tag">('+g.goals7+'×7m)</span>':'')+'</td><td class="n">'+((+g.goals||0)+(+g.miss||0))+'</td><td class="n">'+pctv(divz(+g.goals||0,(+g.goals||0)+(+g.miss||0)))+'</td><td class="n">'+(g.assists||0)+'</td><td class="n">'+(g.steals||0)+'</td><td class="n">'+(g.tech||0)+'</td><td class="n">'+(g.pass||0)+'</td><td class="n">'+(g.actions!=null?g.actions:"–")+'</td></tr>'+
         '<tr id="'+id+'" hidden><td colspan="11" style="background:var(--panel-2)">'+kvTable(g,FL,Object.keys(FL))+'</td></tr>'}).join("")+'</table></div></section>'}
   if(K.length){var sv=sum(K,"saves"),cc=sum(K,"conceded"),kt=sum(K,"total"),kp=sum(K,"plus"),km=sum(K,"minus"),qq=K.map(function(g){return divz(+g.saves||0,(+g.saves||0)+(+g.conceded||0))});
     h+='<h2>Tor</h2><div class="kpis" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">'+
