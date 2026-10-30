@@ -295,7 +295,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.0 · letzte Aktualisierung 29.10.2026</footer>
+<footer class="wrap">Team-Board · Version 4.1 · letzte Aktualisierung 29.10.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -785,7 +785,7 @@ async function loadCoachData(){
   var fs=CTX.fs,A=MKFB.ns(fs,"a_"),T=MKFB.ns(fs,"t_");
   var r=await Promise.all([A.collection("games").get(),A.doc("settings/aliases").get(),T.collection("players").get(),T.collection("games").get(),T.collection("sessions").get(),
     fs.doc("tb_settings/map").get(),fs.collection("users").get()]);
-  var players={},tp=objOf(r[2]);Object.keys(tp).forEach(function(id){var p=tp[id];if(p&&p.name)players[id]={name:p.name,nr:p.nr||"",pos:p.pos||"",active:p.active!==false}});
+  var players={},tp=objOf(r[2]);Object.keys(tp).forEach(function(id){var p=tp[id];if(p&&p.name)players[id]={name:p.name,nr:p.nr||"",pos:p.pos||"",kader:p.kader||"F2",active:p.active!==false}});
   return {A:{games:r[0].docs.map(function(d){return d.data()}).filter(function(g){return g&&g.score&&Array.isArray(g.players)}),aliases:(r[1].exists&&r[1].data().map)||{}},
     T:{players:tp,games:objOf(r[3]),sessions:objOf(r[4])},players:players,map:(r[5].exists&&r[5].data().map)||{},
     users:r[6].docs.map(function(d){return Object.assign({uid:d.id},d.data())})};
@@ -822,12 +822,21 @@ function renderMyEvents(){
   $("meNext").querySelectorAll("[data-rs]").forEach(function(b){b.onclick=function(){setRsvp(ev[+b.dataset.rs],b.dataset.v)}})}
 function renderCoachRsvp(){
   if(!isCoach()||!COACH)return;var ev=events().slice(0,4);if(!ev.length){$("rsvpBox").hidden=true;return}
-  var act=Object.keys(COACH.players).filter(function(id){return COACH.players[id].active});
-  $("rsvpList").innerHTML=ev.map(function(e){var yes=[],no=[],open=[];
-    act.forEach(function(pid){var r=RSVP[rsvpId(e,pid)],n=COACH.players[pid].name;if(r&&r.status==="yes")yes.push(n);else if(r&&r.status==="no")no.push(n);else open.push(n)});
+  var P=COACH.players,stamm=Object.keys(P).filter(function(id){return P[id].active&&P[id].kader==="F2"});
+  $("rsvpList").innerHTML=ev.map(function(e){
+    var g=e.k==="g"?(COACH.T.games[e.id]||{}):null,sq=(g&&g.squad)||{};
+    // Stammkader F2 plus alle, die für dieses Spiel im Trainertool eingetragen sind
+    var ids=stamm.slice();Object.keys(sq).forEach(function(pid){if(P[pid]&&ids.indexOf(pid)<0)ids.push(pid)});
+    var G={yes:[],no:[],open:[],none:[]};
+    ids.forEach(function(pid){var r=RSVP[rsvpId(e,pid)],t=sq[pid],n=esc(P[pid].name),st;
+      if(r&&(r.status==="yes"||r.status==="no")){st=r.status;n+=' <span class="tag">(selbst)</span>'}
+      else if(t==="x")st="yes";else if(t==="o")st="no";else if(t==="-")st="none";else st="open";
+      G[st].push(n)});
     return '<details class="panel" style="padding:10px 12px;margin-top:6px"><summary style="cursor:pointer"><b>'+dd(e.date)+(e.time?" "+esc(e.time):"")+'</b> '+esc(e.txt)+
-      ' <span class="status st-x">'+yes.length+' Zusagen</span> <span class="status st-o">'+no.length+' Absagen</span> <span class="status st-n">'+open.length+' offen</span></summary>'+
-      '<div class="sub" style="margin-top:8px"><b>Zusagen:</b> '+(yes.map(esc).join(", ")||"–")+'<br><b>Absagen:</b> '+(no.map(esc).join(", ")||"–")+'<br><b>Offen:</b> '+(open.map(esc).join(", ")||"–")+'</div></details>'}).join("");
+      ' <span class="status st-x">'+G.yes.length+' dabei</span> <span class="status st-o">'+G.no.length+' Absagen</span> <span class="status st-q">'+G.open.length+' offen</span>'+(G.none.length?' <span class="status st-n">'+G.none.length+' nicht nominiert</span>':'')+'</summary>'+
+      '<div class="sub" style="margin-top:8px;line-height:1.7"><b>Dabei:</b> '+(G.yes.join(", ")||"–")+'<br><b>Absagen:</b> '+(G.no.join(", ")||"–")+'<br><b>Offen:</b> '+(G.open.join(", ")||"–")+
+      (G.none.length?'<br><b>Nicht nominiert:</b> '+G.none.join(", "):"")+'</div></details>'}).join("")+
+    '<p class="sub" style="margin-top:8px">Stand aus dem Trainertool, ergänzt um Zu- und Absagen der Spielerinnen („selbst“). Gezählt werden der Stammkader F2 und alle, die im Trainertool für das Spiel eingetragen sind.</p>';
   $("rsvpBox").hidden=false}
 
 /* ---------- Passwort ändern ---------- */
