@@ -295,7 +295,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.1 · letzte Aktualisierung 29.10.2026</footer>
+<footer class="wrap">Team-Board · Version 4.2 · letzte Aktualisierung 31.10.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -828,6 +828,7 @@ function renderCoachRsvp(){
     // Stammkader F2 plus alle, die für dieses Spiel im Trainertool eingetragen sind
     var ids=stamm.slice();Object.keys(sq).forEach(function(pid){if(P[pid]&&ids.indexOf(pid)<0)ids.push(pid)});
     var G={yes:[],no:[],open:[],none:[]};
+    var ch=e.k==="g"?rsvpChanges(e,sq):[];
     ids.forEach(function(pid){var r=RSVP[rsvpId(e,pid)],t=sq[pid],n=esc(P[pid].name),st;
       if(r&&(r.status==="yes"||r.status==="no")){st=r.status;n+=' <span class="tag">(selbst)</span>'}
       else if(t==="x")st="yes";else if(t==="o")st="no";else if(t==="-")st="none";else st="open";
@@ -835,9 +836,27 @@ function renderCoachRsvp(){
     return '<details class="panel" style="padding:10px 12px;margin-top:6px"><summary style="cursor:pointer"><b>'+dd(e.date)+(e.time?" "+esc(e.time):"")+'</b> '+esc(e.txt)+
       ' <span class="status st-x">'+G.yes.length+' dabei</span> <span class="status st-o">'+G.no.length+' Absagen</span> <span class="status st-q">'+G.open.length+' offen</span>'+(G.none.length?' <span class="status st-n">'+G.none.length+' nicht nominiert</span>':'')+'</summary>'+
       '<div class="sub" style="margin-top:8px;line-height:1.7"><b>Dabei:</b> '+(G.yes.join(", ")||"–")+'<br><b>Absagen:</b> '+(G.no.join(", ")||"–")+'<br><b>Offen:</b> '+(G.open.join(", ")||"–")+
-      (G.none.length?'<br><b>Nicht nominiert:</b> '+G.none.join(", "):"")+'</div></details>'}).join("")+
-    '<p class="sub" style="margin-top:8px">Stand aus dem Trainertool, ergänzt um Zu- und Absagen der Spielerinnen („selbst“). Gezählt werden der Stammkader F2 und alle, die im Trainertool für das Spiel eingetragen sind.</p>';
+      (G.none.length?'<br><b>Nicht nominiert:</b> '+G.none.join(", "):"")+'</div>'+
+      (ch.length?'<div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn small primary" type="button" data-rsapply="'+esc(e.id)+'">'+ch.length+(ch.length===1?' Rückmeldung':' Rückmeldungen')+' ins Trainertool übernehmen</button><span class="sub">'+ch.map(function(c){return esc(P[c.pid].name)+' → '+(c.v==="x"?"Dabei":"Absage")}).join(", ")+'</span></div>':
+       (e.k==="g"&&COACH.T.games[e.id]?'<p class="sub" style="margin-top:6px">Trainertool ist auf dem Stand der Rückmeldungen.</p>':''))+'</details>'}).join("")+
+    '<p class="sub" style="margin-top:8px">Stand aus dem Trainertool, ergänzt um Zu- und Absagen der Spielerinnen („selbst“). Gezählt werden der Stammkader F2 und alle, die im Trainertool für das Spiel eingetragen sind. „Übernehmen“ trägt die Rückmeldungen beim Spiel im Trainertool ein; eine Zusage ändert nichts an „Nicht nominiert“.</p>';
+  $("rsvpList").querySelectorAll("[data-rsapply]").forEach(function(b){b.onclick=function(){applyRsvp(b.dataset.rsapply,b)}});
   $("rsvpBox").hidden=false}
+// Zu-/Absagen der Spielerinnen als Kaderstatus im Trainertool (t_games/{id}.squad): Zusage → "x", Absage → "o".
+// Eine Zusage überschreibt kein „nicht nominiert“ ("-") – das bleibt Entscheidung des Trainers.
+function rsvpChanges(e,sq){var out=[],P=COACH.players;
+  Object.keys(RSVP).forEach(function(k){var r=RSVP[k];if(!r||r.kind!=="g"||String(r.ref)!==String(e.id)||!P[r.pid])return;
+    var t=sq[r.pid];if(r.status==="yes"&&t!=="x"&&t!=="-")out.push({pid:r.pid,v:"x"});else if(r.status==="no"&&t!=="o")out.push({pid:r.pid,v:"o"})});
+  return out}
+async function applyRsvp(id,btn){var e=events().filter(function(x){return x.k==="g"&&String(x.id)===String(id)})[0];if(!e)return;
+  btn.disabled=true;btn.textContent="Wird übernommen …";
+  try{var ref=MKFB.ns(CTX.fs,"t_").doc("games/"+id),snap=await ref.get();
+    if(!snap.exists)throw new Error("Das Spiel gibt es im Trainertool nicht mehr.");
+    var g=snap.data();g.squad=g.squad||{};var ch=rsvpChanges(e,g.squad);
+    ch.forEach(function(c){g.squad[c.pid]=c.v});
+    if(ch.length)await ref.set(g);
+    COACH.T.games[id]=g;renderCoachRsvp()}
+  catch(err){btn.disabled=false;btn.textContent="Erneut versuchen";alert(err&&err.code?fbErr(err):(err&&err.message)||String(err))}}
 
 /* ---------- Passwort ändern ---------- */
 async function changePw(ev){ev.preventDefault();var m=$("pwMsg"),o=$("pwOld").value,n=$("pwNew").value;m.textContent="";

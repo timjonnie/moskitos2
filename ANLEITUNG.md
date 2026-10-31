@@ -1,134 +1,93 @@
-# Moskitos 2 – alles auf einer Website (GitHub Pages)
+# Moskitos 2 – Team-Board: Anleitung
 
-## Das Ziel
+Eine Adresse für alles: `https://timjonnie.github.io/moskitos2/`
 
-Eine Adresse für alles: `https://DEINNAME.github.io/moskitos2/`
+| Adresse | Inhalt | für |
+|---|---|---|
+| `/moskitos2/` | Team-Board: Anmeldung, Dashboard, nächstes/letztes Spiel, Tabelle, Rückmeldungen, Verwaltung | alle |
+| `/moskitos2/#gegner` | Gegneranalyse | alle |
+| `/moskitos2/#auswertung` | Auswertung (Spielerinnen: die eigene, Trainer: die gewählte Spielerin) | alle |
+| `/moskitos2/training/` | Trainertool (Kader, ZN, SR, Übungen, Training) | Trainer, Admin |
+| `/moskitos2/analyse/` | Spielanalyse mit Erfassung | Trainer, Admin |
 
-| Adresse | Inhalt |
-|---|---|
-| `/moskitos2/` | Anmeldung und Startseite mit nächstem/letztem Spiel, Saisonzahlen, Trend, Tabelle |
-| `/moskitos2/training/` | Trainertool (Kader, ZN, SR, Übungen, Training) |
-| `/moskitos2/analyse/` | Spielanalyse mit Erfassung und Gegner-Reiter |
-| `/moskitos2/analyse/#gegner` | direkt zur Gegneranalyse |
+Alle Daten liegen in einer Online-Datenbank (Firebase, Server in Frankfurt).
+Was du in Training, Analyse oder Team-Board speicherst, ist sofort für alle Berechtigten sichtbar.
+**Exportieren und Hochladen ist nicht mehr nötig.**
 
-Jeden Montag holt GitHub die neuen Spielberichte. Startseite und Gegner-Reiter zeigen sie ohne weiteren Schritt.
+## Anmelden
 
-## Der Ordner, so wie er ins Repo gehört
+- Angemeldet wird auf der Startseite. Ein Login gilt für das ganze Team-Board.
+- Wer Training oder Analyse direkt aufruft, ohne angemeldet zu sein, landet auf der Anmeldung und danach im Modul.
+- „Abmelden“ meldet überall ab.
+- Passwort ändern: oben auf **Passwort ändern** tippen. Das macht jede Person selbst.
 
-```
-moskitos2/
-├── index.html                  Startseite
-├── gegner_daten.json           Spielberichte + Termine (wird montags erneuert)
-├── spielberichte_abruf.js      Montags-Abruf
-├── ga_parse.js                 Auslese der PDFs (gleiche Logik wie im Tool)
-├── ANLEITUNG.md                diese Anleitung
-├── analyse/
-│   └── index.html              Spielanalyse inkl. Gegner
-├── training/
-│   └── index.html              Export aus dem Trainertool (von dir)
-└── .github/
-    └── workflows/
-        └── montag.yml          Zeitplan: jeden Montag 06:00
-```
-
-## Teil A – vorbereiten (5 Minuten)
-
-1. Den Ordner `moskitos2` aus der ZIP-Datei auf den PC entpacken.
-2. Trainertool öffnen → Verwaltung → **HTML-Datei exportieren**.
-   Die Datei heißt `index.html` → in den Ordner `moskitos2/training/` legen
-   (die Textdatei `HIER-TRAINERTOOL-EXPORT-ABLEGEN.txt` darf weg).
-3. Spielanalyse: Die Datei `analyse/index.html` ist bereits fertig (Stand heute Morgen + Gegner).
-   Wenn in der Analyse seitdem etwas erfasst wurde: dort Verwaltung → HTML-Datei exportieren
-   und die neue Datei in `analyse/` ersetzen.
-
-## Teil B – GitHub einrichten (10 Minuten)
-
-4. github.com → **Sign up** (kostenlos).
-5. Oben rechts **+** → **New repository**
-   - Name: `moskitos2`
-   - **Public**
-   - Haken bei **Add a README file** → **Create repository**
-6. **Add file → Upload files** → den *Inhalt* des Ordners `moskitos2` in das Feld ziehen
-   (also `index.html`, `gegner_daten.json`, `spielberichte_abruf.js`, `ga_parse.js`, `ANLEITUNG.md`
-   und die Ordner `analyse` und `training`). Unten **Commit changes**.
-   Prüfen: In der Dateiliste stehen jetzt die Ordner `analyse` und `training`.
-7. Den Zeitplan anlegen (der Ordner `.github` lässt sich nicht hochziehen):
-   **Add file → Create new file**, Name genau `.github/workflows/montag.yml`,
-   Inhalt der Datei `montag.yml` hineinkopieren → **Commit changes**.
-8. **Settings → Actions → General** → ganz unten **Read and write permissions** → **Save**.
-
-## Teil C – einschalten und testen (5 Minuten)
-
-9. **Settings → Pages** → Source **Deploy from a branch** → Branch **main**, Ordner **/(root)** → **Save**.
-   Nach 1–2 Minuten steht oben der Link `https://DEINNAME.github.io/moskitos2/`.
-10. **Actions → Spielberichte Montag → Run workflow** → grünen Haken abwarten.
-11. Testen:
-    - Startseite: Steht „Nächstes Spiel: TV Merchweiler – Moskitos 2“ da?
-    - **Training** öffnen → mit dem bisherigen Trainertool-Login anmelden.
-    - **Spielanalyse** öffnen → anmelden → Reiter **Gegner** ansehen.
-12. Den Link an Lucas und die Mannschaft schicken. Die Netlify-Seiten bleiben vorerst online,
-    bis alles zwei, drei Wochen problemlos läuft.
-
-## Ein Login für alles (ab Version 2.0 der Startseite)
-
-- Angemeldet wird nur noch auf der Startseite. Benutzername und Passwort sind die bisherigen.
-- Die Startseite öffnet damit Training und Analyse gleichzeitig. Wer nur für ein Modul freigeschaltet ist,
-  sieht das andere ausgegraut. Die Rollen (Admin, Trainer, Spielerin) gelten in den Modulen wie bisher.
-- Wer ein Modul direkt aufruft, ohne angemeldet zu sein, landet automatisch auf der Anmeldung und danach im Modul.
-- „Abmelden“ in einem Modul oder auf der Startseite meldet überall ab.
-- Damit das in beiden Tools klappt, sollten Benutzername und Passwort in Training und Analyse gleich sein.
-  Unterschiedliche Passwörter gehen auch, dann öffnet die Startseite nur das Modul, zu dem das Passwort passt.
-
-## Verwaltung im Team-Board (ab Version 3.0)
-
-Zugänge, Rollen und Spielerinnenprofile werden nur noch im Team-Board gepflegt (Bereich „Verwaltung“, nur für Admins).
+## Rollen
 
 | Rolle | sieht |
 |---|---|
 | Admin | alles, inkl. Verwaltung |
-| Trainer | Team-Board, Training, Spielanalyse, Gegner, Profilansicht aller Spielerinnen |
-| Spielerin | eigenes Dashboard mit allen eigenen Werten (Überblick, Verlauf, Plus/Minus, jedes Spiel im Detail, Einsätze, nächste Spiele mit Status), das Gesamtbild der Mannschaft und die Gegneranalyse – keine Daten anderer Spielerinnen, keine Rankings |
+| Trainer | Team-Board, Training, Spielanalyse, Gegner, Profilansicht aller Spielerinnen, Rückmeldungen |
+| Spielerin | eigenes Dashboard mit allen eigenen Werten, Zu-/Absage für Spiele und Training, Gesamtbild der Mannschaft, Gegneranalyse – keine Daten anderer Spielerinnen, keine Rankings |
 
-So funktioniert es:
-1. Verwaltung öffnen → Zugänge anlegen oder ändern, Spielerinnen zuordnen, Namensabgleich prüfen.
-2. „Speichern und Dateien erzeugen“ → es wird `team-board-update.zip` heruntergeladen.
-3. ZIP entpacken und den Inhalt ins Repo hochladen: `board.json` in die oberste Ebene,
-   `analyse/index.html` und `training/index.html` in ihre Ordner.
-4. Profile und Teamdaten werden bei jedem Speichern neu aus Training und Analyse berechnet.
-   Nach einem Spieltag also: Analyse exportieren und hochladen, dann in der Verwaltung einmal speichern.
+Die Rollen werden von der Datenbank selbst durchgesetzt: Eine Spielerin kann technisch nur ihr eigenes Profil lesen.
 
-Wichtig:
-- Passwort nur eintragen bei neuen Zugängen, bei Passwortänderung oder wenn sich Rolle bzw. Zuordnung ändert.
-- Spielerinnen bekommen keinen Zugang zu Training und Analyse. Ihre Profile sind einzeln verschlüsselt:
-  Jede Spielerin kann technisch nur ihr eigenes Profil öffnen.
-- Vor dem ersten Speichern zuerst die neuen Dateien aus dem Update-Paket hochladen, damit die Verwaltung
-  auf dem aktuellen Stand der Module aufbaut.
+## Einmalig: Ersteinrichtung (Umzug der alten Daten)
+
+1. Startseite öffnen → **Ersteinrichtung**.
+2. Mit dem **bisherigen Admin-Zugang** anmelden (Benutzername und Passwort wie früher) → **Daten übertragen**.
+   Training, Analyse und die alte Verwaltung werden aus dem Ordner `alt/` und `board.json` gelesen und in die Datenbank geschrieben.
+3. Danach in der **Verwaltung** unter „Aus der alten Verwaltung übernommen“ für jeden bisherigen Zugang ein Startpasswort
+   vergeben → **Alle mit eingetragenem Passwort anlegen**.
+4. Prüfen, ob Training, Analyse und Profile stimmen. Dann Bescheid geben: Der Ordner `alt/` und `board.json`
+   werden aus dem Repo gelöscht. Sie enthalten die alten, verschlüsselten Daten und werden nicht mehr gebraucht.
+
+## Verwaltung (nur Admin)
+
+Team-Board → **Verwaltung öffnen**.
+
+1. **Zugänge:** neue Zugänge anlegen (Benutzername, Rolle, zugeordnete Spielerin, Startpasswort),
+   Rolle oder Zuordnung ändern, Zugänge entfernen. Änderungen gelten sofort.
+   Mit „Für alle aktiven Spielerinnen ohne Zugang anlegen“ bekommen alle Spielerinnen auf einmal einen Zugang.
+2. **Namensabgleich:** Namen aus der Spielanalyse den Spielerinnen im Kader zuordnen.
+
+**Passwort vergessen:** Ein Admin kann Passwörter nicht zurücksetzen (Einschränkung des kostenlosen Firebase-Tarifs).
+Lösung: den Zugang entfernen und unter einem **neuen** Benutzernamen neu anlegen (z. B. `anna.m2` statt `anna.m`).
+Der alte Benutzername bleibt dauerhaft belegt.
+
+## Rückmeldungen der Spielerinnen
+
+- Spielerinnen sagen in ihrem Dashboard bei den nächsten Spielen und Trainings zu oder ab.
+- Trainer sehen im Team-Board unter **Rückmeldungen der Spielerinnen** pro Termin, wer dabei ist, wer abgesagt hat und wer offen ist.
+- Bei Spielen gibt es den Knopf **„… Rückmeldungen ins Trainertool übernehmen“**. Er trägt Zusagen als „Dabei“ und
+  Absagen als „Absage“ beim Spiel im Trainertool ein. Eine Zusage ändert nichts an „Nicht nominiert“ – das bleibt Entscheidung des Trainers.
+
+## Profile und Teamwerte
+
+Profile und Mannschaftszahlen werden neu berechnet, **sobald ein Trainer oder Admin das Team-Board öffnet**.
+Nach einem Spieltag also: Spiel in der Analyse erfassen, danach einmal das Team-Board öffnen.
+
+## Spielberichte (automatisch)
+
+- Jeden Montag um 6 Uhr (Winterzeit) holt GitHub die neuen Spielberichte von handball360 und aktualisiert `gegner_daten.json`.
+- Sofort abrufen: GitHub → **Actions → Spielberichte Montag → Run workflow**.
+- Verlegte Spiele erscheinen automatisch, sobald ein Endstand vorliegt.
+- Einzelne PDFs können weiterhin im Gegner-Reiter der Spielanalyse hochgeladen werden.
 
 ## Als App aufs Handy
 
 - iPhone (Safari): Teilen → „Zum Home-Bildschirm“.
 - Android (Chrome): Menü ⋮ → „App installieren“ bzw. „Zum Startbildschirm hinzufügen“.
 
-## So geht es im Alltag weiter
+## Änderungen am Team-Board selbst
 
-- **Spiel erfasst / Kader geändert:** im jeweiligen Tool exportieren → auf GitHub in den Ordner
-  `analyse` bzw. `training` gehen → **Add file → Upload files** → `index.html` hineinziehen → Commit.
-  Die alte Datei wird ersetzt, eine Minute später ist die neue online. Keine Credits, kein Limit.
-- **Neue Spielberichte:** kommen jeden Montag automatisch. Einzelne PDFs kannst du weiterhin
-  im Gegner-Reiter hochladen.
-- **Etwas kaputt?** Jede Datei hat auf GitHub einen Verlauf (**History**) – alte Version öffnen,
-  herunterladen, wieder hochladen.
+Änderungen am Aussehen oder an Funktionen macht Claude Code direkt im Repo auf einem eigenen Branch.
+Du prüfst den Pull Request auf GitHub und klickst **Merge** – eine Minute später ist die neue Version online.
+Jede Datei hat auf GitHub einen Verlauf (**History**), alte Stände lassen sich jederzeit wiederherstellen.
 
-## Wichtig zum Datenschutz
+## Datenschutz
 
-Das Repo ist öffentlich. Die Daten in `analyse/index.html` und `training/index.html` sind mit
-eurem Login verschlüsselt und ohne Passwort nicht lesbar – also starke Passwörter verwenden.
-`gegner_daten.json` enthält nur Angaben aus den öffentlichen Spielberichten.
-Wer das Repo privat haben möchte, braucht GitHub Pro (ca. 4 $/Monat), dann geht Pages auch privat.
-
-## Die nächsten Ausbaustufen
-
-- **Stufe 2 – gemeinsame Spielerliste:** Trainertool als Quelle für Kader und Spielplan,
-  die Analyse übernimmt Spielerinnen per ID statt per Namen.
-- **Stufe 3 – eine App, ein Login:** Training und Analyse in einer Datei mit einer Anmeldung.
-  Lohnt sich, sobald Stufe 2 läuft.
+- Das Repo ist öffentlich. Es enthält nur den Programmcode und `gegner_daten.json` mit Angaben aus den
+  offiziellen, öffentlichen Spielberichten (auch Torschützinnen der eigenen Mannschaft).
+- Alle Mannschaftsdaten (Kader, Training, Analyse, Profile, Rückmeldungen) liegen geschützt in der Datenbank.
+- Keine Passwörter in Chats, Mails oder Dateien weitergeben. Startpasswörter beim ersten Anmelden ändern lassen.
+- Vor dem Start: Einwilligung der Spielerinnen zur Verarbeitung ihrer Leistungsdaten einholen (Text noch offen).

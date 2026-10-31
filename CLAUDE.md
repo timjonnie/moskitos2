@@ -14,8 +14,8 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 
 | Pfad | Inhalt |
 |---|---|
-| `index.html` | Team-Board 4.1: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, Verwaltung, Ersteinrichtung/Umzug |
-| `analyse/index.html` | Spielanalyse 2.5 (Firebase-Modus, Präfix `a_`) |
+| `index.html` | Team-Board 4.2: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, Verwaltung, Ersteinrichtung/Umzug |
+| `analyse/index.html` | Spielanalyse 2.6 (Firebase-Modus, Präfix `a_`) |
 | `training/index.html` | Trainertool 1.3 (Firebase-Modus, Präfix `t_`) |
 | `board.json`, `alt/` | Alte verschlüsselte Daten – **nur für den einmaligen Umzug**, danach löschen |
 | `gegner_daten.json` | Öffentliche Spielberichte (`games`) + Termine der Moskitos (`fixtures`); wird montags automatisch erneuert |
@@ -24,7 +24,7 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 | `.github/workflows/montag.yml` | Jeden Montag 05:00 UTC Abruf, Commit durch „Gegneranalyse-Bot“ |
 | `manifest.webmanifest`, `sw.js`, `icons/` | PWA (installierbar, Service Worker cacht bewusst nichts) |
 | `moskitos2-update2.zip` | Älteres Update-Paket, überholt |
-| `ANLEITUNG.md` | Anleitung für Menschen – beschreibt noch den alten Export-Ablauf (veraltet) |
+| `ANLEITUNG.md` | Anleitung für Menschen (Firebase-Ablauf, Stand 31.10.2026) |
 | `firestore.rules` | **fehlt im Repo** (lag im Paket `datenbank-update`) |
 
 ## Wichtige Eigenschaften

@@ -20,8 +20,6 @@ unten als neuen Abschnitt einfügen (oder in Claude Code einfügen: „Trag das 
   (Projekt `moskitos2-fe016`). `fb.js`, `fbmod.js`, `mksite.js` und `ga_module.js` gibt es **nicht als eigene
   Dateien** – sie sind inline in `index.html`, `analyse/index.html` und `training/index.html` eingebettet.
 - **`firestore.rules` fehlt im Repo** (lag im Paket `datenbank-update`). Sollte als Referenz eingecheckt werden.
-- `ANLEITUNG.md` beschreibt noch den alten Ablauf (verschlüsselte Exporte, `team-board-update.zip`) und ist
-  gegenüber dem Firebase-Stand veraltet.
 - `alt/`, `board.json` und `moskitos2-update2.zip` liegen noch im Repo (nach dem Umzug löschen).
 
 ## Zusammenfassungen
@@ -151,8 +149,8 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 
 - [ ] **Ersteinrichtung live durchführen.** Danach Sicherheitstest mit einem Konto ohne `users`-Dokument: darf nichts
   lesen und nichts schreiben.
-- [ ] **Rückmeldungen ins Trainertool übernehmen**, per Knopf oder automatisch nach `t_games.squad`.
-- [ ] **Analyse-UI im Firebase-Modus aufräumen:** Export, Netlify und modulinterne Zugänge ausblenden.
+- [x] **Rückmeldungen ins Trainertool übernehmen** (Team-Board 4.2, per Knopf), per Knopf oder automatisch nach `t_games.squad`.
+- [x] **Analyse-UI im Firebase-Modus aufräumen** (Spielanalyse 2.6): Export, Netlify und modulinterne Zugänge ausblenden.
 - [ ] Optional echte E-Mails pro Konto für den Passwort-Reset (`sendPasswordResetEmail`).
 - [ ] Optional automatische Profil-Neuberechnung per Cloud Function (erfordert Blaze).
 - [ ] **Einwilligungstext für Spielerinnen** zur Verarbeitung der Leistungsdaten.
@@ -175,3 +173,15 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   `gegner_daten.json` nie überschreiben, die pflegt der Bot. Änderungen an Modulen auch in die Artefakt-Vorlagen
   übernehmen, falls diese weiter genutzt werden. Vor der Auslieferung testen: Syntax-Check und Playwright-Durchlauf
   mit Fixtures bzw. Mock.
+
+### 31.10.2026 – Umzug nach Claude Code
+
+- `CLAUDE.md` und diese Datei angelegt; Projektwissen aus Chat/Cowork übernommen.
+- **Team-Board 4.2:** In „Rückmeldungen der Spielerinnen“ pro Spiel Knopf „… ins Trainertool übernehmen“.
+  Schreibt in `t_games/{id}.squad`: Zusage → `x`, Absage → `o`. Eine Zusage überschreibt kein `-` (nicht nominiert).
+  Trainings haben im Trainertool keine Anwesenheitsliste – dort bleiben die Rückmeldungen nur im Team-Board.
+- **Spielanalyse 2.6:** Im Firebase-Modus (`S.site`) sind „Zugänge und Rollen“, „Für die Mannschaft exportieren“ und
+  „Stand aus der Mannschafts-Datei übernehmen“ ausgeblendet; stattdessen Hinweis auf sofortiges Speichern und das Team-Board.
+  Der eingebettete Export-Bauplan (`window.__MK_TPL__`) wurde nicht angepasst.
+- **`ANLEITUNG.md`** komplett auf den Firebase-Ablauf umgeschrieben.
+- Getestet mit Playwright und Firebase-Mock (390 px Breite, kein Überlauf, keine Skriptfehler).
