@@ -1,7 +1,10 @@
 name: Spielberichte Montag
 on:
   schedule:
-    - cron: "0 5 * * 1"   # jeden Montag 05:00 UTC = 06:00 MEZ / 07:00 MESZ
+    # GitHub startet Zeitpläne oft verspätet oder lässt sie zur vollen Stunde ganz aus.
+    # Darum krumme Minuten und ein zweiter Versuch; ohne neue Berichte entsteht kein Commit.
+    - cron: "23 5 * * 1"    # Montag 06:23 MEZ / 07:23 MESZ
+    - cron: "47 13 * * 1"   # Montag 14:47 MEZ / 15:47 MESZ (Nachzügler, falls der erste Lauf ausfällt)
   workflow_dispatch: {}    # zusätzlich per Knopfdruck startbar
 permissions:
   contents: write
@@ -20,4 +23,5 @@ jobs:
           git config user.email "bot@users.noreply.github.com"
           git add gegner_daten.json
           git diff --cached --quiet || git commit -m "Spielberichte $(date +%d.%m.%Y)"
+          git pull --rebase --autostash
           git push
