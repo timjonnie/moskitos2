@@ -185,3 +185,13 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   Der eingebettete Export-Bauplan (`window.__MK_TPL__`) wurde nicht angepasst.
 - **`ANLEITUNG.md`** komplett auf den Firebase-Ablauf umgeschrieben.
 - Getestet mit Playwright und Firebase-Mock (390 px Breite, kein Überlauf, keine Skriptfehler).
+
+### 09.11.2026 – Spielberichte kamen scheinbar nicht an
+
+- Der geplante Montagslauf ist am 09.11. nicht gestartet (am 02.11. lief er mit 8 h Verspätung). Der manuelle Lauf
+  um 07:01 UTC war erfolgreich, `gegner_daten.json` enthielt danach den 8. Spieltag.
+- **Fehler 1:** Im Team-Board zeigte `DATA_URL` auf `../gegner_daten.json` – auf GitHub Pages außerhalb von `/moskitos2/` (404).
+- **Fehler 2:** Der Gegner-Baustein übernahm Termine und Datenstand aus dem Browser-Speicher (`mk2_gegner`) ungeprüft,
+  auch wenn sie älter waren als die Datei. Dadurch alte Termine/falscher nächster Gegner. Jetzt nur, wenn neuer.
+- Team-Board 4.3, Spielanalyse 2.7. Zeitplan auf krumme Minuten (05:23 UTC) plus zweiter Lauf 13:47 UTC;
+  `git pull --rebase` vor dem Push, falls beide Läufe sich überschneiden.

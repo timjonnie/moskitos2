@@ -295,7 +295,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.2 · letzte Aktualisierung 31.10.2026</footer>
+<footer class="wrap">Team-Board · Version 4.3 · letzte Aktualisierung 09.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -422,17 +422,18 @@ async function gaPdfItems(buf){
 "use strict";
 var OWN="Moskitos 2";
 // Optional: Adresse der automatisch aktualisierten gegner_daten.json (GitHub raw). Leer = eingebettete Daten.
-var DATA_URL="../gegner_daten.json"; // gemeinsame Website: Daten liegen eine Ebene höher
+var DATA_URL="gegner_daten.json"; // Team-Board liegt im Wurzelordner
 var GOAL={goal:1,pen_goal:1};
 var SEED=null, DATA=null, R=null, ST={team:null,game:"all",sort:"goals",dir:-1,fetched:false};
 function seed(){ if(SEED) return SEED; var el=document.getElementById("gaSeed"); SEED=el?JSON.parse(el.textContent):{games:[]}; return SEED; }
 var DBG=[], DBT={}, SUB=false;
 function key(g){ return String(g.nr||g.id); }
 function local(){ try{ var s=localStorage.getItem("mk2_gegner"); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function newer(a,b){ function n(s){ var m=String(s||"").match(/(\d{2})\.(\d{2})\.(\d{4})/); return m?m[3]+m[2]+m[1]:""; } return n(a)>n(b); }
 function rebuild(){
   var base=seed(), out={}, k; for(k in base) out[k]=base[k];
   var map={}; base.games.forEach(function(g){ map[key(g)]=g; });
-  var L=local(); if(L){ (L.games||[]).forEach(function(g){ map[key(g)]=g; }); if(L.fixtures) out.fixtures=L.fixtures; if(L.updated) out.updated=L.updated; }
+  var L=local(); if(L){ (L.games||[]).forEach(function(g){ map[key(g)]=g; }); if(newer(L.updated,base.updated)){ if(L.fixtures) out.fixtures=L.fixtures; out.updated=L.updated; } }
   DBG.forEach(function(g){ map[key(g)]=g; });
   var del={}; ((L&&L.deleted)||[]).forEach(function(k){del[k]=1;}); for(var t in DBT) del[t]=1;
   out.games=Object.keys(map).filter(function(x){return !del[x];}).map(function(x){return map[x];}); DATA=out; return DATA;

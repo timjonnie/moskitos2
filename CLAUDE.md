@@ -14,14 +14,14 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 
 | Pfad | Inhalt |
 |---|---|
-| `index.html` | Team-Board 4.2: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, Verwaltung, Ersteinrichtung/Umzug |
-| `analyse/index.html` | Spielanalyse 2.6 (Firebase-Modus, Präfix `a_`) |
+| `index.html` | Team-Board 4.3: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, Verwaltung, Ersteinrichtung/Umzug |
+| `analyse/index.html` | Spielanalyse 2.7 (Firebase-Modus, Präfix `a_`) |
 | `training/index.html` | Trainertool 1.3 (Firebase-Modus, Präfix `t_`) |
 | `board.json`, `alt/` | Alte verschlüsselte Daten – **nur für den einmaligen Umzug**, danach löschen |
 | `gegner_daten.json` | Öffentliche Spielberichte (`games`) + Termine der Moskitos (`fixtures`); wird montags automatisch erneuert |
 | `spielberichte_abruf.js` | Node-Skript: zählt handball360-IDs ab `START_ID` hoch, lädt PDFs, schreibt `gegner_daten.json` |
 | `ga_parse.js` | PDF-Auslese (pdf.js) – **gleiche Logik wie im Gegner-Reiter** der Analyse; Änderungen an beiden Stellen synchron halten |
-| `.github/workflows/montag.yml` | Jeden Montag 05:00 UTC Abruf, Commit durch „Gegneranalyse-Bot“ |
+| `.github/workflows/montag.yml` | Jeden Montag 05:23 und 13:47 UTC Abruf, Commit durch „Gegneranalyse-Bot“ |
 | `manifest.webmanifest`, `sw.js`, `icons/` | PWA (installierbar, Service Worker cacht bewusst nichts) |
 | `moskitos2-update2.zip` | Älteres Update-Paket, überholt |
 | `ANLEITUNG.md` | Anleitung für Menschen (Firebase-Ablauf, Stand 31.10.2026) |
