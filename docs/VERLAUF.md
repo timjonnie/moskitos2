@@ -241,3 +241,11 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   Angezeigt werden alle getragenen Nummern (`p.nrTxt`, z. B. „8/21“). Geprüft: Summe der Spielerinnentore = Mannschaftstore
   bei allen 11 Mannschaften; keine Schreibvarianten desselben Namens in den Berichten (nur Geschwister).
 - Team-Board 4.7, Spielanalyse 2.10.
+
+### 11.11.2026 – Spielverläufe farbig
+
+- `cCurve()`: Jedes Spiel bekommt eine eigene Farbe (12er-Palette, ab dem 13. Spiel gestrichelt). Vorher waren nur Spiele
+  mit zeitweise 2+ Toren Rückstand farbig, der Rest grau.
+- Tipp auf ein Spiel in der Legende (`data-gahl`) hebt dessen Verlauf hervor, die anderen werden blass; erneuter Tipp hebt
+  es auf. PDF-Export übernimmt die Farben (Legenden-Regex in `xLegend` angepasst).
+- Team-Board 4.8, Spielanalyse 2.11.
