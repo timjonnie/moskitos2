@@ -73,6 +73,16 @@ Nach einem Spieltag also: Spiel in der Analyse erfassen, danach einmal das Team-
 - Verlegte Spiele erscheinen automatisch, sobald ein Endstand vorliegt.
 - Einzelne PDFs können weiterhin im Gegner-Reiter der Spielanalyse hochgeladen werden.
 
+## Gegneranalyse exportieren (Trainer und Admin)
+
+Im Reiter **Gegner** (Team-Board oder Spielanalyse) einen Gegner wählen → unten **Komplette Analyse exportieren**.
+
+- Ohne Haken entsteht die **Version für die Mannschaft**: Kennzahlen, Torschützinnen, Spielerinnen-Tabelle,
+  Torphasen, Spielverläufe, Ergebnisse und Spiele gegen uns.
+- Mit Haken bei **„Das fällt auf“** (und in der Spielanalyse optional **Trainer-Notizen**) entsteht die
+  **Version für den Trainerstab**. Sie ist im Kopf und auf jeder Seite so markiert und gehört nicht in die Mannschaftsgruppe.
+- **Teilen …** (Handy, als PDF), **Als PDF** (A4, mehrseitig) oder **Als Bild (PNG)** (eine lange Grafik).
+
 ## Als App aufs Handy
 
 - iPhone (Safari): Teilen → „Zum Home-Bildschirm“.
