@@ -610,6 +610,7 @@ window.MKOpp={
     if(DATA_URL&&!ST.fetched){ ST.fetched=true; fetch(DATA_URL,{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){ if(!j) return; var r=merge(j); if(ROOT&&ROOT.isConnected) render(); if(r[0]) toast(r[0]+" neue Spielberichte geladen"); }).catch(function(){}); }
   },
   inject:function(tpl){ try{ load(); var js=JSON.stringify(DATA).replace(/<\//g,"<\\/"); return tpl.replace(/(<script id="gaSeed" type="application\/json">)[\s\S]*?(<\/script>)/,function(m,a,b){return a+js+b;}); }catch(e){ return tpl; } },
+  select:function(team){ ST.team=team; ST.game="all"; },  // z. B. Kurzlink „Bericht“ auf dem Team-Board
   unmount:function(){ window.removeEventListener("resize",onResize); ROOT=null; }
 };
 })();

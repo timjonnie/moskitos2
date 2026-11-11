@@ -225,3 +225,9 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Neu: `.github/workflows/pages.yml` (configure-pages, upload-pages-artifact, deploy-pages), ausgelöst bei Push auf
   `main`, nach „Spielberichte Montag“ (Bot-Commits lösen selbst keinen Push-Lauf aus) und per Knopf. `.nojekyll` ergänzt.
 - Einmalig nötig: Settings → Pages → Source „GitHub Actions“.
+
+### 11.11.2026 – Kurzlink „Bericht“
+
+- Team-Board 4.6: In der Schnellzugriff-Leiste (Trainer/Admin) Knopf „Bericht“ → `#gegner` mit „Moskitos 2 – eigene Auswertung“.
+  Neuer Hook `MKOpp.select(team)` (beide Kopien); Kachel „Gegner“ und „Zur Gegneranalyse“ setzen die Auswahl zurück
+  auf den nächsten Gegner. Veröffentlichung läuft seit #6 über `pages.yml` (hat funktioniert).
