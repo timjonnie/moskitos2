@@ -104,6 +104,11 @@ Spielberichte genauso aus wie die der Gegner: Bilanz, Torphasen, Spielverläufe,
 Du prüfst den Pull Request auf GitHub und klickst **Merge** – eine Minute später ist die neue Version online.
 Jede Datei hat auf GitHub einen Verlauf (**History**), alte Stände lassen sich jederzeit wiederherstellen.
 
+## Wenn eine Änderung nicht online erscheint
+
+Im Footer der Startseite steht die Version. Ist sie nach ein paar Minuten noch alt:
+GitHub → **Actions → Website veröffentlichen** → **Run workflow**. Nach ein bis zwei Minuten ist der neue Stand online.
+
 ## Datenschutz
 
 - Das Repo ist öffentlich. Es enthält nur den Programmcode und `gegner_daten.json` mit Angaben aus den
