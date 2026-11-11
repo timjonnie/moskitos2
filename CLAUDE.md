@@ -22,6 +22,7 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 | `spielberichte_abruf.js` | Node-Skript: zählt handball360-IDs ab `START_ID` hoch, lädt PDFs, schreibt `gegner_daten.json` |
 | `ga_parse.js` | PDF-Auslese (pdf.js) – **gleiche Logik wie im Gegner-Reiter** der Analyse; Änderungen an beiden Stellen synchron halten |
 | `.github/workflows/montag.yml` | Jeden Montag 05:23 und 13:47 UTC Abruf, Commit durch „Gegneranalyse-Bot“ |
+| `.github/workflows/pages.yml` | Veröffentlicht die Website (Pages-Quelle „GitHub Actions“); läuft bei Push auf `main` und nach dem Montags-Abruf |
 | `manifest.webmanifest`, `sw.js`, `icons/` | PWA (installierbar, Service Worker cacht bewusst nichts) |
 | `moskitos2-update2.zip` | Älteres Update-Paket, überholt |
 | `ANLEITUNG.md` | Anleitung für Menschen (Firebase-Ablauf, Stand 31.10.2026) |

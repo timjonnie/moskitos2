@@ -217,3 +217,11 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   wenn nicht Trainer/Admin (`canExp()`). Export: Mannschaftsversion ohne Spielerinnenwerte; mit Haken
   („Das fällt auf und Werte einzelner Spielerinnen“) Trainerstab-Version. Dateiname `Eigene_Auswertung_…`.
 - Team-Board 4.5, Spielanalyse 2.9.
+
+### 11.11.2026 – Veröffentlichung über eigenen Workflow
+
+- Nach dem Merge von #5 brach GitHubs eingebauter Lauf „pages build and deployment“ zweimal mit `startup_failure` ab
+  (ohne Job, ohne Protokoll); normale Workflows liefen. Live blieb Team-Board 4.4.
+- Neu: `.github/workflows/pages.yml` (configure-pages, upload-pages-artifact, deploy-pages), ausgelöst bei Push auf
+  `main`, nach „Spielberichte Montag“ (Bot-Commits lösen selbst keinen Push-Lauf aus) und per Knopf. `.nojekyll` ergänzt.
+- Einmalig nötig: Settings → Pages → Source „GitHub Actions“.
