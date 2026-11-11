@@ -207,3 +207,13 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   Spielerinnen sehen den Bereich nicht.
 - Team-Board 4.4, Spielanalyse 2.8. Getestet mit Playwright + Firebase-Mock und Sichtprüfung der PDF-Seiten.
 - Bekannt: Sehr lange Namen werden in der Torschützinnen-Grafik links abgeschnitten (auch in der normalen Ansicht).
+
+### 11.11.2026 – Eigene Auswertung aus den Spielberichten
+
+- Gegner-Baustein (`MKOpp`, beide Dateien identisch): In der Auswahl oben „Moskitos 2 – eigene Auswertung“ (Optgroup
+  „Eigene Mannschaft“). `analyse()` war schon mannschaftsneutral.
+- Für die eigene Mannschaft statt „Gegen uns“/„Gemeinsame Gegner“ der Block „Heim und auswärts“ (`haLine`).
+- Datenschutz: `R.teamOnly` blendet Spielerinnen-Grafik, -Tabelle und namensbezogene „Das fällt auf“-Punkte aus,
+  wenn nicht Trainer/Admin (`canExp()`). Export: Mannschaftsversion ohne Spielerinnenwerte; mit Haken
+  („Das fällt auf und Werte einzelner Spielerinnen“) Trainerstab-Version. Dateiname `Eigene_Auswertung_…`.
+- Team-Board 4.5, Spielanalyse 2.9.
