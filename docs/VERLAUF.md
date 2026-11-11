@@ -231,3 +231,13 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Team-Board 4.6: In der Schnellzugriff-Leiste (Trainer/Admin) Knopf „Bericht“ → `#gegner` mit „Moskitos 2 – eigene Auswertung“.
   Neuer Hook `MKOpp.select(team)` (beide Kopien); Kachel „Gegner“ und „Zur Gegneranalyse“ setzen die Auswahl zurück
   auf den nächsten Gegner. Veröffentlichung läuft seit #6 über `pages.yml` (hat funktioniert).
+
+### 11.11.2026 – Spielerinnen nach Namen statt Rückennummer zählen
+
+- Fehler: Gegner-Baustein (`analyse()`) und Startseite (`teamProfile()`) fassten Tore über alle Spiele **nach Rückennummer**
+  zusammen. Nummern wechseln aber oft (z. B. #21: viermal Jolien Atz, einmal Nele Dillo → „Nele Dillo 16 Tore“ statt 2;
+  bei HC Perl „Jennifer Christ 16“ statt 27). In fast jeder Mannschaft betroffen.
+- Jetzt Schlüssel = Name aus dem Spielbericht (klein, Leerzeichen normalisiert); ohne Namen Fallback `#Nr`.
+  Angezeigt werden alle getragenen Nummern (`p.nrTxt`, z. B. „8/21“). Geprüft: Summe der Spielerinnentore = Mannschaftstore
+  bei allen 11 Mannschaften; keine Schreibvarianten desselben Namens in den Berichten (nur Geschwister).
+- Team-Board 4.7, Spielanalyse 2.10.
