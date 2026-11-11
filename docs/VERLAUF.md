@@ -195,3 +195,15 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   auch wenn sie älter waren als die Datei. Dadurch alte Termine/falscher nächster Gegner. Jetzt nur, wenn neuer.
 - Team-Board 4.3, Spielanalyse 2.7. Zeitplan auf krumme Minuten (05:23 UTC) plus zweiter Lauf 13:47 UTC;
   `git pull --rebase` vor dem Push, falls beide Läufe sich überschneiden.
+
+### 11.11.2026 – Gegneranalyse komplett exportieren
+
+- Neuer Bereich „Komplette Analyse exportieren“ im Gegner-Baustein (`MKOpp`, in `index.html` und `analyse/index.html`
+  identisch). Erzeugt A4-PDF (mehrseitig, eigener PDF-Bauer ohne Bibliothek), langes PNG oder teilt das PDF per
+  `navigator.share`. Immer helles Kipper-CI, Diagramme werden dafür kurz im hellen Farbschema neu erzeugt.
+- Auswahl: „Das fällt auf“ (nur Trainerstab) und – nur in der Spielanalyse – Trainer-Notizen. Mit Haken wird die Datei
+  als „Trainerstab“ gekennzeichnet (Kopf, Fußzeile, Dateiname), ohne Haken als „Mannschaft“.
+- Sichtbar für Trainer/Admin: in der Analyse über `admin()`, im Team-Board über neuen Host-Hook `MKHost.canExport` (= `isCoach()`).
+  Spielerinnen sehen den Bereich nicht.
+- Team-Board 4.4, Spielanalyse 2.8. Getestet mit Playwright + Firebase-Mock und Sichtprüfung der PDF-Seiten.
+- Bekannt: Sehr lange Namen werden in der Torschützinnen-Grafik links abgeschnitten (auch in der normalen Ansicht).
