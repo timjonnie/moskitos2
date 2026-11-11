@@ -85,7 +85,7 @@ Im Reiter **Gegner** (Team-Board oder Spielanalyse) einen Gegner wählen → unt
 
 ## Eigene Auswertung (Moskitos 2)
 
-Im Reiter **Gegner** steht in der Auswahl ganz oben **„Moskitos 2 – eigene Auswertung“**. Sie wertet unsere eigenen
+Im Reiter **Gegner** steht in der Auswahl ganz oben **„Moskitos 2 – eigene Auswertung“**. Trainer und Admin kommen auch direkt über den Knopf **„Bericht“** auf der Startseite dorthin. Sie wertet unsere eigenen
 Spielberichte genauso aus wie die der Gegner: Bilanz, Torphasen, Spielverläufe, Ergebnisse, Heim und auswärts.
 
 - **Spielerinnen** sehen nur Mannschaftswerte – keine Torschützinnen, keine Tabelle mit einzelnen Spielerinnen.
