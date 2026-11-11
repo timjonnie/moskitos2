@@ -83,6 +83,16 @@ Im Reiter **Gegner** (Team-Board oder Spielanalyse) einen Gegner wählen → unt
   **Version für den Trainerstab**. Sie ist im Kopf und auf jeder Seite so markiert und gehört nicht in die Mannschaftsgruppe.
 - **Teilen …** (Handy, als PDF), **Als PDF** (A4, mehrseitig) oder **Als Bild (PNG)** (eine lange Grafik).
 
+## Eigene Auswertung (Moskitos 2)
+
+Im Reiter **Gegner** steht in der Auswahl ganz oben **„Moskitos 2 – eigene Auswertung“**. Sie wertet unsere eigenen
+Spielberichte genauso aus wie die der Gegner: Bilanz, Torphasen, Spielverläufe, Ergebnisse, Heim und auswärts.
+
+- **Spielerinnen** sehen nur Mannschaftswerte – keine Torschützinnen, keine Tabelle mit einzelnen Spielerinnen.
+- **Trainer und Admin** sehen zusätzlich Torschützinnen und Spielerinnen-Tabelle.
+- Beim Export enthält die Version für die Mannschaft nur Mannschaftswerte. Mit Haken bei
+  „Das fällt auf und Werte einzelner Spielerinnen“ entsteht die Version für den Trainerstab.
+
 ## Als App aufs Handy
 
 - iPhone (Safari): Teilen → „Zum Home-Bildschirm“.

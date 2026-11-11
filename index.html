@@ -297,7 +297,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.4 · letzte Aktualisierung 11.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.5 · letzte Aktualisierung 11.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -454,6 +454,9 @@ function fmt(x,d){ return x.toFixed(d==null?1:d).replace(".",","); }
 function dd(iso){ return iso.slice(8,10)+"."+iso.slice(5,7)+"."; }
 function css(v,f){ var r=getComputedStyle(document.documentElement).getPropertyValue(v).trim(); return r||f; }
 
+function haLine(r,home){ var g=r.games.filter(function(x){return x.home===home;}); if(!g.length) return null; var w=0,d=0,l=0,f=0,a=0;
+  g.forEach(function(x){ f+=x.gf; a+=x.ga; if(x.gf>x.ga) w++; else if(x.gf===x.ga) d++; else l++; });
+  return "<b>"+(home?"Heim":"Auswärts")+":</b> "+g.length+" Spiel"+(g.length===1?"":"e")+", "+w+"–"+d+"–"+l+", Tore "+f+":"+a+" (Ø "+fmt(f/g.length)+":"+fmt(a/g.length)+")"; }
 function teams(){
   var c={}; DATA.games.forEach(function(g){ c[g.home]=(c[g.home]||0)+1; c[g.away]=(c[g.away]||0)+1; }); delete c[OWN];
   return Object.keys(c).map(function(k){return [k,c[k]];}).sort(function(a,b){ return b[1]-a[1]||a[0].localeCompare(b[0],"de"); });
@@ -495,9 +498,9 @@ function insights(r){
   var close=r.games.filter(function(g){return Math.abs(g.gf-g.ga)<=3;});
   L.push("<b>Bilanz "+r.w+"–"+r.d+"–"+r.l+".</b> Im Schnitt "+fmt(r.gf/n)+" Tore und "+fmt(r.ga/n)+" Gegentore."+(close.length?" Knapp (höchstens 3 Tore): "+close.map(function(g){return esc(g.opp)+" "+g.gf+":"+g.ga;}).join(", ")+".":""));
   var top=r.plist.filter(function(p){return p.goals>0;}).slice(0,4), ts=top.reduce(function(s,p){return s+p.goals;},0);
-  if(top.length&&r.gf) L.push("<b>"+(top.length===4?"Vier":top.length)+" Werferinnen machen "+Math.round(ts/r.gf*100)+" % der Tore:</b> "+top.map(function(p){return esc(p.name)+" (#"+p.nr+", "+p.goals+")";}).join(", ")+".");
-  r.plist.filter(function(p){return p.pa>=3;}).forEach(function(p){
-    if(p.pg===p.pa) L.push("<b>"+esc(p.name)+" (#"+p.nr+") verwandelt jeden 7m:</b> "+p.pg+"/"+p.pa+". Fouls gegen sie im Wurfarm vermeiden.");
+  if(!r.teamOnly&&top.length&&r.gf) L.push("<b>"+(top.length===4?"Vier":top.length)+" Werferinnen machen "+Math.round(ts/r.gf*100)+" % der Tore:</b> "+top.map(function(p){return esc(p.name)+" (#"+p.nr+", "+p.goals+")";}).join(", ")+".");
+  (r.teamOnly?[]:r.plist).filter(function(p){return p.pa>=3;}).forEach(function(p){
+    if(p.pg===p.pa) L.push("<b>"+esc(p.name)+" (#"+p.nr+") verwandelt jeden 7m:</b> "+p.pg+"/"+p.pa+"."+(r.team===OWN?"":" Fouls gegen sie im Wurfarm vermeiden."));
     else if(p.pg/p.pa<0.7) L.push("<b>"+esc(p.name)+" (#"+p.nr+") ist vom Punkt unsicher:</b> nur "+p.pg+"/"+p.pa+".");
   });
   var d=r.bf.map(function(x,i){return x-r.ba[i];}), lab=["1–10","11–20","21–30","31–40","41–50","51–60"];
@@ -507,7 +510,7 @@ function insights(r){
   if(be.length) L.push("<b>In "+be.length+" von "+n+" Spielen zeitweise 2+ Tore hinten:</b> "+be.map(function(g){return esc(g.opp)+" (bis "+g.minD+")";}).join(", ")+".");
   if(r.pOpp[1]) L.push("<b>7m der Gegner:</b> "+r.pOpp[0]+"/"+r.pOpp[1]+" verwandelt ("+Math.round(r.pOpp[0]/r.pOpp[1]*100)+" %). Ob gehalten oder verworfen, steht nicht im Bericht.");
   var tw=r.plist.filter(function(p){return p.two>=2;}).sort(function(a,b){return b.two-a.two;});
-  L.push("<b>"+fmt(r.twoOwn/n)+" Zeitstrafen pro Spiel</b>"+(tw.length?", am häufigsten "+tw.slice(0,3).map(function(p){return esc(p.name)+" ("+p.two+")";}).join(", "):"")+".");
+  L.push("<b>"+fmt(r.twoOwn/n)+" Zeitstrafen pro Spiel</b>"+(tw.length&&!r.teamOnly?", am häufigsten "+tw.slice(0,3).map(function(p){return esc(p.name)+" ("+p.two+")";}).join(", "):"")+".");
   r.games.filter(function(g){return g.note&&(admin()||!/^Prüfen/.test(g.note));}).forEach(function(g){ L.push("<b>Hinweis "+dd(g.date)+":</b> "+esc(g.note)); });
   return L;
 }
@@ -565,21 +568,23 @@ function playersTable(){
 }
 function render(){
   load(); var T=teams(); if(!T.length){ ROOT.innerHTML='<div class="panel"><p>Noch keine Spielberichte vorhanden.</p></div>'; return; }
-  if(!ST.team||!T.some(function(t){return t[0]===ST.team;})){ var nx=(DATA.fixtures||[]).filter(function(f){return f.date>=new Date().toISOString().slice(0,10);}).sort(function(a,b){return a.date.localeCompare(b.date);})[0];
+  var ownN=DATA.games.filter(function(g){return g.home===OWN||g.away===OWN;}).length;
+  if(!ST.team||!(T.some(function(t){return t[0]===ST.team;})||(ST.team===OWN&&ownN))){ var nx=(DATA.fixtures||[]).filter(function(f){return f.date>=new Date().toISOString().slice(0,10);}).sort(function(a,b){return a.date.localeCompare(b.date);})[0];
     var cand=nx?(nx.home===OWN?nx.away:nx.home):null; ST.team=T.some(function(t){return t[0]===cand;})?cand:T[0][0]; }
-  R=analyse(ST.team); var r=R, n=r.n, nf=nextFixture(r.team), ad=admin();
+  R=analyse(ST.team); var isOwn=R.team===OWN, showPl=!isOwn||canExp(); R.teamOnly=!showPl; var r=R, n=r.n, nf=nextFixture(r.team), ad=admin();
   var k=[[r.w+"–"+r.d+"–"+r.l,"Bilanz (S–U–N)"],[fmt(r.gf/n),"Ø Tore"],[fmt(r.ga/n),"Ø Gegentore"],[r.pOwn[1]?r.pOwn[0]+"/"+r.pOwn[1]:"–","eigene 7m"],[r.pOpp[1]?r.pOpp[0]+"/"+r.pOpp[1]:"–","7m der Gegner"],[fmt(r.twoOwn/n),"Zeitstrafen pro Spiel"]];
   var own=DATA.games.concat(DATA.results_only||[]).filter(function(g){return [g.home,g.away].indexOf(r.team)>=0&&[g.home,g.away].indexOf(OWN)>=0;});
   var common=r.games.map(function(g){ var o=(DATA.results_only||[]).concat(DATA.games).filter(function(x){return [x.home,x.away].indexOf(OWN)>=0&&[x.home,x.away].indexOf(g.opp)>=0;})[0]; return o?{g:g,o:o}:null; }).filter(Boolean);
   var notes=""; try{ notes=localStorage.getItem("mk2_gegner_notiz_"+r.team)||""; }catch(e){}
   ROOT.innerHTML=
-   '<div class="panel ga-head"><div><h2>'+esc(r.team)+'</h2><p class="ga-sub">'+(nf?"Nächstes Spiel gegen uns: "+esc(nf.label):n+" ausgewertete Spielberichte")+'</p></div>'+
-   '<select data-ga="team" aria-label="Gegner wählen">'+T.map(function(t){return '<option value="'+esc(t[0])+'"'+(t[0]===r.team?" selected":"")+'>'+esc(t[0])+' ('+t[1]+')</option>';}).join("")+'</select></div>'+
+   '<div class="panel ga-head"><div><h2>'+esc(r.team)+(isOwn?' – eigene Auswertung':'')+'</h2><p class="ga-sub">'+(nf?(isOwn?"Nächstes Spiel: ":"Nächstes Spiel gegen uns: ")+esc(nf.label):n+" ausgewertete Spielberichte")+'</p></div>'+
+   '<select data-ga="team" aria-label="Mannschaft wählen">'+(ownN?'<optgroup label="Eigene Mannschaft"><option value="'+esc(OWN)+'"'+(isOwn?" selected":"")+'>'+esc(OWN)+' – eigene Auswertung ('+ownN+')</option></optgroup><optgroup label="Gegner">':'')+T.map(function(t){return '<option value="'+esc(t[0])+'"'+(t[0]===r.team?" selected":"")+'>'+esc(t[0])+' ('+t[1]+')</option>';}).join("")+(ownN?'</optgroup>':'')+'</select></div>'+
+   (isOwn?'<p class="note" style="margin:-4px 0 12px">Ausgewertet aus den offiziellen Spielberichten – wie bei den Gegnern. '+(showPl?'Werte einzelner Spielerinnen sieht nur der Trainerstab.':'Hier stehen nur Mannschaftswerte.')+'</p>':'')+
    '<div class="panel">'+(n<3?'<p class="ga-warn">Nur '+n+' Spielbericht'+(n===1?"":"e")+'. Ein erster Eindruck, noch kein Muster.</p>':'')+
      '<div class="ga-kpis">'+k.map(function(x){return '<div class="ga-kpi"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>';}).join("")+'</div>'+
      '<h3 style="margin:16px 0 8px">Das fällt auf</h3><ul class="ga-ins">'+insights(r).map(function(x){return "<li>"+x+"</li>";}).join("")+'</ul></div>'+
-   '<div class="panel"><h3 style="margin:0 0 8px">Spielerinnen</h3><div class="ga-chart" id="gaScor"></div>'+(ad?'<div class="ga-row"><button class="btn small" data-ga="png:gaScor">Grafik als Bild</button></div>':'')+
-     '<div class="ga-tbl" style="margin-top:10px">'+playersTable()+'</div><p class="note" style="margin-top:6px">Spiele zählt jeden Eintrag im Spielbericht, auch ohne Einsatz.</p></div>'+
+   (showPl?'<div class="panel"><h3 style="margin:0 0 8px">Spielerinnen</h3><div class="ga-chart" id="gaScor"></div>'+(ad?'<div class="ga-row"><button class="btn small" data-ga="png:gaScor">Grafik als Bild</button></div>':'')+
+     '<div class="ga-tbl" style="margin-top:10px">'+playersTable()+'</div><p class="note" style="margin-top:6px">Spiele zählt jeden Eintrag im Spielbericht, auch ohne Einsatz.</p></div>':'')+
    '<div class="panel"><h3 style="margin:0 0 8px">Wann fallen die Tore?</h3><div class="ga-chart" id="gaPh"></div>'+(ad?'<div class="ga-row"><button class="btn small" data-ga="png:gaPh">Grafik als Bild</button></div>':'')+
      '<p class="note" style="margin-top:8px">Stand nach 10 Minuten: '+r.games.map(function(g){return '<span class="'+(g.at10[0]<g.at10[1]?"neg":"")+'">'+g.at10[0]+":"+g.at10[1]+"</span>";}).join(" · ")+
      (r.to.length?'. Auszeiten in Minute '+r.to.slice().sort(function(a,b){return a-b;}).map(function(s){return Math.floor(s/60);}).join(", "):'')+'.</p></div>'+
@@ -588,8 +593,8 @@ function render(){
      (ad?'<div class="ga-row"><button class="btn small" data-ga="png:gaCur">Grafik als Bild</button></div>':'')+'</div>'+
    '<div class="panel"><h3 style="margin:0 0 8px">Ergebnisse</h3><div class="ga-tbl"><table><tr><th>ST</th><th>Datum</th><th>Gegner</th><th></th><th class="n">Ergebnis</th><th class="n">Halbzeit</th><th class="n">tiefster Stand</th>'+(ad?'<th>Bericht</th>':'')+'</tr>'+
      r.games.map(function(g){return '<tr><td>'+(g.comp==="Pokal"?"Pokal":g.st)+'</td><td>'+dd(g.date)+'</td><td>'+esc(g.opp)+'</td><td>'+(g.home?"H":"A")+'</td><td class="n"><b>'+g.gf+':'+g.ga+'</b></td><td class="n '+(g.hf<g.ha?"neg":"")+'">'+g.hf+':'+g.ha+'</td><td class="n '+(g.minD<0?"neg":"")+'">'+g.minD+'</td>'+(ad?'<td>'+(g.pdf?'<a href="'+esc(g.pdf)+'" target="_blank" rel="noopener">PDF</a>':'')+'</td>':'')+'</tr>';}).join("")+'</table></div></div>'+
-   '<div class="ga-two"><div class="panel"><h3 style="margin:0 0 8px">Gegen uns</h3>'+(own.length?'<p>'+own.map(function(g){return dd(g.date)+": "+esc(g.home)+" – "+esc(g.away)+" <b>"+g.score[0]+":"+g.score[1]+"</b>";}).join("<br>")+'</p>':'<p>Diese Saison noch kein Spiel gegen '+esc(r.team)+'.</p>')+
-     (common.length?'<p><b>Gemeinsame Gegner</b><br>'+common.map(function(c){ var us=c.o.home===OWN?c.o.score[0]:c.o.score[1], th=c.o.home===OWN?c.o.score[1]:c.o.score[0]; return esc(c.g.opp)+": "+esc(r.team)+" "+c.g.gf+":"+c.g.ga+", wir "+us+":"+th; }).join("<br>")+'</p>':'')+'</div>'+
+   '<div class="ga-two">'+(isOwn?'<div class="panel"><h3 style="margin:0 0 8px">Heim und auswärts</h3><p>'+[haLine(r,true),haLine(r,false)].filter(Boolean).join("<br>")+'</p></div>':'<div class="panel"><h3 style="margin:0 0 8px">Gegen uns</h3>'+(own.length?'<p>'+own.map(function(g){return dd(g.date)+": "+esc(g.home)+" – "+esc(g.away)+" <b>"+g.score[0]+":"+g.score[1]+"</b>";}).join("<br>")+'</p>':'<p>Diese Saison noch kein Spiel gegen '+esc(r.team)+'.</p>')+
+     (common.length?'<p><b>Gemeinsame Gegner</b><br>'+common.map(function(c){ var us=c.o.home===OWN?c.o.score[0]:c.o.score[1], th=c.o.home===OWN?c.o.score[1]:c.o.score[0]; return esc(c.g.opp)+": "+esc(r.team)+" "+c.g.gf+":"+c.g.ga+", wir "+us+":"+th; }).join("<br>")+'</p>':'')+'</div>')+
      (ad?'<div class="panel"><h3 style="margin:0 0 8px">Trainer-Notizen</h3><textarea data-ga="notes" placeholder="Abwehrsystem, Auslösungen, Torhüterin … aus Video und eigener Statistik">'+esc(notes)+'</textarea><p class="note">Nur für Admin und Trainer sichtbar, gespeichert auf diesem Gerät.</p></div>':'')+'</div>'+
    (canExp()?'<div id="gaExp">'+exportPanel()+'</div>':'')+
    (ad?'<div class="panel"><h3 style="margin:0 0 8px">Spielberichte hinzufügen</h3>'+
@@ -601,7 +606,7 @@ function render(){
    (ad?'<div class="panel"><h3 style="margin:0 0 8px">Daten &amp; Export</h3><div class="ga-row"><button class="btn" data-ga="csv">Spielerinnen als CSV</button><button class="btn" data-ga="json">Alle Daten als JSON</button>'+
      '<label class="btn" style="display:inline-flex;align-items:center;gap:6px">JSON einspielen<input type="file" accept=".json,application/json" data-ga="file" style="display:none"></label></div>'+
      '<p class="note" style="margin-top:8px">Datenstand: '+DATA.games.length+' Spielberichte, zuletzt '+esc(DATA.updated||"–")+'. Neue Berichte kommen montags als JSON aus dem automatischen Abruf.</p></div>':'');
-  ROOT.querySelector("#gaScor").innerHTML=cScorers(r,width("gaScor"));
+  var scEl=ROOT.querySelector("#gaScor"); if(scEl) scEl.innerHTML=cScorers(r,width("gaScor"));
   ROOT.querySelector("#gaPh").innerHTML=cPhases(r,width("gaPh"));
   ROOT.querySelector("#gaCur").innerHTML=cCurve(r,ST.game,width("gaCur"));
 }
@@ -658,7 +663,7 @@ function xTable(x,y,cols,rows){ // cols: [label, width, align]
   x.fillStyle=XP.line; x.fillRect(X,y,W,2); return y+2; }
 // Bausteine: jeder Abschnitt wird ein eigenes Bild, damit Seitenumbrüche nie mitten in einer Tabelle liegen
 async function xBlocks(opt){
-  var r=R, n=r.n, nf=nextFixture(r.team), today=new Date().toLocaleDateString("de-DE"), B=[];
+  var isOwn=R.team===OWN, hidePl=isOwn&&!opt.staff, r=Object.assign({},R,{teamOnly:hidePl}), n=r.n, nf=nextFixture(r.team), today=new Date().toLocaleDateString("de-DE"), B=[];
   // Diagramme im hellen Farbschema erzeugen (Darkmode der Ansicht spielt keine Rolle)
   var de=document.documentElement, th=de.getAttribute("data-theme"); de.setAttribute("data-theme","light");
   var sv; try{ sv={scor:cScorers(r,760),ph:cPhases(r,760),cur:cCurve(r,"all",760)}; } finally{ if(th==null) de.removeAttribute("data-theme"); else de.setAttribute("data-theme",th); }
@@ -666,9 +671,9 @@ async function xBlocks(opt){
   function blk(draw){ var cx=xCanvas(3200), y=draw(cx[1]); B.push(xCrop(cx[0],y)); }
   // Kopf
   blk(function(x){ x.fillStyle=XP.band; x.fillRect(0,0,XW,250);
-    xT(x,"GEGNERANALYSE",XPAD,86,{w:700,size:24,color:"#F6C98B"});
+    xT(x,isOwn?"EIGENE AUSWERTUNG":"GEGNERANALYSE",XPAD,86,{w:700,size:24,color:"#F6C98B"});
     var tw=xT(x,r.team,XPAD,160,{w:700,size:62,color:XP.bandInk,max:XW-XPAD*2-40}); xT(x,".",XPAD+tw+2,160,{w:700,size:62,color:XP.accent});
-    xT(x,nf?"Nächstes Spiel gegen uns: "+nf.label:n+" ausgewertete Spielberichte",XPAD,208,{w:400,size:24,color:XP.bandMuted,max:XW-XPAD*2});
+    xT(x,nf?(isOwn?"Nächstes Spiel: ":"Nächstes Spiel gegen uns: ")+nf.label:n+" ausgewertete Spielberichte",XPAD,208,{w:400,size:24,color:XP.bandMuted,max:XW-XPAD*2});
     var y=250+44;
     if(opt.staff){ x.fillStyle=XP.accentSoft; x.fillRect(XPAD,y-30,XW-XPAD*2,48); xT(x,"Für den Trainerstab – nicht an die Mannschaft weitergeben",XPAD+16,y+2,{w:700,size:22,color:XP.accent}); y+=44; }
     xT(x,"Moskitos 2 · Oberliga Frauen · "+n+" Spielbericht"+(n===1?"":"e")+" · Stand "+(DATA.updated||today),XPAD,y,{size:21,color:XP.muted}); return y+24; });
@@ -685,10 +690,10 @@ async function xBlocks(opt){
   if(opt.ins){ var L=insights(r); if(L.length) blk(function(x){ var y=xTitle(x,"Das fällt auf",56)+20;
     L.forEach(function(s){ x.fillStyle=XP.accent; x.beginPath(); x.arc(XPAD+8,y-8,5,0,Math.PI*2); x.fill(); y=xRich(x,s,XPAD+28,y,XW-XPAD*2-28,{size:23})+10; }); return y+6; }); }
   // Spielerinnen
-  blk(function(x){ var y=xTitle(x,"Torschützinnen",56)+14;
+  if(!hidePl) blk(function(x){ var y=xTitle(x,"Torschützinnen",56)+14;
     if(im.scor){ var w=XW-XPAD*2, h=im.scor.height*w/im.scor.width; x.drawImage(im.scor,XPAD,y,w,h); y+=h; } else y=xRich(x,"Keine Tore erfasst.",XPAD,y+30,XW-XPAD*2,{size:22,color:XP.muted});
     return y+10; });
-  var rows=R.plist.slice().sort(function(a,b){ return b.goals-a.goals||a.nr-b.nr; });
+  var rows=hidePl?[]:R.plist.slice().sort(function(a,b){ return b.goals-a.goals||a.nr-b.nr; });
   for(var i=0;i<rows.length;i+=24){ (function(part,first){ blk(function(x){ var y=first?xTitle(x,"Spielerinnen",56)+14:20;
     y=xTable(x,y,[["Nr",80,"r"],["Name",420],["Spiele",130,"r"],["Tore",120,"r"],["Ø",110,"r"],["7m",120,"r"],["2 Min.",116,"r"]],
       part.map(function(p){ return [p.nr,p.name,p.games,{t:p.goals,b:1},fmt(p.goals/Math.max(p.games,1)),p.pa?p.pg+"/"+p.pa:"–",p.two||"–"]; }));
@@ -713,7 +718,8 @@ async function xBlocks(opt){
   // Gegen uns + gemeinsame Gegner
   var own=DATA.games.concat(DATA.results_only||[]).filter(function(g){return [g.home,g.away].indexOf(r.team)>=0&&[g.home,g.away].indexOf(OWN)>=0;});
   var common=r.games.map(function(g){ var o=(DATA.results_only||[]).concat(DATA.games).filter(function(z){return [z.home,z.away].indexOf(OWN)>=0&&[z.home,z.away].indexOf(g.opp)>=0;})[0]; return o?{g:g,o:o}:null; }).filter(Boolean);
-  blk(function(x){ var y=xTitle(x,"Gegen uns",56)+24, W=XW-XPAD*2;
+  if(isOwn) blk(function(x){ var y=xTitle(x,"Heim und auswärts",56)+24; [haLine(r,true),haLine(r,false)].filter(Boolean).forEach(function(s){ y=xRich(x,s,XPAD,y,XW-XPAD*2,{size:22}); }); return y+4; });
+  else blk(function(x){ var y=xTitle(x,"Gegen uns",56)+24, W=XW-XPAD*2;
     if(own.length) own.forEach(function(g){ y=xRich(x,dd(g.date)+": "+esc(g.home)+" – "+esc(g.away)+" <b>"+g.score[0]+":"+g.score[1]+"</b>",XPAD,y,W,{size:22}); });
     else y=xRich(x,"Diese Saison noch kein Spiel gegen "+esc(r.team)+".",XPAD,y,W,{size:22,color:XP.muted});
     if(common.length){ y+=14; y=xRich(x,"<b>Gemeinsame Gegner</b>",XPAD,y,W,{size:22});
@@ -753,7 +759,7 @@ async function xPdf(pages){ // mehrseitiges PDF aus JPEG-Seiten, ohne Bibliothek
   return new Blob(parts,{type:"application/pdf"});
 }
 function xOpts(){ var staff=!!ST.xins||!!ST.xnotes; return {ins:!!ST.xins,notes:!!ST.xnotes,staff:staff}; }
-function xName(o,ext){ var d=new Date().toISOString().slice(0,10); return "Gegneranalyse_"+slug(R.team)+(o.staff?"_Trainerstab":"_Mannschaft")+"_"+d+"."+ext; }
+function xName(o,ext){ var d=new Date().toISOString().slice(0,10); return (R.team===OWN?"Eigene_Auswertung_":"Gegneranalyse_")+slug(R.team)+(o.staff?"_Trainerstab":"_Mannschaft")+"_"+d+"."+ext; }
 async function exportFull(kind,btn){
   if(!R) return; var o=xOpts(), old=btn.textContent; btn.disabled=true; btn.textContent="Wird erstellt …";
   try{ try{ if(document.fonts&&document.fonts.ready) await document.fonts.ready; }catch(e){}
@@ -761,16 +767,16 @@ async function exportFull(kind,btn){
     if(kind==="pdf"){ save(await xPdf(xPages(B,o.staff)),xName(o,"pdf")); }
     else if(kind==="png"){ save(await xBlob(xLong(B,o.staff),"image/png"),xName(o,"png")); }
     else { var f=new File([await xPdf(xPages(B,o.staff))],xName(o,"pdf"),{type:"application/pdf"});
-      if(navigator.canShare&&navigator.canShare({files:[f]})) await navigator.share({files:[f],title:"Gegneranalyse "+R.team}); else save(f,f.name); } }
+      if(navigator.canShare&&navigator.canShare({files:[f]})) await navigator.share({files:[f],title:(R.team===OWN?"Eigene Auswertung ":"Gegneranalyse ")+R.team}); else save(f,f.name); } }
   catch(err){ if(!err||err.name!=="AbortError") toast("Export nicht möglich: "+((err&&err.message)||err)); }
   finally{ btn.disabled=false; btn.textContent=old; }
 }
 function exportPanel(){
   var ad=admin(), o=xOpts(), share=!!(navigator.canShare&&navigator.share);
   return '<div class="panel"><h3 style="margin:0 0 8px">Komplette Analyse exportieren</h3>'+
-    '<label class="ga-chk"><input type="checkbox" data-ga="xins"'+(ST.xins?" checked":"")+'> „Das fällt auf“ mitexportieren <span class="note">(nur für den Trainerstab)</span></label>'+
+    '<label class="ga-chk"><input type="checkbox" data-ga="xins"'+(ST.xins?" checked":"")+'> „Das fällt auf“'+(R&&R.team===OWN?' und Werte einzelner Spielerinnen':'')+' mitexportieren <span class="note">(nur für den Trainerstab)</span></label>'+
     (ad?'<label class="ga-chk"><input type="checkbox" data-ga="xnotes"'+(ST.xnotes?" checked":"")+'> Trainer-Notizen mitexportieren</label>':'')+
-    '<p class="note" style="margin-top:6px">'+(o.staff?'<b class="neg">Version für den Trainerstab</b> – nicht in die Mannschaftsgruppe schicken.':'<b>Version für die Mannschaft:</b> Kennzahlen, Torschützinnen, Torphasen, Spielverläufe, Ergebnisse und Spiele gegen uns.')+'</p>'+
+    '<p class="note" style="margin-top:6px">'+(o.staff?'<b class="neg">Version für den Trainerstab</b> – nicht in die Mannschaftsgruppe schicken.':(R&&R.team===OWN?'<b>Version für die Mannschaft:</b> Kennzahlen, Torphasen, Spielverläufe, Ergebnisse, Heim und auswärts – ohne Werte einzelner Spielerinnen.':'<b>Version für die Mannschaft:</b> Kennzahlen, Torschützinnen, Torphasen, Spielverläufe, Ergebnisse und Spiele gegen uns.'))+'</p>'+
     '<div class="ga-row">'+(share?'<button class="btn primary" data-ga="xshare">Teilen …</button>':'')+'<button class="btn'+(share?'':' primary')+'" data-ga="xpdf">Als PDF</button><button class="btn" data-ga="xpng">Als Bild (PNG)</button></div></div>';
 }
 function merge(inc){
@@ -858,7 +864,7 @@ function onChange(e){
   else if(t.dataset.ga==="file"){ var f=t.files[0]; if(!f) return; f.text().then(function(s){ var r=merge(JSON.parse(s)); render(); toast(r[0]+" neue, "+r[1]+" aktualisierte Spielberichte übernommen"); }).catch(function(err){ toast("Einspielen fehlgeschlagen: "+err.message); }); }
 }
 function onInput(e){ var t=e.target; if(t.dataset&&t.dataset.ga==="notes"&&R){ try{ localStorage.setItem("mk2_gegner_notiz_"+R.team,t.value); }catch(err){} } }
-var rz=null; function onResize(){ clearTimeout(rz); rz=setTimeout(function(){ if(ROOT&&ROOT.isConnected&&R){ ROOT.querySelector("#gaScor").innerHTML=cScorers(R,width("gaScor")); ROOT.querySelector("#gaPh").innerHTML=cPhases(R,width("gaPh")); ROOT.querySelector("#gaCur").innerHTML=cCurve(R,ST.game,width("gaCur")); } },200); }
+var rz=null; function onResize(){ clearTimeout(rz); rz=setTimeout(function(){ if(ROOT&&ROOT.isConnected&&R){ if(ROOT.querySelector("#gaScor")) ROOT.querySelector("#gaScor").innerHTML=cScorers(R,width("gaScor")); ROOT.querySelector("#gaPh").innerHTML=cPhases(R,width("gaPh")); ROOT.querySelector("#gaCur").innerHTML=cCurve(R,ST.game,width("gaCur")); } },200); }
 window.MKOpp={
   mount:function(el){
     ROOT=el; ROOT.classList.add("ga"); subscribe();
