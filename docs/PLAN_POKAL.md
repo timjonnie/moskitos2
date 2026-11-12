@@ -32,6 +32,23 @@ Diese Claude-Umgebung erreicht weder **handball.net** noch **handball360.isquad.
 2. **Oder** einen **Link zu einem Pokal-Spielbericht** (PDF, `…dhb_acta_completa_pdf.php?id_partido=…`), sobald das
    erste Pokalspiel mit Bericht gespielt ist (Runde 2 am 22.11.). Dazu Gegner und Datum der kampflos gewonnenen 1. Runde.
 
+## Sobald der Network Access freigegeben ist
+
+Mit Zugriff auf **www.handball.net** kann ich dort auch die **kommenden Spiele crawlen** – nicht nur für den Pokal:
+
+- **Pokal-Spielplan** (Runden, Gegner, Termine, Hallen) direkt von der Pokalseite (Liga 10446, Phase 17425).
+- **Liga-Spielplan** der Oberliga Frauen mit allen offenen Spielen und Spieltagen – damit ist die Spieltags-Vorschau auf der
+  Ligaseite sofort vollständig (heute nur über `league_fixtures` aus den PDFs, die erst montags kommen).
+- **Verlegte Spiele / Nachholtermine** aktuell halten (neue Termine erscheinen auf handball.net oft früher als im PDF).
+- Möglichst als Teil des Montags-Abrufs (GitHub-Workflow), damit die Termine automatisch aktuell bleiben – vorher einmal
+  hier testen, wie handball.net die Daten ausliefert (die Seite lädt per JavaScript, ggf. über eine JSON-Schnittstelle).
+
+Erste Schritte nach der Freigabe:
+1. Prüfen, ob `www.handball.net` und `handball360.isquad.de` erreichbar sind.
+2. Struktur der Pokal- und Ligaseite analysieren (Spielplan, Spiel-IDs, Links zu den Spielberichten).
+3. Abruf-Skript erweitern: kommende Spiele (Liga + Pokal) und Pokal-Spielberichte.
+4. Pokal-Bereich bauen, Spieltags-Vorschau und Termine auf die neuen Daten umstellen.
+
 ## Merkposten (später)
 
 - **Vorsaison-Vergleich** (2025/26) – derzeit nicht möglich: Nach der Umstellung des Systems ist nur die neue Saison
