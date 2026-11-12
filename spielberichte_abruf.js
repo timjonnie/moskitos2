@@ -38,7 +38,7 @@ function fixtureFrom(lines, id) {
 (async () => {
   const data = fs.existsSync(DATEI) ? JSON.parse(fs.readFileSync(DATEI, "utf8")) : { games: [] };
   const byNr = new Map(data.games.map(g => [String(g.nr || g.id), g]));
-  const fixtures = [];
+  const fixtures = [], ligaFixtures = [];
   let miss = 0, neu = 0, upd = 0, offen = 0;
   for (let id = START_ID; miss < MAX_MISS; id++) {
     let buf;
@@ -56,6 +56,7 @@ function fixtureFrom(lines, id) {
     const r = gaParse(items, null, URL(id));
     if (r.error) {                       // noch nicht gespielt
       const f = fixtureFrom(lines, id); offen++;
+      if (f) ligaFixtures.push(f);
       if (f && (f.home === OWN || f.away === OWN)) fixtures.push(f);
       continue;
     }
@@ -68,6 +69,7 @@ function fixtureFrom(lines, id) {
   data.games = [...byNr.values()].sort((a, b) => a.date.localeCompare(b.date) || String(a.nr).localeCompare(String(b.nr)));
   const heute = new Date().toISOString().slice(0, 10);
   if (fixtures.length) data.fixtures = fixtures.filter(f => f.date >= heute).sort((a, b) => a.date.localeCompare(b.date));
+  if (ligaFixtures.length) data.league_fixtures = ligaFixtures.filter(f => f.date >= heute).sort((a, b) => a.date.localeCompare(b.date)); // alle offenen Ligaspiele (Spieltag-Vorschau)
   data.results_only = [];
   data.updated = new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
   fs.writeFileSync(DATEI, JSON.stringify(data, null, 1));

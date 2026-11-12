@@ -64,6 +64,14 @@ Siebenmeter-Quote und Zeitstrafen – jeweils mit der führenden Mannschaft (bes
 verwandelte 7m, meiste Zeitstrafen je Spiel). Spiele mit Moskitos 2 sind orange markiert.
 Trainer und Admin können sie unten im Bereich als **PDF**, **Bild (PNG)** oder per **Teilen …** exportieren – im gleichen Format wie die Gegneranalyse.
 
+### Seite „Alle Ligastatistiken“ (`#liga`)
+
+Über den Link unter der Ligastatistik: Spieltag-Rückblick und -Vorschau, Tabellen (Heim, Auswärts, 1./2. Halbzeit,
+Form der letzten 5), Tabellenverlauf (mit Vergleichsmannschaft), Phasen-Tabelle (Start- und Schlussphase),
+Spannung und Comebacks, Übersicht und Rekorde, Disziplin, Auszeiten-Wirkung, Unter-/Überzahl (geschätzt),
+Restprogramm Moskitos 2. **Ranglisten** (Torschützinnen, 7m-Schützinnen) sehen nur Trainer und Admin.
+Die Spieltags-Vorschau enthält alle Ligaspiele, sobald der Montags-Abruf sie mitliefert (`league_fixtures`).
+
 ## Rückmeldungen der Spielerinnen
 
 - Spielerinnen sagen in ihrem Dashboard bei den nächsten Spielen und Trainings zu oder ab.
