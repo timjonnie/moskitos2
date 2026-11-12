@@ -263,3 +263,5 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   Gleichstand auf zwei Nachkommastellen → alle genannt. Export als ein Baustein, damit er immer auf eine A4-Seite passt.
 - Team-Board 4.12: Ligastatistik nennt bei „Siebenmeter“ die beste Quote (ab 5 Würfen) und die meisten verwandelten 7m,
   bei „Zeitstrafen“ die Mannschaft mit den meisten Zeitstrafen je Spiel (Gleichstände: alle).
+- Team-Board 4.13: Desktop-Anordnung `.row.lt` – links „Form und Trend“ + Tabelle, rechts Ligastatistik (kein Leerraum mehr links).
+  Handy (≤ 700 px): Spalten per `display:contents` aufgelöst, Reihenfolge Form → Ligastatistik → Tabelle wie bisher.
