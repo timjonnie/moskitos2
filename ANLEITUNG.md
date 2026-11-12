@@ -60,6 +60,7 @@ Auf der Startseite steht über der Tabelle die **Ligastatistik** (auf- und zukla
 der Liga: Spiele und Heim-/Gastsiege, Tore gesamt und je Spiel, höchster Heim- und Auswärtssieg, torreichstes und
 torärmstes Spiel, meiste Tore / 7m-Tore / Feldtore einer Spielerin in einem Spiel, beste Torschützin der Saison,
 Siebenmeter-Quote und Zeitstrafen. Spiele mit Moskitos 2 sind orange markiert.
+Trainer und Admin können sie unten im Bereich als **PDF**, **Bild (PNG)** oder per **Teilen …** exportieren – im gleichen Format wie die Gegneranalyse.
 
 ## Rückmeldungen der Spielerinnen
 

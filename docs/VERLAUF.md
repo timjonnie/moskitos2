@@ -257,3 +257,5 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   meiste Tore/7m-Tore/Feldtore einer Spielerin in einem Spiel, beste Torschützin der Saison (nach Name+Mannschaft),
   7m-Quote, Zeitstrafen. Gleichstände werden alle genannt; Moskitos 2 orange. Für alle Rollen sichtbar (öffentliche Berichtsdaten).
 - Kachel „Training“ heißt jetzt „Trainer“ (Ziel unverändert `training/`).
+- Team-Board 4.10: Export der Ligastatistik (PDF eine A4-Seite, PNG, Teilen) für Trainer/Admin. Nutzt die Export-Bausteine
+  des Gegner-Moduls, die jetzt als `MKOpp.x` bereitstehen (in beiden Kopien gleich). Daten über `ligaRows()`/`LIGA`.
