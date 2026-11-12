@@ -7,7 +7,7 @@ Eine Adresse für alles: `https://timjonnie.github.io/moskitos2/`
 | `/moskitos2/` | Team-Board: Anmeldung, Dashboard, nächstes/letztes Spiel, Tabelle, Rückmeldungen, Verwaltung | alle |
 | `/moskitos2/#gegner` | Gegneranalyse | alle |
 | `/moskitos2/#auswertung` | Auswertung (Spielerinnen: die eigene, Trainer: die gewählte Spielerin) | alle |
-| `/moskitos2/training/` | Trainertool (Kader, ZN, SR, Übungen, Training) | Trainer, Admin |
+| `/moskitos2/training/` | Trainertool – auf der Startseite die Kachel **„Trainer“** (Kader, ZN, SR, Übungen, Training) | Trainer, Admin |
 | `/moskitos2/analyse/` | Spielanalyse mit Erfassung | Trainer, Admin |
 
 Alle Daten liegen in einer Online-Datenbank (Firebase, Server in Frankfurt).
@@ -53,6 +53,13 @@ Team-Board → **Verwaltung öffnen**.
 **Passwort vergessen:** Ein Admin kann Passwörter nicht zurücksetzen (Einschränkung des kostenlosen Firebase-Tarifs).
 Lösung: den Zugang entfernen und unter einem **neuen** Benutzernamen neu anlegen (z. B. `anna.m2` statt `anna.m`).
 Der alte Benutzername bleibt dauerhaft belegt.
+
+## Ligastatistik
+
+Auf der Startseite steht über der Tabelle die **Ligastatistik** (auf- und zuklappbar), berechnet aus allen Spielberichten
+der Liga: Spiele und Heim-/Gastsiege, Tore gesamt und je Spiel, höchster Heim- und Auswärtssieg, torreichstes und
+torärmstes Spiel, meiste Tore / 7m-Tore / Feldtore einer Spielerin in einem Spiel, beste Torschützin der Saison,
+Siebenmeter-Quote und Zeitstrafen. Spiele mit Moskitos 2 sind orange markiert.
 
 ## Rückmeldungen der Spielerinnen
 
