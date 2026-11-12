@@ -79,6 +79,9 @@ h2{ font:600 13px var(--font-display); text-transform:uppercase; letter-spacing:
 .lg-sel select{ font:inherit; padding:5px 8px; border-radius:8px; border:1px solid var(--line); background:var(--panel); color:var(--ink); min-width:0; max-width:100%; }
 .lgt{ font-size:13.5px; } .lgt td,.lgt th{ white-space:nowrap; } .lg-p{ color:var(--good); font-weight:600; } .lg-m{ color:var(--bad); font-weight:600; }
 #ligaView{ min-width:0; } #ligaView .list li>span:first-child{ min-width:0; }
+.lg-fill .lg-it{ padding-top:calc(9px + var(--lgpad,0px)); padding-bottom:calc(9px + var(--lgpad,0px)); }
+.lg-fill .lg-it:first-child{ padding-top:0; }
+.lg-chk{ display:flex; gap:8px; align-items:center; font-size:14.5px; margin:10px 0; cursor:pointer; } .lg-chk input{ width:18px; height:18px; accent-color:var(--accent); }
 .lg-exp{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; padding-top:12px; border-top:1px solid var(--line); }
 .big{ font:600 clamp(21px,5.2vw,27px)/1.2 var(--font-display); margin:2px 0 4px; letter-spacing:-.01em; }
 .sub{ color:var(--muted); font-size:14.5px; }
@@ -349,7 +352,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.15 · letzte Aktualisierung 12.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.16 · letzte Aktualisierung 12.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -932,7 +935,7 @@ window.MKOpp={
   },
   inject:function(tpl){ try{ load(); var js=JSON.stringify(DATA).replace(/<\//g,"<\\/"); return tpl.replace(/(<script id="gaSeed" type="application\/json">)[\s\S]*?(<\/script>)/,function(m,a,b){return a+js+b;}); }catch(e){ return tpl; } },
   select:function(team){ ST.team=team; ST.game="all"; },  // z. B. Kurzlink „Bericht“ auf dem Team-Board
-  x:{XP:XP,XW:XW,XPAD:XPAD,canvas:xCanvas,crop:xCrop,t:xT,rich:xRich,title:xTitle,pages:xPages,long:xLong,pdf:xPdf,blob:xBlob,save:save,slug:slug},  // Export-Bausteine (z. B. Ligastatistik)
+  x:{XP:XP,XW:XW,XPAD:XPAD,img:xImg,canvas:xCanvas,crop:xCrop,t:xT,rich:xRich,title:xTitle,pages:xPages,long:xLong,pdf:xPdf,blob:xBlob,save:save,slug:slug},  // Export-Bausteine (z. B. Ligastatistik)
   unmount:function(){ window.removeEventListener("resize",onResize); ROOT=null; }
 };
 })();
@@ -1393,7 +1396,7 @@ function lgRanglisten(gs){var P=lgPlayers(gs);
 function renderLiga(){
   var gs=lgGames();if(!gs.length){$("lvRoot").innerHTML='<div class="panel"><p class="sub">Noch keine Spielberichte.</p></div>';return}
   var TABS=[["heim","Heim"],["ausw","Auswärts"],["hz1","1. Halbzeit"],["hz2","2. Halbzeit"],["form","Form (letzte 5)"]];
-  var SEC=[["lgSt","Spieltag"],["lgTab","Tabellen"],["lgVer","Tabellenverlauf"],["lgPh","Phasen"],["lgSp","Spannung"],["lgRek","Rekorde"],["lgDis","Disziplin"],["lgAz","Auszeiten"],["lgUz","Unter-/Überzahl"],["lgRest","Restprogramm"]].concat(isCoach()?[["lgRang","Ranglisten"]]:[]);
+  var SEC=[["lgSt","Spieltag"],["lgTab","Tabellen"],["lgVer","Tabellenverlauf"],["lgPh","Phasen"],["lgSp","Spannung"],["lgRek","Rekorde"],["lgDis","Disziplin"],["lgAz","Auszeiten"],["lgUz","Unter-/Überzahl"],["lgRest","Restprogramm"]].concat(isCoach()?[["lgRang","Ranglisten"],["lgExp","Export"]]:[]);
   function sec(id,title,body){return '<section class="panel lg-sec" id="'+id+'"><h2>'+title+'</h2>'+body+'</section>'}
   $("lvRoot").innerHTML='<div class="panel"><h1 class="lg-h1">Ligastatistik</h1><p class="sub">Oberliga Frauen'+(PUB.season?" · Saison "+esc(PUB.season):"")+' · '+gs.length+' Spielberichte · Stand '+esc(PUB.updated||"–")+'</p>'+
       '<nav class="lg-nav">'+SEC.map(function(s){return '<button type="button" data-lgjump="'+s[0]+'">'+s[1]+'</button>'}).join("")+'</nav></div>'+
@@ -1408,12 +1411,128 @@ function renderLiga(){
     sec("lgAz","Auszeiten-Wirkung",lgAuszeiten(gs))+
     sec("lgUz","Unter- und Überzahl",lgUnterzahl(gs))+
     sec("lgRest","Restprogramm Moskitos 2",lgRest(gs))+
-    (isCoach()?sec("lgRang","Ranglisten",lgRanglisten(gs)):"");
+    (isCoach()?sec("lgRang","Ranglisten",lgRanglisten(gs)):"")+lvExportPanel();
 }
 document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("[data-lgtab],[data-lgjump]");if(!t||!$("lvRoot").contains(t))return;
   if(t.dataset.lgjump){var el=$(t.dataset.lgjump);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});return}
   LV.tab=t.dataset.lgtab;renderLiga();var el2=$("lgTab");if(el2)el2.scrollIntoView({block:"start"})});
 document.addEventListener("change",function(e){var t=e.target;if(t&&t.hasAttribute&&t.hasAttribute("data-lgcmp")){LV.cmp=t.value;$("lgVerBody").innerHTML=lgVerlauf(lgGames())}});
+/* ---------- Startseite: Ligastatistik bis zur Höhe der linken Spalte mit weiteren Kennzahlen füllen ---------- */
+function lgExtraRows(all){
+  var gs=all.filter(function(g){return g.score&&g.events&&g.comp!=="Pokal"}).sort(function(a,b){return a.date.localeCompare(b.date)});if(!gs.length)return [];
+  function tmh(t){return t===OWN?'<span class="own">'+esc(t)+'</span>':esc(t)}
+  function lead(mode,lbl,small){var r=lgAgg(lgEntries(gs,mode));if(!r.length)return null;var top=r.filter(function(x){return x.p===r[0].p&&x.d===r[0].d});
+    return [lbl,r[0].p+":"+(2*r[0].sp-r[0].p),small,top.map(function(x){return tmh(x.team)+" ("+x.s+"–"+x.u+"–"+x.n+", "+x.tf+":"+x.ta+")"}).join(", ")]}
+  var T={};gs.forEach(function(g){[["home",g.home],["away",g.away]].forEach(function(a){var t=T[a[1]]||(T[a[1]]={team:a[1],sp:0,sd:0,ed:0,z:0,res:[]});t.sp++;
+    var i=a[0]==="home"?0:1;t.res.push(g.score[i]>g.score[1-i]?"S":g.score[i]<g.score[1-i]?"N":"U");
+    g.events.forEach(function(e){var own=e.side===a[0];if(GOAL[e.type]){if(e.s<600)t.sd+=own?1:-1;if(e.s>=3000)t.ed+=own?1:-1}if(own&&e.type==="two_min")t.z++})})});
+  var TL=Object.keys(T).map(function(k){var t=T[k],n=0;for(var i=t.res.length-1;i>=0&&t.res[i]==="S";i--)n++;t.streak=n;return t});
+  function best(f,low){var v=null,l=[];TL.forEach(function(t){var x=Math.round(f(t)*100)/100;if(v==null||(low?x<v:x>v)){v=x;l=[t]}else if(x===v)l.push(t)});return {v:v,l:l}}
+  function sg(d){return (d>0?"+":"")+d}
+  var bs=best(function(t){return t.sd}),be=best(function(t){return t.ed}),fair=best(function(t){return t.z/t.sp},true),st=best(function(t){return t.streak});
+  var az={};gs.forEach(function(g){g.events.forEach(function(e){if(e.type!=="timeout")return;var tm=e.side==="home"?g.home:g.away,a=az[tm]||(az[tm]={team:tm,n:0,w:0});
+    var v=lgDiffIn(g,e.side,Math.max(0,e.s-300),e.s),n=lgDiffIn(g,e.side,e.s,e.s+300);a.n++;a.w+=(n[0]-n[1])-(v[0]-v[1])})});
+  var AZ=Object.keys(az).map(function(k){return az[k]}).filter(function(a){return a.n>=3}).sort(function(a,b){return b.w/b.n-a.w/a.n});
+  var R=[lead("heim","Beste Heimmannschaft","Punkte"),lead("ausw","Beste Auswärtsmannschaft","Punkte"),lead("form","Formstärkste Mannschaft","Punkte (letzte 5)"),
+    ["Beste Startphase",sg(bs.v),"Tordiff. 1.–10. Min.",bs.l.map(function(t){return tmh(t.team)}).join(", ")],
+    ["Beste Schlussphase",sg(be.v),"Tordiff. 51.–60. Min.",be.l.map(function(t){return tmh(t.team)}).join(", ")],
+    ["Fairste Mannschaft",fmt(fair.v),"Zeitstrafen je Spiel",fair.l.map(function(t){return tmh(t.team)+" ("+t.z+" in "+t.sp+" Spielen)"}).join(", ")],
+    st.v>1?["Längste aktuelle Siegesserie",st.v+" Siege","in Folge",st.l.map(function(t){return tmh(t.team)}).join(", ")]:null,
+    lead("hz1","Beste 1. Halbzeit","Punkte (Halbzeitwertung)"),lead("hz2","Beste 2. Halbzeit","Punkte (nur 2. Halbzeit)"),
+    AZ.length?["Wirksamste Auszeiten",sg(Math.round(AZ[0].w/AZ[0].n*10)/10).replace(".",","),"Tore Veränderung je Auszeit",tmh(AZ[0].team)+" ("+AZ[0].n+" Auszeiten)"]:null];
+  return R.filter(Boolean);
+}
+var LGX=[],lgFillT=null;
+function lgRowHtml(r){return '<div class="lg-it lg-x"><div class="lg-l">'+r[0]+'</div><div class="lg-v">'+r[1]+(r[2]?'<small>'+r[2]+'</small>':'')+'</div><div class="lg-d">'+r[3]+'</div></div>'}
+function fillLiga(){
+  var box=$("ligaBox"),liga=$("liga"),row=box&&box.closest(".row.lt");if(!box||!liga||!row)return;
+  liga.querySelectorAll(".lg-x").forEach(function(e){e.remove()});liga.classList.remove("lg-fill");liga.style.removeProperty("--lgpad");
+  var cols=getComputedStyle(row).gridTemplateColumns.split(" ").length;if(cols<2||!box.open||!LGX.length||$("dash").hidden||$("boardView").hidden)return;
+  // natürliche Höhen messen (ohne Strecken), dann Zeilen ergänzen und Rest gleichmäßig verteilen
+  var left=row.children[0],trend=left.querySelector(".trend");row.style.alignItems="start";box.style.flex="none";if(trend)trend.style.flex="none";
+  var target=left.offsetHeight;
+  for(var i=0;i<LGX.length;i++){liga.insertAdjacentHTML("beforeend",lgRowHtml(LGX[i]));if(box.offsetHeight>target){liga.lastElementChild.remove();break}}
+  var n=liga.querySelectorAll(".lg-it").length,rest=target-box.offsetHeight;if(n&&rest>0)liga.style.setProperty("--lgpad",Math.min(rest/n/2,24).toFixed(1)+"px");
+  liga.classList.add("lg-fill");row.style.alignItems="";box.style.flex="";if(trend)trend.style.flex="";
+}
+var LGRO=null;function lgObserve(){var row=document.querySelector(".row.lt");if(!row||LGRO||!window.ResizeObserver)return;LGRO=new ResizeObserver(lgFillSoon);LGRO.observe(row.children[0])}
+function lgFillSoon(){clearTimeout(lgFillT);lgFillT=setTimeout(fillLiga,120)}
+window.addEventListener("resize",lgFillSoon);
+
+document.addEventListener("toggle",function(e){if(e.target&&e.target.id==="ligaBox")lgFillSoon()},true);
+/* ---------- Export der ganzen Ligaseite (A4, mehrseitig) – gleiches Format wie Gegneranalyse ---------- */
+function lvRich(el){ // innerHTML → Text mit <b> für fett/Moskitos
+  var h=el.innerHTML.replace(/<br\s*\/?>/g," ").replace(/<(span|b)[^>]*class="[^"]*(lg-own|own)[^"]*"[^>]*>([\s\S]*?)<\/\1>/g,"<b>$3</b>").replace(/<b[^>]*>/g,"<b>").replace(/<(?!\/?b>)[^>]+>/g,"");return h.replace(/\s+/g," ").trim()}
+async function lvBlocks(staff){
+  var X=window.MKOpp&&MKOpp.x;if(!X)throw new Error("Export-Bausteine nicht geladen");
+  var P=X.XP,W=X.XW,PAD=X.XPAD,IW=W-PAD*2,B=[],gs=lgGames(),de=document.documentElement,th=de.getAttribute("data-theme");
+  // Inhalte im hellen Farbschema neu aufbauen, alle Tabellen statt nur des gewählten Reiters
+  de.setAttribute("data-theme","light");var host=document.createElement("div");host.style.cssText="position:absolute;left:-9999px;top:0;width:760px";document.body.appendChild(host);
+  var TABS=[["heim","Heimtabelle"],["ausw","Auswärtstabelle"],["hz1","Tabelle 1. Halbzeit"],["hz2","Tabelle 2. Halbzeit"],["form","Formtabelle (letzte 5 Spiele)"]];
+  var S=[["Spieltag",lgSpieltag(gs)],["Tabellen",TABS.map(function(t){return '<h3>'+t[1]+'</h3>'+lgTable(lgAgg(lgEntries(gs,t[0])))}).join("")],["Tabellenverlauf",lgVerlauf(gs)],["Phasen-Tabelle",lgPhasen(gs)],
+    ["Spannung und Comebacks",lgSpannung(gs)],["Übersicht und Rekorde",'<div class="liga">'+ligaStats((PUB&&PUB.games)||[])+'</div>'],["Disziplin",lgDisziplin(gs)],["Auszeiten-Wirkung",lgAuszeiten(gs)],
+    ["Unter- und Überzahl",lgUnterzahl(gs)],["Restprogramm Moskitos 2",lgRest(gs)]].concat(staff?[["Ranglisten",lgRanglisten(gs)]]:[]);
+  host.innerHTML=S.map(function(s){return '<section data-t="'+esc(s[0])+'">'+s[1]+'</section>'}).join("");
+  host.querySelectorAll(".lg-sel").forEach(function(e){e.remove()});
+  var svgs=[].slice.call(host.querySelectorAll("svg")),imgs=[];
+  for(var i=0;i<svgs.length;i++){var so=svgs[i].outerHTML;if(so.indexOf("xmlns=")<0)so=so.replace("<svg ",'<svg xmlns="http://www.w3.org/2000/svg" font-family="Lexend,Arial,sans-serif" ');imgs.push(await X.img(so))}
+  try{
+  var H3=null;
+  function blk(draw){var c=X.canvas(3600),y=draw(c[1]);B.push(X.crop(c[0],y))}
+  var upd=(PUB&&PUB.updated)||new Date().toLocaleDateString("de-DE");
+  blk(function(x){x.fillStyle=P.band;x.fillRect(0,0,W,220);X.t(x,"LIGASTATISTIK",PAD,74,{w:700,size:24,color:"#F6C98B"});
+    var tw=X.t(x,"Oberliga Frauen",PAD,142,{w:700,size:58,color:P.bandInk});X.t(x,".",PAD+tw+2,142,{w:700,size:58,color:P.accent});
+    X.t(x,"HV Saar"+(PUB&&PUB.season?" · Saison "+PUB.season:"")+" · "+gs.length+" Spielberichte · Stand "+upd,PAD,186,{size:23,color:P.bandMuted});
+    var y=220+40;if(staff){x.fillStyle=P.accentSoft;x.fillRect(PAD,y-30,IW,48);X.t(x,"Mit Ranglisten – für den Trainerstab",PAD+16,y+2,{w:700,size:22,color:P.accent});y+=40}
+    X.t(x,"Aus den offiziellen Spielberichten berechnet · Spiele und Spielerinnen von Moskitos 2 fett",PAD,y,{size:20,color:P.muted});return y+20});
+  var si=0;
+  [].slice.call(host.children).forEach(function(sec){var first=true;
+    // Titel und Zwischenüberschrift werden immer zusammen mit dem nächsten Inhalt gezeichnet (keine verwaisten Überschriften)
+    function title(x){var y=20;if(first){first=false;y=X.title(x,sec.getAttribute("data-t"),56)+18}if(H3){X.t(x,H3,PAD,y+24,{w:700,size:19,color:P.muted});H3=null;y+=40}return y}
+    function walk(el){[].slice.call(el.children).forEach(function(c){var tag=c.tagName.toLowerCase();
+      if(tag==="h3"){H3=c.textContent.toUpperCase()}
+      else if(tag==="p"||(tag==="div"&&c.classList.contains("sub"))){var t=lvRich(c);if(t)blk(function(x){var y=title(x);return X.rich(x,t,PAD,y+26,IW,{size:20,color:P.muted,lh:28})})}
+      else if(tag==="svg"){var im=imgs[svgs.indexOf(c)];if(im)blk(function(x){var y=title(x),w=IW,h=im.height*w/im.width;x.drawImage(im,PAD,y,w,h);return y+h+6})}
+      else if(tag==="table"){var rows=[].slice.call(c.querySelectorAll("tr"));
+        var cells=rows.map(function(r){return [].slice.call(r.children).map(function(td){return {t:td.innerText.replace(/\s*\n\s*/g," · ").trim(),n:td.classList.contains("n"),b:!!td.querySelector("b")||td.tagName==="TH"}})});
+        var nc=Math.max.apply(null,cells.map(function(r){return r.length})),wd=[];
+        for(var k=0;k<nc;k++)wd.push(Math.max.apply(null,cells.map(function(r){return r[k]?Math.min(r[k].t.length,34):0}))+2);
+        var sum=wd.reduce(function(a,b){return a+b},0),cw=wd.map(function(v){return v/sum*IW});
+        for(var r0=0;r0<rows.length;r0+=20)(function(part,head){blk(function(x){var y=title(x),rh=40;
+          var all=(head&&r0>0?[cells[0]]:[]).concat(part);
+          all.forEach(function(r,ri){var hd=rows[cells.indexOf(r)].querySelector("th"),own=rows[cells.indexOf(r)].classList.contains("own");
+            if(hd){x.fillStyle=P.soft;x.fillRect(PAD,y,IW,rh)}else if(own){x.fillStyle=P.accentSoft;x.fillRect(PAD,y,IW,rh)}else if(ri%2===0){x.fillStyle="#FBF9F5";x.fillRect(PAD,y,IW,rh)}
+            var cx=PAD;r.forEach(function(cl,j){var w=cw[j],al=cl.n?"right":"left";X.t(x,cl.t,al==="right"?cx+w-10:cx+10,y+27,{w:hd||cl.b||own?700:400,size:hd?17:19,color:hd?P.muted:P.ink,align:al,max:w-14});cx+=w});y+=rh});
+          x.fillStyle=P.line;x.fillRect(PAD,y,IW,2);return y+8})})(cells.slice(r0,r0+20),cells[0]&&rows[0].querySelector("th"));}
+      else if(tag==="ul"){var li=[].slice.call(c.children);for(var l0=0;l0<li.length;l0+=14)(function(part){blk(function(x){var y=title(x)+6;
+          part.forEach(function(it,ii){var sp=[].slice.call(it.children),lt=sp.length>1?lvRich(sp[0]):lvRich(it),rt=sp.length>1?sp[sp.length-1].innerText.replace(/\s+/g," ").trim():"";
+            if(ii){x.fillStyle=P.line;x.fillRect(PAD,y-4,IW,1.5)}x.font="600 19px Lexend,Arial,sans-serif";var rw=rt?Math.min(x.measureText(rt).width,IW*0.48):0;var y2=X.rich(x,lt,PAD,y+26,IW-rw-24,{size:20,lh:28});if(rt)X.t(x,rt,W-PAD,y+26,{w:600,size:19,align:"right",max:IW*0.48});y=Math.max(y2,y+36)+4});return y})})(li.slice(l0,l0+14))}
+      else if(c.classList.contains("facts")){var f=[].slice.call(c.children);blk(function(x){var y=title(x)+4,gap=16,w=(IW-gap*(f.length-1))/f.length;
+          f.forEach(function(fc,i){var X0=PAD+i*(w+gap);x.fillStyle=P.soft;x.fillRect(X0,y,w,100);X.t(x,(fc.querySelector("b")||{}).textContent||"",X0+18,y+52,{w:700,size:34,max:w-30});X.t(x,(fc.querySelector("span")||{}).textContent||"",X0+18,y+84,{size:17,color:P.muted,max:w-30})});return y+108})}
+      else if(c.classList.contains("lg-it")){blk(function(x){var y=title(x),lab=c.querySelector(".lg-l"),val=c.querySelector(".lg-v"),det=c.querySelector(".lg-d"),sm=val&&val.querySelector("small");
+          x.fillStyle=P.line;x.fillRect(PAD,y,IW,1.5);X.t(x,lab?lab.textContent:"",PAD,y+28,{size:18,color:P.muted});
+          var y2=X.rich(x,det?lvRich(det):"",PAD,y+56,IW-280,{size:21,lh:29});X.t(x,val?val.firstChild.textContent:"",W-PAD,y+48,{w:700,size:32,align:"right"});
+          if(sm)X.t(x,sm.textContent,W-PAD,y+74,{size:17,color:P.muted,align:"right"});return Math.max(y2-10,y+82)})}
+      else walk(c)})}
+    walk(sec);si++});
+  }finally{host.remove();if(th==null)de.removeAttribute("data-theme");else de.setAttribute("data-theme",th)}
+  return B;
+}
+async function lvExport(kind,btn){
+  var X=window.MKOpp&&MKOpp.x,old=btn.textContent,staff=isCoach()&&!!($("lvRang")||{}).checked;btn.disabled=true;btn.textContent="Wird erstellt …";
+  try{try{if(document.fonts&&document.fonts.ready)await document.fonts.ready}catch(e){}
+    var B=await lvBlocks(staff),name="Ligastatistik_komplett_"+(staff?"Trainerstab_":"")+new Date().toISOString().slice(0,10);
+    if(kind==="pdf")X.save(await X.pdf(X.pages(B,staff)),name+".pdf");
+    else if(kind==="png")X.save(await X.blob(X.long(B,staff),"image/png"),name+".png");
+    else{var f=new File([await X.pdf(X.pages(B,staff))],name+".pdf",{type:"application/pdf"});
+      if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:"Ligastatistik Oberliga Frauen"});else X.save(f,f.name)}}
+  catch(err){if(!err||err.name!=="AbortError")alert("Export nicht möglich: "+((err&&err.message)||err))}
+  finally{btn.disabled=false;btn.textContent=old}}
+function lvExportPanel(){if(!isCoach())return "";var sh=!!(navigator.canShare&&navigator.share);
+  return '<section class="panel lg-sec" id="lgExp"><h2>Ligastatistik exportieren</h2><p class="sub">Die ganze Seite als A4-PDF (mehrseitig), als Bild oder zum Teilen – alle fünf Tabellen untereinander.</p>'+
+    '<label class="lg-chk"><input type="checkbox" id="lvRang"> Ranglisten mitexportieren <span class="sub">(nur für den Trainerstab)</span></label>'+
+    '<div class="lg-exp" style="border:0;padding-top:0">'+(sh?'<button class="btn small primary" type="button" data-lvx="share">Teilen …</button>':'')+'<button class="btn small'+(sh?'':' primary')+'" type="button" data-lvx="pdf">Als PDF</button><button class="btn small" type="button" data-lvx="png">Als Bild (PNG)</button></div></section>'}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-lvx]");if(b)lvExport(b.dataset.lvx,b)});
 function renderPublic(d){
   var games=(d.games||[]).filter(function(g){return g.score&&g.events}),heute=new Date().toISOString().slice(0,10);
   var tab=table(games),me=teamProfile(games,OWN),rs=me.games.map(function(g){return Object.assign(res(g,OWN),{g:g})});
@@ -1421,7 +1540,7 @@ function renderPublic(d){
   var k=[[pos?pos+".":"–","Platz von "+tab.length],[row.p+":"+(2*row.sp-row.p),"Punkte"],[row.s+"–"+row.u+"–"+row.n,"Siege–Unent.–Niederl."],
          [me.n?fmt(me.gf/me.n):"–","Ø Tore"],[me.n?fmt(me.ga/me.n):"–","Ø Gegentore"],[(row.d>0?"+":"")+row.d,"Tordifferenz"]];
   $("kpis").innerHTML=k.map(function(x){return '<div class="kpi"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
-  $("liga").innerHTML=ligaStats(games);
+  $("liga").innerHTML=ligaStats(games);LGX=lgExtraRows(games);lgObserve();lgFillSoon();
   $("ligaExp").hidden=!(SES&&isCoach()&&LIGA&&LIGA.rows.length);var lsh=$("ligaExp").querySelector('[data-lx="share"]');if(lsh)lsh.hidden=!(navigator.canShare&&navigator.share);
   var last=rs[rs.length-1];
   if(last){var g=last.g,l=letter(last);
@@ -1793,7 +1912,7 @@ function mountGegner(){
 }
 function route(){var on=!$("dash").hidden,g=on&&location.hash==="#gegner",a=on&&location.hash==="#auswertung",lv=on&&location.hash==="#liga";
   $("gegnerView").hidden=!g;$("auswView").hidden=!a;$("ligaView").hidden=!lv;$("boardView").hidden=g||a||lv;
-  if(lv){renderLiga();window.scrollTo(0,0)}
+  if(lv){renderLiga();window.scrollTo(0,0)}else if(!g&&!a)lgFillSoon();
   if(g){mountGegner();window.scrollTo(0,0)}else if(window.MKOpp)window.MKOpp.unmount();
   if(a){var P=isCoach()?CUR_P:MY_P;$("avRoot").innerHTML=P?fullAnalysis(P):'<div class="panel"><p class="sub">'+(isCoach()?"Bitte zuerst unter „Profilansicht prüfen“ eine Spielerin wählen.":"Für dein Profil liegen noch keine Daten vor.")+'</p></div>';window.scrollTo(0,0)}}
 window.addEventListener("hashchange",route);

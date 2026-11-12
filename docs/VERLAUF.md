@@ -281,3 +281,9 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - `spielberichte_abruf.js`: speichert zusätzlich `league_fixtures` (alle offenen Ligaspiele) für die Spieltags-Vorschau.
   Bis zum nächsten Abruf zeigt die Vorschau nur das eigene Spiel mit Hinweis.
 - Team-Board 4.15.
+- Team-Board 4.16: Export der ganzen Ligaseite (`lvBlocks()` setzt die gerenderten Abschnitte in Canvas-Bausteine um:
+  Tabellen, Listen, Kacheln, Kennzahlzeilen, SVG; alle fünf Tabellen; Überschriften bleiben beim Inhalt). Option
+  „Ranglisten mitexportieren“ → Trainerstab-Version. `MKOpp.x.img` neu (beide Kopien; Spielanalyse 2.12).
+- Startseite: `fillLiga()` misst am Desktop die natürliche Höhe der linken Spalte und hängt Zusatz-Kennzahlen aus
+  `lgExtraRows()` an, bis die Ligastatistik bündig ist; Rest wird als Zeilenabstand verteilt. Läuft bei Laden, Größenänderung
+  (ResizeObserver auf linker Spalte) und Auf-/Zuklappen. Ist die Ligastatistik von sich aus länger, wird nichts angehängt.

@@ -71,6 +71,12 @@ Form der letzten 5), Tabellenverlauf (mit Vergleichsmannschaft), Phasen-Tabelle 
 Spannung und Comebacks, Übersicht und Rekorde, Disziplin, Auszeiten-Wirkung, Unter-/Überzahl (geschätzt),
 Restprogramm Moskitos 2. **Ranglisten** (Torschützinnen, 7m-Schützinnen) sehen nur Trainer und Admin.
 Die Spieltags-Vorschau enthält alle Ligaspiele, sobald der Montags-Abruf sie mitliefert (`league_fixtures`).
+Ganz unten (Trainer und Admin): **Ligastatistik exportieren** – die ganze Seite als mehrseitiges A4-PDF, Bild oder zum
+Teilen; alle fünf Tabellen untereinander. Mit Haken bei „Ranglisten mitexportieren“ entsteht die Trainerstab-Version.
+
+Auf der Startseite füllt sich die Ligastatistik am Desktop automatisch mit weiteren Kennzahlen (beste Heim-/Auswärts-
+mannschaft, formstärkste Mannschaft, beste Start-/Schlussphase, fairste Mannschaft, Siegesserie, beste Halbzeiten,
+wirksamste Auszeiten), bis sie mit der linken Spalte bündig abschließt.
 
 ## Rückmeldungen der Spielerinnen
 
