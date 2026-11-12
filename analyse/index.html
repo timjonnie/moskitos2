@@ -616,6 +616,7 @@ window.MKOpp={
   },
   inject:function(tpl){ try{ load(); var js=JSON.stringify(DATA).replace(/<\//g,"<\\/"); return tpl.replace(/(<script id="gaSeed" type="application\/json">)[\s\S]*?(<\/script>)/,function(m,a,b){return a+js+b;}); }catch(e){ return tpl; } },
   select:function(team){ ST.team=team; ST.game="all"; },  // z. B. Kurzlink „Bericht“ auf dem Team-Board
+  x:{XP:XP,XW:XW,XPAD:XPAD,canvas:xCanvas,crop:xCrop,t:xT,rich:xRich,title:xTitle,pages:xPages,long:xLong,pdf:xPdf,blob:xBlob,save:save,slug:slug},  // Export-Bausteine (z. B. Ligastatistik)
   unmount:function(){ window.removeEventListener("resize",onResize); ROOT=null; }
 };
 })();

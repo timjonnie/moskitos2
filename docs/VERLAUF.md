@@ -249,3 +249,15 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Tipp auf ein Spiel in der Legende (`data-gahl`) hebt dessen Verlauf hervor, die anderen werden blass; erneuter Tipp hebt
   es auf. PDF-Export übernimmt die Farben (Legenden-Regex in `xLegend` angepasst).
 - Team-Board 4.8, Spielanalyse 2.11.
+
+### 12.11.2026 – Ligastatistik, Kachel „Trainer“
+
+- Team-Board 4.9: Aufklappbarer Bereich „Ligastatistik“ über der Tabelle (`ligaStats()` in `index.html`, Vorlage: handballstatistiken.de).
+  Werte: Spiele (Heim/Remis/Gast), Tore gesamt/Schnitt (Heim/Gast), höchster Heim-/Auswärtssieg, torreichstes/-ärmstes Spiel,
+  meiste Tore/7m-Tore/Feldtore einer Spielerin in einem Spiel, beste Torschützin der Saison (nach Name+Mannschaft),
+  7m-Quote, Zeitstrafen. Gleichstände werden alle genannt; Moskitos 2 orange. Für alle Rollen sichtbar (öffentliche Berichtsdaten).
+- Kachel „Training“ heißt jetzt „Trainer“ (Ziel unverändert `training/`).
+- Team-Board 4.10: Export der Ligastatistik (PDF eine A4-Seite, PNG, Teilen) für Trainer/Admin. Nutzt die Export-Bausteine
+  des Gegner-Moduls, die jetzt als `MKOpp.x` bereitstehen (in beiden Kopien gleich). Daten über `ligaRows()`/`LIGA`.
+- Team-Board 4.11: Ligastatistik um „Bester Angriff“ (Tore ÷ Spiele) und „Beste Abwehr“ (Gegentore ÷ Spiele) ergänzt,
+  Gleichstand auf zwei Nachkommastellen → alle genannt. Export als ein Baustein, damit er immer auf eine A4-Seite passt.
