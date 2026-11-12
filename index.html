@@ -49,7 +49,11 @@ h2{ font:600 13px var(--font-display); text-transform:uppercase; letter-spacing:
 .panel{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; }
 .row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:12px; margin-bottom:12px; }
 .col{ display:flex; flex-direction:column; gap:12px; min-width:0; }
-.row.lt{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+.row.lt{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:stretch; }
+.row.lt .trend, .row.lt .lt-liga{ flex:1 1 auto; }
+.tm h3{ font:600 13px var(--font-display); text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:18px 0 6px; }
+.tm .list li>span:first-child{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.tm .ph{ display:flex; gap:12px; font-size:12.5px; color:var(--muted); margin-top:2px; } .tm .ph i{ display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:-1px; }
 @media (max-width:700px){ .row.lt{ grid-template-columns:minmax(0,1fr); } .row.lt>.col{ display:contents; } .row.lt .trend{ order:1; } .row.lt .lt-liga{ order:2; } .row.lt .lt-tab{ order:3; } }
 .liga summary{ cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .liga summary::-webkit-details-marker{ display:none; }
@@ -249,6 +253,13 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </section>
 
     <div class="row">
+      <section class="panel" id="lastBox" hidden>
+        <h2>Letztes Spiel</h2>
+        <div class="big" id="lastTitle"></div>
+        <div class="sub" id="lastWhen"></div>
+        <ul class="list" id="lastScorers"></ul>
+        <a class="more" id="lastLink" href="analyse/">Zur Spielanalyse →</a>
+      </section>
       <section class="panel" id="nextBox" hidden>
         <h2>Nächstes Spiel</h2>
         <div class="big" id="nextTitle"></div>
@@ -257,26 +268,20 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
         <ul class="list" id="nextScorers"></ul>
         <a class="more" id="nextLink" href="#gegner">Zur Gegneranalyse →</a>
       </section>
-      <section class="panel" id="lastBox" hidden>
-        <h2>Letztes Spiel</h2>
-        <div class="big" id="lastTitle"></div>
-        <div class="sub" id="lastWhen"></div>
-        <ul class="list" id="lastScorers"></ul>
-        <a class="more" id="lastLink" href="analyse/">Zur Spielanalyse →</a>
-      </section>
     </div>
 
     <h2 style="margin-top:6px">Saison</h2>
     <div class="kpis" id="kpis"></div>
 
     <!-- Desktop: links Form/Trend + Tabelle, rechts Ligastatistik. Handy: Form, Ligastatistik, Tabelle -->
-    <div class="row lt" style="margin-top:12px;align-items:start">
+    <div class="row lt" style="margin-top:12px">
       <div class="col">
       <section class="panel trend">
         <h2>Form und Trend</h2>
         <div id="form"></div>
         <div id="trend"></div>
         <div class="sub" id="trendTxt" style="margin-top:6px"></div>
+        <div id="trendMore"></div>
         <div id="teamStats"></div>
       </section>
       <section class="panel lt-tab">
@@ -328,7 +333,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.13 · letzte Aktualisierung 12.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.14 · letzte Aktualisierung 12.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -1218,6 +1223,31 @@ async function ligaExport(kind,btn){
   catch(err){if(!err||err.name!=="AbortError")alert("Export nicht möglich: "+((err&&err.message)||err))}
   finally{btn.disabled=false;btn.textContent=old}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-lx]");if(b)ligaExport(b.dataset.lx,b)});
+// Zusätzliche Saisonwerte unter „Form und Trend“ (öffentliche Spielberichte)
+function trendMore(rs){
+  if(!rs.length)return "";var h="";
+  var ha=[true,false].map(function(home){var a=rs.filter(function(r){return (r.side==="home")===home});if(!a.length)return null;
+    var w=a.filter(function(r){return r.gf>r.ga}).length,u=a.filter(function(r){return r.gf===r.ga}).length,gf=0,ga=0;a.forEach(function(r){gf+=r.gf;ga+=r.ga});
+    return [w+"–"+u+"–"+(a.length-w-u),(home?"Heim":"Auswärts")+" · "+gf+":"+ga+" (Ø "+fmt(gf/a.length)+" : "+fmt(ga/a.length)+")"]}).filter(Boolean);
+  var hz=[0,0,0,0];rs.forEach(function(r){hz[0]+=r.hf;hz[1]+=r.ha;hz[2]+=r.gf-r.hf;hz[3]+=r.ga-r.ha});
+  ha.push([hz[0]+":"+hz[1],"1. Halbzeit gesamt"],[hz[2]+":"+hz[3],"2. Halbzeit gesamt"]);
+  h+='<h3>Heim, auswärts und Halbzeiten</h3><div class="facts" style="margin-top:0">'+ha.map(function(x){return '<div class="fact"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("")+'</div>';
+  // Wann fallen die Tore? (je 10 Minuten)
+  var bf=[0,0,0,0,0,0],ba=[0,0,0,0,0,0];
+  rs.forEach(function(r){(r.g.events||[]).forEach(function(e){if(!GOAL[e.type])return;var b=Math.min(Math.floor(e.s/600),5);if(e.side===r.side)bf[b]++;else ba[b]++})});
+  var W=320,H=110,pad=4,bw=(W-2*pad)/6,mx=Math.max.apply(null,bf.concat(ba).concat([1])),sv="",ac=cssv("--accent"),op=cssv("--opp")||"#A9B4C0",mu=cssv("--muted");
+  bf.forEach(function(v,i){var x=pad+i*bw,w=bw*0.32,h1=v/mx*(H-34),h2=ba[i]/mx*(H-34),d=v-ba[i];
+    sv+='<rect x="'+(x+bw*0.16)+'" y="'+(H-18-h1)+'" width="'+w+'" height="'+Math.max(h1,1.5)+'" rx="2" fill="'+ac+'"><title>'+(i*10+1)+"–"+(i*10+10)+". Min.: "+v+' Tore</title></rect>';
+    sv+='<rect x="'+(x+bw*0.52)+'" y="'+(H-18-h2)+'" width="'+w+'" height="'+Math.max(h2,1.5)+'" rx="2" fill="'+op+'"><title>'+ba[i]+' Gegentore</title></rect>';
+    sv+='<text x="'+(x+bw/2)+'" y="'+(H-4)+'" text-anchor="middle" font-size="10" fill="'+mu+'">'+(i*10+1)+"–"+(i*10+10)+"'</text>";
+    sv+='<text x="'+(x+bw/2)+'" y="'+(H-22-Math.max(h1,h2))+'" text-anchor="middle" font-size="10" fill="'+mu+'">'+(d>0?"+":"")+d+'</text>'});
+  h+='<h3>Wann fallen die Tore?</h3><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tore und Gegentore je 10 Minuten">'+sv+'</svg>'+
+     '<div class="ph"><span><i style="background:'+ac+'"></i>Tore</span><span><i style="background:'+op+'"></i>Gegentore</span><span>Zahl: Differenz</span></div>';
+  // Alle Ergebnisse
+  h+='<h3>Alle Ergebnisse</h3><ul class="list" style="margin-top:0">'+rs.slice().reverse().map(function(r){var l=letter(r),g=r.g;
+    return '<li><span><span class="chip '+l+'">'+l+'</span>'+dd(g.date)+' · '+(r.side==="home"?"gegen ":"bei ")+esc(shortName(r.opp))+'</span><span><b>'+r.gf+':'+r.ga+'</b> <span class="sub">('+r.hf+':'+r.ha+')</span></span></li>'}).join("")+'</ul>';
+  return h;
+}
 function renderPublic(d){
   var games=(d.games||[]).filter(function(g){return g.score&&g.events}),heute=new Date().toISOString().slice(0,10);
   var tab=table(games),me=teamProfile(games,OWN),rs=me.games.map(function(g){return Object.assign(res(g,OWN),{g:g})});
@@ -1246,6 +1276,7 @@ function renderPublic(d){
     if(prev.length){var p=prev[prev.length-1];$("nextScorers").insertAdjacentHTML("afterbegin",'<li><span>Hinspiel</span><b>'+esc(p.home)+' '+p.score[0]+':'+p.score[1]+' '+esc(p.away)+'</b></li>')}
     $("nextLink").textContent="Gegneranalyse "+opp+" →";$("nextBox").hidden=false}
   $("form").innerHTML=rs.length?'<div class="sub" style="margin-bottom:4px">Letzte Spiele</div>'+chips(rs.slice(-5).map(letter)):"";
+  $("trendMore").innerHTML='<div class="tm">'+trendMore(rs)+'</div>';
   $("trend").innerHTML=diffBars(rs.map(function(r){return r.gf-r.ga}),rs.map(function(r){return r.opp+" "+r.gf+":"+r.ga}));
   if(rs.length>=2){var h1=rs.slice(0,Math.ceil(rs.length/2)),h2=rs.slice(Math.ceil(rs.length/2));
     var avg=function(a,key){return a.reduce(function(s,r){return s+r[key]},0)/a.length};
