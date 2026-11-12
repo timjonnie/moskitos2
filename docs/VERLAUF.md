@@ -265,3 +265,6 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   bei „Zeitstrafen“ die Mannschaft mit den meisten Zeitstrafen je Spiel (Gleichstände: alle).
 - Team-Board 4.13: Desktop-Anordnung `.row.lt` – links „Form und Trend“ + Tabelle, rechts Ligastatistik (kein Leerraum mehr links).
   Handy (≤ 700 px): Spalten per `display:contents` aufgelöst, Reihenfolge Form → Ligastatistik → Tabelle wie bisher.
+- Team-Board 4.14: „Letztes Spiel“ links, „Nächstes Spiel“ rechts. „Form und Trend“ erweitert (`trendMore()`): Heim/auswärts,
+  Halbzeiten, „Wann fallen die Tore?“ (Tore/Gegentore je 10 Min.), „Alle Ergebnisse“ mit Halbzeitstand – alles aus den
+  öffentlichen Spielberichten, für alle Rollen. Linke Spalte und Ligastatistik dehnen sich (`flex:1`), Unterkanten bündig.
