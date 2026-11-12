@@ -268,3 +268,26 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Team-Board 4.14: „Letztes Spiel“ links, „Nächstes Spiel“ rechts. „Form und Trend“ erweitert (`trendMore()`): Heim/auswärts,
   Halbzeiten, „Wann fallen die Tore?“ (Tore/Gegentore je 10 Min.), „Alle Ergebnisse“ mit Halbzeitstand – alles aus den
   öffentlichen Spielberichten, für alle Rollen. Linke Spalte und Ligastatistik dehnen sich (`flex:1`), Unterkanten bündig.
+
+### 12.11.2026 – Seite „Ligastatistik“ (#liga)
+
+- Vorschläge per Auswahl angenommen (alle). Neue Ansicht `#ligaView` mit Navigation: Spieltag (Rückblick + Vorschau),
+  Tabellen (Heim/Auswärts/1. HZ/2. HZ/Form 5), Tabellenverlauf (Platz je Spieltag, Vergleichsteam), Phasen-Tabelle,
+  Spannung & Comebacks, Übersicht + Rekorde, Disziplin, Auszeiten-Wirkung (±5 Min.), Unter-/Überzahl (2 Min. nach Strafe,
+  geschätzt), Restprogramm Moskitos, Ranglisten (nur `isCoach()`).
+- Rekorde (höchste Halbzeitführung, schnellstes Tor, längste Torserie, meiste Tore einer Halbzeit) über `lgRekordRows()`
+  auch in der Ligastatistik der Startseite und im Export (bleibt eine Seite).
+- Pokalspiele werden auf der Ligaseite nicht mitgezählt (`comp!=="Pokal"`).
+- `spielberichte_abruf.js`: speichert zusätzlich `league_fixtures` (alle offenen Ligaspiele) für die Spieltags-Vorschau.
+  Bis zum nächsten Abruf zeigt die Vorschau nur das eigene Spiel mit Hinweis.
+- Team-Board 4.15.
+- Team-Board 4.16: Export der ganzen Ligaseite (`lvBlocks()` setzt die gerenderten Abschnitte in Canvas-Bausteine um:
+  Tabellen, Listen, Kacheln, Kennzahlzeilen, SVG; alle fünf Tabellen; Überschriften bleiben beim Inhalt). Option
+  „Ranglisten mitexportieren“ → Trainerstab-Version. `MKOpp.x.img` neu (beide Kopien; Spielanalyse 2.12).
+- Startseite: `fillLiga()` misst am Desktop die natürliche Höhe der linken Spalte und hängt Zusatz-Kennzahlen aus
+  `lgExtraRows()` an, bis die Ligastatistik bündig ist; Rest wird als Zeilenabstand verteilt. Läuft bei Laden, Größenänderung
+  (ResizeObserver auf linker Spalte) und Auf-/Zuklappen. Ist die Ligastatistik von sich aus länger, wird nichts angehängt.
+- Team-Board 4.17: Unter-/Überzahl exakt statt geschätzt (Hinweis Nutzer: Zeitstrafe dauert immer genau 2 Minuten).
+  `lgStrength()` baut je Spiel die Strafintervalle [s, s+120) (auch Disqualifikation = 2 Min. Unterzahl, steht im Bericht ohne
+  extra Zeitstrafe); Unter-/Überzahl = weniger/mehr Spielerinnen als der Gegner zu diesem Zeitpunkt (Überlappungen verrechnet).
+  Ausgabe: Strafen, Minuten in Unter-/Überzahl, Tore:Gegentore je Zustand. Gegengerechnet in Python (Moskitos 14:43 Min., 5:8).
