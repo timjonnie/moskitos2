@@ -60,7 +60,8 @@ Auf der Startseite steht über der Tabelle die **Ligastatistik** (auf- und zukla
 der Liga: Spiele und Heim-/Gastsiege, Tore gesamt und je Spiel, bester Angriff (meiste Tore je Spiel) und beste Abwehr
 (wenigste Gegentore je Spiel), höchster Heim- und Auswärtssieg, torreichstes und
 torärmstes Spiel, meiste Tore / 7m-Tore / Feldtore einer Spielerin in einem Spiel, beste Torschützin der Saison,
-Siebenmeter-Quote und Zeitstrafen. Spiele mit Moskitos 2 sind orange markiert.
+Siebenmeter-Quote und Zeitstrafen – jeweils mit der führenden Mannschaft (beste 7m-Quote ab 5 Würfen, meiste
+verwandelte 7m, meiste Zeitstrafen je Spiel). Spiele mit Moskitos 2 sind orange markiert.
 Trainer und Admin können sie unten im Bereich als **PDF**, **Bild (PNG)** oder per **Teilen …** exportieren – im gleichen Format wie die Gegneranalyse.
 
 ## Rückmeldungen der Spielerinnen

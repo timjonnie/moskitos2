@@ -323,7 +323,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.11 · letzte Aktualisierung 12.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.12 · letzte Aktualisierung 12.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -1148,10 +1148,17 @@ function ligaRows(games){
   var sl=Object.keys(season).map(function(k){return season[k]}).sort(function(a,b){return b.t-a.t||a.g-b.g}),tv=sl.length?sl[0].t:0,tl=sl.filter(function(x){return x.t===tv});
   function pl(x){return esc(x.name)+" ("+tm(x.team)+")"}
   // Bester Angriff / beste Abwehr: Tore bzw. Gegentore je Spiel
-  var T={};gs.forEach(function(g){[[g.home,0],[g.away,1]].forEach(function(a){var t=T[a[0]]||(T[a[0]]={team:a[0],sp:0,gf:0,ga:0});t.sp++;t.gf+=g.score[a[1]];t.ga+=g.score[1-a[1]]})});
+  var T={};gs.forEach(function(g){[[g.home,0,"home"],[g.away,1,"away"]].forEach(function(a){var t=T[a[0]]||(T[a[0]]={team:a[0],sp:0,gf:0,ga:0,pg:0,pa:0,two:0});t.sp++;t.gf+=g.score[a[1]];t.ga+=g.score[1-a[1]];
+    g.events.forEach(function(e){if(e.side!==a[2])return;if(e.type==="pen_goal"){t.pg++;t.pa++}else if(e.type==="pen_miss")t.pa++;else if(e.type==="two_min")t.two++})})});
   var TL=Object.keys(T).map(function(k){var t=T[k];t.af=t.gf/t.sp;t.aa=t.ga/t.sp;return t});
   function tbest(f,low){var v=null,l=[];TL.forEach(function(t){var x=Math.round(f(t)*100)/100;if(v==null||(low?x<v:x>v)){v=x;l=[t]}else if(x===v)l.push(t)});return {v:v,l:l}}
   var ba=tbest(function(t){return t.af}),bd=tbest(function(t){return t.aa},true);
+  // Führende Mannschaft bei 7m (Quote, mind. 5 Würfe; meiste Treffer) und Zeitstrafen je Spiel
+  var TP=TL.filter(function(t){return t.pa>=5}),pq=TP.length?(function(){var v=null,l=[];TP.forEach(function(t){var x=Math.round(t.pg/t.pa*1000);if(v==null||x>v){v=x;l=[t]}else if(x===v)l.push(t)});return l})():[];
+  var pm=tbest(function(t){return t.pg}),tw=tbest(function(t){return t.two/t.sp});
+  var penTxt=(pq.length?"Beste Quote: "+list(pq,function(t){return tm(t.team)+" "+Math.round(t.pg/t.pa*100)+" % ("+t.pg+"/"+t.pa+")"}):"")+
+    (pm.v?(pq.length?"<br>":"")+"Meiste verwandelt: "+list(pm.l,function(t){return tm(t.team)+" ("+t.pg+")"}):"");
+  var twoTxt=tw.v?"Meiste je Spiel: "+list(tw.l,function(t){return tm(t.team)+" "+fmt(t.two/t.sp)+" ("+t.two+" in "+t.sp+" Spiel"+(t.sp===1?"":"en")+")"}):"Zwei-Minuten-Strafen aller Mannschaften";
   function tq(t,k){return tm(t.team)+" ("+t[k]+" "+(k==="gf"?"Tore":"Gegentore")+" in "+t.sp+" Spiel"+(t.sp===1?"":"en")+")"}
   var R=[
     ["Spiele",n,"",hs+" Heimsiege – "+u+" Remis – "+as+" Gastsiege"],
@@ -1166,8 +1173,8 @@ function ligaRows(games){
     mp.v?["Meiste 7m-Tore in einem Spiel",mp.v+" Tore","",list(mp.l,pl)]:null,
     mf.v?["Meiste Feldtore in einem Spiel",mf.v+" Tore","",list(mf.l,pl)]:null,
     tv?["Meiste Tore in der Saison",tv+" Tore",fmt(tv/Math.max(tl[0].g,1))+" je Spiel",list(tl,pl)]:null,
-    ["Siebenmeter",pg+"/"+pa,pa?Math.round(pg/pa*100)+" % verwandelt":"","Verwandelte und geworfene 7m aller Mannschaften"],
-    ["Zeitstrafen",two,fmt(two/n)+" je Spiel","Zwei-Minuten-Strafen aller Mannschaften"]
+    ["Siebenmeter",pg+"/"+pa,pa?Math.round(pg/pa*100)+" % verwandelt":"",penTxt||"Verwandelte und geworfene 7m aller Mannschaften"],
+    ["Zeitstrafen",two,fmt(two/n)+" je Spiel",twoTxt]
   ].filter(Boolean);
   return R;
 }

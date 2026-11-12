@@ -261,3 +261,5 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   des Gegner-Moduls, die jetzt als `MKOpp.x` bereitstehen (in beiden Kopien gleich). Daten über `ligaRows()`/`LIGA`.
 - Team-Board 4.11: Ligastatistik um „Bester Angriff“ (Tore ÷ Spiele) und „Beste Abwehr“ (Gegentore ÷ Spiele) ergänzt,
   Gleichstand auf zwei Nachkommastellen → alle genannt. Export als ein Baustein, damit er immer auf eine A4-Seite passt.
+- Team-Board 4.12: Ligastatistik nennt bei „Siebenmeter“ die beste Quote (ab 5 Würfen) und die meisten verwandelten 7m,
+  bei „Zeitstrafen“ die Mannschaft mit den meisten Zeitstrafen je Spiel (Gleichstände: alle).
