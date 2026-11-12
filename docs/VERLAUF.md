@@ -297,3 +297,13 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 
 - Plan in `docs/PLAN_SAISONS_POKAL.md`. Diese Claude-Umgebung erreicht handball360.isquad.de nicht (Netzwerkregel, 403);
   GitHub-Workflows schon. Vorsaison wird daher per neuem Workflow nachgeladen. Start 13.11.2026.
+
+### 12.11.2026 – Feedback Lukas zur Spielerfassung (Tabelle)
+
+- Spielanalyse 2.13, Erfassung → Reiter „Tabelle“:
+  - „Tippen = +1 / −1“-Leiste (`.tmode-bar`) klebt unter der Spielstands-Leiste (`--liveH` per `efSticky()` gemessen).
+  - Kopfzeilen der Feldspielerinnen- und Torhüterinnen-Tabelle folgen dem Seiten-Scrollen und bleiben unter der Leiste
+    (`efHead()`, translateY auf `thead th`; kein verschachteltes Scrollfenster).
+  - Schalter farbig: +1 grün, −1 rot (`.seg.tmode`).
+  - Zeilen alphabetisch (nur Anzeige; `data-cell` behält den Originalindex, Verlauf/Rückgängig unverändert).
+- Nicht angepasst: eingebetteter Export-Bauplan `__MK_TPL__` (nur für den alten Artefakt-Modus).

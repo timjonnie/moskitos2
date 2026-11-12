@@ -49,7 +49,8 @@ Stand 12.11.2026 – Start am 13.11.2026.
 
 ## Außerdem offen
 
-- **Feedback von Lukas zur Spielerfassung** (Spielanalyse → Erfassung) einarbeiten – Feedback bitte mitbringen.
+- ~~Feedback von Lukas zur Spielerfassung~~ – am 12.11. umgesetzt (Spielanalyse 2.13): Kopfzeile fixiert, +1/−1-Schalter
+  läuft mit und ist grün/rot, Tabelle alphabetisch. Weiteres Feedback von Lukas gern ergänzen.
 
 ## Ablauf morgen
 
