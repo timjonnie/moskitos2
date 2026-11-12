@@ -352,7 +352,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.17 · letzte Aktualisierung 12.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.18 · letzte Aktualisierung 12.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -1133,7 +1133,7 @@ async function showDash(){
   $("tilesWrap").hidden=false;$("tTraining").hidden=!isCoach();$("tAnalyse").hidden=!isCoach();$("tMine").hidden=!(SES.role==="spielerin");
   $("lastLink").hidden=!isCoach();$("adminBox").hidden=!isAdmin();
   var q="";
-  if(isCoach()){q+='<a class="qbtn" href="analyse/#erfassung"><span class="dot"></span>Spiel erfassen</a><a class="qbtn" href="training/"><span class="dot"></span>Kader fürs nächste Spiel</a><a class="qbtn" href="#gegner" id="qBericht"><span class="dot"></span>Bericht</a>';
+  if(isCoach()){q+='<a class="qbtn" href="analyse/#erfassung"><span class="dot"></span>Spiel erfassen</a><a class="qbtn" href="training/"><span class="dot"></span>Kader fürs nächste Spiel</a><a class="qbtn" href="#gegner" id="qBericht"><span class="dot"></span>Bericht</a><a class="qbtn" href="#liga"><span class="dot"></span>Ligastatistik</a>';
     q+=isAdmin()?'<button class="qbtn" type="button" id="qAdmin"><span class="dot"></span>Zugänge verwalten</button>':""}
   $("quick").innerHTML=q;if($("qBericht"))$("qBericht").onclick=function(){if(window.MKOpp&&MKOpp.select)MKOpp.select("Moskitos 2")};["tGegner","nextLink"].forEach(function(id){if($(id))$(id).onclick=function(){if(window.MKOpp&&MKOpp.select)MKOpp.select(null)}});if($("qAdmin"))$("qAdmin").onclick=function(){$("adminBox").scrollIntoView({behavior:"smooth"});openAdmin()};
   PUB=await fetch("gegner_daten.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null});
