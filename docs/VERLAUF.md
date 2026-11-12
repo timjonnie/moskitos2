@@ -292,3 +292,8 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   extra Zeitstrafe); Unter-/Überzahl = weniger/mehr Spielerinnen als der Gegner zu diesem Zeitpunkt (Überlappungen verrechnet).
   Ausgabe: Strafen, Minuten in Unter-/Überzahl, Tore:Gegentore je Zustand. Gegengerechnet in Python (Moskitos 14:43 Min., 5:8).
 - Team-Board 4.18: Schnellzugriff „Ligastatistik“ (→ `#liga`) zwischen „Bericht“ und „Zugänge verwalten“ (Trainer/Admin).
+
+### 12.11.2026 – Analyse Vorsaison und Pokal
+
+- Plan in `docs/PLAN_SAISONS_POKAL.md`. Diese Claude-Umgebung erreicht handball360.isquad.de nicht (Netzwerkregel, 403);
+  GitHub-Workflows schon. Vorsaison wird daher per neuem Workflow nachgeladen. Start 13.11.2026.
