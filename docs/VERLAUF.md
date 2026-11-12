@@ -287,3 +287,7 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Startseite: `fillLiga()` misst am Desktop die natürliche Höhe der linken Spalte und hängt Zusatz-Kennzahlen aus
   `lgExtraRows()` an, bis die Ligastatistik bündig ist; Rest wird als Zeilenabstand verteilt. Läuft bei Laden, Größenänderung
   (ResizeObserver auf linker Spalte) und Auf-/Zuklappen. Ist die Ligastatistik von sich aus länger, wird nichts angehängt.
+- Team-Board 4.17: Unter-/Überzahl exakt statt geschätzt (Hinweis Nutzer: Zeitstrafe dauert immer genau 2 Minuten).
+  `lgStrength()` baut je Spiel die Strafintervalle [s, s+120) (auch Disqualifikation = 2 Min. Unterzahl, steht im Bericht ohne
+  extra Zeitstrafe); Unter-/Überzahl = weniger/mehr Spielerinnen als der Gegner zu diesem Zeitpunkt (Überlappungen verrechnet).
+  Ausgabe: Strafen, Minuten in Unter-/Überzahl, Tore:Gegentore je Zustand. Gegengerechnet in Python (Moskitos 14:43 Min., 5:8).

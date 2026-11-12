@@ -68,7 +68,7 @@ Trainer und Admin können sie unten im Bereich als **PDF**, **Bild (PNG)** oder 
 
 Über den Link unter der Ligastatistik: Spieltag-Rückblick und -Vorschau, Tabellen (Heim, Auswärts, 1./2. Halbzeit,
 Form der letzten 5), Tabellenverlauf (mit Vergleichsmannschaft), Phasen-Tabelle (Start- und Schlussphase),
-Spannung und Comebacks, Übersicht und Rekorde, Disziplin, Auszeiten-Wirkung, Unter-/Überzahl (geschätzt),
+Spannung und Comebacks, Übersicht und Rekorde, Disziplin, Auszeiten-Wirkung, Unter-/Überzahl (exakt aus den 2-Minuten-Strafen),
 Restprogramm Moskitos 2. **Ranglisten** (Torschützinnen, 7m-Schützinnen) sehen nur Trainer und Admin.
 Die Spieltags-Vorschau enthält alle Ligaspiele, sobald der Montags-Abruf sie mitliefert (`league_fixtures`).
 Ganz unten (Trainer und Admin): **Ligastatistik exportieren** – die ganze Seite als mehrseitiges A4-PDF, Bild oder zum

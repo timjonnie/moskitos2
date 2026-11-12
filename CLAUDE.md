@@ -14,7 +14,7 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 
 | Pfad | Inhalt |
 |---|---|
-| `index.html` | Team-Board 4.16: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, Verwaltung, Ersteinrichtung/Umzug |
+| `index.html` | Team-Board 4.17: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, Verwaltung, Ersteinrichtung/Umzug |
 | `analyse/index.html` | Spielanalyse 2.12 (Firebase-Modus, Präfix `a_`) |
 | `training/index.html` | Trainertool 1.3 (Firebase-Modus, Präfix `t_`) |
 | `board.json`, `alt/` | Alte verschlüsselte Daten – **nur für den einmaligen Umzug**, danach löschen |

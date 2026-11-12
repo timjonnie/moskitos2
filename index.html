@@ -352,7 +352,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.16 · letzte Aktualisierung 12.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.17 · letzte Aktualisierung 12.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -1363,14 +1363,30 @@ function lgAuszeiten(gs){var T={};gs.forEach(function(g){g.events.forEach(functi
   return '<p class="sub" style="margin-bottom:8px">Tordifferenz der Mannschaft in den 5 Minuten vor und nach jeder eigenen Auszeit. „Wirkung“ = Ø Veränderung je Auszeit.</p>'+
     '<div style="overflow-x:auto"><table class="lgt"><tr><th>Mannschaft</th><th class="n">Auszeiten</th><th class="n">5 Min. davor</th><th class="n">5 Min. danach</th><th class="n">Wirkung</th></tr>'+
     R.map(function(t){return '<tr class="'+(t.team===OWN?"own":"")+'"><td>'+esc(shortName(t.team))+'</td><td class="n">'+t.n+'</td><td class="n">'+dc(t.v)+'</td><td class="n">'+dc(t.na)+'</td><td class="n"><b>'+dc(t.eff,1)+'</b></td></tr>'}).join("")+'</table></div>'}
-function lgUnterzahl(gs){var T={};function t0(n){return T[n]||(T[n]={team:n,z:0,uf:0,ua:0,o:0,of:0,oa:0})}
-  gs.forEach(function(g){g.events.forEach(function(e){if(e.type!=="two_min")return;var s=e.side,o=s==="home"?"away":"home",ts=t0(s==="home"?g.home:g.away),to=t0(o==="home"?g.home:g.away);
-    var w=lgDiffIn(g,s,e.s,e.s+120);ts.z++;ts.uf+=w[0];ts.ua+=w[1];to.o++;to.of+=w[1];to.oa+=w[0]})});
-  var R=Object.keys(T).map(function(k){return T[k]}).sort(function(a,b){return (b.uf-b.ua)/Math.max(b.z,1)-(a.uf-a.ua)/Math.max(a.z,1)});
+// Unter-/Überzahl exakt: jede Zeitstrafe (und Disqualifikation) reduziert die Mannschaft genau 2 Minuten (120 s),
+// unabhängig von Toren. Mehrere Strafen überlappen; maßgeblich ist die Differenz der Spielerinnen auf dem Feld.
+function lgStrength(g){var P={home:[],away:[]};g.events.forEach(function(e){if(e.type==="two_min"||e.type==="disq")P[e.side].push([e.s,Math.min(e.s+120,3600)])});
+  function off(side,t){return P[side].filter(function(i){return t>=i[0]&&t<i[1]}).length}
+  return {P:P,off:off}}
+function lgUnterzahl(gs){var T={};function t0(n){return T[n]||(T[n]={team:n,us:0,uf:0,ua:0,os:0,of:0,oa:0,z:0})}
+  gs.forEach(function(g){var S=lgStrength(g),sides=[["home",g.home],["away",g.away]];
+    // Zeit in Unter-/Überzahl: Sekundenraster über die Strafzeiträume
+    var marks={};["home","away"].forEach(function(sd){S.P[sd].forEach(function(i){marks[i[0]]=1;marks[i[1]]=1})});
+    var ts=Object.keys(marks).map(Number).sort(function(a,b){return a-b});
+    for(var k=0;k<ts.length-1;k++){var a=ts[k],b=ts[k+1],h=S.off("home",a),w=S.off("away",a);if(h===w)continue;
+      var hs=t0(g.home),as=t0(g.away);if(h>w){hs.us+=b-a;as.os+=b-a}else{as.us+=b-a;hs.os+=b-a}}
+    sides.forEach(function(x){t0(x[1]).z+=S.P[x[0]].length});
+    g.events.forEach(function(e){if(!GOAL[e.type])return;var h=S.off("home",e.s),w=S.off("away",e.s);if(h===w)return;
+      var sc=e.side==="home"?g.home:g.away,ot=e.side==="home"?g.away:g.home,myOff=e.side==="home"?h:w,opOff=e.side==="home"?w:h,me=t0(sc),op=t0(ot);
+      if(myOff>opOff){me.uf++;op.oa++}else{me.of++;op.ua++}})});
+  var R=Object.keys(T).map(function(k){return T[k]}).sort(function(a,b){return (b.uf-b.ua)-(a.uf-a.ua)||(b.of-b.oa)-(a.of-a.oa)});
   function dc(d){return '<span class="'+(d>0?"lg-p":d<0?"lg-m":"")+'">'+(d>0?"+":"")+d+'</span>'}
-  return '<p class="sub" style="margin-bottom:8px">Geschätzt aus den Zeitstempeln: Tore in den 2 Minuten nach einer Zeitstrafe. Überlappende Strafen und vorzeitige Rückkehr sind nicht berücksichtigt.</p>'+
-    '<div style="overflow-x:auto"><table class="lgt"><tr><th>Mannschaft</th><th class="n">Unterzahl</th><th class="n">Tore:Gegen</th><th class="n">Diff</th><th class="n">Überzahl</th><th class="n">Tore:Gegen</th><th class="n">Diff</th></tr>'+
-    R.map(function(t){return '<tr class="'+(t.team===OWN?"own":"")+'"><td>'+esc(shortName(t.team))+'</td><td class="n">'+t.z+'×</td><td class="n">'+t.uf+':'+t.ua+'</td><td class="n">'+dc(t.uf-t.ua)+'</td><td class="n">'+t.o+'×</td><td class="n">'+t.of+':'+t.oa+'</td><td class="n">'+dc(t.of-t.oa)+'</td></tr>'}).join("")+'</table></div>'}
+  function mn(sec){var m=Math.floor(sec/60),r=sec%60;return m+":"+(r<10?"0":"")+r}
+  var own=T[OWN],tx=own?'<p class="sub" style="margin-bottom:8px">Moskitos 2: '+mn(own.us)+' Min. in Unterzahl ('+own.uf+':'+own.ua+'), '+mn(own.os)+' Min. in Überzahl ('+own.of+':'+own.oa+').</p>':'';
+  return '<p class="sub" style="margin-bottom:8px">Aus den Zeitstempeln: Eine Zeitstrafe (auch nach Disqualifikation) dauert genau 2 Minuten. Überlappende Strafen werden verrechnet – gezählt wird, wenn eine Mannschaft weniger Spielerinnen auf dem Feld hat als die andere.</p>'+tx+
+    '<div style="overflow-x:auto"><table class="lgt"><tr><th>Mannschaft</th><th class="n">Strafen</th><th class="n">Unterzahl</th><th class="n">Tore:Gegen</th><th class="n">Diff</th><th class="n">Überzahl</th><th class="n">Tore:Gegen</th><th class="n">Diff</th></tr>'+
+    R.map(function(t){return '<tr class="'+(t.team===OWN?"own":"")+'"><td>'+esc(shortName(t.team))+'</td><td class="n">'+t.z+'</td><td class="n">'+mn(t.us)+'</td><td class="n">'+t.uf+':'+t.ua+'</td><td class="n">'+dc(t.uf-t.ua)+'</td><td class="n">'+mn(t.os)+'</td><td class="n">'+t.of+':'+t.oa+'</td><td class="n">'+dc(t.of-t.oa)+'</td></tr>'}).join("")+'</table></div>'+
+    '<p class="sub">Unterzahl/Überzahl in Minuten:Sekunden.</p>'}
 function lgRest(gs){var heute=new Date().toISOString().slice(0,10),fx=((PUB&&PUB.fixtures)||[]).filter(function(f){return f.date>=heute}).sort(function(a,b){return a.date.localeCompare(b.date)});
   if(!fx.length)return '<p class="sub">Keine offenen Spiele bekannt.</p>';
   var tab=lgAgg(lgEntries(gs,"all")),pl={},N=tab.length;tab.forEach(function(r,i){pl[r.team]={p:i+1,r:r}});
