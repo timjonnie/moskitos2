@@ -47,6 +47,10 @@ Stand 12.11.2026 – Start am 13.11.2026.
 5. **Entscheidung**: Wo soll der Vorjahresvergleich erscheinen? Vorschlag: Startseite (Saisonkennzahlen),
    Ligastatistik, Gegneranalyse, eigene Auswertung – jeweils per Schalter.
 
+## Außerdem offen
+
+- **Feedback von Lukas zur Spielerfassung** (Spielanalyse → Erfassung) einarbeiten – Feedback bitte mitbringen.
+
 ## Ablauf morgen
 
 1. Du lieferst Punkt 1–3 (Punkt 4 optional).
