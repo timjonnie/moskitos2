@@ -295,7 +295,7 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 
 ### 12.11.2026 – Analyse Vorsaison und Pokal
 
-- Plan in `docs/PLAN_SAISONS_POKAL.md`. Diese Claude-Umgebung erreicht handball360.isquad.de nicht (Netzwerkregel, 403);
+- Plan in `docs/PLAN_POKAL.md` (Vorsaison verworfen, s. u.). Diese Claude-Umgebung erreicht handball360.isquad.de nicht (Netzwerkregel, 403);
   GitHub-Workflows schon. Vorsaison wird daher per neuem Workflow nachgeladen. Start 13.11.2026.
 
 ### 12.11.2026 – Feedback Lukas zur Spielerfassung (Tabelle)
@@ -307,3 +307,10 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   - Schalter farbig: +1 grün, −1 rot (`.seg.tmode`).
   - Zeilen alphabetisch (nur Anzeige; `data-cell` behält den Originalindex, Verlauf/Rückgängig unverändert).
 - Nicht angepasst: eingebetteter Export-Bauplan `__MK_TPL__` (nur für den alten Artefakt-Modus).
+
+### 13.11.2026 – Vorsaison gestrichen, Pokal-Link
+
+- Vorsaison-Vergleich gestrichen: Nach der Systemumstellung ist nur die neue Saison migriert, alte Berichte sind nicht
+  abrufbar. Als Merkposten in `docs/PLAN_POKAL.md`.
+- Pokal: Opel Deckert Cup Frauen auf handball.net (Liga 10446, Phase 17425). handball.net ist aus der Claude-Umgebung
+  ebenfalls gesperrt → Freigabe der Domains oder ein Pokal-Bericht-Link nötig.
