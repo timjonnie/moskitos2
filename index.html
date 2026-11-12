@@ -49,6 +49,8 @@ h2{ font:600 13px var(--font-display); text-transform:uppercase; letter-spacing:
 .panel{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; }
 .row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:12px; margin-bottom:12px; }
 .col{ display:flex; flex-direction:column; gap:12px; min-width:0; }
+.row.lt{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+@media (max-width:700px){ .row.lt{ grid-template-columns:minmax(0,1fr); } .row.lt>.col{ display:contents; } .row.lt .trend{ order:1; } .row.lt .lt-liga{ order:2; } .row.lt .lt-tab{ order:3; } }
 .liga summary{ cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .liga summary::-webkit-details-marker{ display:none; }
 .liga summary h2{ margin:0; }
@@ -267,7 +269,9 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     <h2 style="margin-top:6px">Saison</h2>
     <div class="kpis" id="kpis"></div>
 
-    <div class="row" style="margin-top:12px;align-items:start">
+    <!-- Desktop: links Form/Trend + Tabelle, rechts Ligastatistik. Handy: Form, Ligastatistik, Tabelle -->
+    <div class="row lt" style="margin-top:12px;align-items:start">
+      <div class="col">
       <section class="panel trend">
         <h2>Form und Trend</h2>
         <div id="form"></div>
@@ -275,18 +279,19 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
         <div class="sub" id="trendTxt" style="margin-top:6px"></div>
         <div id="teamStats"></div>
       </section>
+      <section class="panel lt-tab">
+        <h2>Tabelle</h2>
+        <div style="overflow-x:auto"><table id="table"></table></div>
+        <div class="sub" style="margin-top:6px;font-size:12.5px">Aus den Spielberichten berechnet, Nachholspiele noch offen.</div>
+      </section>
+      </div>
       <div class="col">
-      <details class="panel liga" id="ligaBox" open>
+      <details class="panel liga lt-liga" id="ligaBox" open>
         <summary><h2>Ligastatistik</h2></summary>
         <div id="liga"></div>
         <div class="sub" style="margin-top:6px;font-size:12.5px">Aus den offiziellen Spielberichten berechnet.</div>
         <div class="lg-exp" id="ligaExp" hidden><button class="btn small" type="button" data-lx="share" hidden>Teilen …</button><button class="btn small" type="button" data-lx="pdf">Als PDF</button><button class="btn small" type="button" data-lx="png">Als Bild (PNG)</button></div>
       </details>
-      <section class="panel">
-        <h2>Tabelle</h2>
-        <div style="overflow-x:auto"><table id="table"></table></div>
-        <div class="sub" style="margin-top:6px;font-size:12.5px">Aus den Spielberichten berechnet, Nachholspiele noch offen.</div>
-      </section>
       </div>
     </div>
 
@@ -323,7 +328,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.12 · letzte Aktualisierung 12.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.13 · letzte Aktualisierung 12.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
