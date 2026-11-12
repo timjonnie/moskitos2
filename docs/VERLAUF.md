@@ -259,3 +259,5 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Kachel „Training“ heißt jetzt „Trainer“ (Ziel unverändert `training/`).
 - Team-Board 4.10: Export der Ligastatistik (PDF eine A4-Seite, PNG, Teilen) für Trainer/Admin. Nutzt die Export-Bausteine
   des Gegner-Moduls, die jetzt als `MKOpp.x` bereitstehen (in beiden Kopien gleich). Daten über `ligaRows()`/`LIGA`.
+- Team-Board 4.11: Ligastatistik um „Bester Angriff“ (Tore ÷ Spiele) und „Beste Abwehr“ (Gegentore ÷ Spiele) ergänzt,
+  Gleichstand auf zwei Nachkommastellen → alle genannt. Export als ein Baustein, damit er immer auf eine A4-Seite passt.

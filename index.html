@@ -323,7 +323,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.10 · letzte Aktualisierung 12.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.11 · letzte Aktualisierung 12.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -1147,9 +1147,17 @@ function ligaRows(games){
   var mt=top(function(x){return x.t}),mp=top(function(x){return x.p}),mf=top(function(x){return x.f});
   var sl=Object.keys(season).map(function(k){return season[k]}).sort(function(a,b){return b.t-a.t||a.g-b.g}),tv=sl.length?sl[0].t:0,tl=sl.filter(function(x){return x.t===tv});
   function pl(x){return esc(x.name)+" ("+tm(x.team)+")"}
+  // Bester Angriff / beste Abwehr: Tore bzw. Gegentore je Spiel
+  var T={};gs.forEach(function(g){[[g.home,0],[g.away,1]].forEach(function(a){var t=T[a[0]]||(T[a[0]]={team:a[0],sp:0,gf:0,ga:0});t.sp++;t.gf+=g.score[a[1]];t.ga+=g.score[1-a[1]]})});
+  var TL=Object.keys(T).map(function(k){var t=T[k];t.af=t.gf/t.sp;t.aa=t.ga/t.sp;return t});
+  function tbest(f,low){var v=null,l=[];TL.forEach(function(t){var x=Math.round(f(t)*100)/100;if(v==null||(low?x<v:x>v)){v=x;l=[t]}else if(x===v)l.push(t)});return {v:v,l:l}}
+  var ba=tbest(function(t){return t.af}),bd=tbest(function(t){return t.aa},true);
+  function tq(t,k){return tm(t.team)+" ("+t[k]+" "+(k==="gf"?"Tore":"Gegentore")+" in "+t.sp+" Spiel"+(t.sp===1?"":"en")+")"}
   var R=[
     ["Spiele",n,"",hs+" Heimsiege – "+u+" Remis – "+as+" Gastsiege"],
     ["Tore gesamt / Schnitt",(ht+at).toLocaleString("de-DE"),fmt((ht+at)/n)+" je Spiel","Heimtore "+ht.toLocaleString("de-DE")+" ("+fmt(ht/n)+" je Spiel) – Gasttore "+at.toLocaleString("de-DE")+" ("+fmt(at/n)+" je Spiel)"],
+    TL.length?["Bester Angriff",fmt(ba.v),"Tore je Spiel",list(ba.l,function(t){return tq(t,"gf")})]:null,
+    TL.length?["Beste Abwehr",fmt(bd.v),"Gegentore je Spiel",list(bd.l,function(t){return tq(t,"ga")})]:null,
     hw.v!=null?["Höchster Heimsieg","+"+hw.v,list(hw.l,sc),list(hw.l,match)]:null,
     aw.v!=null?["Höchster Auswärtssieg","+"+aw.v,list(aw.l,sc),list(aw.l,match)]:null,
     ["Torreichstes Spiel",hi.v+" Tore",list(hi.l,sc),list(hi.l,match)],
@@ -1171,20 +1179,21 @@ function ligaStats(games){
 async function ligaBlocks(){
   var X=window.MKOpp&&MKOpp.x;if(!X||!LIGA||!LIGA.rows.length)throw new Error("Ligastatistik noch nicht geladen");
   var P=X.XP,W=X.XW,PAD=X.XPAD,B=[],season=(PUB&&PUB.season)||"",upd=(PUB&&PUB.updated)||new Date().toLocaleDateString("de-DE");
-  function blk(draw){var c=X.canvas(1600),y=draw(c[1]);B.push(X.crop(c[0],y))}
+  // Alles in einen Baustein: passt er nicht auf eine Seite, verkleinert der Seitenbauer ihn – die Statistik bleibt einseitig
+  var C=X.canvas(4000),cy=0;function blk(draw){var c=X.canvas(1600),y=draw(c[1]);C[1].drawImage(c[0],0,cy);cy+=y+8}
   function txt(h){return String(h).replace(/<span class="own">([\s\S]*?)<\/span>/g,"<b>$1</b>")}
-  blk(function(x){x.fillStyle=P.band;x.fillRect(0,0,W,250);
-    X.t(x,"LIGASTATISTIK",PAD,86,{w:700,size:24,color:"#F6C98B"});
-    var tw=X.t(x,"Oberliga Frauen",PAD,160,{w:700,size:62,color:P.bandInk});X.t(x,".",PAD+tw+2,160,{w:700,size:62,color:P.accent});
-    X.t(x,"HV Saar"+(season?" · Saison "+season:""),PAD,208,{size:24,color:P.bandMuted});
-    X.t(x,"Aus "+LIGA.n+" offiziellen Spielberichten · Stand "+upd+" · Spiele mit Moskitos 2 fett",PAD,294,{size:21,color:P.muted});return 318});
+  blk(function(x){x.fillStyle=P.band;x.fillRect(0,0,W,220);
+    X.t(x,"LIGASTATISTIK",PAD,74,{w:700,size:24,color:"#F6C98B"});
+    var tw=X.t(x,"Oberliga Frauen",PAD,142,{w:700,size:58,color:P.bandInk});X.t(x,".",PAD+tw+2,142,{w:700,size:58,color:P.accent});
+    X.t(x,"HV Saar"+(season?" · Saison "+season:""),PAD,186,{size:23,color:P.bandMuted});
+    X.t(x,"Aus "+LIGA.n+" offiziellen Spielberichten · Stand "+upd+" · Spiele mit Moskitos 2 fett",PAD,260,{size:20,color:P.muted});return 276});
   LIGA.rows.forEach(function(r,i){blk(function(x){var y=4,vw=300;x.fillStyle=P.line;if(i)x.fillRect(PAD,0,W-PAD*2,2);
-    X.t(x,r[0],PAD,y+30,{size:20,color:P.muted});
-    var y2=X.rich(x,txt(r[3]),PAD,y+62,W-PAD*2-vw-20,{size:23,lh:32});
-    X.t(x,String(r[1]),W-PAD,y+54,{w:700,size:38,align:"right"});
-    if(r[2])X.t(x,String(r[2]).replace(/<[^>]+>/g,""),W-PAD,y+84,{size:19,color:P.muted,align:"right"});
-    return Math.max(y2-14,y+92)+4})});
-  return B;
+    X.t(x,r[0],PAD,y+26,{size:19,color:P.muted});
+    var y2=X.rich(x,txt(r[3]),PAD,y+56,W-PAD*2-vw-20,{size:22,lh:30});
+    X.t(x,String(r[1]),W-PAD,y+48,{w:700,size:36,align:"right"});
+    if(r[2])X.t(x,String(r[2]).replace(/<[^>]+>/g,""),W-PAD,y+76,{size:18,color:P.muted,align:"right"});
+    return Math.max(y2-12,y+82)+2})});
+  B.push(X.crop(C[0],cy));return B;
 }
 async function ligaExport(kind,btn){
   var X=window.MKOpp&&MKOpp.x,old=btn.textContent;btn.disabled=true;btn.textContent="Wird erstellt …";

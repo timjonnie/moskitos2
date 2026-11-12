@@ -57,7 +57,8 @@ Der alte Benutzername bleibt dauerhaft belegt.
 ## Ligastatistik
 
 Auf der Startseite steht über der Tabelle die **Ligastatistik** (auf- und zuklappbar), berechnet aus allen Spielberichten
-der Liga: Spiele und Heim-/Gastsiege, Tore gesamt und je Spiel, höchster Heim- und Auswärtssieg, torreichstes und
+der Liga: Spiele und Heim-/Gastsiege, Tore gesamt und je Spiel, bester Angriff (meiste Tore je Spiel) und beste Abwehr
+(wenigste Gegentore je Spiel), höchster Heim- und Auswärtssieg, torreichstes und
 torärmstes Spiel, meiste Tore / 7m-Tore / Feldtore einer Spielerin in einem Spiel, beste Torschützin der Saison,
 Siebenmeter-Quote und Zeitstrafen. Spiele mit Moskitos 2 sind orange markiert.
 Trainer und Admin können sie unten im Bereich als **PDF**, **Bild (PNG)** oder per **Teilen …** exportieren – im gleichen Format wie die Gegneranalyse.
