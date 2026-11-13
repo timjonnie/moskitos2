@@ -68,6 +68,9 @@ h2{ font:600 13px var(--font-display); text-transform:uppercase; letter-spacing:
 .lg-v small{ display:block; font-weight:400; font-size:12.5px; color:var(--muted); }
 .lg-d{ font-size:14px; line-height:1.4; overflow-wrap:anywhere; }
 .lg-d .own{ color:var(--accent); font-weight:600; }
+.pk-tag{ display:inline-block; font-size:12px; font-weight:600; padding:2px 8px; border-radius:999px; background:var(--panel-2); color:var(--muted); white-space:nowrap; }
+.pk-ok{ background:var(--good-soft); color:var(--good); } .pk-out{ background:var(--bad-soft); color:var(--bad); }
+li.pk-own{ background:var(--accent-soft); margin:0 -8px; padding-left:8px; padding-right:8px; border-radius:6px; }
 .lg-own{ color:var(--accent); font-weight:600; }
 .lg-h1{ font:700 30px/1.15 var(--font-display); margin:0 0 4px; } .lg-h1 span{ color:var(--accent); }
 .lg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
@@ -284,6 +287,12 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
       </section>
     </div>
 
+    <section class="panel" id="pokalBox" hidden style="margin-bottom:12px">
+      <h2>Pokal</h2>
+      <p class="sub" style="margin:-4px 0 4px">Opel Deckert Cup · Pokal Frauen</p>
+      <div id="pokalBody"></div>
+    </section>
+
     <h2 style="margin-top:6px">Saison</h2>
     <div class="kpis" id="kpis"></div>
 
@@ -342,6 +351,10 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
       <a class="more" href="#" id="avBack" style="margin:0 0 12px">← Zurück zum Team-Board</a>
       <div id="avRoot"></div>
     </div>
+    <div id="pokalView" hidden>
+      <a class="more" href="#" id="pvBack" style="margin:0 0 12px">← Zurück zum Team-Board</a>
+      <div id="pvRoot"></div>
+    </div>
     <div id="ligaView" hidden>
       <a class="more" href="#" id="lvBack" style="margin:0 0 12px">← Zurück zum Team-Board</a>
       <div id="lvRoot"></div>
@@ -352,7 +365,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.18 · letzte Aktualisierung 12.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.20 · letzte Aktualisierung 13.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -391,9 +404,9 @@ window.MKFB=(function(){
 var GA_TEAMS={"TV MERCHWEILER":"TV Merchweiler","HF KÖLLERTAL":"HF Köllertal","ASC QUIERSCHIED":"ASC Quierschied","TV KIRKEL":"TV Kirkel",
  "HG SAARLOUIS":"HG Saarlouis","HSG TV BIRKENFELD/NOHFELDEN-TUS SCHWARZENBACH":"HSG Birkenfeld/Nohfelden-Schwarzenbach","HC PERL":"HC Perl",
  "HSG TVA/ATSV SAARBRÜCKEN":"HSG TVA/ATSV Saarbrücken","HF UNTERE SAAR 2":"HF Untere Saar 2","SG ZWEIBRÜCKEN":"SG Zweibrücken",
- "HSG DJK MARPINGEN-SC ALSWEILER II":"Moskitos 2","MOSKITOS 2":"Moskitos 2"};
+ "HSG DJK MARPINGEN-SC ALSWEILER II":"Moskitos 2","HSG DJK MARPINGEN-SC ALSWEILER 2":"Moskitos 2","HF UNTERE SAAR 2 (OL)":"HF Untere Saar 2","HF UNTERE SAAR 3 (VL)":"HF Untere Saar 3","RW SCHAUMBERG":"RW Schaumberg","USC SAAR":"USC Saar","HSG TVA/ATSV SAARBRÜCKEN 2":"HSG TVA/ATSV Saarbrücken 2","HSG TV BIRKENFELD/NOHFELDEN-TUS SCHWARZENBACH 2":"HSG Birkenfeld/Nohfelden-Schwarzenbach 2","FSG DJK OBERTHAL/TUS HIRSTEIN":"FSG Oberthal/Hirstein","FSG DJK OBERTHAL/TUS HIRSTEIN 2":"FSG Oberthal/Hirstein 2","HSG DJK MARPINGEN-SC ALSWEILER":"HSG Marpingen-Alsweiler","HSG DJK MARPINGEN-SC ALSWEILER 3":"HSG Marpingen-Alsweiler 3","MOSKITOS 2":"Moskitos 2"};
 function gaTeam(s){ s=String(s||"").replace(/\s+/g," ").trim(); var u=s.toUpperCase(); if(GA_TEAMS[u]) return GA_TEAMS[u];
-  return s.toLowerCase().replace(/(^|[\s\/\-])(\S)/g,function(m,a,b){return a+b.toUpperCase();}).replace(/\b(Tv|Hsg|Hg|Hc|Hf|Sg|Asc|Djk|Sc|Tus|Ii)\b/g,function(m){return m.toUpperCase();}); }
+  return s.toLowerCase().replace(/(^|[\s\/\-])(\S)/g,function(m,a,b){return a+b.toUpperCase();}).replace(/\b(Tv|Hsg|Hg|Hc|Hf|Sg|Asc|Djk|Sc|Tus|Ii|Tva|Atsv|Rw|Usc|Sv|Fsg|Ol|Vl)\b/g,function(m){return m.toUpperCase();}); }
 function gaLines(items){
   var arr=items.slice().sort(function(a,b){return a.p-b.p||b.y-a.y||a.x-b.x;}), lines=[], cur=null;
   arr.forEach(function(it){ if(cur&&cur.p===it.p&&Math.abs(cur.y-it.y)<=2.5){ cur.items.push(it); } else { cur={p:it.p,y:it.y,items:[it]}; lines.push(cur); } });
@@ -493,7 +506,7 @@ function rebuild(){
   var L=local(); if(L){ (L.games||[]).forEach(function(g){ map[key(g)]=g; }); if(newer(L.updated,base.updated)){ if(L.fixtures) out.fixtures=L.fixtures; out.updated=L.updated; } }
   DBG.forEach(function(g){ map[key(g)]=g; });
   var del={}; ((L&&L.deleted)||[]).forEach(function(k){del[k]=1;}); for(var t in DBT) del[t]=1;
-  out.games=Object.keys(map).filter(function(x){return !del[x];}).map(function(x){return map[x];}); DATA=out; return DATA;
+  out.games=Object.keys(map).filter(function(x){return !del[x];}).map(function(x){return map[x];}).filter(function(g){return g.comp!=="Pokal";}); /* Pokal hat einen eigenen Bereich */ DATA=out; return DATA;
 }
 function load(){ if(!DATA) rebuild(); return DATA; }
 function subscribe(){
@@ -1153,7 +1166,7 @@ async function showDash(){
 /* ---------- Ligastatistik (aus allen Spielberichten) ---------- */
 var LIGA=null;
 function ligaRows(games){
-  var gs=games.filter(function(g){return g.score&&g.events}),n=gs.length;if(!n)return [];
+  var gs=games.filter(function(g){return g.score&&g.events&&g.comp!=="Pokal"}),n=gs.length;if(!n)return [];
   function tm(t){return t===OWN?'<span class="own">'+esc(t)+'</span>':esc(t)}
   function match(g){return tm(g.home)+" – "+tm(g.away)}
   function sc(g){return g.score[0]+":"+g.score[1]}
@@ -1310,7 +1323,7 @@ function lgSpieltag(gs){
   var last=gs.filter(function(g){return g.st===maxSt});
   function gl(g){var w=g.score[0]>g.score[1]?0:g.score[0]<g.score[1]?1:-1;return '<li><span>'+(w===0?'<b>':'')+lgTeam(g.home)+(w===0?'</b>':'')+' – '+(w===1?'<b>':'')+lgTeam(g.away)+(w===1?'</b>':'')+'</span><span><b>'+g.score[0]+':'+g.score[1]+'</b> <span class="sub">('+g.ht[0]+':'+g.ht[1]+')</span></span></li>'}
   var h='<h3>'+maxSt+'. Spieltag – Ergebnisse</h3><ul class="list">'+last.map(gl).join("")+'</ul>';
-  var heute=new Date().toISOString().slice(0,10),lf=((PUB&&PUB.league_fixtures)||[]).filter(function(f){return f.date>=heute}),own=((PUB&&PUB.fixtures)||[]).filter(function(f){return f.date>=heute});
+  var heute=new Date().toISOString().slice(0,10),lf=((PUB&&PUB.league_fixtures)||[]).filter(function(f){return f.date>=heute}),own=((PUB&&PUB.fixtures)||[]).filter(function(f){return f.comp!=="Pokal"&&f.date>=heute});
   // nächster Spieltag = Spieltag des nächsten Termins nach Datum (verlegte Nachholspiele haben kleinere Nummern)
   var src=(lf.length?lf:own).slice().sort(function(a,b){return a.date.localeCompare(b.date)}),nst=src.length?(src[0].st||99):99;
   var nx=src.filter(function(f){return (f.st||99)===nst&&f.date<=addDays(src[0].date,6)}),nh=src.filter(function(f){return f.st&&f.st<nst&&f.date<=addDays(src[0].date,6)});
@@ -1387,7 +1400,7 @@ function lgUnterzahl(gs){var T={};function t0(n){return T[n]||(T[n]={team:n,us:0
     '<div style="overflow-x:auto"><table class="lgt"><tr><th>Mannschaft</th><th class="n">Strafen</th><th class="n">Unterzahl</th><th class="n">Tore:Gegen</th><th class="n">Diff</th><th class="n">Überzahl</th><th class="n">Tore:Gegen</th><th class="n">Diff</th></tr>'+
     R.map(function(t){return '<tr class="'+(t.team===OWN?"own":"")+'"><td>'+esc(shortName(t.team))+'</td><td class="n">'+t.z+'</td><td class="n">'+mn(t.us)+'</td><td class="n">'+t.uf+':'+t.ua+'</td><td class="n">'+dc(t.uf-t.ua)+'</td><td class="n">'+mn(t.os)+'</td><td class="n">'+t.of+':'+t.oa+'</td><td class="n">'+dc(t.of-t.oa)+'</td></tr>'}).join("")+'</table></div>'+
     '<p class="sub">Unterzahl/Überzahl in Minuten:Sekunden.</p>'}
-function lgRest(gs){var heute=new Date().toISOString().slice(0,10),fx=((PUB&&PUB.fixtures)||[]).filter(function(f){return f.date>=heute}).sort(function(a,b){return a.date.localeCompare(b.date)});
+function lgRest(gs){var heute=new Date().toISOString().slice(0,10),fx=((PUB&&PUB.fixtures)||[]).filter(function(f){return f.date>=heute&&f.comp!=="Pokal"}).sort(function(a,b){return a.date.localeCompare(b.date)});
   if(!fx.length)return '<p class="sub">Keine offenen Spiele bekannt.</p>';
   var tab=lgAgg(lgEntries(gs,"all")),pl={},N=tab.length;tab.forEach(function(r,i){pl[r.team]={p:i+1,r:r}});
   var sum=0,cnt=0,h=0;
@@ -1549,13 +1562,62 @@ function lvExportPanel(){if(!isCoach())return "";var sh=!!(navigator.canShare&&n
     '<label class="lg-chk"><input type="checkbox" id="lvRang"> Ranglisten mitexportieren <span class="sub">(nur für den Trainerstab)</span></label>'+
     '<div class="lg-exp" style="border:0;padding-top:0">'+(sh?'<button class="btn small primary" type="button" data-lvx="share">Teilen …</button>':'')+'<button class="btn small'+(sh?'':' primary')+'" type="button" data-lvx="pdf">Als PDF</button><button class="btn small" type="button" data-lvx="png">Als Bild (PNG)</button></div></section>'}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-lvx]");if(b)lvExport(b.dataset.lvx,b)});
+/* ---------- Pokal (Opel Deckert Cup | Pokal Frauen) aus gegner_daten.json → cup ---------- */
+var POKAL_RUNDEN=["Sechzehntelfinale","Achtelfinale","Viertelfinale","Halbfinale","Finale"];
+function pkGames(){return ((PUB&&PUB.cup&&PUB.cup.games)||[]).slice().sort(function(a,b){return a.id-b.id})}
+function pkRounds(){var R={},order=[];pkGames().forEach(function(e){if(!R[e.round]){R[e.round]=[];order.push(e.round)}R[e.round].push(e)});
+  order.sort(function(a,b){var i=POKAL_RUNDEN.indexOf(a),j=POKAL_RUNDEN.indexOf(b);return (i<0?99:i)-(j<0?99:j)});return order.map(function(r){return {name:r,games:R[r]}})}
+function pkTeam(t){return t?(t===OWN?'<span class="lg-own">'+esc(t)+'</span>':esc(t)):'<span class="sub">offen</span>'}
+// Halbfinale und Finale finden immer am Ostermontag statt (Jahr = Saisonende, z. B. 2026/27 → 2027)
+function osterMontag(y){var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1;
+  var dt=new Date(Date.UTC(y,mo-1,da+1));return dt.toISOString().slice(0,10)}
+function pkOster(){var y=+(String((PUB&&PUB.season)||"").match(/^(\d{4})/)||[])[1];return y?osterMontag(y+1):null}
+function pkDate(e){return e.date||((e.round==="Halbfinale"||e.round==="Finale")?pkOster():null)}
+function pkWhen(e){if(!e.date&&(e.round==="Halbfinale"||e.round==="Finale")&&pkOster()){var o=pkOster();return "Ostermontag, "+dd(o)+o.slice(0,4)}if(!e.date)return "Termin offen";var d=new Date(e.date+"T12:00:00");return ["So","Mo","Di","Mi","Do","Fr","Sa"][d.getDay()]+", "+dd(e.date)+(e.date.slice(0,4)!==String(new Date().getFullYear())?e.date.slice(0,4):"")+(e.time?", "+e.time:"")}
+function pkStatus(e){
+  if(e.status==="gespielt"||e.status==="Ergebnis")return '<b>'+e.score[0]+':'+e.score[1]+'</b>'+(e.ht?' <span class="sub">('+e.ht[0]+':'+e.ht[1]+')</span>':'');
+  if(e.status==="kampflos")return '<span class="pk-tag">kampflos</span>';
+  if(e.status==="Freilos")return '<span class="pk-tag">Freilos</span>';
+  if(e.status==="ohne Ergebnis")return '<span class="pk-tag">ohne Ergebnis</span>';
+  return '<span class="sub">'+esc(pkWhen(e))+'</span>'}
+function pkLine(e){if(!e.home&&!e.away)return "";
+  var hw=e.winner&&e.winner===e.home,aw=e.winner&&e.winner===e.away,fl=e.status==="Freilos";
+  var txt=fl?'Freilos: '+pkTeam(e.home||e.away):(hw?'<b>':'')+pkTeam(e.home)+(hw?'</b>':'')+' – '+(aw?'<b>':'')+pkTeam(e.away)+(aw?'</b>':'');
+  return '<li class="'+(e.home===OWN||e.away===OWN?"pk-own":"")+'"><span>'+txt+(e.venue&&e.status==="offen"?'<br><span class="sub">'+esc(e.venue)+'</span>':'')+'</span><span>'+pkStatus(e)+'</span></li>'}
+// Unser Weg durch den Pokal (Startseite)
+function renderPokalBox(){var box=$("pokalBox");if(!box)return;var G=pkGames();if(!G.length){box.hidden=true;return}
+  var mine=G.filter(function(e){return e.home===OWN||e.away===OWN}),R=pkRounds(),heute=new Date().toISOString().slice(0,10);
+  var out=mine.some(function(e){return e.winner&&e.winner!==OWN});
+  var h='<ul class="list">'+mine.map(function(e){var home=e.home===OWN,opp=home?e.away:e.home,res;
+    if(e.status==="kampflos"||e.status==="Freilos")res=e.winner===OWN?'<span class="pk-tag pk-ok">kampflos weiter</span>':'<span class="pk-tag">kampflos</span>';
+    else if(e.score&&(e.status==="gespielt"||e.status==="Ergebnis")){var us=home?e.score[0]:e.score[1],th=home?e.score[1]:e.score[0];res='<b>'+us+':'+th+'</b> '+(e.winner===OWN?'<span class="pk-tag pk-ok">weiter</span>':'<span class="pk-tag pk-out">ausgeschieden</span>')}
+    else{var tage=e.date?Math.round((new Date(e.date+"T12:00:00")-new Date(heute+"T12:00:00"))/864e5):null;res='<span class="sub">'+esc(pkWhen(e))+(tage!=null&&tage>=0?(tage===0?" · heute":tage===1?" · morgen":" · in "+tage+" Tagen"):"")+'</span>'}
+    return '<li><span><span class="sub">'+esc(e.round)+'</span><br>'+(home?"gegen ":"bei ")+esc(opp||"offen")+(e.status==="offen"&&e.venue?' <span class="sub">· '+esc(e.venue)+'</span>':'')+'</span><span>'+res+'</span></li>'}).join("");
+  if(!out){var last=mine[mine.length-1],idx=R.findIndex(function(r){return last&&r.name===last.round});
+    R.slice(idx+1).forEach(function(r){var d=r.games.map(pkDate).filter(Boolean).sort()[0],ost=!r.games.some(function(e){return e.date})&&d;h+='<li><span><span class="sub">'+esc(r.name)+'</span><br><span class="sub">Gegner noch offen</span></span><span class="sub">'+(d?(ost?"Ostermontag, ":"")+esc(dd(d)+d.slice(0,4)):"Termin offen")+'</span></li>'})}
+  h+='</ul>';var nx=mine.filter(function(e){return e.status==="offen"&&(e.home===OWN?e.away:e.home)})[0],opp=nx?(nx.home===OWN?nx.away:nx.home):null;
+  h+='<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px"><a class="more" href="#pokal">Ganzer Pokal →</a>'+(opp?'<a class="more" href="#gegner" id="pkOpp">Gegneranalyse '+esc(shortName(opp))+' →</a>':'')+'</div>';
+  $("pokalBody").innerHTML=h;box.hidden=false;
+  var po=$("pkOpp");if(po)po.onclick=function(){if(window.MKOpp&&MKOpp.select)MKOpp.select(opp)}}
+// Seite #pokal: alle Runden
+function renderPokal(){var R=pkRounds();if(!R.length){$("pvRoot").innerHTML='<div class="panel"><p class="sub">Noch keine Pokaldaten. Sie kommen mit dem nächsten Montags-Abruf.</p></div>';return}
+  var G=pkGames(),played=G.filter(function(e){return e.status==="gespielt"||e.status==="Ergebnis"}),goals=played.reduce(function(s,e){return s+e.score[0]+e.score[1]},0);
+  var h='<div class="panel"><h1 class="lg-h1">Pokal</h1><p class="sub">'+esc((PUB.cup&&PUB.cup.name)||"Opel Deckert Cup")+' · Pokal Frauen · HV Saar'+(PUB.season?" · Saison "+esc(PUB.season):"")+'</p>'+
+    (played.length?'<div class="facts"><div class="fact"><b>'+played.length+'</b><span>Spiele mit Ergebnis</span></div><div class="fact"><b>'+fmt(goals/played.length)+'</b><span>Tore je Spiel</span></div><div class="fact"><b>'+G.filter(function(e){return e.status==="kampflos"}).length+'</b><span>kampflos entschieden</span></div></div>':'')+'</div>';
+  R.forEach(function(r){var real=r.games.filter(function(e){return e.home||e.away}),d=r.games.map(function(e){return e.date}).filter(Boolean).sort();
+    if(!d.length&&(r.name==="Halbfinale"||r.name==="Finale")&&pkOster())d=[pkOster()];
+    h+='<section class="panel lg-sec"><h2>'+esc(r.name)+'</h2><p class="sub" style="margin:0 0 6px">'+(d.length?(d[0]===d[d.length-1]?esc(pkWhen({date:d[0],round:r.name})).replace(/, $/,"")+(!r.games.some(function(e){return e.date})?" (Ostermontag)":""):"vom "+dd(d[0])+" bis "+dd(d[d.length-1])+d[d.length-1].slice(0,4)):"Termin offen")+'</p>'+
+      (real.length?'<ul class="list">'+real.map(pkLine).join("")+'</ul>':'<p class="sub">Paarungen stehen noch nicht fest ('+r.games.length+' Spiel'+(r.games.length===1?'':'e')+').</p>')+'</section>'});
+  h+='<p class="sub" style="margin-top:10px">Aus den offiziellen Spielberichten (handball360), aktualisiert mit dem Montags-Abruf. „kampflos“: ohne Spiel entschieden, der Sieger steht in der nächsten Runde.</p>';
+  $("pvRoot").innerHTML=h}
 function renderPublic(d){
-  var games=(d.games||[]).filter(function(g){return g.score&&g.events}),heute=new Date().toISOString().slice(0,10);
+  var games=(d.games||[]).filter(function(g){return g.score&&g.events&&g.comp!=="Pokal"}),heute=new Date().toISOString().slice(0,10);
   var tab=table(games),me=teamProfile(games,OWN),rs=me.games.map(function(g){return Object.assign(res(g,OWN),{g:g})});
   var pos=tab.findIndex(function(x){return x.team===OWN})+1,row=tab[pos-1]||{p:0,s:0,u:0,n:0,d:0,sp:0};
   var k=[[pos?pos+".":"–","Platz von "+tab.length],[row.p+":"+(2*row.sp-row.p),"Punkte"],[row.s+"–"+row.u+"–"+row.n,"Siege–Unent.–Niederl."],
          [me.n?fmt(me.gf/me.n):"–","Ø Tore"],[me.n?fmt(me.ga/me.n):"–","Ø Gegentore"],[(row.d>0?"+":"")+row.d,"Tordifferenz"]];
   $("kpis").innerHTML=k.map(function(x){return '<div class="kpi"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
+  renderPokalBox();
   $("liga").innerHTML=ligaStats(games);LGX=lgExtraRows(games);lgObserve();lgFillSoon();
   $("ligaExp").hidden=!(SES&&isCoach()&&LIGA&&LIGA.rows.length);var lsh=$("ligaExp").querySelector('[data-lx="share"]');if(lsh)lsh.hidden=!(navigator.canShare&&navigator.share);
   var last=rs[rs.length-1];
@@ -1568,7 +1630,7 @@ function renderPublic(d){
   var f=(d.fixtures||[]).filter(function(x){return x.date>=heute}).sort(function(a,b){return a.date.localeCompare(b.date)})[0];
   if(f){var opp=f.home===OWN?f.away:f.home,op=teamProfile(games,opp),opos=tab.findIndex(function(x){return x.team===opp})+1;
     var tage=Math.round((new Date(f.date+"T12:00:00")-new Date(heute+"T12:00:00"))/864e5);
-    $("nextTitle").textContent=(f.home===OWN?"gegen ":"bei ")+opp;
+    $("nextTitle").textContent=(f.home===OWN?"gegen ":"bei ")+opp+(f.comp==="Pokal"?" (Pokal)":"");
     $("nextWhen").textContent=f.label+(tage===0?" · heute":tage===1?" · morgen":" · in "+tage+" Tagen");
     var ff=[[opos?opos+".":"–","Tabellenplatz"],[op.n?fmt(op.gf/op.n)+" : "+fmt(op.ga/op.n):"–","Ø Tore : Gegentore"],[op.form.length?chips(op.form.slice(-5)):"–","Form"]];
     $("nextFacts").innerHTML=ff.map(function(x){return '<div class="fact"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
@@ -1926,13 +1988,15 @@ function mountGegner(){
     sc.textContent=JSON.stringify(PUB);document.body.appendChild(sc);GA_MOUNTED=true}
   window.MKOpp.mount($("gaRoot"));
 }
-function route(){var on=!$("dash").hidden,g=on&&location.hash==="#gegner",a=on&&location.hash==="#auswertung",lv=on&&location.hash==="#liga";
-  $("gegnerView").hidden=!g;$("auswView").hidden=!a;$("ligaView").hidden=!lv;$("boardView").hidden=g||a||lv;
-  if(lv){renderLiga();window.scrollTo(0,0)}else if(!g&&!a)lgFillSoon();
+function route(){var on=!$("dash").hidden,g=on&&location.hash==="#gegner",a=on&&location.hash==="#auswertung",lv=on&&location.hash==="#liga",pv=on&&location.hash==="#pokal";
+  $("gegnerView").hidden=!g;$("auswView").hidden=!a;$("ligaView").hidden=!lv;$("pokalView").hidden=!pv;$("boardView").hidden=g||a||lv||pv;
+  if(pv){renderPokal();window.scrollTo(0,0)}
+  if(lv){renderLiga();window.scrollTo(0,0)}else if(!g&&!a&&!pv)lgFillSoon();
   if(g){mountGegner();window.scrollTo(0,0)}else if(window.MKOpp)window.MKOpp.unmount();
   if(a){var P=isCoach()?CUR_P:MY_P;$("avRoot").innerHTML=P?fullAnalysis(P):'<div class="panel"><p class="sub">'+(isCoach()?"Bitte zuerst unter „Profilansicht prüfen“ eine Spielerin wählen.":"Für dein Profil liegen noch keine Daten vor.")+'</p></div>';window.scrollTo(0,0)}}
 window.addEventListener("hashchange",route);
 $("avBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
+$("pvBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
 $("lvBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
 $("gvBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
 

@@ -1,4 +1,4 @@
-# Plan: Pokal (Opel Deckert Cup Frauen) – Stand 13.11.2026
+# Plan: Pokal (Opel Deckert Cup Frauen) – umgesetzt am 13.11.2026 (Team-Board 4.19)
 
 ## Ziel
 
@@ -48,6 +48,31 @@ Erste Schritte nach der Freigabe:
 2. Struktur der Pokal- und Ligaseite analysieren (Spielplan, Spiel-IDs, Links zu den Spielberichten).
 3. Abruf-Skript erweitern: kommende Spiele (Liga + Pokal) und Pokal-Spielberichte.
 4. Pokal-Bereich bauen, Spieltags-Vorschau und Termine auf die neuen Daten umstellen.
+
+## Ergebnis nach der Freigabe (13.11.2026)
+
+- **handball360.isquad.de: erreichbar.** Spielberichte lassen sich direkt abrufen und auslesen.
+- **www.handball.net: Verbindung erlaubt, aber die Seite selbst blockt automatisierte Abrufe** (Cloudflare-Schutz, 403).
+  Diesen Schutz umgehen wir bewusst nicht – den Spielplan von handball.net können wir daher nicht crawlen.
+- **Liga-Spielplan: erledigt.** Der Montags-Abruf speichert seit 12.11. alle offenen Ligaspiele (`league_fixtures`) aus den
+  vorab angelegten Spielberichten. Manuell gestartet am 13.11.: 75 offene Spiele inkl. Nachholspielen.
+- **Pokal-Nummern:** `id_partido` wird bundesweit vergeben (Ligen in Blöcken, Stand > 430.000). Pokalspiele werden je Runde
+  nach der Auslosung angelegt – ohne Spielplan von handball.net sind sie nicht sinnvoll auffindbar (Blindsuche = zehntausende
+  Abrufe, unangemessen). Stichprobe 399.000–401.000: Oberliga Frauen 399579–~399690, Verbandsliga Frauen ab ~399700.
+
+### Umsetzung (13.11.2026)
+
+Spielbericht-Link 687625 (vom Nutzer) → Pokal-Block 687617–687647 gefunden (Sechzehntel- bis Finale, alle Runden vorab
+angelegt). Abruf liest den Block wöchentlich (`POKAL` in `spielberichte_abruf.js`), Daten in `gegner_daten.json` → `cup`.
+UI: Kasten „Pokal“ auf der Startseite, Seite `#pokal`. Der folgende Abschnitt war der ursprüngliche Ausweichweg.
+
+### Ursprünglicher Ausweichweg
+
+1. **Pokaltermine** kommen aus dem Trainertool (dort sind sie bereits eingetragen, z. B. Runde 2 am 22.11. gegen Quierschied).
+2. **Pokal-Spielberichte:** pro Spiel den Link zum Spielbericht (PDF) im Gegner-Reiter unter „Spielberichte hinzufügen“
+   einfügen – die Auslese erkennt „POKAL“ automatisch. Alternativ die `id_partido`/Spielnummer schicken, dann suche ich
+   die Nachbarnummern (gleiche Runde) gezielt ab und trage sie in den Abruf ein.
+3. Danach Pokal-Bereich bauen (Runden aus Trainertool + Berichte, kampflose 1. Runde als Eintrag ohne Bericht).
 
 ## Merkposten (später)
 

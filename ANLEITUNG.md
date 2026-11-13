@@ -78,6 +78,14 @@ Auf der Startseite füllt sich die Ligastatistik am Desktop automatisch mit weit
 mannschaft, formstärkste Mannschaft, beste Start-/Schlussphase, fairste Mannschaft, Siegesserie, beste Halbzeiten,
 wirksamste Auszeiten), bis sie mit der linken Spalte bündig abschließt.
 
+## Pokal (Opel Deckert Cup)
+
+Auf der Startseite zeigt der Kasten **Pokal** euren Weg: bisherige Runden (auch „kampflos weiter“), das nächste
+Pokalspiel mit Termin und Halle sowie die folgenden Runden. Halbfinale und Finale finden am **Ostermontag** statt – solange der
+Verband noch keinen Termin eingetragen hat, wird dieser automatisch angezeigt. **Ganzer Pokal →** öffnet alle Runden mit allen Ergebnissen.
+Das nächste Pokalspiel erscheint auch unter „Nächstes Spiel“ und in der Gegneranalyse. Die Daten kommen mit dem
+Montags-Abruf aus den offiziellen Spielberichten; Liga-Tabellen und -Statistiken bleiben reine Liga.
+
 ## Rückmeldungen der Spielerinnen
 
 - Spielerinnen sagen in ihrem Dashboard bei den nächsten Spielen und Trainings zu oder ab.

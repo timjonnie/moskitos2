@@ -314,3 +314,24 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   abrufbar. Als Merkposten in `docs/PLAN_POKAL.md`.
 - Pokal: Opel Deckert Cup Frauen auf handball.net (Liga 10446, Phase 17425). handball.net ist aus der Claude-Umgebung
   ebenfalls gesperrt → Freigabe der Domains oder ein Pokal-Bericht-Link nötig.
+
+### 13.11.2026 – Freigabe handball.net / handball360
+
+- handball360 erreichbar; handball.net blockt automatisierte Abrufe (Cloudflare 403) – nicht umgangen.
+- Montags-Abruf manuell gestartet: `league_fixtures` mit 75 offenen Ligaspielen → Spieltags-Vorschau vollständig.
+- Pokal: Termine aus dem Trainertool, Berichte per Link; Details in `docs/PLAN_POKAL.md`.
+
+### 13.11.2026 – Pokal (Opel Deckert Cup) eingebaut
+
+- Nutzer lieferte gespeicherte handball.net-Seiten (Runde 1) und den Bericht-Link 687625 → Pokal Frauen liegt als Block
+  687617–687647 (16 Sechzehntel-, 8 Achtel-, 4 Viertel-, 2 Halbfinals, Finale). Moskitos 2: kampflos weiter gegen
+  TuS Elm-Sprengen; Achtelfinale So 22.11., 14:00, gegen ASC Quierschied (Sporthalle Alsweiler).
+- `spielberichte_abruf.js`: `pokalAbruf()`/`cupEntry()` – Runde, Termin, Halle, Mannschaften (lange Namen aus „Heim:/Gast:“),
+  Endstand auch ohne Spielverlauf („Sieger …“), Status gespielt/Ergebnis/kampflos/Freilos/offen; kampflose Sieger aus der
+  nächsten Runde erschlossen. `data.cup`, eigene offene Pokalspiele zusätzlich in `fixtures` (`comp:"Pokal"`).
+- `GA_TEAMS` (alle drei Parser-Kopien): „…ALSWEILER 2“ = Moskitos 2 u. a. Pokalteams; Kürzel-Großschreibung erweitert.
+- Team-Board 4.19: Kasten „Pokal“ + Seite `#pokal`; „Nächstes Spiel“ kann ein Pokalspiel sein („(Pokal)“).
+  Liga-Auswertungen (Tabellen, Ligastatistik, Restprogramm, Gegner-Baustein) filtern Pokalspiele heraus. Spielanalyse 2.14.
+- Getestet: Abruf lokal mit den 31 Pokal-PDFs (Mock-Fetch, Kopie der Daten), Playwright Spielerin/Trainer, 390/1100 px.
+- Team-Board 4.20: Halbfinale und Finale immer am Ostermontag (Hinweis Nutzer). `osterMontag(jahr)` (Gauß), Jahr = Saisonende;
+  wird angezeigt, solange im Bericht kein Datum steht (2026/27 → Mo, 29.03.2027).
