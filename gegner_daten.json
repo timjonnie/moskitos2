@@ -16487,6 +16487,15 @@
    "label": "Sa, 14.11.2026, 15:45, Marpingen Sporthalle (Heimspiel)"
   },
   {
+   "id": 687638,
+   "comp": "Pokal",
+   "round": "Achtelfinale",
+   "date": "2026-11-22",
+   "home": "Moskitos 2",
+   "away": "ASC Quierschied",
+   "label": "So, 22.11.2026, 14:00, Sporthalle Alsweiler (Pokal, Achtelfinale, Heimspiel)"
+  },
+  {
    "id": 399624,
    "st": 10,
    "date": "2026-11-28",
@@ -17192,5 +17201,4389 @@
    "away": "Moskitos 2",
    "label": "Sa, 24.04.2027, 18:00, Sporthalle In Den Fliesen (auswärts)"
   }
- ]
+ ],
+ "cup": {
+  "name": "Opel Deckert Cup",
+  "games": [
+   {
+    "id": 687617,
+    "nr": "2627SARBKR2DJWA0101C",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "16:00",
+    "venue": "",
+    "home": "TV Merchweiler 2",
+    "away": "HF Untere Saar 3",
+    "score": [
+     0,
+     0
+    ],
+    "ht": null,
+    "winner": "HF Untere Saar 3",
+    "status": "kampflos",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687617"
+   },
+   {
+    "id": 687618,
+    "nr": "2627SARBKR2DJWA0102D",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "12:00",
+    "venue": "Riegelsberghalle",
+    "home": "HF Köllertal 2",
+    "away": "SG Zweibrücken",
+    "score": [
+     25,
+     35
+    ],
+    "ht": [
+     14,
+     17
+    ],
+    "winner": "SG Zweibrücken",
+    "status": "gespielt",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687618",
+    "game": {
+     "id": 687618,
+     "nr": "2627SARBKR2DJWA0102D",
+     "comp": "Pokal",
+     "st": null,
+     "date": "2026-10-31",
+     "time": "12:00",
+     "venue": "Riegelsberghalle",
+     "home": "HF Köllertal 2",
+     "away": "SG Zweibrücken",
+     "score": [
+      25,
+      35
+     ],
+     "ht": [
+      14,
+      17
+     ],
+     "roster": {
+      "home": {
+       "3": "Selina Honecker",
+       "4": "Marion Neu",
+       "6": "Aline Engel",
+       "8": "Janine Bruxmeier",
+       "9": "Johanna Großmann",
+       "10": "Kathrin Lebold",
+       "11": "Corinna Fischer",
+       "12": "Nathalie Breinig",
+       "14": "Finnja Straß",
+       "15": "Manuela Vanoli",
+       "18": "Alisha Würz",
+       "29": "Laura Krämer",
+       "90": "Saskia Zimmer"
+      },
+      "away": {
+       "2": "Emma Wenzel",
+       "5": "Lea Merker",
+       "9": "Milla Hoffmann",
+       "10": "Teresa Maria Wenzel",
+       "11": "Jasmin Ruffing",
+       "12": "Leonie Hoffmann",
+       "13": "Anna Sommer",
+       "17": "Lea Bullacher",
+       "18": "Lejla Carkadzija",
+       "23": "Celine Jag",
+       "33": "Clara Drumm",
+       "36": "Becky Gerlach",
+       "40": "Charlotte Krauß"
+      }
+     },
+     "events": [
+      {
+       "s": 30,
+       "side": "away",
+       "type": "goal",
+       "nr": 36
+      },
+      {
+       "s": 72,
+       "side": "away",
+       "type": "goal",
+       "nr": 23
+      },
+      {
+       "s": 106,
+       "side": "away",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 169,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 243,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 291,
+       "side": "away",
+       "type": "warning",
+       "nr": 36
+      },
+      {
+       "s": 315,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 10
+      },
+      {
+       "s": 331,
+       "side": "away",
+       "type": "goal",
+       "nr": 23
+      },
+      {
+       "s": 355,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 412,
+       "side": "home",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 422,
+       "side": "away",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 470,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 492,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 516,
+       "side": "home",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 639,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 782,
+       "side": "away",
+       "type": "goal",
+       "nr": 36
+      },
+      {
+       "s": 815,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 909,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 920,
+       "side": "away",
+       "type": "goal",
+       "nr": 36
+      },
+      {
+       "s": 949,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 954,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 1064,
+       "side": "away",
+       "type": "warning",
+       "nr": 17
+      },
+      {
+       "s": 1139,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 1160,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 1256,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 1274,
+       "side": "home",
+       "type": "warning",
+       "nr": 29
+      },
+      {
+       "s": 1290,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 18
+      },
+      {
+       "s": 1323,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 1383,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 1466,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 1503,
+       "side": "home",
+       "type": "pen_miss",
+       "nr": 10
+      },
+      {
+       "s": 1522,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 1573,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 1670,
+       "side": "away",
+       "type": "goal",
+       "nr": 36
+      },
+      {
+       "s": 1702,
+       "side": "home",
+       "type": "goal",
+       "nr": 6
+      },
+      {
+       "s": 1710,
+       "side": "away",
+       "type": "goal",
+       "nr": 36
+      },
+      {
+       "s": 1751,
+       "side": "home",
+       "type": "pen_miss",
+       "nr": 4
+      },
+      {
+       "s": 1789,
+       "side": "away",
+       "type": "goal",
+       "nr": 36
+      },
+      {
+       "s": 1825,
+       "side": "home",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 1855,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 18
+      },
+      {
+       "s": 1887,
+       "side": "home",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 1989,
+       "side": "home",
+       "type": "goal",
+       "nr": 29
+      },
+      {
+       "s": 2051,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 2110,
+       "side": "away",
+       "type": "goal",
+       "nr": 40
+      },
+      {
+       "s": 2140,
+       "side": "home",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 2245,
+       "side": "home",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 2255,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 2293,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 2326,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 2356,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 2367,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 2407,
+       "side": "home",
+       "type": "pen_miss",
+       "nr": 6
+      },
+      {
+       "s": 2488,
+       "side": "away",
+       "type": "goal",
+       "nr": 36
+      },
+      {
+       "s": 2541,
+       "side": "away",
+       "type": "two_min",
+       "nr": 36
+      },
+      {
+       "s": 2585,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 2620,
+       "side": "home",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 2634,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 2662,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 2743,
+       "side": "away",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 2813,
+       "side": "home",
+       "type": "goal",
+       "nr": 29
+      },
+      {
+       "s": 2885,
+       "side": "away",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 2941,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 18
+      },
+      {
+       "s": 2978,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 3049,
+       "side": "away",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 3122,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 3148,
+       "side": "home",
+       "type": "goal",
+       "nr": 6
+      },
+      {
+       "s": 3156,
+       "side": "away",
+       "type": "goal",
+       "nr": 36
+      },
+      {
+       "s": 3265,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 3337,
+       "side": "home",
+       "type": "pen_miss",
+       "nr": 10
+      },
+      {
+       "s": 3549,
+       "side": "home",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 3563,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 3592,
+       "side": "home",
+       "type": "goal",
+       "nr": 8
+      }
+     ],
+     "note": "",
+     "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687618"
+    }
+   },
+   {
+    "id": 687619,
+    "nr": "2627SARBKR2DJWA0103C",
+    "round": "Sechzehntelfinale",
+    "date": "2026-11-01",
+    "time": "17:00",
+    "venue": "Primshalle",
+    "home": "HC Schmelz",
+    "away": "TV Merchweiler",
+    "score": [
+     14,
+     38
+    ],
+    "ht": [
+     6,
+     16
+    ],
+    "winner": "TV Merchweiler",
+    "status": "gespielt",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687619",
+    "game": {
+     "id": 687619,
+     "nr": "2627SARBKR2DJWA0103C",
+     "comp": "Pokal",
+     "st": null,
+     "date": "2026-11-01",
+     "time": "17:00",
+     "venue": "Primshalle",
+     "home": "HC Schmelz",
+     "away": "TV Merchweiler",
+     "score": [
+      14,
+      38
+     ],
+     "ht": [
+      6,
+      16
+     ],
+     "roster": {
+      "home": {
+       "1": "Sandra Stein",
+       "2": "Aytennur Aydin",
+       "3": "Mailin Braun",
+       "6": "Lara Thoma",
+       "9": "Lea Trierweiler",
+       "11": "Ana Tonita",
+       "13": "Jana Schneiderlöchner",
+       "14": "Aline Trierweiler",
+       "19": "Leonie Meinecke",
+       "21": "Nilay Cimen",
+       "25": "Anja Noß",
+       "66": "Lea Hau",
+       "82": "Johanna Theobald-Lauer"
+      },
+      "away": {
+       "1": "Brooke Sahra Cooper",
+       "4": "Kira Mager",
+       "7": "Lucy Beenen",
+       "9": "Lisa Schweitzer",
+       "10": "Anna Gattermann",
+       "11": "Lena Dahm",
+       "12": "Hannah Seel",
+       "17": "Luise Schilke",
+       "19": "Anna-Lisa Ewen",
+       "23": "Hanna Schilke",
+       "28": "Jana Seel",
+       "54": "Jessica Wagner",
+       "95": "Adriana Altpeter"
+      }
+     },
+     "events": [
+      {
+       "s": 170,
+       "side": "away",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 194,
+       "side": "home",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 323,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 23
+      },
+      {
+       "s": 363,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 412,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 471,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 546,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 11
+      },
+      {
+       "s": 581,
+       "side": "away",
+       "type": "goal",
+       "nr": 23
+      },
+      {
+       "s": 669,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 884,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 23
+      },
+      {
+       "s": 959,
+       "side": "away",
+       "type": "goal",
+       "nr": 23
+      },
+      {
+       "s": 1126,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 1126,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 1167,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 1267,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 1289,
+       "side": "home",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 1347,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 11
+      },
+      {
+       "s": 1544,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 11
+      },
+      {
+       "s": 1571,
+       "side": "away",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 1578,
+       "side": "home",
+       "type": "warning",
+       "nr": 14
+      },
+      {
+       "s": 1598,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 1647,
+       "side": "home",
+       "type": "two_min",
+       "nr": 3
+      },
+      {
+       "s": 1657,
+       "side": "away",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 1678,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 1735,
+       "side": "away",
+       "type": "warning",
+       "nr": 95
+      },
+      {
+       "s": 1770,
+       "side": "away",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 1822,
+       "side": "away",
+       "type": "goal",
+       "nr": 23
+      },
+      {
+       "s": 1872,
+       "side": "away",
+       "type": "two_min",
+       "nr": 11
+      },
+      {
+       "s": 1969,
+       "side": "away",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 2030,
+       "side": "home",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 2111,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 2276,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 2434,
+       "side": "away",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 2480,
+       "side": "away",
+       "type": "two_min",
+       "nr": 23
+      },
+      {
+       "s": 2552,
+       "side": "home",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 2670,
+       "side": "away",
+       "type": "goal",
+       "nr": 95
+      },
+      {
+       "s": 2725,
+       "side": "away",
+       "type": "goal",
+       "nr": 95
+      },
+      {
+       "s": 2765,
+       "side": "home",
+       "type": "two_min",
+       "nr": 11
+      },
+      {
+       "s": 2766,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 23
+      },
+      {
+       "s": 2795,
+       "side": "home",
+       "type": "goal",
+       "nr": 66
+      },
+      {
+       "s": 2802,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 2831,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 2869,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2910,
+       "side": "away",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 2957,
+       "side": "away",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 2991,
+       "side": "away",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 3032,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3079,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 3084,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 3162,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3203,
+       "side": "home",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 3285,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3329,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3379,
+       "side": "away",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 3452,
+       "side": "away",
+       "type": "goal",
+       "nr": 95
+      },
+      {
+       "s": 3510,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 19
+      },
+      {
+       "s": 3526,
+       "side": "away",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 3572,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3589,
+       "side": "home",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 3600,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      }
+     ],
+     "note": "",
+     "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687619"
+    }
+   },
+   {
+    "id": 687620,
+    "nr": "2627SARBKR2DJWA0104D",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "",
+    "venue": "-",
+    "home": "TV Sulzbach (zurückgezogen)",
+    "away": "HG Saarlouis 2",
+    "score": [
+     0,
+     0
+    ],
+    "ht": null,
+    "winner": "HG Saarlouis 2",
+    "status": "kampflos",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687620"
+   },
+   {
+    "id": 687621,
+    "nr": "2627SARBKR2DJWA0105C",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "15:00",
+    "venue": "Saarlouis Sporthalle Am Stadtgarten",
+    "home": "HG Saarlouis",
+    "away": "TV Kirkel",
+    "score": [
+     28,
+     22
+    ],
+    "ht": [
+     13,
+     10
+    ],
+    "winner": "HG Saarlouis",
+    "status": "gespielt",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687621",
+    "game": {
+     "id": 687621,
+     "nr": "2627SARBKR2DJWA0105C",
+     "comp": "Pokal",
+     "st": null,
+     "date": "2026-10-31",
+     "time": "15:00",
+     "venue": "Saarlouis Sporthalle Am Stadtgarten",
+     "home": "HG Saarlouis",
+     "away": "TV Kirkel",
+     "score": [
+      28,
+      22
+     ],
+     "ht": [
+      13,
+      10
+     ],
+     "roster": {
+      "home": {
+       "3": "Maren Blatton",
+       "9": "Julia Kockler",
+       "13": "Sophie Schneider",
+       "16": "Joelle Marie Charlotte Söther",
+       "17": "Lara Neff",
+       "19": "Kira Zimmer",
+       "37": "Jo-Ann Buchholz",
+       "39": "Sandra Jonczyk",
+       "44": "Louisa Gothier",
+       "90": "Alisha-Chantal Staudter",
+       "99": "Julia Jungmann"
+      },
+      "away": {
+       "10": "Schmidt Petra",
+       "14": "Jacqueline Schneider",
+       "15": "Alisa Wagner",
+       "16": "Amalia Borek",
+       "17": "Emilie Hirschauer",
+       "18": "Larissa Blatt",
+       "19": "Jasmina Johannes",
+       "22": "Annika Alt",
+       "44": "Laura Schnagl",
+       "66": "Dana Leibrock",
+       "85": "Amelie Marie Lambert",
+       "96": "Daniela Bauer"
+      }
+     },
+     "events": [
+      {
+       "s": 61,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 96,
+       "side": "home",
+       "type": "goal",
+       "nr": 39
+      },
+      {
+       "s": 175,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 19
+      },
+      {
+       "s": 198,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 251,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 292,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 356,
+       "side": "home",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 433,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 14
+      },
+      {
+       "s": 446,
+       "side": "home",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 495,
+       "side": "away",
+       "type": "warning",
+       "nr": 66
+      },
+      {
+       "s": 653,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 684,
+       "side": "away",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 711,
+       "side": "home",
+       "type": "goal",
+       "nr": 39
+      },
+      {
+       "s": 742,
+       "side": "away",
+       "type": "goal",
+       "nr": 44
+      },
+      {
+       "s": 772,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 834,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 845,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 855,
+       "side": "away",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 897,
+       "side": "home",
+       "type": "goal",
+       "nr": 39
+      },
+      {
+       "s": 927,
+       "side": "away",
+       "type": "goal",
+       "nr": 66
+      },
+      {
+       "s": 1198,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 15
+      },
+      {
+       "s": 1217,
+       "side": "home",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 1330,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 1371,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 1453,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 1676,
+       "side": "away",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 1683,
+       "side": "home",
+       "type": "two_min",
+       "nr": 9
+      },
+      {
+       "s": 1709,
+       "side": "home",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 1864,
+       "side": "home",
+       "type": "goal",
+       "nr": 39
+      },
+      {
+       "s": 1954,
+       "side": "away",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 2003,
+       "side": "away",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 2014,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 2113,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 2197,
+       "side": "home",
+       "type": "goal",
+       "nr": 44
+      },
+      {
+       "s": 2339,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 2436,
+       "side": "home",
+       "type": "goal",
+       "nr": 39
+      },
+      {
+       "s": 2463,
+       "side": "away",
+       "type": "goal",
+       "nr": 14
+      },
+      {
+       "s": 2477,
+       "side": "home",
+       "type": "goal",
+       "nr": 90
+      },
+      {
+       "s": 2503,
+       "side": "away",
+       "type": "goal",
+       "nr": 85
+      },
+      {
+       "s": 2546,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 19
+      },
+      {
+       "s": 2620,
+       "side": "home",
+       "type": "goal",
+       "nr": 39
+      },
+      {
+       "s": 2632,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 2661,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 2686,
+       "side": "home",
+       "type": "goal",
+       "nr": 44
+      },
+      {
+       "s": 2778,
+       "side": "home",
+       "type": "goal",
+       "nr": 39
+      },
+      {
+       "s": 2845,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 2922,
+       "side": "home",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 3028,
+       "side": "home",
+       "type": "two_min",
+       "nr": 90
+      },
+      {
+       "s": 3037,
+       "side": "away",
+       "type": "goal",
+       "nr": 66
+      },
+      {
+       "s": 3065,
+       "side": "away",
+       "type": "goal",
+       "nr": 14
+      },
+      {
+       "s": 3071,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 3132,
+       "side": "home",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 3218,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3256,
+       "side": "away",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 3378,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3412,
+       "side": "home",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3456,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 3600,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 19
+      }
+     ],
+     "note": "",
+     "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687621"
+    }
+   },
+   {
+    "id": 687622,
+    "nr": "2627SARBKR2DJWA0106C",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "13:00",
+    "venue": "Mühlbachhalle Schiffweiler",
+    "home": "HG Itzenplitz",
+    "away": "HSG TVA/ATSV Saarbrücken 2",
+    "score": [
+     19,
+     35
+    ],
+    "ht": [
+     10,
+     16
+    ],
+    "winner": "HSG TVA/ATSV Saarbrücken 2",
+    "status": "gespielt",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687622",
+    "game": {
+     "id": 687622,
+     "nr": "2627SARBKR2DJWA0106C",
+     "comp": "Pokal",
+     "st": null,
+     "date": "2026-10-31",
+     "time": "13:00",
+     "venue": "Mühlbachhalle Schiffweiler",
+     "home": "HG Itzenplitz",
+     "away": "HSG TVA/ATSV Saarbrücken 2",
+     "score": [
+      19,
+      35
+     ],
+     "ht": [
+      10,
+      16
+     ],
+     "roster": {
+      "home": {
+       "6": "Nele Antonia Budde",
+       "7": "Marleen Tyb`l",
+       "10": "Nele Altmeyer",
+       "13": "Luisa Alina Veith",
+       "18": "Leni Fries",
+       "20": "Lara Luckas",
+       "21": "Michelle Keßler",
+       "27": "Lena Mohr",
+       "29": "Giulia Kurz",
+       "33": "Christiane Kasper"
+      },
+      "away": {
+       "2": "Johannah Müller",
+       "7": "Mathilda Marx",
+       "8": "Emma Rettig",
+       "10": "Johanna Krause",
+       "11": "Rania Samira Fouaghla",
+       "12": "Myriam Schönenberger",
+       "15": "Natalie Woll",
+       "19": "Katrin Kopp",
+       "20": "Michelle Rubly",
+       "21": "Tabea Ricken",
+       "23": "Christina Peters",
+       "54": "Luisa Caico",
+       "83": "Lara Karrenbauer"
+      }
+     },
+     "events": [
+      {
+       "s": 80,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 114,
+       "side": "away",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 204,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 252,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 262,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 348,
+       "side": "home",
+       "type": "warning",
+       "nr": 29
+      },
+      {
+       "s": 355,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 11
+      },
+      {
+       "s": 377,
+       "side": "home",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 406,
+       "side": "away",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 430,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 462,
+       "side": "away",
+       "type": "warning",
+       "nr": 2
+      },
+      {
+       "s": 470,
+       "side": "home",
+       "type": "pen_miss",
+       "nr": 21
+      },
+      {
+       "s": 514,
+       "side": "home",
+       "type": "warning",
+       "nr": 20
+      },
+      {
+       "s": 575,
+       "side": "home",
+       "type": "goal",
+       "nr": 29
+      },
+      {
+       "s": 726,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 832,
+       "side": "away",
+       "type": "goal",
+       "nr": 83
+      },
+      {
+       "s": 886,
+       "side": "away",
+       "type": "two_min",
+       "nr": 2
+      },
+      {
+       "s": 1023,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 1097,
+       "side": "home",
+       "type": "warning",
+       "nr": 6
+      },
+      {
+       "s": 1105,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 11
+      },
+      {
+       "s": 1139,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 29
+      },
+      {
+       "s": 1178,
+       "side": "home",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 1204,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 1216,
+       "side": "away",
+       "type": "disq",
+       "nr": 11
+      },
+      {
+       "s": 1223,
+       "side": "home",
+       "type": "goal",
+       "nr": 29
+      },
+      {
+       "s": 1248,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 1448,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 1487,
+       "side": "home",
+       "type": "two_min",
+       "nr": 20
+      },
+      {
+       "s": 1493,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 21
+      },
+      {
+       "s": 1527,
+       "side": "away",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 1591,
+       "side": "away",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 1624,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 1643,
+       "side": "away",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 1664,
+       "side": "home",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 1723,
+       "side": "away",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 1742,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 1905,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 8
+      },
+      {
+       "s": 1924,
+       "side": "home",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 1952,
+       "side": "away",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 2145,
+       "side": "away",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 2252,
+       "side": "away",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 2284,
+       "side": "home",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 2349,
+       "side": "away",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 2409,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2432,
+       "side": "home",
+       "type": "goal",
+       "nr": 29
+      },
+      {
+       "s": 2471,
+       "side": "away",
+       "type": "goal",
+       "nr": 83
+      },
+      {
+       "s": 2549,
+       "side": "away",
+       "type": "goal",
+       "nr": 83
+      },
+      {
+       "s": 2560,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 2590,
+       "side": "away",
+       "type": "goal",
+       "nr": 83
+      },
+      {
+       "s": 2664,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 2777,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 2796,
+       "side": "home",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 2842,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 2940,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 8
+      },
+      {
+       "s": 2965,
+       "side": "away",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 3032,
+       "side": "away",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 3066,
+       "side": "home",
+       "type": "goal",
+       "nr": 29
+      },
+      {
+       "s": 3111,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3140,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 3203,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 3228,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      },
+      {
+       "s": 3265,
+       "side": "home",
+       "type": "goal",
+       "nr": 29
+      },
+      {
+       "s": 3281,
+       "side": "away",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 3534,
+       "side": "away",
+       "type": "goal",
+       "nr": 19
+      }
+     ],
+     "note": "",
+     "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687622"
+    }
+   },
+   {
+    "id": 687623,
+    "nr": "2627SARBKR2DJWA0107C",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "17:30",
+    "venue": "Sporthalle Perl",
+    "home": "HC Perl",
+    "away": "RW Schaumberg",
+    "score": [
+     25,
+     28
+    ],
+    "ht": [
+     10,
+     14
+    ],
+    "winner": "RW Schaumberg",
+    "status": "gespielt",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687623",
+    "game": {
+     "id": 687623,
+     "nr": "2627SARBKR2DJWA0107C",
+     "comp": "Pokal",
+     "st": null,
+     "date": "2026-10-31",
+     "time": "17:30",
+     "venue": "Sporthalle Perl",
+     "home": "HC Perl",
+     "away": "RW Schaumberg",
+     "score": [
+      25,
+      28
+     ],
+     "ht": [
+      10,
+      14
+     ],
+     "roster": {
+      "home": {
+       "2": "Laura Kolb",
+       "4": "Valerie Görgen",
+       "7": "Charlotte Buchheit",
+       "11": "Julie Scheer",
+       "14": "Luisa Winter",
+       "16": "Cosima Müller",
+       "17": "Alina Meuer",
+       "18": "Jennifer Christ",
+       "20": "Mia Parage",
+       "22": "Helene Myalski",
+       "33": "Saphy Erika Zinga-Botao"
+      },
+      "away": {
+       "5": "Hannah Kreutzer",
+       "8": "Katharina Brück",
+       "10": "Melina Marie Maldener",
+       "11": "Marie Bachmann",
+       "15": "Tamara Stuhlsatz",
+       "24": "Celina Klesen",
+       "28": "Alina-Sophie Stapelfeldt",
+       "33": "Jana Gebhardt",
+       "42": "Sarah Hahn",
+       "66": "Annika Werner",
+       "94": "Annika Fusenig",
+       "99": "Lea Henkes"
+      }
+     },
+     "events": [
+      {
+       "s": 135,
+       "side": "away",
+       "type": "goal",
+       "nr": 42
+      },
+      {
+       "s": 168,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 254,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 290,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 326,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 28
+      },
+      {
+       "s": 364,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 389,
+       "side": "away",
+       "type": "goal",
+       "nr": 24
+      },
+      {
+       "s": 429,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 17
+      },
+      {
+       "s": 472,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 28
+      },
+      {
+       "s": 502,
+       "side": "away",
+       "type": "warning",
+       "nr": 5
+      },
+      {
+       "s": 573,
+       "side": "away",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 636,
+       "side": "away",
+       "type": "goal",
+       "nr": 42
+      },
+      {
+       "s": 677,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 763,
+       "side": "away",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 820,
+       "side": "away",
+       "type": "warning",
+       "nr": 24
+      },
+      {
+       "s": 853,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 915,
+       "side": "away",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 932,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 1004,
+       "side": "away",
+       "type": "warning",
+       "nr": 15
+      },
+      {
+       "s": 1005,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 17
+      },
+      {
+       "s": 1096,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 1174,
+       "side": "away",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 1293,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 1337,
+       "side": "away",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 1437,
+       "side": "home",
+       "type": "warning",
+       "nr": 18
+      },
+      {
+       "s": 1484,
+       "side": "away",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 1527,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 17
+      },
+      {
+       "s": 1558,
+       "side": "home",
+       "type": "warning",
+       "nr": 33
+      },
+      {
+       "s": 1572,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 28
+      },
+      {
+       "s": 1713,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 1729,
+       "side": "away",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 1875,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 1912,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 2018,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 2049,
+       "side": "home",
+       "type": "goal",
+       "nr": 33
+      },
+      {
+       "s": 2095,
+       "side": "home",
+       "type": "pen_miss",
+       "nr": 17
+      },
+      {
+       "s": 2121,
+       "side": "home",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 2222,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2226,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 2301,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 28
+      },
+      {
+       "s": 2367,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2425,
+       "side": "away",
+       "type": "goal",
+       "nr": 24
+      },
+      {
+       "s": 2463,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 14
+      },
+      {
+       "s": 2640,
+       "side": "away",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 2687,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 14
+      },
+      {
+       "s": 2713,
+       "side": "away",
+       "type": "goal",
+       "nr": 24
+      },
+      {
+       "s": 2742,
+       "side": "home",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 2833,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2888,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 2974,
+       "side": "away",
+       "type": "goal",
+       "nr": 24
+      },
+      {
+       "s": 3064,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 3126,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 3205,
+       "side": "home",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 3219,
+       "side": "away",
+       "type": "goal",
+       "nr": 42
+      },
+      {
+       "s": 3281,
+       "side": "home",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 3298,
+       "side": "away",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 3350,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 28
+      },
+      {
+       "s": 3372,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 3386,
+       "side": "away",
+       "type": "goal",
+       "nr": 33
+      },
+      {
+       "s": 3414,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 3494,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 3520,
+       "side": "away",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 3581,
+       "side": "away",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 3591,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      }
+     ],
+     "note": "",
+     "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687623"
+    }
+   },
+   {
+    "id": 687624,
+    "nr": "2627SARBKR2DJWA0108C",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "Freilos",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687624"
+   },
+   {
+    "id": 687625,
+    "nr": "2627SARBKR2DJWA0109",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-27",
+    "time": "19:30",
+    "venue": "Sporthalle Alsweiler",
+    "home": "HSG Marpingen-Alsweiler 3",
+    "away": "HF Köllertal",
+    "score": [
+     37,
+     26
+    ],
+    "ht": [
+     18,
+     16
+    ],
+    "winner": "HSG Marpingen-Alsweiler 3",
+    "status": "gespielt",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687625",
+    "game": {
+     "id": 687625,
+     "nr": "2627SARBKR2DJWA0109",
+     "comp": "Pokal",
+     "st": null,
+     "date": "2026-10-27",
+     "time": "19:30",
+     "venue": "Sporthalle Alsweiler",
+     "home": "HSG Marpingen-Alsweiler 3",
+     "away": "HF Köllertal",
+     "score": [
+      37,
+      26
+     ],
+     "ht": [
+      18,
+      16
+     ],
+     "roster": {
+      "home": {
+       "1": "Emelie Werron",
+       "3": "Pauline Tam",
+       "9": "Lea Hubertus",
+       "14": "Ida Giebel",
+       "15": "Marie Simon",
+       "18": "Lena Müller",
+       "20": "Anja Schreiner",
+       "22": "Lina Schmidt",
+       "26": "Melina Rohe",
+       "28": "Lucie Staub",
+       "30": "Gina Carlino",
+       "96": "Lea Sträßer"
+      },
+      "away": {
+       "2": "Saina Teymouri",
+       "5": "Dobroslawa Borowiec",
+       "7": "Hanna Spallek",
+       "11": "Nathalie Wagner",
+       "13": "Lilly Reimringer",
+       "15": "Judith Zander",
+       "17": "Melanie Neutzling",
+       "27": "Svenja Maximini",
+       "44": "Leonie Krebs"
+      }
+     },
+     "events": [
+      {
+       "s": 101,
+       "side": "home",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 152,
+       "side": "away",
+       "type": "warning",
+       "nr": 7
+      },
+      {
+       "s": 184,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 217,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 238,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 278,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 337,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 5
+      },
+      {
+       "s": 344,
+       "side": "home",
+       "type": "goal",
+       "nr": 15
+      },
+      {
+       "s": 397,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 427,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 450,
+       "side": "away",
+       "type": "goal",
+       "nr": 44
+      },
+      {
+       "s": 460,
+       "side": "home",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 504,
+       "side": "home",
+       "type": "goal",
+       "nr": 22
+      },
+      {
+       "s": 564,
+       "side": "away",
+       "type": "goal",
+       "nr": 44
+      },
+      {
+       "s": 804,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 7
+      },
+      {
+       "s": 833,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 846,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 936,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 976,
+       "side": "home",
+       "type": "goal",
+       "nr": 30
+      },
+      {
+       "s": 1023,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 1051,
+       "side": "away",
+       "type": "warning",
+       "nr": 11
+      },
+      {
+       "s": 1166,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 1172,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 1192,
+       "side": "home",
+       "type": "goal",
+       "nr": 26
+      },
+      {
+       "s": 1247,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 1269,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 1311,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 1361,
+       "side": "away",
+       "type": "goal",
+       "nr": 2
+      },
+      {
+       "s": 1446,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 7
+      },
+      {
+       "s": 1480,
+       "side": "away",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 1501,
+       "side": "home",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 1522,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 1563,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 1576,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 1607,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 1657,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 1665,
+       "side": "home",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 1682,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 1724,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 1816,
+       "side": "home",
+       "type": "goal",
+       "nr": 30
+      },
+      {
+       "s": 1859,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 1884,
+       "side": "away",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 1900,
+       "side": "home",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 1948,
+       "side": "away",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 1961,
+       "side": "home",
+       "type": "goal",
+       "nr": 20
+      },
+      {
+       "s": 2016,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 7
+      },
+      {
+       "s": 2100,
+       "side": "away",
+       "type": "warning",
+       "nr": 44
+      },
+      {
+       "s": 2167,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 2255,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 30
+      },
+      {
+       "s": 2315,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 2377,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 7
+      },
+      {
+       "s": 2377,
+       "side": "home",
+       "type": "two_min",
+       "nr": 20
+      },
+      {
+       "s": 2431,
+       "side": "home",
+       "type": "goal",
+       "nr": 28
+      },
+      {
+       "s": 2568,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 2581,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 2624,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 2660,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 2694,
+       "side": "away",
+       "type": "goal",
+       "nr": 44
+      },
+      {
+       "s": 2723,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 2795,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 2846,
+       "side": "home",
+       "type": "goal",
+       "nr": 22
+      },
+      {
+       "s": 2892,
+       "side": "home",
+       "type": "goal",
+       "nr": 30
+      },
+      {
+       "s": 2933,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 3022,
+       "side": "home",
+       "type": "goal",
+       "nr": 30
+      },
+      {
+       "s": 3152,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 3160,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 3175,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 3252,
+       "side": "home",
+       "type": "goal",
+       "nr": 96
+      },
+      {
+       "s": 3288,
+       "side": "away",
+       "type": "goal",
+       "nr": 44
+      },
+      {
+       "s": 3336,
+       "side": "away",
+       "type": "goal",
+       "nr": 11
+      },
+      {
+       "s": 3417,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 30
+      },
+      {
+       "s": 3595,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      }
+     ],
+     "note": "",
+     "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687625"
+    }
+   },
+   {
+    "id": 687626,
+    "nr": "2627SARBKR2DJWA0110",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "Freilos",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687626"
+   },
+   {
+    "id": 687627,
+    "nr": "2627SARBKR2DJWA0111",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "17:00",
+    "venue": "Jahnsporthalle",
+    "home": "TUS Elm-Sprengen",
+    "away": "Moskitos 2",
+    "score": [
+     0,
+     0
+    ],
+    "ht": null,
+    "winner": "Moskitos 2",
+    "status": "kampflos",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687627"
+   },
+   {
+    "id": 687628,
+    "nr": "2627SARBKR2DJWA0112",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "20:00",
+    "venue": "Sporthalle Am Berg",
+    "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach 2",
+    "away": "ASC Quierschied",
+    "score": [
+     21,
+     48
+    ],
+    "ht": [
+     10,
+     22
+    ],
+    "winner": "ASC Quierschied",
+    "status": "gespielt",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687628",
+    "game": {
+     "id": 687628,
+     "nr": "2627SARBKR2DJWA0112",
+     "comp": "Pokal",
+     "st": null,
+     "date": "2026-10-31",
+     "time": "20:00",
+     "venue": "Sporthalle Am Berg",
+     "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach 2",
+     "away": "ASC Quierschied",
+     "score": [
+      21,
+      48
+     ],
+     "ht": [
+      10,
+      22
+     ],
+     "roster": {
+      "home": {
+       "12": "Ricarda Landgraf",
+       "20": "Nele Kallisch",
+       "24": "Angela Antonia Baltes",
+       "26": "Fiona Strauß",
+       "27": "Emily Engel",
+       "28": "Finja Merker",
+       "30": "Lisa Straub",
+       "32": "Lina Wiertz",
+       "56": "Sara Luzie Korb",
+       "57": "Lara Welsch",
+       "99": "Hannah-Louisa Landgraf"
+      },
+      "away": {
+       "1": "Selina Kohlenberg",
+       "3": "Lea Sophie Knapp",
+       "13": "Michelle Schreiner",
+       "17": "Leonie Rodener",
+       "33": "Lena Becker",
+       "45": "Raihana Fouaghla",
+       "58": "Isabelle Biehl",
+       "60": "Jana Ibrahim",
+       "74": "Tamara Leidner",
+       "94": "Helena Dörr",
+       "97": "Kathrin Eggert"
+      }
+     },
+     "events": [
+      {
+       "s": 16,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 44,
+       "side": "away",
+       "type": "goal",
+       "nr": 58
+      },
+      {
+       "s": 56,
+       "side": "home",
+       "type": "goal",
+       "nr": 57
+      },
+      {
+       "s": 109,
+       "side": "away",
+       "type": "goal",
+       "nr": 94
+      },
+      {
+       "s": 150,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 94
+      },
+      {
+       "s": 232,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 239,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 251,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 284,
+       "side": "home",
+       "type": "goal",
+       "nr": 56
+      },
+      {
+       "s": 306,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 328,
+       "side": "home",
+       "type": "goal",
+       "nr": 99
+      },
+      {
+       "s": 339,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 395,
+       "side": "away",
+       "type": "goal",
+       "nr": 58
+      },
+      {
+       "s": 460,
+       "side": "away",
+       "type": "warning",
+       "nr": 3
+      },
+      {
+       "s": 505,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 94
+      },
+      {
+       "s": 541,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 597,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 756,
+       "side": "home",
+       "type": "goal",
+       "nr": 99
+      },
+      {
+       "s": 769,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 60
+      },
+      {
+       "s": 769,
+       "side": "home",
+       "type": "two_min",
+       "nr": 28
+      },
+      {
+       "s": 799,
+       "side": "away",
+       "type": "goal",
+       "nr": 58
+      },
+      {
+       "s": 826,
+       "side": "away",
+       "type": "goal",
+       "nr": 58
+      },
+      {
+       "s": 870,
+       "side": "away",
+       "type": "goal",
+       "nr": 45
+      },
+      {
+       "s": 947,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 1059,
+       "side": "home",
+       "type": "goal",
+       "nr": 30
+      },
+      {
+       "s": 1078,
+       "side": "away",
+       "type": "goal",
+       "nr": 58
+      },
+      {
+       "s": 1163,
+       "side": "away",
+       "type": "goal",
+       "nr": 58
+      },
+      {
+       "s": 1190,
+       "side": "home",
+       "type": "goal",
+       "nr": 57
+      },
+      {
+       "s": 1247,
+       "side": "away",
+       "type": "goal",
+       "nr": 45
+      },
+      {
+       "s": 1356,
+       "side": "away",
+       "type": "two_min",
+       "nr": 17
+      },
+      {
+       "s": 1428,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 74
+      },
+      {
+       "s": 1452,
+       "side": "home",
+       "type": "goal",
+       "nr": 99
+      },
+      {
+       "s": 1487,
+       "side": "away",
+       "type": "goal",
+       "nr": 94
+      },
+      {
+       "s": 1581,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 99
+      },
+      {
+       "s": 1606,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 1635,
+       "side": "home",
+       "type": "goal",
+       "nr": 30
+      },
+      {
+       "s": 1655,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 1737,
+       "side": "home",
+       "type": "goal",
+       "nr": 30
+      },
+      {
+       "s": 1821,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 1866,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 1897,
+       "side": "away",
+       "type": "goal",
+       "nr": 58
+      },
+      {
+       "s": 1914,
+       "side": "home",
+       "type": "goal",
+       "nr": 30
+      },
+      {
+       "s": 1947,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 1959,
+       "side": "home",
+       "type": "goal",
+       "nr": 99
+      },
+      {
+       "s": 1971,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 2121,
+       "side": "home",
+       "type": "goal",
+       "nr": 57
+      },
+      {
+       "s": 2141,
+       "side": "away",
+       "type": "goal",
+       "nr": 97
+      },
+      {
+       "s": 2168,
+       "side": "away",
+       "type": "goal",
+       "nr": 58
+      },
+      {
+       "s": 2214,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 2275,
+       "side": "away",
+       "type": "goal",
+       "nr": 45
+      },
+      {
+       "s": 2301,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 2347,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 2370,
+       "side": "home",
+       "type": "goal",
+       "nr": 57
+      },
+      {
+       "s": 2386,
+       "side": "home",
+       "type": "two_min",
+       "nr": 12
+      },
+      {
+       "s": 2388,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 45
+      },
+      {
+       "s": 2412,
+       "side": "away",
+       "type": "goal",
+       "nr": 45
+      },
+      {
+       "s": 2461,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 2506,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 2563,
+       "side": "home",
+       "type": "goal",
+       "nr": 57
+      },
+      {
+       "s": 2708,
+       "side": "away",
+       "type": "goal",
+       "nr": 17
+      },
+      {
+       "s": 2781,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 2811,
+       "side": "away",
+       "type": "goal",
+       "nr": 94
+      },
+      {
+       "s": 2843,
+       "side": "home",
+       "type": "goal",
+       "nr": 99
+      },
+      {
+       "s": 2856,
+       "side": "away",
+       "type": "goal",
+       "nr": 60
+      },
+      {
+       "s": 2919,
+       "side": "home",
+       "type": "goal",
+       "nr": 56
+      },
+      {
+       "s": 2939,
+       "side": "away",
+       "type": "goal",
+       "nr": 94
+      },
+      {
+       "s": 3076,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 74
+      },
+      {
+       "s": 3098,
+       "side": "away",
+       "type": "goal",
+       "nr": 60
+      },
+      {
+       "s": 3120,
+       "side": "away",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 3153,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 99
+      },
+      {
+       "s": 3173,
+       "side": "away",
+       "type": "goal",
+       "nr": 58
+      },
+      {
+       "s": 3201,
+       "side": "home",
+       "type": "goal",
+       "nr": 26
+      },
+      {
+       "s": 3262,
+       "side": "home",
+       "type": "goal",
+       "nr": 56
+      },
+      {
+       "s": 3284,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 3386,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 3451,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 12
+      },
+      {
+       "s": 3463,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 3514,
+       "side": "away",
+       "type": "goal",
+       "nr": 45
+      },
+      {
+       "s": 3595,
+       "side": "away",
+       "type": "goal",
+       "nr": 13
+      }
+     ],
+     "note": "",
+     "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687628"
+    }
+   },
+   {
+    "id": 687629,
+    "nr": "2627SARBKR2DJWA0113",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "13:00",
+    "venue": "Halle B8.3",
+    "home": "USC Saar",
+    "away": "HSG TVA/ATSV Saarbrücken",
+    "score": [
+     25,
+     40
+    ],
+    "ht": null,
+    "winner": "HSG TVA/ATSV Saarbrücken",
+    "status": "Ergebnis",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687629"
+   },
+   {
+    "id": 687630,
+    "nr": "2627SARBKR2DJWA0114",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "18:00",
+    "venue": "Sporthalle Am Berg",
+    "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+    "away": "HF Untere Saar 2",
+    "score": [
+     60,
+     29
+    ],
+    "ht": [
+     30,
+     7
+    ],
+    "winner": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+    "status": "gespielt",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687630",
+    "game": {
+     "id": 687630,
+     "nr": "2627SARBKR2DJWA0114",
+     "comp": "Pokal",
+     "st": null,
+     "date": "2026-10-31",
+     "time": "18:00",
+     "venue": "Sporthalle Am Berg",
+     "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+     "away": "HF Untere Saar 2",
+     "score": [
+      60,
+      29
+     ],
+     "ht": [
+      30,
+      7
+     ],
+     "roster": {
+      "home": {
+       "1": "Lea Sophie Quint",
+       "3": "Cara Leismann",
+       "4": "Djenna Hokke",
+       "5": "Mona-Marie Zühlsdorf",
+       "6": "Jana Jung",
+       "7": "Sarah Zinkgraf",
+       "8": "Alea Leismann",
+       "9": "Leni Brücher",
+       "10": "Bianca Lauer",
+       "13": "Lena Bubenheim",
+       "18": "Elisa Welker",
+       "21": "Pauline Hahnefeld",
+       "23": "Mareike Landgraf",
+       "95": "Victoria Schmidt"
+      },
+      "away": {
+       "1": "Lilly Rautenberg",
+       "7": "Flora Schwarz",
+       "9": "Sophia Hoffmann",
+       "12": "Lina Dusdal",
+       "24": "Melina Schmidt",
+       "27": "Nadeshda Sophie Metzdorf",
+       "31": "Lenja Schlink",
+       "41": "Sophie Schumacher",
+       "77": "Maike Ernst"
+      }
+     },
+     "events": [
+      {
+       "s": 138,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 170,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 208,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 216,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 254,
+       "side": "home",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 286,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 351,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 392,
+       "side": "away",
+       "type": "warning",
+       "nr": 7
+      },
+      {
+       "s": 408,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 7
+      },
+      {
+       "s": 443,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 451,
+       "side": "home",
+       "type": "goal",
+       "nr": 8
+      },
+      {
+       "s": 479,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 522,
+       "side": "home",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 551,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 590,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 607,
+       "side": "home",
+       "type": "warning",
+       "nr": 5
+      },
+      {
+       "s": 699,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 723,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 762,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 814,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 858,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 894,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 27
+      },
+      {
+       "s": 925,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 6
+      },
+      {
+       "s": 974,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 1011,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 1060,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 1130,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 1153,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 1183,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 1224,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 1233,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 1371,
+       "side": "home",
+       "type": "pen_goal",
+       "nr": 6
+      },
+      {
+       "s": 1409,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 1439,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 1474,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 1528,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 1568,
+       "side": "away",
+       "type": "pen_goal",
+       "nr": 31
+      },
+      {
+       "s": 1591,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 1638,
+       "side": "away",
+       "type": "goal",
+       "nr": 24
+      },
+      {
+       "s": 1650,
+       "side": "home",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 1704,
+       "side": "home",
+       "type": "two_min",
+       "nr": 18
+      },
+      {
+       "s": 1717,
+       "side": "away",
+       "type": "goal",
+       "nr": 77
+      },
+      {
+       "s": 1728,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 1837,
+       "side": "home",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 1846,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 1861,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 1898,
+       "side": "home",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 1929,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 24
+      },
+      {
+       "s": 1950,
+       "side": "home",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 1968,
+       "side": "away",
+       "type": "goal",
+       "nr": 31
+      },
+      {
+       "s": 2004,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 2127,
+       "side": "away",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 2151,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2168,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 2176,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 2184,
+       "side": "home",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 2218,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 2260,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2275,
+       "side": "home",
+       "type": "goal",
+       "nr": 5
+      },
+      {
+       "s": 2298,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 2298,
+       "side": "away",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 2306,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 2335,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 2353,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 2367,
+       "side": "home",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 2384,
+       "side": "away",
+       "type": "goal",
+       "nr": 24
+      },
+      {
+       "s": 2400,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2569,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 2598,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2637,
+       "side": "home",
+       "type": "goal",
+       "nr": 3
+      },
+      {
+       "s": 2761,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 2791,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 2812,
+       "side": "away",
+       "type": "goal",
+       "nr": 31
+      },
+      {
+       "s": 2882,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 2934,
+       "side": "away",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 2963,
+       "side": "home",
+       "type": "goal",
+       "nr": 21
+      },
+      {
+       "s": 2992,
+       "side": "away",
+       "type": "pen_miss",
+       "nr": 7
+      },
+      {
+       "s": 3003,
+       "side": "home",
+       "type": "goal",
+       "nr": 10
+      },
+      {
+       "s": 3029,
+       "side": "away",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 3053,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 3078,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 3105,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 3157,
+       "side": "home",
+       "type": "goal",
+       "nr": 6
+      },
+      {
+       "s": 3181,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 3210,
+       "side": "away",
+       "type": "goal",
+       "nr": 41
+      },
+      {
+       "s": 3230,
+       "side": "home",
+       "type": "pen_miss",
+       "nr": 6
+      },
+      {
+       "s": 3245,
+       "side": "away",
+       "type": "goal",
+       "nr": 77
+      },
+      {
+       "s": 3253,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 3285,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 3327,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 3344,
+       "side": "away",
+       "type": "goal",
+       "nr": 24
+      },
+      {
+       "s": 3348,
+       "side": "home",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 3367,
+       "side": "away",
+       "type": "two_min",
+       "nr": 9
+      },
+      {
+       "s": 3375,
+       "side": "home",
+       "type": "goal",
+       "nr": 13
+      },
+      {
+       "s": 3393,
+       "side": "away",
+       "type": "goal",
+       "nr": 31
+      },
+      {
+       "s": 3416,
+       "side": "home",
+       "type": "goal",
+       "nr": 4
+      },
+      {
+       "s": 3472,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 3481,
+       "side": "home",
+       "type": "goal",
+       "nr": 7
+      },
+      {
+       "s": 3487,
+       "side": "away",
+       "type": "timeout",
+       "nr": null
+      },
+      {
+       "s": 3527,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      },
+      {
+       "s": 3541,
+       "side": "away",
+       "type": "goal",
+       "nr": 27
+      },
+      {
+       "s": 3559,
+       "side": "home",
+       "type": "goal",
+       "nr": 9
+      },
+      {
+       "s": 3588,
+       "side": "home",
+       "type": "goal",
+       "nr": 18
+      }
+     ],
+     "note": "",
+     "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687630"
+    }
+   },
+   {
+    "id": 687631,
+    "nr": "2627SARBKR2DJWA0115",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "11:00",
+    "venue": "Südwesthalle",
+    "home": "SV Bous",
+    "away": "FSG Oberthal/Hirstein 2",
+    "score": [
+     0,
+     0
+    ],
+    "ht": null,
+    "winner": "SV Bous",
+    "status": "kampflos",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687631"
+   },
+   {
+    "id": 687632,
+    "nr": "2627SARBKR2DJWA0116",
+    "round": "Sechzehntelfinale",
+    "date": "2026-10-31",
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "Freilos",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687632"
+   },
+   {
+    "id": 687633,
+    "nr": "2627SARBKR2DJWA0201D",
+    "round": "Achtelfinale",
+    "date": "2026-11-21",
+    "time": "16:00",
+    "venue": "Merzig Thiel's Park Sporthalle",
+    "home": "HF Untere Saar 3",
+    "away": "SG Zweibrücken",
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687633"
+   },
+   {
+    "id": 687634,
+    "nr": "2627SARBKR2DJWA0202D",
+    "round": "Achtelfinale",
+    "date": "2026-11-19",
+    "time": "19:45",
+    "venue": "Sporthalle Steinrausch",
+    "home": "HG Saarlouis 2",
+    "away": "TV Merchweiler",
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687634"
+   },
+   {
+    "id": 687635,
+    "nr": "2627SARBKR2DJWA0203C",
+    "round": "Achtelfinale",
+    "date": "2026-11-21",
+    "time": "18:00",
+    "venue": "Rastbachtalhalle",
+    "home": "HSG TVA/ATSV Saarbrücken 2",
+    "away": "HG Saarlouis",
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687635"
+   },
+   {
+    "id": 687636,
+    "nr": "2627SARBKR2DJWA0204C",
+    "round": "Achtelfinale",
+    "date": "2026-11-17",
+    "time": "19:45",
+    "venue": "Sport- Und Kulturhalle Theley",
+    "home": "RW Schaumberg",
+    "away": "HF Untere Saar",
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687636"
+   },
+   {
+    "id": 687637,
+    "nr": "2627SARBKR2DJWA0205",
+    "round": "Achtelfinale",
+    "date": "2026-11-21",
+    "time": "17:00",
+    "venue": "Marpingen Sporthalle",
+    "home": "HSG Marpingen-Alsweiler 3",
+    "away": "FSG Oberthal/Hirstein",
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687637"
+   },
+   {
+    "id": 687638,
+    "nr": "2627SARBKR2DJWA0206",
+    "round": "Achtelfinale",
+    "date": "2026-11-22",
+    "time": "14:00",
+    "venue": "Sporthalle Alsweiler",
+    "home": "Moskitos 2",
+    "away": "ASC Quierschied",
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687638"
+   },
+   {
+    "id": 687639,
+    "nr": "2627SARBKR2DJWA0207",
+    "round": "Achtelfinale",
+    "date": "2026-11-21",
+    "time": "20:00",
+    "venue": "Rastbachtalhalle",
+    "home": "HSG TVA/ATSV Saarbrücken",
+    "away": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687639"
+   },
+   {
+    "id": 687640,
+    "nr": "2627SARBKR2DJWA0208",
+    "round": "Achtelfinale",
+    "date": "2026-11-21",
+    "time": "13:00",
+    "venue": "Glück-Auf-Halle Wadgassen",
+    "home": "SV Bous",
+    "away": "HSG Marpingen-Alsweiler",
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687640"
+   },
+   {
+    "id": 687641,
+    "nr": "2627SARBKR2DJWA0301D",
+    "round": "Viertelfinale",
+    "date": "2027-01-09",
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687641"
+   },
+   {
+    "id": 687642,
+    "nr": "2627SARBKR2DJWA0302C",
+    "round": "Viertelfinale",
+    "date": "2027-01-09",
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687642"
+   },
+   {
+    "id": 687643,
+    "nr": "2627SARBKR2DJWA0303",
+    "round": "Viertelfinale",
+    "date": "2027-01-09",
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687643"
+   },
+   {
+    "id": 687644,
+    "nr": "2627SARBKR2DJWA0304",
+    "round": "Viertelfinale",
+    "date": "2027-01-09",
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687644"
+   },
+   {
+    "id": 687645,
+    "nr": "2627SARBKR2DJWA0401C",
+    "round": "Halbfinale",
+    "date": null,
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687645"
+   },
+   {
+    "id": 687646,
+    "nr": "2627SARBKR2DJWA0402",
+    "round": "Halbfinale",
+    "date": null,
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687646"
+   },
+   {
+    "id": 687647,
+    "nr": "2627SARBKR2DJWA0501",
+    "round": "Finale",
+    "date": null,
+    "time": "",
+    "venue": "",
+    "home": null,
+    "away": null,
+    "score": null,
+    "ht": null,
+    "winner": null,
+    "status": "offen",
+    "pdf": "https://handball360.isquad.de/dhb_acta_completa_pdf.php?id_partido=687647"
+   }
+  ]
+ }
 }
