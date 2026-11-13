@@ -314,3 +314,9 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   abrufbar. Als Merkposten in `docs/PLAN_POKAL.md`.
 - Pokal: Opel Deckert Cup Frauen auf handball.net (Liga 10446, Phase 17425). handball.net ist aus der Claude-Umgebung
   ebenfalls gesperrt → Freigabe der Domains oder ein Pokal-Bericht-Link nötig.
+
+### 13.11.2026 – Freigabe handball.net / handball360
+
+- handball360 erreichbar; handball.net blockt automatisierte Abrufe (Cloudflare 403) – nicht umgangen.
+- Montags-Abruf manuell gestartet: `league_fixtures` mit 75 offenen Ligaspielen → Spieltags-Vorschau vollständig.
+- Pokal: Termine aus dem Trainertool, Berichte per Link; Details in `docs/PLAN_POKAL.md`.
