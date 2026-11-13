@@ -357,3 +357,13 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Nutzer sah den Bereich auf dem Handy nicht. Mit Testdaten nicht nachstellbar; Ursache vermutlich ein Fehler in einem vorherigen
   Startseiten-Bereich, der den Rest abbricht (nachgestellt mit fehlerhaftem Spielbericht → Rückmeldungen fehlten). Jetzt lädt jeder
   Bereich einzeln (`safe()`), Fehler erscheinen unten als „Nicht geladen: …“.
+
+### 13.11.2026 – Gegneranalyse: weitere Kennzahlen (alle Vorschläge angenommen)
+
+- Gegner-Baustein (beide Kopien): `mkSections(r,showPl)` liefert Abschnitte als Zeilen [Bezeichnung, Wert, Zusatz, Erläuterung]
+  für Ansicht (`mkSectionHtml`) und PDF (`xsec`):
+  - Einordnung: Tabellenplatz, Punkte, Form (5); Tore/Gegentore/Zeitstrafen/Verwarnungen je Spiel und 7m-Quote vs. Liga-Ø und Moskitos 2.
+  - Spielverlauf: 1./2. Halbzeit, Pausenführung gehalten, Rückstand gedreht, Start-/Schlussphase, längste Serie für/gegen, knappe Spiele.
+  - Taktik & Disziplin: Unter-/Überzahl exakt (2-Min.-Logik), Auszeiten (Anzahl, Minute, Spielstand, Wirkung ±5), Disziplin, Heim/Auswärts.
+  - Kader (nur bei Spielerinnenwerten sichtbar, eigene Mannschaft nur Trainerstab): Torverteilung, 7m-Schützinnen, Strafen, Torzeiten.
+- Team-Board 4.22, Spielanalyse 2.18.
