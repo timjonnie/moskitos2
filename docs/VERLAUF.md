@@ -346,3 +346,6 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Spielanalyse 2.16, Übersicht: „Tore“ (je Spiel) und „7m + 2 Min. herausgeholt“ (`drawn` = won7+won2min) bei Kennzahlen,
   „Tempo-Bilanz“ (`tgsBal` = eigene minus Gegner-Tempotore je Spiel, nur Spiele mit beiden Werten) bei Abwehr & Tempo.
   Damit volle Reihen (10 bzw. 5 Kacheln). Neue Kacheln tragen `web:1` und fehlen bewusst in den Teilen-Bildern (4er-Raster bleibt).
+- Spielanalyse 2.17: weitere Kacheln bei Kennzahlen – Tordifferenz (mit Vorzeichen), Handlungseff. (`handEff`), Assists,
+  Paraden 7m / Tempo (`save7` = Torhüterinnen-Zonen s7/c7, 7m und Tempo sind in der Erfassung zusammengefasst), 1:1 verloren.
+  Kennzahlen jetzt 15 Kacheln (3 volle Reihen), Spielseite 20. Alle neuen mit `web:1` (nicht in den Teilen-Bildern).
