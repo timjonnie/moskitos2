@@ -335,3 +335,8 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Getestet: Abruf lokal mit den 31 Pokal-PDFs (Mock-Fetch, Kopie der Daten), Playwright Spielerin/Trainer, 390/1100 px.
 - Team-Board 4.20: Halbfinale und Finale immer am Ostermontag (Hinweis Nutzer). `osterMontag(jahr)` (Gauß), Jahr = Saisonende;
   wird angezeigt, solange im Bericht kein Datum steht (2026/27 → Mo, 29.03.2027).
+
+### 13.11.2026 – Spielanalyse: Spiele als Raster statt Scrollleiste
+
+- Spielanalyse 2.15, Übersicht: Spiele-Kacheln als umbrechendes Raster (`.gwrap`, Desktop ~5 je Zeile, Handy 2), letzte 8 Spiele,
+  Knopf „Alle n Spiele anzeigen“ (`S.stripAll`). Kurznamen über `gridName()` (Vereinskürzel weg), Handy „H/A“ statt Heim/Ausw.
