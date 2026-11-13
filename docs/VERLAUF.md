@@ -340,3 +340,9 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 
 - Spielanalyse 2.15, Übersicht: Spiele-Kacheln als umbrechendes Raster (`.gwrap`, Desktop ~5 je Zeile, Handy 2), letzte 8 Spiele,
   Knopf „Alle n Spiele anzeigen“ (`S.stripAll`). Kurznamen über `gridName()` (Vereinskürzel weg), Handy „H/A“ statt Heim/Ausw.
+
+### 13.11.2026 – Neue Kennzahlen in der Spielanalyse
+
+- Spielanalyse 2.16, Übersicht: „Tore“ (je Spiel) und „7m + 2 Min. herausgeholt“ (`drawn` = won7+won2min) bei Kennzahlen,
+  „Tempo-Bilanz“ (`tgsBal` = eigene minus Gegner-Tempotore je Spiel, nur Spiele mit beiden Werten) bei Abwehr & Tempo.
+  Damit volle Reihen (10 bzw. 5 Kacheln). Neue Kacheln tragen `web:1` und fehlen bewusst in den Teilen-Bildern (4er-Raster bleibt).
