@@ -333,3 +333,5 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Team-Board 4.19: Kasten „Pokal“ + Seite `#pokal`; „Nächstes Spiel“ kann ein Pokalspiel sein („(Pokal)“).
   Liga-Auswertungen (Tabellen, Ligastatistik, Restprogramm, Gegner-Baustein) filtern Pokalspiele heraus. Spielanalyse 2.14.
 - Getestet: Abruf lokal mit den 31 Pokal-PDFs (Mock-Fetch, Kopie der Daten), Playwright Spielerin/Trainer, 390/1100 px.
+- Team-Board 4.20: Halbfinale und Finale immer am Ostermontag (Hinweis Nutzer). `osterMontag(jahr)` (Gauß), Jahr = Saisonende;
+  wird angezeigt, solange im Bericht kein Datum steht (2026/27 → Mo, 29.03.2027).

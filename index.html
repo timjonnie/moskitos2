@@ -365,7 +365,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.19 · letzte Aktualisierung 13.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.20 · letzte Aktualisierung 13.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -1568,7 +1568,12 @@ function pkGames(){return ((PUB&&PUB.cup&&PUB.cup.games)||[]).slice().sort(funct
 function pkRounds(){var R={},order=[];pkGames().forEach(function(e){if(!R[e.round]){R[e.round]=[];order.push(e.round)}R[e.round].push(e)});
   order.sort(function(a,b){var i=POKAL_RUNDEN.indexOf(a),j=POKAL_RUNDEN.indexOf(b);return (i<0?99:i)-(j<0?99:j)});return order.map(function(r){return {name:r,games:R[r]}})}
 function pkTeam(t){return t?(t===OWN?'<span class="lg-own">'+esc(t)+'</span>':esc(t)):'<span class="sub">offen</span>'}
-function pkWhen(e){if(!e.date)return "Termin offen";var d=new Date(e.date+"T12:00:00");return ["So","Mo","Di","Mi","Do","Fr","Sa"][d.getDay()]+", "+dd(e.date)+(e.date.slice(0,4)!==String(new Date().getFullYear())?e.date.slice(0,4):"")+(e.time?", "+e.time:"")}
+// Halbfinale und Finale finden immer am Ostermontag statt (Jahr = Saisonende, z. B. 2026/27 → 2027)
+function osterMontag(y){var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1;
+  var dt=new Date(Date.UTC(y,mo-1,da+1));return dt.toISOString().slice(0,10)}
+function pkOster(){var y=+(String((PUB&&PUB.season)||"").match(/^(\d{4})/)||[])[1];return y?osterMontag(y+1):null}
+function pkDate(e){return e.date||((e.round==="Halbfinale"||e.round==="Finale")?pkOster():null)}
+function pkWhen(e){if(!e.date&&(e.round==="Halbfinale"||e.round==="Finale")&&pkOster()){var o=pkOster();return "Ostermontag, "+dd(o)+o.slice(0,4)}if(!e.date)return "Termin offen";var d=new Date(e.date+"T12:00:00");return ["So","Mo","Di","Mi","Do","Fr","Sa"][d.getDay()]+", "+dd(e.date)+(e.date.slice(0,4)!==String(new Date().getFullYear())?e.date.slice(0,4):"")+(e.time?", "+e.time:"")}
 function pkStatus(e){
   if(e.status==="gespielt"||e.status==="Ergebnis")return '<b>'+e.score[0]+':'+e.score[1]+'</b>'+(e.ht?' <span class="sub">('+e.ht[0]+':'+e.ht[1]+')</span>':'');
   if(e.status==="kampflos")return '<span class="pk-tag">kampflos</span>';
@@ -1589,7 +1594,7 @@ function renderPokalBox(){var box=$("pokalBox");if(!box)return;var G=pkGames();i
     else{var tage=e.date?Math.round((new Date(e.date+"T12:00:00")-new Date(heute+"T12:00:00"))/864e5):null;res='<span class="sub">'+esc(pkWhen(e))+(tage!=null&&tage>=0?(tage===0?" · heute":tage===1?" · morgen":" · in "+tage+" Tagen"):"")+'</span>'}
     return '<li><span><span class="sub">'+esc(e.round)+'</span><br>'+(home?"gegen ":"bei ")+esc(opp||"offen")+(e.status==="offen"&&e.venue?' <span class="sub">· '+esc(e.venue)+'</span>':'')+'</span><span>'+res+'</span></li>'}).join("");
   if(!out){var last=mine[mine.length-1],idx=R.findIndex(function(r){return last&&r.name===last.round});
-    R.slice(idx+1).forEach(function(r){var d=r.games.map(function(e){return e.date}).filter(Boolean).sort()[0];h+='<li><span><span class="sub">'+esc(r.name)+'</span><br><span class="sub">Gegner noch offen</span></span><span class="sub">'+(d?esc(dd(d)+d.slice(0,4)):"Termin offen")+'</span></li>'})}
+    R.slice(idx+1).forEach(function(r){var d=r.games.map(pkDate).filter(Boolean).sort()[0],ost=!r.games.some(function(e){return e.date})&&d;h+='<li><span><span class="sub">'+esc(r.name)+'</span><br><span class="sub">Gegner noch offen</span></span><span class="sub">'+(d?(ost?"Ostermontag, ":"")+esc(dd(d)+d.slice(0,4)):"Termin offen")+'</span></li>'})}
   h+='</ul>';var nx=mine.filter(function(e){return e.status==="offen"&&(e.home===OWN?e.away:e.home)})[0],opp=nx?(nx.home===OWN?nx.away:nx.home):null;
   h+='<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px"><a class="more" href="#pokal">Ganzer Pokal →</a>'+(opp?'<a class="more" href="#gegner" id="pkOpp">Gegneranalyse '+esc(shortName(opp))+' →</a>':'')+'</div>';
   $("pokalBody").innerHTML=h;box.hidden=false;
@@ -1600,7 +1605,8 @@ function renderPokal(){var R=pkRounds();if(!R.length){$("pvRoot").innerHTML='<di
   var h='<div class="panel"><h1 class="lg-h1">Pokal</h1><p class="sub">'+esc((PUB.cup&&PUB.cup.name)||"Opel Deckert Cup")+' · Pokal Frauen · HV Saar'+(PUB.season?" · Saison "+esc(PUB.season):"")+'</p>'+
     (played.length?'<div class="facts"><div class="fact"><b>'+played.length+'</b><span>Spiele mit Ergebnis</span></div><div class="fact"><b>'+fmt(goals/played.length)+'</b><span>Tore je Spiel</span></div><div class="fact"><b>'+G.filter(function(e){return e.status==="kampflos"}).length+'</b><span>kampflos entschieden</span></div></div>':'')+'</div>';
   R.forEach(function(r){var real=r.games.filter(function(e){return e.home||e.away}),d=r.games.map(function(e){return e.date}).filter(Boolean).sort();
-    h+='<section class="panel lg-sec"><h2>'+esc(r.name)+'</h2><p class="sub" style="margin:0 0 6px">'+(d.length?(d[0]===d[d.length-1]?esc(pkWhen({date:d[0]})).replace(/, $/,""):"vom "+dd(d[0])+" bis "+dd(d[d.length-1])+d[d.length-1].slice(0,4)):"Termin offen")+'</p>'+
+    if(!d.length&&(r.name==="Halbfinale"||r.name==="Finale")&&pkOster())d=[pkOster()];
+    h+='<section class="panel lg-sec"><h2>'+esc(r.name)+'</h2><p class="sub" style="margin:0 0 6px">'+(d.length?(d[0]===d[d.length-1]?esc(pkWhen({date:d[0],round:r.name})).replace(/, $/,"")+(!r.games.some(function(e){return e.date})?" (Ostermontag)":""):"vom "+dd(d[0])+" bis "+dd(d[d.length-1])+d[d.length-1].slice(0,4)):"Termin offen")+'</p>'+
       (real.length?'<ul class="list">'+real.map(pkLine).join("")+'</ul>':'<p class="sub">Paarungen stehen noch nicht fest ('+r.games.length+' Spiel'+(r.games.length===1?'':'e')+').</p>')+'</section>'});
   h+='<p class="sub" style="margin-top:10px">Aus den offiziellen Spielberichten (handball360), aktualisiert mit dem Montags-Abruf. „kampflos“: ohne Spiel entschieden, der Sieger steht in der nächsten Runde.</p>';
   $("pvRoot").innerHTML=h}
