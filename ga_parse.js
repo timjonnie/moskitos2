@@ -2,9 +2,9 @@
 var GA_TEAMS={"TV MERCHWEILER":"TV Merchweiler","HF KÖLLERTAL":"HF Köllertal","ASC QUIERSCHIED":"ASC Quierschied","TV KIRKEL":"TV Kirkel",
  "HG SAARLOUIS":"HG Saarlouis","HSG TV BIRKENFELD/NOHFELDEN-TUS SCHWARZENBACH":"HSG Birkenfeld/Nohfelden-Schwarzenbach","HC PERL":"HC Perl",
  "HSG TVA/ATSV SAARBRÜCKEN":"HSG TVA/ATSV Saarbrücken","HF UNTERE SAAR 2":"HF Untere Saar 2","SG ZWEIBRÜCKEN":"SG Zweibrücken",
- "HSG DJK MARPINGEN-SC ALSWEILER II":"Moskitos 2","MOSKITOS 2":"Moskitos 2"};
+ "HSG DJK MARPINGEN-SC ALSWEILER II":"Moskitos 2","HSG DJK MARPINGEN-SC ALSWEILER 2":"Moskitos 2","HF UNTERE SAAR 2 (OL)":"HF Untere Saar 2","HF UNTERE SAAR 3 (VL)":"HF Untere Saar 3","RW SCHAUMBERG":"RW Schaumberg","USC SAAR":"USC Saar","HSG TVA/ATSV SAARBRÜCKEN 2":"HSG TVA/ATSV Saarbrücken 2","HSG TV BIRKENFELD/NOHFELDEN-TUS SCHWARZENBACH 2":"HSG Birkenfeld/Nohfelden-Schwarzenbach 2","FSG DJK OBERTHAL/TUS HIRSTEIN":"FSG Oberthal/Hirstein","FSG DJK OBERTHAL/TUS HIRSTEIN 2":"FSG Oberthal/Hirstein 2","HSG DJK MARPINGEN-SC ALSWEILER":"HSG Marpingen-Alsweiler","HSG DJK MARPINGEN-SC ALSWEILER 3":"HSG Marpingen-Alsweiler 3","MOSKITOS 2":"Moskitos 2"};
 function gaTeam(s){ s=String(s||"").replace(/\s+/g," ").trim(); var u=s.toUpperCase(); if(GA_TEAMS[u]) return GA_TEAMS[u];
-  return s.toLowerCase().replace(/(^|[\s\/\-])(\S)/g,function(m,a,b){return a+b.toUpperCase();}).replace(/\b(Tv|Hsg|Hg|Hc|Hf|Sg|Asc|Djk|Sc|Tus|Ii)\b/g,function(m){return m.toUpperCase();}); }
+  return s.toLowerCase().replace(/(^|[\s\/\-])(\S)/g,function(m,a,b){return a+b.toUpperCase();}).replace(/\b(Tv|Hsg|Hg|Hc|Hf|Sg|Asc|Djk|Sc|Tus|Ii|Tva|Atsv|Rw|Usc|Sv|Fsg|Ol|Vl)\b/g,function(m){return m.toUpperCase();}); }
 function gaLines(items){
   var arr=items.slice().sort(function(a,b){return a.p-b.p||b.y-a.y||a.x-b.x;}), lines=[], cur=null;
   arr.forEach(function(it){ if(cur&&cur.p===it.p&&Math.abs(cur.y-it.y)<=2.5){ cur.items.push(it); } else { cur={p:it.p,y:it.y,items:[it]}; lines.push(cur); } });

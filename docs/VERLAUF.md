@@ -320,3 +320,16 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - handball360 erreichbar; handball.net blockt automatisierte Abrufe (Cloudflare 403) – nicht umgangen.
 - Montags-Abruf manuell gestartet: `league_fixtures` mit 75 offenen Ligaspielen → Spieltags-Vorschau vollständig.
 - Pokal: Termine aus dem Trainertool, Berichte per Link; Details in `docs/PLAN_POKAL.md`.
+
+### 13.11.2026 – Pokal (Opel Deckert Cup) eingebaut
+
+- Nutzer lieferte gespeicherte handball.net-Seiten (Runde 1) und den Bericht-Link 687625 → Pokal Frauen liegt als Block
+  687617–687647 (16 Sechzehntel-, 8 Achtel-, 4 Viertel-, 2 Halbfinals, Finale). Moskitos 2: kampflos weiter gegen
+  TuS Elm-Sprengen; Achtelfinale So 22.11., 14:00, gegen ASC Quierschied (Sporthalle Alsweiler).
+- `spielberichte_abruf.js`: `pokalAbruf()`/`cupEntry()` – Runde, Termin, Halle, Mannschaften (lange Namen aus „Heim:/Gast:“),
+  Endstand auch ohne Spielverlauf („Sieger …“), Status gespielt/Ergebnis/kampflos/Freilos/offen; kampflose Sieger aus der
+  nächsten Runde erschlossen. `data.cup`, eigene offene Pokalspiele zusätzlich in `fixtures` (`comp:"Pokal"`).
+- `GA_TEAMS` (alle drei Parser-Kopien): „…ALSWEILER 2“ = Moskitos 2 u. a. Pokalteams; Kürzel-Großschreibung erweitert.
+- Team-Board 4.19: Kasten „Pokal“ + Seite `#pokal`; „Nächstes Spiel“ kann ein Pokalspiel sein („(Pokal)“).
+  Liga-Auswertungen (Tabellen, Ligastatistik, Restprogramm, Gegner-Baustein) filtern Pokalspiele heraus. Spielanalyse 2.14.
+- Getestet: Abruf lokal mit den 31 Pokal-PDFs (Mock-Fetch, Kopie der Daten), Playwright Spielerin/Trainer, 390/1100 px.

@@ -1,4 +1,4 @@
-# Plan: Pokal (Opel Deckert Cup Frauen) – Stand 13.11.2026 (aktualisiert nach Freigabe)
+# Plan: Pokal (Opel Deckert Cup Frauen) – umgesetzt am 13.11.2026 (Team-Board 4.19)
 
 ## Ziel
 
@@ -60,7 +60,13 @@ Erste Schritte nach der Freigabe:
   nach der Auslosung angelegt – ohne Spielplan von handball.net sind sie nicht sinnvoll auffindbar (Blindsuche = zehntausende
   Abrufe, unangemessen). Stichprobe 399.000–401.000: Oberliga Frauen 399579–~399690, Verbandsliga Frauen ab ~399700.
 
-### Weg für den Pokal
+### Umsetzung (13.11.2026)
+
+Spielbericht-Link 687625 (vom Nutzer) → Pokal-Block 687617–687647 gefunden (Sechzehntel- bis Finale, alle Runden vorab
+angelegt). Abruf liest den Block wöchentlich (`POKAL` in `spielberichte_abruf.js`), Daten in `gegner_daten.json` → `cup`.
+UI: Kasten „Pokal“ auf der Startseite, Seite `#pokal`. Der folgende Abschnitt war der ursprüngliche Ausweichweg.
+
+### Ursprünglicher Ausweichweg
 
 1. **Pokaltermine** kommen aus dem Trainertool (dort sind sie bereits eingetragen, z. B. Runde 2 am 22.11. gegen Quierschied).
 2. **Pokal-Spielberichte:** pro Spiel den Link zum Spielbericht (PDF) im Gegner-Reiter unter „Spielberichte hinzufügen“

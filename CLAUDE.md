@@ -14,8 +14,8 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 
 | Pfad | Inhalt |
 |---|---|
-| `index.html` | Team-Board 4.18: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, Verwaltung, Ersteinrichtung/Umzug |
-| `analyse/index.html` | Spielanalyse 2.13 (Firebase-Modus, Präfix `a_`) |
+| `index.html` | Team-Board 4.19: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, `#pokal`, Verwaltung, Ersteinrichtung/Umzug |
+| `analyse/index.html` | Spielanalyse 2.14 (Firebase-Modus, Präfix `a_`) |
 | `training/index.html` | Trainertool 1.3 (Firebase-Modus, Präfix `t_`) |
 | `board.json`, `alt/` | Alte verschlüsselte Daten – **nur für den einmaligen Umzug**, danach löschen |
 | `gegner_daten.json` | Öffentliche Spielberichte (`games`) + Termine der Moskitos (`fixtures`); wird montags automatisch erneuert |
@@ -57,7 +57,9 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 - Lokal testen: `python3 -m http.server 8000` im Repo-Root, dann `http://localhost:8000/`.
 - Montags-Abruf lokal: `npm install --no-save pdfjs-dist@3.11.174 && node spielberichte_abruf.js`
   (braucht Netzzugriff auf handball360.isquad.de).
-- Pokal: Wenn das erste Pokalspiel stattfindet, in `spielberichte_abruf.js` die Liste `KLASSEN` ergänzen.
+- Pokal: `POKAL.start` in `spielberichte_abruf.js` = erste `id_partido` des Pokal-Blocks (2026/27: 687617, alle Runden vorab
+  angelegt). Daten in `gegner_daten.json` → `cup`; eigene offene Pokalspiele zusätzlich in `fixtures` mit `comp:"Pokal"`.
+  Liga-Auswertungen filtern `comp!=="Pokal"`. Neue Saison: neuen Startwert eintragen (Spielbericht-Link von handball.net).
 - Neue Saison: `START_ID`, `SAISON` im Abruf-Skript und Teamnamen in `GA_TEAMS` (`ga_parse.js`) anpassen.
 - Nicht direkt auf `main` entwickeln; `main` ist die Live-Seite.
 - `gegner_daten.json` **nie von Hand überschreiben** – die pflegt der Montags-Bot.
