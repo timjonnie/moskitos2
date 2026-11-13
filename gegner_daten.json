@@ -16475,7 +16475,7 @@
   }
  ],
  "results_only": [],
- "updated": "11.11.2026",
+ "updated": "13.11.2026",
  "focus": "TV Merchweiler",
  "fixtures": [
   {
@@ -16581,6 +16581,608 @@
    "home": "Moskitos 2",
    "away": "HSG TVA/ATSV Saarbrücken",
    "label": "Sa, 17.04.2027, 15:00, Marpingen Sporthalle (Heimspiel)"
+  },
+  {
+   "id": 399688,
+   "st": 22,
+   "date": "2027-04-24",
+   "home": "HG Saarlouis",
+   "away": "Moskitos 2",
+   "label": "Sa, 24.04.2027, 18:00, Sporthalle In Den Fliesen (auswärts)"
+  }
+ ],
+ "league_fixtures": [
+  {
+   "id": 399622,
+   "st": 9,
+   "date": "2026-11-14",
+   "home": "Moskitos 2",
+   "away": "HC Perl",
+   "label": "Sa, 14.11.2026, 15:45, Marpingen Sporthalle (Heimspiel)"
+  },
+  {
+   "id": 399619,
+   "st": 9,
+   "date": "2026-11-15",
+   "home": "HF Köllertal",
+   "away": "ASC Quierschied",
+   "label": "So, 15.11.2026, 17:00, Riegelsberghalle"
+  },
+  {
+   "id": 399621,
+   "st": 9,
+   "date": "2026-11-15",
+   "home": "HF Untere Saar 2",
+   "away": "TV Merchweiler",
+   "label": "So, 15.11.2026, 17:30, Merzig Thiel's Park Sporthalle"
+  },
+  {
+   "id": 399623,
+   "st": 9,
+   "date": "2026-11-15",
+   "home": "HSG TVA/ATSV Saarbrücken",
+   "away": "HG Saarlouis",
+   "label": "So, 15.11.2026, 19:00, Rastbachtalhalle"
+  },
+  {
+   "id": 399599,
+   "st": 5,
+   "date": "2026-11-19",
+   "home": "HF Untere Saar 2",
+   "away": "HF Köllertal",
+   "label": "Do, 19.11.2026, 19:30, Seffersbachhalle"
+  },
+  {
+   "id": 399624,
+   "st": 10,
+   "date": "2026-11-28",
+   "home": "HSG TVA/ATSV Saarbrücken",
+   "away": "Moskitos 2",
+   "label": "Sa, 28.11.2026, 20:00, Rastbachtalhalle (auswärts)"
+  },
+  {
+   "id": 399625,
+   "st": 10,
+   "date": "2026-11-28",
+   "home": "HC Perl",
+   "away": "HF Untere Saar 2",
+   "label": "Sa, 28.11.2026, 17:30, Sporthalle Perl"
+  },
+  {
+   "id": 399626,
+   "st": 10,
+   "date": "2026-11-28",
+   "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "away": "SG Zweibrücken",
+   "label": "Sa, 28.11.2026, 18:00, Sporthalle Am Berg"
+  },
+  {
+   "id": 399628,
+   "st": 10,
+   "date": "2026-11-28",
+   "home": "HG Saarlouis",
+   "away": "ASC Quierschied",
+   "label": "Sa, 28.11.2026, 16:00, Sporthalle In Den Fliesen"
+  },
+  {
+   "id": 399627,
+   "st": 10,
+   "date": "2026-11-29",
+   "home": "TV Kirkel",
+   "away": "HF Köllertal",
+   "label": "So, 29.11.2026, 19:00, Burghalle"
+  },
+  {
+   "id": 399630,
+   "st": 11,
+   "date": "2026-12-05",
+   "home": "HF Köllertal",
+   "away": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "label": "Sa, 05.12.2026, 18:00, Trimm-Treff-Halle"
+  },
+  {
+   "id": 399632,
+   "st": 11,
+   "date": "2026-12-05",
+   "home": "HF Untere Saar 2",
+   "away": "HSG TVA/ATSV Saarbrücken",
+   "label": "Sa, 05.12.2026, 18:00, Seffersbachhalle"
+  },
+  {
+   "id": 399633,
+   "st": 11,
+   "date": "2026-12-05",
+   "home": "Moskitos 2",
+   "away": "HG Saarlouis",
+   "label": "Sa, 05.12.2026, 16:00, Marpingen Sporthalle (Heimspiel)"
+  },
+  {
+   "id": 399631,
+   "st": 11,
+   "date": "2026-12-06",
+   "home": "SG Zweibrücken",
+   "away": "TV Merchweiler",
+   "label": "So, 06.12.2026, 16:00, Zweibrücken Ignaz-Roth-Halle"
+  },
+  {
+   "id": 399634,
+   "st": 12,
+   "date": "2026-12-12",
+   "home": "HF Untere Saar 2",
+   "away": "Moskitos 2",
+   "label": "Sa, 12.12.2026, 18:00, Merzig Thiel's Park Sporthalle (auswärts)"
+  },
+  {
+   "id": 399635,
+   "st": 12,
+   "date": "2026-12-12",
+   "home": "SG Zweibrücken",
+   "away": "HC Perl",
+   "label": "Sa, 12.12.2026, 15:30, Zweibrücken Westpfalzhalle"
+  },
+  {
+   "id": 399636,
+   "st": 12,
+   "date": "2026-12-13",
+   "home": "HF Köllertal",
+   "away": "TV Merchweiler",
+   "label": "So, 13.12.2026, 18:00, Trimm-Treff-Halle"
+  },
+  {
+   "id": 399637,
+   "st": 12,
+   "date": "2026-12-13",
+   "home": "ASC Quierschied",
+   "away": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "label": "So, 13.12.2026, 17:00, Fischbachhalle Fischbach"
+  },
+  {
+   "id": 399638,
+   "st": 12,
+   "date": "2026-12-13",
+   "home": "TV Kirkel",
+   "away": "HG Saarlouis",
+   "label": "So, 13.12.2026, 17:00, Burghalle"
+  },
+  {
+   "id": 399586,
+   "st": 2,
+   "date": "2026-12-19",
+   "home": "HF Köllertal",
+   "away": "HC Perl",
+   "label": "Sa, 19.12.2026, 14:00, Trimm-Treff-Halle"
+  },
+  {
+   "id": 399606,
+   "st": 6,
+   "date": "2026-12-19",
+   "home": "TV Kirkel",
+   "away": "Moskitos 2",
+   "label": "Sa, 19.12.2026, 17:00, Burghalle (auswärts)"
+  },
+  {
+   "id": 399629,
+   "st": 11,
+   "date": "2027-01-03",
+   "home": "ASC Quierschied",
+   "away": "TV Kirkel",
+   "label": "So, 03.01.2027, 17:30, Fischbachhalle Fischbach"
+  },
+  {
+   "id": 399620,
+   "st": 9,
+   "date": "2027-01-14",
+   "home": "SG Zweibrücken",
+   "away": "TV Kirkel",
+   "label": "Do, 14.01.2027, 20:00, Zweibrücken Westpfalzhalle"
+  },
+  {
+   "id": 399607,
+   "st": 6,
+   "date": "2027-01-22",
+   "home": "ASC Quierschied",
+   "away": "HF Untere Saar 2",
+   "label": "Fr, 22.01.2027, 19:30, Fischbachhalle Fischbach"
+  },
+  {
+   "id": 399618,
+   "st": 8,
+   "date": "2027-01-24",
+   "home": "HG Saarlouis",
+   "away": "HF Köllertal",
+   "label": "So, 24.01.2027, 18:00, Sporthalle Steinrausch"
+  },
+  {
+   "id": 399639,
+   "st": 13,
+   "date": "2027-01-30",
+   "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "away": "TV Kirkel",
+   "label": "Sa, 30.01.2027, 18:00, Sporthalle Am Berg"
+  },
+  {
+   "id": 399640,
+   "st": 13,
+   "date": "2027-01-30",
+   "home": "ASC Quierschied",
+   "away": "TV Merchweiler",
+   "label": "Sa, 30.01.2027, 00:00, -"
+  },
+  {
+   "id": 399641,
+   "st": 13,
+   "date": "2027-01-30",
+   "home": "HC Perl",
+   "away": "HF Köllertal",
+   "label": "Sa, 30.01.2027, 17:30, Sporthalle Perl"
+  },
+  {
+   "id": 399642,
+   "st": 13,
+   "date": "2027-01-30",
+   "home": "HSG TVA/ATSV Saarbrücken",
+   "away": "SG Zweibrücken",
+   "label": "Sa, 30.01.2027, 18:00, Rastbachtalhalle"
+  },
+  {
+   "id": 399643,
+   "st": 13,
+   "date": "2027-01-30",
+   "home": "HG Saarlouis",
+   "away": "HF Untere Saar 2",
+   "label": "Sa, 30.01.2027, 18:00, Sporthalle In Den Fliesen"
+  },
+  {
+   "id": 399646,
+   "st": 14,
+   "date": "2027-02-13",
+   "home": "ASC Quierschied",
+   "away": "HC Perl",
+   "label": "Sa, 13.02.2027, 18:00, Fischbachhalle Fischbach"
+  },
+  {
+   "id": 399648,
+   "st": 14,
+   "date": "2027-02-13",
+   "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "away": "HG Saarlouis",
+   "label": "Sa, 13.02.2027, 18:00, Sporthalle Am Berg"
+  },
+  {
+   "id": 399644,
+   "st": 14,
+   "date": "2027-02-14",
+   "home": "SG Zweibrücken",
+   "away": "Moskitos 2",
+   "label": "So, 14.02.2027, 16:00, Zweibrücken Ignaz-Roth-Halle (auswärts)"
+  },
+  {
+   "id": 399645,
+   "st": 14,
+   "date": "2027-02-14",
+   "home": "HF Köllertal",
+   "away": "HSG TVA/ATSV Saarbrücken",
+   "label": "So, 14.02.2027, 18:00, Riegelsberghalle"
+  },
+  {
+   "id": 399647,
+   "st": 14,
+   "date": "2027-02-14",
+   "home": "TV Kirkel",
+   "away": "TV Merchweiler",
+   "label": "So, 14.02.2027, 14:00, Burghalle"
+  },
+  {
+   "id": 399650,
+   "st": 15,
+   "date": "2027-02-20",
+   "home": "HC Perl",
+   "away": "TV Kirkel",
+   "label": "Sa, 20.02.2027, 17:30, Sporthalle Perl"
+  },
+  {
+   "id": 399651,
+   "st": 15,
+   "date": "2027-02-20",
+   "home": "HSG TVA/ATSV Saarbrücken",
+   "away": "ASC Quierschied",
+   "label": "Sa, 20.02.2027, 20:00, Rastbachtalhalle"
+  },
+  {
+   "id": 399653,
+   "st": 15,
+   "date": "2027-02-20",
+   "home": "HF Untere Saar 2",
+   "away": "SG Zweibrücken",
+   "label": "Sa, 20.02.2027, 18:00, Seffersbachhalle"
+  },
+  {
+   "id": 399649,
+   "st": 15,
+   "date": "2027-02-21",
+   "home": "TV Merchweiler",
+   "away": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "label": "So, 21.02.2027, 16:00, Allenfeldhalle"
+  },
+  {
+   "id": 399652,
+   "st": 15,
+   "date": "2027-02-21",
+   "home": "HF Köllertal",
+   "away": "Moskitos 2",
+   "label": "So, 21.02.2027, 16:00, Trimm-Treff-Halle (auswärts)"
+  },
+  {
+   "id": 399655,
+   "st": 16,
+   "date": "2027-02-27",
+   "home": "ASC Quierschied",
+   "away": "Moskitos 2",
+   "label": "Sa, 27.02.2027, 18:00, Fischbachhalle Fischbach (auswärts)"
+  },
+  {
+   "id": 399656,
+   "st": 16,
+   "date": "2027-02-27",
+   "home": "TV Kirkel",
+   "away": "HSG TVA/ATSV Saarbrücken",
+   "label": "Sa, 27.02.2027, 19:00, Burghalle"
+  },
+  {
+   "id": 399657,
+   "st": 16,
+   "date": "2027-02-27",
+   "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "away": "HC Perl",
+   "label": "Sa, 27.02.2027, 18:00, Sporthalle Am Berg"
+  },
+  {
+   "id": 399658,
+   "st": 16,
+   "date": "2027-02-27",
+   "home": "TV Merchweiler",
+   "away": "HG Saarlouis",
+   "label": "Sa, 27.02.2027, 18:00, Allenfeldhalle"
+  },
+  {
+   "id": 399654,
+   "st": 16,
+   "date": "2027-02-28",
+   "home": "HF Köllertal",
+   "away": "HF Untere Saar 2",
+   "label": "So, 28.02.2027, 18:00, Trimm-Treff-Halle"
+  },
+  {
+   "id": 399659,
+   "st": 17,
+   "date": "2027-03-06",
+   "home": "HC Perl",
+   "away": "TV Merchweiler",
+   "label": "Sa, 06.03.2027, 17:30, Sporthalle Perl"
+  },
+  {
+   "id": 399660,
+   "st": 17,
+   "date": "2027-03-06",
+   "home": "HSG TVA/ATSV Saarbrücken",
+   "away": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "label": "Sa, 06.03.2027, 18:00, Rastbachtalhalle"
+  },
+  {
+   "id": 399662,
+   "st": 17,
+   "date": "2027-03-06",
+   "home": "HF Untere Saar 2",
+   "away": "ASC Quierschied",
+   "label": "Sa, 06.03.2027, 18:00, Merzig Thiel's Park Sporthalle"
+  },
+  {
+   "id": 399663,
+   "st": 17,
+   "date": "2027-03-06",
+   "home": "HG Saarlouis",
+   "away": "SG Zweibrücken",
+   "label": "Sa, 06.03.2027, 18:00, Sporthalle In Den Fliesen"
+  },
+  {
+   "id": 399661,
+   "st": 17,
+   "date": "2027-03-07",
+   "home": "Moskitos 2",
+   "away": "TV Kirkel",
+   "label": "So, 07.03.2027, 16:00, Sporthalle Alsweiler (Heimspiel)"
+  },
+  {
+   "id": 399665,
+   "st": 18,
+   "date": "2027-03-13",
+   "home": "TV Kirkel",
+   "away": "HF Untere Saar 2",
+   "label": "Sa, 13.03.2027, 15:00, Burghalle"
+  },
+  {
+   "id": 399666,
+   "st": 18,
+   "date": "2027-03-13",
+   "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "away": "Moskitos 2",
+   "label": "Sa, 13.03.2027, 17:00, Sporthalle Am Berg (auswärts)"
+  },
+  {
+   "id": 399668,
+   "st": 18,
+   "date": "2027-03-13",
+   "home": "HG Saarlouis",
+   "away": "HC Perl",
+   "label": "Sa, 13.03.2027, 18:00, Sporthalle Steinrausch"
+  },
+  {
+   "id": 399664,
+   "st": 18,
+   "date": "2027-03-14",
+   "home": "HF Köllertal",
+   "away": "SG Zweibrücken",
+   "label": "So, 14.03.2027, 16:00, Trimm-Treff-Halle"
+  },
+  {
+   "id": 399667,
+   "st": 18,
+   "date": "2027-03-14",
+   "home": "TV Merchweiler",
+   "away": "HSG TVA/ATSV Saarbrücken",
+   "label": "So, 14.03.2027, 16:00, Allenfeldhalle"
+  },
+  {
+   "id": 399669,
+   "st": 19,
+   "date": "2027-03-20",
+   "home": "HSG TVA/ATSV Saarbrücken",
+   "away": "HC Perl",
+   "label": "Sa, 20.03.2027, 20:00, Rastbachtalhalle"
+  },
+  {
+   "id": 399670,
+   "st": 19,
+   "date": "2027-03-20",
+   "home": "Moskitos 2",
+   "away": "TV Merchweiler",
+   "label": "Sa, 20.03.2027, 17:00, Sporthalle Alsweiler (Heimspiel)"
+  },
+  {
+   "id": 399671,
+   "st": 19,
+   "date": "2027-03-20",
+   "home": "HF Untere Saar 2",
+   "away": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "label": "Sa, 20.03.2027, 18:00, Seffersbachhalle"
+  },
+  {
+   "id": 399672,
+   "st": 19,
+   "date": "2027-03-21",
+   "home": "SG Zweibrücken",
+   "away": "ASC Quierschied",
+   "label": "So, 21.03.2027, 16:00, Zweibrücken Westpfalzhalle"
+  },
+  {
+   "id": 399673,
+   "st": 19,
+   "date": "2027-03-21",
+   "home": "HF Köllertal",
+   "away": "HG Saarlouis",
+   "label": "So, 21.03.2027, 18:00, Trimm-Treff-Halle"
+  },
+  {
+   "id": 399675,
+   "st": 20,
+   "date": "2027-04-10",
+   "home": "TV Kirkel",
+   "away": "SG Zweibrücken",
+   "label": "Sa, 10.04.2027, 18:00, Burghalle"
+  },
+  {
+   "id": 399677,
+   "st": 20,
+   "date": "2027-04-10",
+   "home": "HC Perl",
+   "away": "Moskitos 2",
+   "label": "Sa, 10.04.2027, 19:30, Sporthalle Perl (auswärts)"
+  },
+  {
+   "id": 399678,
+   "st": 20,
+   "date": "2027-04-10",
+   "home": "HG Saarlouis",
+   "away": "HSG TVA/ATSV Saarbrücken",
+   "label": "Sa, 10.04.2027, 18:00, Sporthalle In Den Fliesen"
+  },
+  {
+   "id": 399674,
+   "st": 20,
+   "date": "2027-04-11",
+   "home": "ASC Quierschied",
+   "away": "HF Köllertal",
+   "label": "So, 11.04.2027, 19:30, Fischbachhalle Fischbach"
+  },
+  {
+   "id": 399676,
+   "st": 20,
+   "date": "2027-04-11",
+   "home": "TV Merchweiler",
+   "away": "HF Untere Saar 2",
+   "label": "So, 11.04.2027, 18:00, Allenfeldhalle"
+  },
+  {
+   "id": 399679,
+   "st": 21,
+   "date": "2027-04-17",
+   "home": "Moskitos 2",
+   "away": "HSG TVA/ATSV Saarbrücken",
+   "label": "Sa, 17.04.2027, 15:00, Marpingen Sporthalle (Heimspiel)"
+  },
+  {
+   "id": 399680,
+   "st": 21,
+   "date": "2027-04-17",
+   "home": "HF Untere Saar 2",
+   "away": "HC Perl",
+   "label": "Sa, 17.04.2027, 18:00, Merzig Thiel's Park Sporthalle"
+  },
+  {
+   "id": 399682,
+   "st": 21,
+   "date": "2027-04-17",
+   "home": "HF Köllertal",
+   "away": "TV Kirkel",
+   "label": "Sa, 17.04.2027, 18:00, Gastmannschaft Tv Kirkel"
+  },
+  {
+   "id": 399683,
+   "st": 21,
+   "date": "2027-04-17",
+   "home": "ASC Quierschied",
+   "away": "HG Saarlouis",
+   "label": "Sa, 17.04.2027, 18:00, Fischbachhalle Fischbach"
+  },
+  {
+   "id": 399681,
+   "st": 21,
+   "date": "2027-04-18",
+   "home": "SG Zweibrücken",
+   "away": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "label": "So, 18.04.2027, 16:00, Zweibrücken Westpfalzhalle"
+  },
+  {
+   "id": 399684,
+   "st": 22,
+   "date": "2027-04-24",
+   "home": "TV Kirkel",
+   "away": "ASC Quierschied",
+   "label": "Sa, 24.04.2027, 17:30, Burghalle"
+  },
+  {
+   "id": 399685,
+   "st": 22,
+   "date": "2027-04-24",
+   "home": "HSG Birkenfeld/Nohfelden-Schwarzenbach",
+   "away": "HF Köllertal",
+   "label": "Sa, 24.04.2027, 17:00, Sporthalle Am Berg"
+  },
+  {
+   "id": 399686,
+   "st": 22,
+   "date": "2027-04-24",
+   "home": "TV Merchweiler",
+   "away": "SG Zweibrücken",
+   "label": "Sa, 24.04.2027, 16:00, Allenfeldhalle"
+  },
+  {
+   "id": 399687,
+   "st": 22,
+   "date": "2027-04-24",
+   "home": "HSG TVA/ATSV Saarbrücken",
+   "away": "HF Untere Saar 2",
+   "label": "Sa, 24.04.2027, 18:00, Rastbachtalhalle"
   },
   {
    "id": 399688,
