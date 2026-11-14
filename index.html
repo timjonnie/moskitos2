@@ -386,7 +386,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.23 · letzte Aktualisierung 14.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.24 · letzte Aktualisierung 14.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -1616,13 +1616,13 @@ document.addEventListener("toggle",function(e){if(e.target&&e.target.id==="ligaB
 /* ---------- Export der ganzen Ligaseite (A4, mehrseitig) – gleiches Format wie Gegneranalyse ---------- */
 function lvRich(el){ // innerHTML → Text mit <b> für fett/Moskitos
   var h=el.innerHTML.replace(/<br\s*\/?>/g," ").replace(/<(span|b)[^>]*class="[^"]*(lg-own|own)[^"]*"[^>]*>([\s\S]*?)<\/\1>/g,"<b>$3</b>").replace(/<b[^>]*>/g,"<b>").replace(/<(?!\/?b>)[^>]+>/g,"");return h.replace(/\s+/g," ").trim()}
-async function lvBlocks(staff){
+async function lvBlocks(staff,custom){
   var X=window.MKOpp&&MKOpp.x;if(!X)throw new Error("Export-Bausteine nicht geladen");
   var P=X.XP,W=X.XW,PAD=X.XPAD,IW=W-PAD*2,B=[],gs=lgGames(),de=document.documentElement,th=de.getAttribute("data-theme");
   // Inhalte im hellen Farbschema neu aufbauen, alle Tabellen statt nur des gewählten Reiters
   de.setAttribute("data-theme","light");var host=document.createElement("div");host.style.cssText="position:absolute;left:-9999px;top:0;width:760px";document.body.appendChild(host);
   var TABS=[["heim","Heimtabelle"],["ausw","Auswärtstabelle"],["hz1","Tabelle 1. Halbzeit"],["hz2","Tabelle 2. Halbzeit"],["form","Formtabelle (letzte 5 Spiele)"]];
-  var S=[["Spieltag",lgSpieltag(gs)],["Tabellen",TABS.map(function(t){return '<h3>'+t[1]+'</h3>'+lgTable(lgAgg(lgEntries(gs,t[0])))}).join("")],["Tabellenverlauf",lgVerlauf(gs)],["Phasen-Tabelle",lgPhasen(gs)],
+  var S=custom?custom.sections:[["Spieltag",lgSpieltag(gs)],["Tabellen",TABS.map(function(t){return '<h3>'+t[1]+'</h3>'+lgTable(lgAgg(lgEntries(gs,t[0])))}).join("")],["Tabellenverlauf",lgVerlauf(gs)],["Phasen-Tabelle",lgPhasen(gs)],
     ["Spannung und Comebacks",lgSpannung(gs)],["Übersicht und Rekorde",'<div class="liga">'+ligaStats((PUB&&PUB.games)||[])+'</div>'],["Disziplin",lgDisziplin(gs)],["Auszeiten-Wirkung",lgAuszeiten(gs)],
     ["Unter- und Überzahl",lgUnterzahl(gs)],["Restprogramm Moskitos 2",lgRest(gs)]].concat(staff?[["Ranglisten",lgRanglisten(gs)]]:[]);
   host.innerHTML=S.map(function(s){return '<section data-t="'+esc(s[0])+'">'+s[1]+'</section>'}).join("");
@@ -1633,11 +1633,13 @@ async function lvBlocks(staff){
   var H3=null;
   function blk(draw){var c=X.canvas(3600),y=draw(c[1]);B.push(X.crop(c[0],y))}
   var upd=(PUB&&PUB.updated)||new Date().toLocaleDateString("de-DE");
-  blk(function(x){x.fillStyle=P.band;x.fillRect(0,0,W,220);X.t(x,"LIGASTATISTIK",PAD,74,{w:700,size:24,color:"#F6C98B"});
-    var tw=X.t(x,"Oberliga Frauen",PAD,142,{w:700,size:58,color:P.bandInk});X.t(x,".",PAD+tw+2,142,{w:700,size:58,color:P.accent});
-    X.t(x,"HV Saar"+(PUB&&PUB.season?" · Saison "+PUB.season:"")+" · "+gs.length+" Spielberichte · Stand "+upd,PAD,186,{size:23,color:P.bandMuted});
-    var y=220+40;if(staff){x.fillStyle=P.accentSoft;x.fillRect(PAD,y-30,IW,48);X.t(x,"Mit Ranglisten – für den Trainerstab",PAD+16,y+2,{w:700,size:22,color:P.accent});y+=40}
-    X.t(x,"Aus den offiziellen Spielberichten berechnet · Spiele und Spielerinnen von Moskitos 2 fett",PAD,y,{size:20,color:P.muted});return y+20});
+  var HD=(custom&&custom.head)||{eyebrow:"LIGASTATISTIK",title:"Oberliga Frauen",sub:"HV Saar"+(PUB&&PUB.season?" · Saison "+PUB.season:"")+" · "+gs.length+" Spielberichte · Stand "+upd,
+    staffNote:"Mit Ranglisten – für den Trainerstab",note:"Aus den offiziellen Spielberichten berechnet · Spiele und Spielerinnen von Moskitos 2 fett"};
+  blk(function(x){x.fillStyle=P.band;x.fillRect(0,0,W,220);X.t(x,HD.eyebrow,PAD,74,{w:700,size:24,color:"#F6C98B"});
+    var tw=X.t(x,HD.title,PAD,142,{w:700,size:HD.title.length>26?44:58,color:P.bandInk,max:IW-30});X.t(x,".",PAD+tw+2,142,{w:700,size:HD.title.length>26?44:58,color:P.accent});
+    X.t(x,HD.sub,PAD,186,{size:23,color:P.bandMuted,max:IW});
+    var y=220+40;if(staff&&HD.staffNote){x.fillStyle=P.accentSoft;x.fillRect(PAD,y-30,IW,48);X.t(x,HD.staffNote,PAD+16,y+2,{w:700,size:22,color:P.accent});y+=40}
+    X.t(x,HD.note,PAD,y,{size:20,color:P.muted,max:IW});return y+20});
   var si=0;
   [].slice.call(host.children).forEach(function(sec){var first=true;
     // Titel und Zwischenüberschrift werden immer zusammen mit dem nächsten Inhalt gezeichnet (keine verwaisten Überschriften)
@@ -1770,7 +1772,9 @@ function brDetail(g){var H=brSide(g,"home"),A=brSide(g,"away"),lc=brLeadChanges(
     R.map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td></tr>'}).join("")+
     '<tr><td>Führungswechsel</td><td class="n" colspan="2" style="text-align:center">'+lc+'</td></tr>'+
     '</table></div><h3 class="br-h3">Torschützinnen</h3><div class="br-sc">'+sc(brScorers(g,"home"),showH,g.home)+sc(brScorers(g,"away"),showA,g.away)+'</div>'+
-    (g.pdf?'<a class="more" href="'+esc(g.pdf)+'" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">Original-Spielbericht (PDF) →</a>':'')+'</div>'}
+    brAnalyseHtml(g)+
+    (g.pdf?'<a class="more" href="'+esc(g.pdf)+'" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">Original-Spielbericht (PDF) →</a>':'')+
+    (isCoach()?'<h3 class="br-h3">Komplette Auswertung dieses Spiels</h3>'+brExportButtons(g.id):'')+'</div>'}
 function renderBerichte(){var all=((PUB&&PUB.games)||[]).filter(function(g){return g.score&&g.events&&g.comp!=="Pokal"});
   if(!all.length){$("brRoot").innerHTML='<div class="panel"><p class="sub">Noch keine Spielberichte.</p></div>';return}
   var sts=[],teams={};all.forEach(function(g){if(g.st&&sts.indexOf(g.st)<0)sts.push(g.st);teams[g.home]=1;teams[g.away]=1});sts.sort(function(a,b){return b-a});
@@ -1778,7 +1782,7 @@ function renderBerichte(){var all=((PUB&&PUB.games)||[]).filter(function(g){retu
   var gs=all.filter(function(g){return (!BV.st||String(g.st)===BV.st)&&(!BV.team||g.home===BV.team||g.away===BV.team)}).sort(function(a,b){return b.date.localeCompare(a.date)||(b.st||0)-(a.st||0)});
   var h='<div class="panel"><h1 class="lg-h1">Spielberichte</h1><p class="sub">Alle Ligaspiele aus den offiziellen Spielberichten · '+all.length+' Spiele · Stand '+esc((PUB&&PUB.updated)||"–")+'</p>'+
     '<div class="br-f"><label>Spieltag<select data-brst><option value="">Alle</option>'+sts.map(function(s){return '<option value="'+s+'"'+(String(s)===BV.st?" selected":"")+'>'+s+'. Spieltag</option>'}).join("")+'</select></label>'+
-    '<label>Mannschaft<select data-brteam><option value="">Alle</option>'+TL.map(function(t){return '<option'+(t===BV.team?" selected":"")+'>'+esc(t)+'</option>'}).join("")+'</select></label></div></div>';
+    '<label>Mannschaft<select data-brteam><option value="">Alle</option>'+TL.map(function(t){return '<option'+(t===BV.team?" selected":"")+'>'+esc(t)+'</option>'}).join("")+'</select></label></div>'+(isCoach()?'<p class="sub" style="margin:12px 0 6px">Ergebnisübersicht der gewählten Spiele exportieren:</p>'+brExportButtons(null):'')+'</div>';
   var cur=null;
   gs.forEach(function(g){var key=g.st?g.st+". Spieltag":"Spiele";if(key!==cur){if(cur!==null)h+='</div>';cur=key;h+='<div class="panel lg-sec"><h2>'+esc(key)+'</h2>'}
     var w=g.score[0]>g.score[1]?0:g.score[0]<g.score[1]?1:-1,own=g.home===OWN||g.away===OWN;
@@ -1788,6 +1792,57 @@ function renderBerichte(){var all=((PUB&&PUB.games)||[]).filter(function(g){retu
 document.addEventListener("toggle",function(e){var d=e.target;if(!d||!d.classList||!d.classList.contains("br-g")||!d.open)return;var b=d.querySelector(".br-body");if(b.innerHTML)return;
   var g=((PUB&&PUB.games)||[]).filter(function(x){return String(x.id)===d.dataset.brid})[0];if(g)b.innerHTML=brDetail(g)},true);
 document.addEventListener("change",function(e){var t=e.target;if(!t||!t.hasAttribute)return;if(t.hasAttribute("data-brst")){BV.st=t.value;renderBerichte()}else if(t.hasAttribute("data-brteam")){BV.team=t.value;renderBerichte()}});
+/* ---------- Spielberichte: komplette Auswertung je Spiel + Export ---------- */
+// Passendes Spiel aus Lukas' Spielanalyse (nur Trainerstab, nur eigene Spiele)
+function brAnalyse(g){if(!isCoach()||!COACH||!COACH.A||(g.home!==OWN&&g.away!==OWN))return null;
+  return (COACH.A.games||[]).filter(function(a){return a.date===g.date})[0]||null}
+function brAnalyseRows(a){var t={};["goals","goals7","miss","miss7","tech","pass","steals","assists","won7","won2min","caused7","pen","lost1v1","plus","minus"].forEach(function(k){t[k]=(a.players||[]).reduce(function(s,p){return s+(+p[k]||0)},0)});
+  var sv=(a.goalies||[]).reduce(function(s,p){return s+(+p.saves||0)},0),cc=(a.goalies||[]).reduce(function(s,p){return s+(+p.conceded||0)},0);
+  function q(x,y){return y?Math.round(x/y*100)+" %":"–"}
+  return [["Angriffseffektivität",q(t.goals,t.goals+t.miss+t.tech+t.pass),"Tore je Angriff"],["Wurfquote",q(t.goals,t.goals+t.miss),t.goals+" Tore, "+t.miss+" Fehlwürfe"],["7m-Quote",q(t.goals7,t.goals7+t.miss7),t.goals7+"/"+(t.goals7+t.miss7)],
+    ["Handlungseffektivität",q(t.plus,t.plus+t.minus),t.plus+" Plus, "+t.minus+" Minus"],["Ballverluste",t.tech+t.pass,t.tech+" techn. Fehler, "+t.pass+" Fehlpässe"],["Assists",t.assists,""],
+    ["7m + 2 Min. herausgeholt",t.won7+t.won2min,t.won7+" × 7m, "+t.won2min+" × 2 Min."],["Paradenquote",q(sv,sv+cc),sv+" Paraden, "+cc+" Gegentore"],["Ballgewinne",t.steals,""],
+    ["7m + 2 Min. verursacht",t.caused7+t.pen,t.caused7+" × 7m, "+t.pen+" × 2 Min."],["1:1 verloren",t.lost1v1,""]]}
+function brAnalyseHtml(g){var a=brAnalyse(g);if(!a)return "";
+  return '<h3 class="br-h3">Aus der Spielanalyse (Erfassung)</h3><div class="liga">'+brAnalyseRows(a).map(function(r){return '<div class="lg-it"><div class="lg-l">'+r[0]+'</div><div class="lg-v">'+r[1]+'</div><div class="lg-d">'+esc(r[2])+'</div></div>'}).join("")+'</div>'}
+function brPhases(g){var B=[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];g.events.forEach(function(e){if(!GOAL[e.type])return;B[Math.min(Math.floor(e.s/600),5)][e.side==="home"?0:1]++});
+  return '<table class="lgt"><tr><th>Minute</th><th class="n">'+esc(shortName(g.home))+'</th><th class="n">'+esc(shortName(g.away))+'</th></tr>'+B.map(function(b,i){return '<tr><td>'+(i*10+1)+'.–'+(i*10+10)+'.</td><td class="n">'+b[0]+'</td><td class="n">'+b[1]+'</td></tr>'}).join("")+'</table>'}
+function brScorerTable(g,sd){var team=g[sd];if(team===OWN&&!isCoach())return '<h3>'+esc(team)+'</h3><p>Torschützinnen nur für den Trainerstab.</p>';
+  var ro=(g.roster||{})[sd]||{},c={};g.events.forEach(function(e){if(e.side!==sd||e.nr==null)return;var k=e.nr,x=c[k]||(c[k]={nr:k,name:ro[k]||("Nr. "+k),t:0,pg:0,pa:0,two:0});
+    if(GOAL[e.type])x.t++;if(e.type==="pen_goal"){x.pg++;x.pa++}else if(e.type==="pen_miss")x.pa++;else if(e.type==="two_min")x.two++});
+  var L=Object.keys(c).map(function(k){return c[k]}).filter(function(p){return p.t||p.pa||p.two}).sort(function(a,b){return b.t-a.t||a.nr-b.nr});
+  return '<h3>'+esc(team)+'</h3><table class="lgt"><tr><th class="n">Nr</th><th>Spielerin</th><th class="n">Tore</th><th class="n">7m</th><th class="n">2 Min.</th></tr>'+
+    L.map(function(p){return '<tr><td class="n">'+p.nr+'</td><td>'+esc(p.name)+'</td><td class="n"><b>'+p.t+'</b></td><td class="n">'+(p.pa?p.pg+"/"+p.pa:"–")+'</td><td class="n">'+(p.two||"–")+'</td></tr>'}).join("")+'</table>'}
+function brGameSections(g){var tab=brDetail(g),host=document.createElement("div");host.innerHTML=tab;var t=host.querySelector("table");
+  var S=[["Spielverlauf",brCurve(g)],["Kennzahlen Heim / Gast",t?t.outerHTML:""],["Tore je 10 Minuten",brPhases(g)],["Torschützinnen",brScorerTable(g,"home")+brScorerTable(g,"away")]];
+  var a=brAnalyse(g);if(a)S.push(["Aus der Spielanalyse (Erfassung)",'<div class="liga">'+brAnalyseRows(a).map(function(r){return '<div class="lg-it"><div class="lg-l">'+r[0]+'</div><div class="lg-v">'+r[1]+'</div><div class="lg-d">'+esc(r[2])+'</div></div>'}).join("")+'</div>']);
+  return S}
+async function brExport(kind,btn,gid){
+  var X=window.MKOpp&&MKOpp.x,old=btn.textContent;btn.disabled=true;btn.textContent="Wird erstellt …";
+  try{try{if(document.fonts&&document.fonts.ready)await document.fonts.ready}catch(e){}
+    var B,name,title,all=((PUB&&PUB.games)||[]).filter(function(x){return x.score&&x.events&&x.comp!=="Pokal"}),staff=false;
+    if(gid){var g=all.filter(function(x){return String(x.id)===String(gid)})[0];if(!g)throw new Error("Spiel nicht gefunden");
+      var de=document.documentElement,th=de.getAttribute("data-theme");de.setAttribute("data-theme","light");var S;try{S=brGameSections(g)}finally{if(th==null)de.removeAttribute("data-theme");else de.setAttribute("data-theme",th)}
+      staff=!!brAnalyse(g)||((g.home===OWN||g.away===OWN)&&isCoach());
+      title=shortName(g.home)+" – "+shortName(g.away)+" "+g.score[0]+":"+g.score[1];
+      B=await lvBlocks(staff,{sections:S,head:{eyebrow:"SPIELBERICHT"+(g.st?" · "+g.st+". SPIELTAG":""),title:title,sub:"Oberliga Frauen · "+dd(g.date)+g.date.slice(0,4)+" · Halbzeit "+g.ht[0]+":"+g.ht[1]+(g.venue?" · "+g.venue:""),
+        staffNote:"Mit Werten einzelner Spielerinnen und Spielanalyse – für den Trainerstab",note:"Aus dem offiziellen Spielbericht"+(brAnalyse(g)?" und der Spielanalyse (Erfassung)":"")+" berechnet"}});
+      name="Spielbericht_"+(g.st?"ST"+g.st+"_":"")+(window.MKOpp.x.slug?MKOpp.x.slug(shortName(g.home)+"_"+shortName(g.away)):"Spiel")+"_"+g.date}
+    else{var gs=all.filter(function(g){return (!BV.st||String(g.st)===BV.st)&&(!BV.team||g.home===BV.team||g.away===BV.team)}).sort(function(a,b){return (b.st||0)-(a.st||0)||b.date.localeCompare(a.date)});
+      var by={};gs.forEach(function(g){var k=g.st?g.st+". Spieltag":"Spiele";(by[k]=by[k]||[]).push(g)});
+      var S2=Object.keys(by).map(function(k){return [k,'<table class="lgt"><tr><th>Datum</th><th>Heim</th><th>Gast</th><th class="n">Ergebnis</th><th class="n">HZ</th><th class="n">2 Min.</th><th class="n">7m</th></tr>'+by[k].map(function(g){var H=brSide(g,"home"),A=brSide(g,"away");
+        return '<tr class="'+(g.home===OWN||g.away===OWN?"own":"")+'"><td>'+dd(g.date)+'</td><td>'+esc(shortName(g.home))+'</td><td>'+esc(shortName(g.away))+'</td><td class="n"><b>'+g.score[0]+':'+g.score[1]+'</b></td><td class="n">'+g.ht[0]+':'+g.ht[1]+'</td><td class="n">'+H.two+':'+A.two+'</td><td class="n">'+H.pg+'/'+H.pa+' : '+A.pg+'/'+A.pa+'</td></tr>'}).join("")+'</table>']});
+      B=await lvBlocks(false,{sections:S2,head:{eyebrow:"SPIELBERICHTE",title:"Oberliga Frauen",sub:gs.length+" Spiele"+(BV.st?" · "+BV.st+". Spieltag":"")+(BV.team?" · "+BV.team:"")+" · Stand "+((PUB&&PUB.updated)||""),note:"Aus den offiziellen Spielberichten · Spiele von Moskitos 2 hervorgehoben"}});
+      title="Spielberichte Oberliga Frauen";name="Spielberichte_"+(BV.st?"ST"+BV.st+"_":"")+(BV.team?MKOpp.x.slug(BV.team)+"_":"")+new Date().toISOString().slice(0,10)}
+    if(kind==="pdf")X.save(await X.pdf(X.pages(B,staff)),name+".pdf");
+    else if(kind==="png")X.save(await X.blob(X.long(B,staff),"image/png"),name+".png");
+    else{var f=new File([await X.pdf(X.pages(B,staff))],name+".pdf",{type:"application/pdf"});
+      if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:title});else X.save(f,f.name)}}
+  catch(err){if(!err||err.name!=="AbortError")alert("Export nicht möglich: "+((err&&err.message)||err))}
+  finally{btn.disabled=false;btn.textContent=old}}
+function brExportButtons(gid){if(!isCoach())return "";var sh=!!(navigator.canShare&&navigator.share),a=gid?' data-gid="'+esc(gid)+'"':'';
+  return '<div class="lg-exp" style="border:0;padding-top:0">'+(sh?'<button class="btn small primary" type="button" data-brx="share"'+a+'>Teilen …</button>':'')+'<button class="btn small'+(sh?'':' primary')+'" type="button" data-brx="pdf"'+a+'>'+(gid?"Auswertung als PDF":"Als PDF")+'</button><button class="btn small" type="button" data-brx="png"'+a+'>Als Bild (PNG)</button></div>'}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-brx]");if(b)brExport(b.dataset.brx,b,b.dataset.gid||null)});
 function renderPublic(d){
   var games=(d.games||[]).filter(function(g){return g.score&&g.events&&g.comp!=="Pokal"}),heute=new Date().toISOString().slice(0,10);
   var tab=table(games),me=teamProfile(games,OWN),rs=me.games.map(function(g){return Object.assign(res(g,OWN),{g:g})});

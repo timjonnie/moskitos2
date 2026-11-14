@@ -94,6 +94,11 @@ Spielverlauf und die Kennzahlen Heim gegen Gast (Halbzeit, 7m, Zeitstrafen, Verw
 Start-/Schlussphase, höchste Führung, längste Torserie, Führungswechsel) sowie die Torschützinnen – die von Moskitos 2
 nur für den Trainerstab. Ergänzt die Spielanalyse (eigene Erfassung) um alle Spiele der Liga.
 
+Für den Trainerstab zusätzlich: Bei unseren Spielen stehen in der aufgeklappten Ansicht die Kennzahlen **aus der Spielanalyse**
+(Erfassung von Lukas). Unter jedem Spiel gibt es **„Auswertung als PDF“** (bzw. Bild/Teilen) mit Verlauf, Kennzahlen Heim/Gast,
+Toren je 10 Minuten, Torschützinnen (mit 7m und Zeitstrafen) und – bei unseren Spielen – den Spielanalyse-Werten.
+Oben auf der Seite lässt sich die Ergebnisübersicht der gefilterten Spiele exportieren.
+
 ## Rückmeldungen der Spielerinnen
 
 - Spielerinnen sagen in ihrem Dashboard bei den nächsten Spielen und Trainings zu oder ab.
