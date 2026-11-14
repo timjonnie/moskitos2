@@ -78,6 +78,7 @@ li.pk-own{ background:var(--accent-soft); margin:0 -8px; padding-left:8px; paddi
 .br-g>summary::-webkit-details-marker{ display:none; } .br-m{ min-width:0; font-size:14.5px; } .br-s{ white-space:nowrap; font-size:15px; }
 .br-g[open]>summary .br-s b{ color:var(--accent); } .br-det{ padding:4px 0 12px; } .br-t td:first-child{ color:var(--muted); }
 .br-h3{ font:600 13px var(--font-display); text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:14px 0 4px; }
+.br-gd{ color:#15803d; } .br-bd{ color:var(--accent); } .br-t td .sub{ font-size:12px; }
 .br-sc{ display:grid; grid-template-columns:1fr 1fr; gap:14px; } .br-sh{ font-weight:600; font-size:14px; } .br-sc .list li{ font-size:13.5px; }
 .br-g.pk-own{ margin:0 -8px; padding:0 8px; }
 .lg-own{ color:var(--accent); font-weight:600; }
@@ -386,7 +387,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.24 · letzte Aktualisierung 14.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.25 · letzte Aktualisierung 14.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -1759,20 +1760,25 @@ function brCurve(g){var c=lgCurve(g),W=640,H=190,L=44,lo=Math.min.apply(null,[-3
   return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Spielverlauf aus Sicht der Heimmannschaft">'+sv+'</svg><p class="sub" style="margin:2px 0 0">Verlauf aus Sicht von '+esc(shortName(g.home))+' (oben = Heim führt) · ○ Auszeit</p>'}
 function brScorers(g,sd){var ro=(g.roster||{})[sd]||{},c={};g.events.forEach(function(e){if(e.side!==sd||e.nr==null||!GOAL[e.type])return;var k=e.nr,x=c[k]||(c[k]={name:ro[k]||("Nr. "+k),t:0,p:0});x.t++;if(e.type==="pen_goal")x.p++});
   return Object.keys(c).map(function(k){return c[k]}).sort(function(a,b){return b.t-a.t}).slice(0,5)}
-function brDetail(g){var H=brSide(g,"home"),A=brSide(g,"away"),lc=brLeadChanges(g);
+function brDetail(g){var H=brSide(g,"home"),A=brSide(g,"away"),lc=brLeadChanges(g),LD=brLead(g);
   function mn(s){var m=Math.floor(s/60),x=s%60;return m+":"+(x<10?"0":"")+x}
   function q(p,a){return a?p+"/"+a:"–"}
   var R=[["Halbzeit",H.ht,A.ht],["7m",q(H.pg,H.pa),q(A.pg,A.pa)],["Zeitstrafen",H.two,A.two],["Verwarnungen",H.warn,A.warn],["Disqualifikationen",H.disq,A.disq],
     ["Auszeiten (Minute)",H.to.length?H.to.join(", "):"–",A.to.length?A.to.join(", "):"–"],["Unterzahl (Min. · Tore)",H.us?mn(H.us)+" · "+H.uf+":"+H.ua:"–",A.us?mn(A.us)+" · "+A.uf+":"+A.ua:"–"],
-    ["Tore 1.–10. Min.",H.s10,A.s10],["Tore 51.–60. Min.",H.e10,A.e10],["Höchste Führung",H.maxLead?"+"+H.maxLead:"–",A.maxLead?"+"+A.maxLead:"–"],["Längste Torserie",H.run+":0",A.run+":0"]];
+    ["Tore 1.–10. Min.",H.s10,A.s10],["Tore 26.–30. Min. (vor der Pause)",lgDiffIn(g,"home",1500,1800)[0],lgDiffIn(g,"away",1500,1800)[0]],["Tore 31.–35. Min. (nach der Pause)",lgDiffIn(g,"home",1800,2100)[0],lgDiffIn(g,"away",1800,2100)[0]],["Tore 51.–60. Min.",H.e10,A.e10],["Höchste Führung",H.maxLead?"+"+H.maxLead:"–",A.maxLead?"+"+A.maxLead:"–"],["Längste Torserie",H.run+":0",A.run+":0"],
+    ["Zeit in Führung",brMn(LD.h),brMn(LD.a)],["Längste Torflaute",dr(brDrought(g,"home")),dr(brDrought(g,"away"))]];
+  function dr(b){return Math.round(b[0]/60)+" Min. ("+brMn(b[1])+"–"+brMn(b[2])+")"}
   var showH=g.home!==OWN||isCoach(),showA=g.away!==OWN||isCoach();
   function sc(list,show,team){return '<div><div class="br-sh">'+esc(shortName(team))+'</div>'+(show?(list.length?'<ul class="list" style="margin-top:2px">'+list.map(function(p){return '<li><span>'+esc(p.name)+(p.p?' <span class="sub">('+p.p+'× 7m)</span>':'')+'</span><b>'+p.t+'</b></li>'}).join("")+'</ul>':'<p class="sub">–</p>'):'<p class="sub">nur für den Trainerstab</p>')+'</div>'}
   return '<div class="br-det">'+brCurve(g)+
     '<div style="overflow-x:auto;margin-top:8px"><table class="lgt br-t"><tr><th></th><th class="n">'+esc(shortName(g.home))+'</th><th class="n">'+esc(shortName(g.away))+'</th></tr>'+
     R.map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td></tr>'}).join("")+
     '<tr><td>Führungswechsel</td><td class="n" colspan="2" style="text-align:center">'+lc+'</td></tr>'+
+    '<tr><td>Ausgleiche</td><td class="n" colspan="2" style="text-align:center">'+LD.eq+'</td></tr>'+
+    '<tr><td>Zeit im Gleichstand</td><td class="n" colspan="2" style="text-align:center">'+brMn(LD.u)+'</td></tr>'+
+    '<tr><td>Erstes Tor</td><td class="n" colspan="2" style="text-align:center">'+(LD.first?esc(shortName(g[LD.first])):"–")+'</td></tr>'+
     '</table></div><h3 class="br-h3">Torschützinnen</h3><div class="br-sc">'+sc(brScorers(g,"home"),showH,g.home)+sc(brScorers(g,"away"),showA,g.away)+'</div>'+
-    brAnalyseHtml(g)+
+    brExtraSections(g).map(function(x){return '<h3 class="br-h3">'+x[0]+'</h3>'+x[1]}).join("")+
     (g.pdf?'<a class="more" href="'+esc(g.pdf)+'" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">Original-Spielbericht (PDF) →</a>':'')+
     (isCoach()?'<h3 class="br-h3">Komplette Auswertung dieses Spiels</h3>'+brExportButtons(g.id):'')+'</div>'}
 function renderBerichte(){var all=((PUB&&PUB.games)||[]).filter(function(g){return g.score&&g.events&&g.comp!=="Pokal"});
@@ -1796,15 +1802,103 @@ document.addEventListener("change",function(e){var t=e.target;if(!t||!t.hasAttri
 // Passendes Spiel aus Lukas' Spielanalyse (nur Trainerstab, nur eigene Spiele)
 function brAnalyse(g){if(!isCoach()||!COACH||!COACH.A||(g.home!==OWN&&g.away!==OWN))return null;
   return (COACH.A.games||[]).filter(function(a){return a.date===g.date})[0]||null}
-function brAnalyseRows(a){var t={};["goals","goals7","miss","miss7","tech","pass","steals","assists","won7","won2min","caused7","pen","lost1v1","plus","minus"].forEach(function(k){t[k]=(a.players||[]).reduce(function(s,p){return s+(+p[k]||0)},0)});
-  var sv=(a.goalies||[]).reduce(function(s,p){return s+(+p.saves||0)},0),cc=(a.goalies||[]).reduce(function(s,p){return s+(+p.conceded||0)},0);
-  function q(x,y){return y?Math.round(x/y*100)+" %":"–"}
-  return [["Angriffseffektivität",q(t.goals,t.goals+t.miss+t.tech+t.pass),"Tore je Angriff"],["Wurfquote",q(t.goals,t.goals+t.miss),t.goals+" Tore, "+t.miss+" Fehlwürfe"],["7m-Quote",q(t.goals7,t.goals7+t.miss7),t.goals7+"/"+(t.goals7+t.miss7)],
-    ["Handlungseffektivität",q(t.plus,t.plus+t.minus),t.plus+" Plus, "+t.minus+" Minus"],["Ballverluste",t.tech+t.pass,t.tech+" techn. Fehler, "+t.pass+" Fehlpässe"],["Assists",t.assists,""],
-    ["7m + 2 Min. herausgeholt",t.won7+t.won2min,t.won7+" × 7m, "+t.won2min+" × 2 Min."],["Paradenquote",q(sv,sv+cc),sv+" Paraden, "+cc+" Gegentore"],["Ballgewinne",t.steals,""],
-    ["7m + 2 Min. verursacht",t.caused7+t.pen,t.caused7+" × 7m, "+t.pen+" × 2 Min."],["1:1 verloren",t.lost1v1,""]]}
-function brAnalyseHtml(g){var a=brAnalyse(g);if(!a)return "";
-  return '<h3 class="br-h3">Aus der Spielanalyse (Erfassung)</h3><div class="liga">'+brAnalyseRows(a).map(function(r){return '<div class="lg-it"><div class="lg-l">'+r[0]+'</div><div class="lg-v">'+r[1]+'</div><div class="lg-d">'+esc(r[2])+'</div></div>'}).join("")+'</div>'}
+function brMn(s){var m=Math.floor(s/60),x=Math.round(s%60);return m+":"+(x<10?"0":"")+x}
+function brNum(v){return (Math.round(v*10)/10).toString().replace(".",",")}
+// ▲/▼ gegenüber Schnitt; better: 1 = mehr ist gut, -1 = weniger ist gut, 0 = neutral
+function brArrow(v,avg,better){if(avg==null||isNaN(avg)||isNaN(v))return "";var d=v-avg;if(Math.abs(d)<0.05)return " =";
+  var up=d>0,cls=!better?"":((up?1:-1)*better>0?"br-gd":"br-bd");return ' <span class="'+cls+'">'+(up?"▲":"▼")+'</span>'}
+// Zeit in Führung / Rückstand / Gleichstand (Sekunden), Ausgleiche, erstes Tor
+function brLead(g){var c=lgCurve(g),t=0,d=0,r={h:0,a:0,u:0,eq:0,first:c.length?c[0][2]:null};
+  c.concat([[3600,null]]).forEach(function(p){var s=Math.min(p[0],3600),dt=Math.max(s-t,0);if(d>0)r.h+=dt;else if(d<0)r.a+=dt;else r.u+=dt;t=Math.max(t,s);if(p[1]!=null){if(p[1]===0)r.eq++;d=p[1]}});return r}
+// Längste Phase ohne eigenes Tor: [Dauer, von, bis]
+function brDrought(g,sd){var ts=[0].concat(lgSorted(g.events).filter(function(e){return GOAL[e.type]&&e.side===sd}).map(function(e){return Math.min(e.s,3600)}),[3600]),b=[0,0,0];
+  for(var i=1;i<ts.length;i++){var d=ts[i]-ts[i-1];if(d>b[0])b=[d,ts[i-1],ts[i]]}return b}
+function brGameVals(g,sd){var i=sd==="home"?0:1,r={tf:g.score[i],ta:g.score[1-i],two:0,pg:0};g.events.forEach(function(e){if(e.side!==sd)return;if(e.type==="two_min")r.two++;else if(e.type==="pen_goal")r.pg++});return r}
+// Tabelle vor / nach dem Spiel (nur Ligaspiele bis zu diesem Datum)
+function brRank(gs,team){var rows=lgAgg(lgEntries(gs,"all"));for(var i=0;i<rows.length;i++)if(rows[i].team===team)return {pl:i+1,r:rows[i]};return null}
+function brTab(g,R){return '<div style="overflow-x:auto"><table class="lgt br-t"><tr><th></th><th class="n">'+esc(shortName(g.home))+'</th><th class="n">'+esc(shortName(g.away))+'</th></tr>'+
+  R.map(function(r){return r.length===2?'<tr><td>'+r[0]+'</td><td class="n" colspan="2" style="text-align:center">'+r[1]+'</td></tr>':'<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td></tr>'}).join("")+'</table></div>'}
+function brEinordnung(g){var all=lgGames(),pre=all.filter(function(x){return x.date<g.date&&x.id!==g.id}),post=pre.concat([g]),R=[];
+  function pt(x){return x?x.pl+". · "+x.r.p+":"+(2*x.r.sp-x.r.p):"–"}
+  var hb=brRank(pre,g.home),ab=brRank(pre,g.away),ha=brRank(post,g.home),aa=brRank(post,g.away);
+  R.push(["Platz vorher",pt(hb),pt(ab)],["Platz danach",pt(ha),pt(aa)]);
+  function mv(b,a){if(!b||!a)return "–";var d=b.pl-a.pl;return d>0?"▲ "+d+" Platz"+(d>1?"e":""):d<0?"▼ "+(-d)+" Platz"+(d<-1?"e":""):"gehalten"}
+  if(hb||ab)R.push(["Veränderung",mv(hb,ha),mv(ab,aa)]);
+  function avg(team){var gs=all.filter(function(x){return x.id!==g.id&&(x.home===team||x.away===team)}),s={tf:0,ta:0,two:0,pg:0,n:gs.length};
+    gs.forEach(function(x){var v=brGameVals(x,x.home===team?"home":"away");["tf","ta","two","pg"].forEach(function(k){s[k]+=v[k]})});return s}
+  var H=brGameVals(g,"home"),A=brGameVals(g,"away"),hs=avg(g.home),as=avg(g.away);
+  function c(v,s,k,b){if(!s.n)return String(v[k]);var m=s[k]/s.n;return v[k]+'<br><span class="sub">Ø '+brNum(m)+'</span>'+brArrow(v[k],m,b)}
+  [["Tore","tf",1],["Gegentore","ta",-1],["Zeitstrafen","two",-1],["7m-Tore","pg",0]].forEach(function(d){R.push([d[0],c(H,hs,d[1],d[2]),c(A,as,d[1],d[2])])});
+  return brTab(g,R)+'<p class="sub" style="margin:4px 0 0">Platz · Punkte vor dem Spiel und danach (nur mit diesem Ergebnis) · Ø = Saisonschnitt der übrigen Ligaspiele ('+esc(shortName(g.home))+': '+hs.n+', '+esc(shortName(g.away))+': '+as.n+') · ▲▼ höher/niedriger als sonst (grün = besser, orange = schlechter)'+(pre.length?'':' · erstes Spiel der Saison')+'</p>'}
+// Torverteilung (nur Summen, keine Namen)
+function brDist(g,sd){var c={},n7=0,t=0;g.events.forEach(function(e){if(e.side!==sd||!GOAL[e.type])return;t++;if(e.type==="pen_goal")n7++;if(e.nr!=null)c[e.nr]=(c[e.nr]||0)+1});
+  var v=Object.keys(c).map(function(k){return c[k]}).sort(function(a,b){return b-a}),t3=v.slice(0,3).reduce(function(a,b){return a+b},0),best=v[0]||0;
+  function p(x){return t?Math.round(x/t*100)+" %":"–"}return {n:v.length,t3:p(t3),best:p(best),p7:p(n7),feld:t-n7}}
+function brVerteilung(g){var H=brDist(g,"home"),A=brDist(g,"away");
+  [[H,"home"],[A,"away"]].forEach(function(x){if(g[x[1]]===OWN&&!isCoach()){x[0].best="–";x[0].t3="–"}});
+  return brTab(g,[["Torschützinnen",H.n,A.n],["Anteil beste Werferin",H.best,A.best],["Anteil Top-3",H.t3,A.t3],["Feldtore",H.feld,A.feld],["Anteil 7m-Tore",H.p7,A.p7]])}
+// Alle Duelle der beiden Mannschaften in dieser Saison (Liga + Pokal)
+function brDuels(g){function pair(x){return (x.home===g.home&&x.away===g.away)||(x.home===g.away&&x.away===g.home)}
+  var L=lgGames().filter(function(x){return x.id!==g.id&&pair(x)}).map(function(x){return {d:x.date,c:"Liga"+(x.st?", "+x.st+". Spieltag":""),h:x.home,a:x.away,s:x.score}});
+  pkGames().forEach(function(x){if(x.id!==g.id&&pair(x)&&x.status==="gespielt"&&x.score)L.push({d:x.date||"",c:"Pokal, "+x.round,h:x.home,a:x.away,s:x.score})});
+  ((PUB&&PUB.fixtures)||[]).concat((PUB&&PUB.league_fixtures)||[]).forEach(function(f){if(f.date&&f.date>g.date&&pair(f)&&!L.some(function(x){return x.d===f.date}))L.push({d:f.date,c:(f.comp==="Pokal"?"Pokal":"Liga")+" · noch offen",h:f.home,a:f.away,s:null})});
+  L.sort(function(a,b){return a.d.localeCompare(b.d)});
+  if(!L.length)return '<p class="sub">Keine weiteren Duelle in dieser Saison.</p>';
+  return '<ul class="list">'+L.map(function(x){return '<li><span>'+(x.d?dd(x.d)+x.d.slice(0,4)+' · ':'')+esc(x.c)+(x.d<g.date?'':' <span class="sub">(später)</span>')+'<br>'+esc(shortName(x.h))+' – '+esc(shortName(x.a))+'</span><b>'+(x.s?x.s[0]+':'+x.s[1]:'–')+'</b></li>'}).join("")+'</ul>'}
+/* ---------- Spielanalyse (nur Trainerstab, eigene Spiele) ---------- */
+function brTot(a){var t={};["goals","goals7","miss","miss7","tech","pass","steals","assists","won7","won2min","caused7","pen","lost1v1","plus","minus"].forEach(function(k){t[k]=(a.players||[]).reduce(function(s,p){return s+(+p[k]||0)},0)});
+  t.sv=(a.goalies||[]).reduce(function(s,p){return s+(+p.saves||0)},0);t.cc=(a.goalies||[]).reduce(function(s,p){return s+(+p.conceded||0)},0);
+  var O=a.opp,TP=a.tempo||{};t.hasOpp=!!O;if(O){t.oT=+O.tech||0;t.oM=+O.miss||0;t.oP=+O.pass||0;t.oTo=t.oT+t.oM+t.oP}
+  t.hasTo=!!TP.own;if(TP.own){t.tRun=+TP.own.run||0;t.tHit=+TP.own.hit||0}t.hasTg=!!TP.opp;if(TP.opp){t.gRun=+TP.opp.run||0;t.gHit=+TP.opp.hit||0}return t}
+// Kennzahl-Definitionen: p = Quote [Zähler, Nenner], c = Anzahl je Spiel; need = nur wenn erfasst
+var BR_KPI=[
+  {l:"Angriffseffektivität",b:1,p:function(t){return [t.goals,t.goals+t.miss+t.tech+t.pass]},d:function(){return "Tore je Angriff"}},
+  {l:"Wurfquote",b:1,p:function(t){return [t.goals,t.goals+t.miss]},d:function(t){return t.goals+" Tore, "+t.miss+" Fehlwürfe"}},
+  {l:"7m-Quote",b:1,p:function(t){return [t.goals7,t.goals7+t.miss7]},d:function(t){return t.goals7+"/"+(t.goals7+t.miss7)}},
+  {l:"Handlungseffektivität",b:1,p:function(t){return [t.plus,t.plus+t.minus]},d:function(t){return t.plus+" Plus, "+t.minus+" Minus"}},
+  {l:"Ballverluste",b:-1,c:function(t){return t.tech+t.pass},d:function(t){return t.tech+" techn. Fehler, "+t.pass+" Fehlpässe"}},
+  {l:"Assists",b:1,c:function(t){return t.assists},d:function(){return ""}},
+  {l:"7m + 2 Min. herausgeholt",b:1,c:function(t){return t.won7+t.won2min},d:function(t){return t.won7+" × 7m, "+t.won2min+" × 2 Min."}},
+  {l:"Paradenquote",b:1,p:function(t){return [t.sv,t.sv+t.cc]},d:function(t){return t.sv+" Paraden, "+t.cc+" Gegentore"}},
+  {l:"Ballgewinne",b:1,c:function(t){return t.steals},d:function(){return ""}},
+  {l:"7m + 2 Min. verursacht",b:-1,c:function(t){return t.caused7+t.pen},d:function(t){return t.caused7+" × 7m, "+t.pen+" × 2 Min."}},
+  {l:"1:1 verloren",b:-1,c:function(t){return t.lost1v1},d:function(){return ""}}];
+var BR_TEMPO=[
+  {l:"Tempogegenstöße eigene",b:1,need:"hasTo",p:function(t){return [t.tHit,t.tRun]},d:function(t){return t.tHit+" Tore aus "+t.tRun+" Tempogegenstößen"}},
+  {l:"Tempogegenstöße Gegner",b:-1,need:"hasTg",p:function(t){return [t.gHit,t.gRun]},d:function(t){return t.gHit+" Gegentore aus "+t.gRun+" Tempogegenstößen"}},
+  {l:"Tempo-Bilanz",b:1,need:"hasTo",need2:"hasTg",c:function(t){return t.tHit-t.gHit},sign:1,d:function(t){return "Tempotore minus Tempogegentore"}},
+  {l:"Fehler Gegner",b:1,need:"hasOpp",c:function(t){return t.oTo},d:function(t){return t.oT+" techn. Fehler, "+t.oM+" Fehlwürfe, "+t.oP+" Fehlpässe"}},
+  {l:"Abwehreffektivität",b:1,need:"hasOpp",p:function(t){return [t.sv+t.oTo,t.cc+t.sv+t.oTo]},d:function(){return "Gegnerische Angriffe ohne Tor (Paraden + Fehler Gegner)"}}];
+function brOthers(a){return ((COACH&&COACH.A&&COACH.A.games)||[]).filter(function(x){return x!==a&&x.id!==a.id&&x.score&&Array.isArray(x.players)})}
+function brKpiRows(a,defs){var t=brTot(a),O=brOthers(a).map(brTot);
+  return defs.filter(function(k){return (!k.need||t[k.need])&&(!k.need2||t[k.need2])}).map(function(k){
+    var os=O.filter(function(x){return (!k.need||x[k.need])&&(!k.need2||x[k.need2])}),v,vs,avg=null,as="";
+    if(k.p){var q=k.p(t);v=q[1]?q[0]/q[1]:NaN;vs=q[1]?Math.round(v*100)+" %":"–";
+      var Z=0,N=0;os.forEach(function(x){var r=k.p(x);Z+=r[0];N+=r[1]});if(N){avg=Z/N;as="Ø "+Math.round(avg*100)+" %"}}
+    else{v=k.c(t);vs=(k.sign&&v>0?"+":"")+v;if(os.length){avg=os.reduce(function(s,x){return s+k.c(x)},0)/os.length;as="Ø "+(k.sign&&avg>0?"+":"")+brNum(avg)}}
+    return [k.l,vs,as?as+brArrow(k.p?Math.round(v*100):v,k.p?Math.round(avg*100):avg,k.b):"",k.d(t)]})}
+function brKpiHtml(rows){return '<div class="liga">'+rows.map(function(r){return '<div class="lg-it"><div class="lg-l">'+r[0]+'</div><div class="lg-v">'+r[1]+(r[2]?'<small>'+r[2]+'</small>':'')+'</div><div class="lg-d">'+esc(r[3])+'</div></div>'}).join("")+'</div>'}
+function brGkZones(a){var Z=[["Distanz","sDist","cDist"],["Außen","sWing","cWing"],["Zentral","sCenter","cCenter"],["7m / TG","s7","c7"]];
+  var G=(a.goalies||[]).filter(function(p){return (+p.saves||0)+(+p.conceded||0)>0});if(!G.length)return "";
+  var tot={name:"Gesamt",saves:0,conceded:0};G.forEach(function(p){tot.saves+=+p.saves||0;tot.conceded+=+p.conceded||0;Z.forEach(function(z){tot[z[1]]=(tot[z[1]]||0)+(+p[z[1]]||0);tot[z[2]]=(tot[z[2]]||0)+(+p[z[2]]||0)})});
+  if(!Z.some(function(z){return tot[z[1]]||tot[z[2]]}))return "";
+  function cell(p,z){var s=+p[z[1]]||0,c=+p[z[2]]||0;return s+c?s+"/"+(s+c):"–"}
+  function row(p,tr){var n=(+p.saves||0)+(+p.conceded||0);return '<tr'+(tr?' class="own"':'')+'><td>'+esc(p.name||"–")+'</td>'+Z.map(function(z){return '<td class="n">'+cell(p,z)+'</td>'}).join("")+'<td class="n"><b>'+(n?Math.round((+p.saves||0)/n*100)+" %":"–")+'</b></td></tr>'}
+  return '<div style="overflow-x:auto"><table class="lgt"><tr><th>Torhüterin</th>'+Z.map(function(z){return '<th class="n">'+z[0]+'</th>'}).join("")+'<th class="n">Quote</th></tr>'+G.map(function(p){return row(p)}).join("")+(G.length>1?row(tot,1):"")+'</table></div>'+
+    '<p class="sub" style="margin:4px 0 0">Paraden / Würfe aufs Tor je Wurfposition</p>'}
+function brPlusMinus(a){var P=(a.players||[]).filter(function(p){return (+p.plus||0)+(+p.minus||0)+(+p.goals||0)+(+p.miss||0)>0}).map(function(p){var g=+p.goals||0,m=+p.miss||0;
+    return {n:p.name||"–",pl:+p.plus||0,mi:+p.minus||0,g:g,q:g+m?Math.round(g/(g+m)*100)+" %":"–"}}).sort(function(x,y){return (y.pl-y.mi)-(x.pl-x.mi)||y.pl-x.pl});
+  if(!P.length)return "";
+  return '<div style="overflow-x:auto"><table class="lgt"><tr><th>Spielerin</th><th class="n">Plus</th><th class="n">Minus</th><th class="n">Saldo</th><th class="n">Tore</th><th class="n">Wurfquote</th></tr>'+
+    P.map(function(p){var s=p.pl-p.mi;return '<tr><td>'+esc(p.n)+'</td><td class="n">'+p.pl+'</td><td class="n">'+p.mi+'</td><td class="n"><b>'+(s>0?"+":"")+s+'</b></td><td class="n">'+p.g+'</td><td class="n">'+p.q+'</td></tr>'}).join("")+'</table></div>'}
+// Zusätzliche Abschnitte der Komplettauswertung (Ansicht + Export)
+function brExtraSections(g){var S=[["Einordnung",brEinordnung(g)],["Torverteilung",brVerteilung(g)],["Duelle dieser Saison",brDuels(g)]];
+  var a=brAnalyse(g);if(a){var n=brOthers(a).length;
+    S.push(["Aus der Spielanalyse (Erfassung)",brKpiHtml(brKpiRows(a,BR_KPI))+(n?'<p class="sub" style="margin:4px 0 0">Ø = Schnitt der übrigen '+n+' erfassten Spiele · ▲▼ höher/niedriger als sonst (grün = besser, orange = schlechter)</p>':'')]);
+    var tr=brKpiRows(a,BR_TEMPO);if(tr.length)S.push(["Tempo & Abwehr",brKpiHtml(tr)]);
+    var gz=brGkZones(a);if(gz)S.push(["Torhüterinnen nach Wurfposition",gz]);
+    var pm=brPlusMinus(a);if(pm)S.push(["Spielerinnen: Plus / Minus",pm])}
+  return S}
 function brPhases(g){var B=[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];g.events.forEach(function(e){if(!GOAL[e.type])return;B[Math.min(Math.floor(e.s/600),5)][e.side==="home"?0:1]++});
   return '<table class="lgt"><tr><th>Minute</th><th class="n">'+esc(shortName(g.home))+'</th><th class="n">'+esc(shortName(g.away))+'</th></tr>'+B.map(function(b,i){return '<tr><td>'+(i*10+1)+'.–'+(i*10+10)+'.</td><td class="n">'+b[0]+'</td><td class="n">'+b[1]+'</td></tr>'}).join("")+'</table>'}
 function brScorerTable(g,sd){var team=g[sd];if(team===OWN&&!isCoach())return '<h3>'+esc(team)+'</h3><p>Torschützinnen nur für den Trainerstab.</p>';
@@ -1815,8 +1909,7 @@ function brScorerTable(g,sd){var team=g[sd];if(team===OWN&&!isCoach())return '<h
     L.map(function(p){return '<tr><td class="n">'+p.nr+'</td><td>'+esc(p.name)+'</td><td class="n"><b>'+p.t+'</b></td><td class="n">'+(p.pa?p.pg+"/"+p.pa:"–")+'</td><td class="n">'+(p.two||"–")+'</td></tr>'}).join("")+'</table>'}
 function brGameSections(g){var tab=brDetail(g),host=document.createElement("div");host.innerHTML=tab;var t=host.querySelector("table");
   var S=[["Spielverlauf",brCurve(g)],["Kennzahlen Heim / Gast",t?t.outerHTML:""],["Tore je 10 Minuten",brPhases(g)],["Torschützinnen",brScorerTable(g,"home")+brScorerTable(g,"away")]];
-  var a=brAnalyse(g);if(a)S.push(["Aus der Spielanalyse (Erfassung)",'<div class="liga">'+brAnalyseRows(a).map(function(r){return '<div class="lg-it"><div class="lg-l">'+r[0]+'</div><div class="lg-v">'+r[1]+'</div><div class="lg-d">'+esc(r[2])+'</div></div>'}).join("")+'</div>']);
-  return S}
+  return S.concat(brExtraSections(g))}
 async function brExport(kind,btn,gid){
   var X=window.MKOpp&&MKOpp.x,old=btn.textContent;btn.disabled=true;btn.textContent="Wird erstellt …";
   try{try{if(document.fonts&&document.fonts.ready)await document.fonts.ready}catch(e){}
