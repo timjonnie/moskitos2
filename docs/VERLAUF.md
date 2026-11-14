@@ -378,3 +378,16 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   Je Spiel `brExport(kind,btn,gid)`: Verlauf, Kennzahlen Heim/Gast, Tore je 10 Min. (`brPhases`), Torschützinnen-Tabellen
   (`brScorerTable`), bei eigenen Spielen Spielanalyse-Werte aus `COACH.A.games` (Zuordnung über Datum, `brAnalyse`/`brAnalyseRows`,
   auch in der Detailansicht). Seiten-Export: Ergebnisübersicht der gefilterten Spiele je Spieltag. Alles nur `isCoach()`.
+
+### 14.11.2026 – Komplettauswertung je Spiel: weitere Kennzahlen
+
+- Team-Board 4.25 (Spielberichte, Ansicht + PDF/PNG-Export über `brExtraSections(g)`):
+  - Kennzahlen-Tabelle: Tore 26.–30. / 31.–35. Min. (um die Pause), Zeit in Führung, längste Torflaute (`brDrought`),
+    Ausgleiche, Zeit im Gleichstand, erstes Tor (`brLead`).
+  - „Einordnung“ (`brEinordnung`): Platz · Punkte vor dem Spiel und danach (nur mit diesem Ergebnis), Tore/Gegentore/Zeitstrafen/7m-Tore
+    vs. Saisonschnitt der übrigen Ligaspiele (▲▼, grün = besser, orange = schlechter).
+  - „Torverteilung“ (`brDist`): Anzahl Torschützinnen, Anteil beste Werferin / Top-3 (eigene Mannschaft nur Trainerstab), Feldtore, 7m-Anteil.
+  - „Duelle dieser Saison“ (`brDuels`): Liga + Pokal (gespielt) und noch offene Termine.
+  - Nur Trainerstab, eigene Spiele (Spielanalyse): alle Kennzahlen mit Ø der übrigen erfassten Spiele (`BR_KPI`, `brKpiRows`),
+    „Tempo & Abwehr“ (`BR_TEMPO`, nur wenn erfasst), Torhüterinnen nach Wurfposition (`brGkZones`), Plus/Minus je Spielerin (`brPlusMinus`).
+- Abgelehnt: Auszeiten im Detail je Spiel.
