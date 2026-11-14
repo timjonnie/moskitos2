@@ -374,3 +374,7 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   gruppiert nach Spieltag, Filter Spieltag/Mannschaft, je Spiel aufklappbar (`brDetail()`): Verlauf (`brCurve`), Kennzahlen Heim/Gast
   (`brSide`: Halbzeit, 7m, Strafen, Auszeiten, Unterzahl exakt, Start/Schluss, höchste Führung, längste Serie), Führungswechsel,
   Torschützinnen (eigene nur `isCoach()`), Link zum Original-PDF. Details werden erst beim Aufklappen berechnet.
+- Team-Board 4.24: Spielberichte-Export. `lvBlocks(staff,custom)` nimmt eigene Abschnitte + Kopf (`custom.head`).
+  Je Spiel `brExport(kind,btn,gid)`: Verlauf, Kennzahlen Heim/Gast, Tore je 10 Min. (`brPhases`), Torschützinnen-Tabellen
+  (`brScorerTable`), bei eigenen Spielen Spielanalyse-Werte aus `COACH.A.games` (Zuordnung über Datum, `brAnalyse`/`brAnalyseRows`,
+  auch in der Detailansicht). Seiten-Export: Ergebnisübersicht der gefilterten Spiele je Spieltag. Alles nur `isCoach()`.
