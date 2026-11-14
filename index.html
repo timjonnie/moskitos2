@@ -71,6 +71,15 @@ h2{ font:600 13px var(--font-display); text-transform:uppercase; letter-spacing:
 .pk-tag{ display:inline-block; font-size:12px; font-weight:600; padding:2px 8px; border-radius:999px; background:var(--panel-2); color:var(--muted); white-space:nowrap; }
 .pk-ok{ background:var(--good-soft); color:var(--good); } .pk-out{ background:var(--bad-soft); color:var(--bad); }
 li.pk-own{ background:var(--accent-soft); margin:0 -8px; padding-left:8px; padding-right:8px; border-radius:6px; }
+.br-f{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; } .br-f label{ display:flex; flex-direction:column; gap:3px; font-size:12.5px; color:var(--muted); flex:1 1 160px; min-width:0; }
+.br-f select{ font:inherit; font-size:14px; color:var(--ink); padding:7px 9px; border-radius:8px; border:1px solid var(--line); background:var(--panel); min-width:0; }
+.br-g{ border-top:1px solid var(--line); } .br-g:first-of-type{ border-top:0; }
+.br-g>summary{ list-style:none; cursor:pointer; display:flex; justify-content:space-between; gap:10px; padding:9px 0; align-items:center; }
+.br-g>summary::-webkit-details-marker{ display:none; } .br-m{ min-width:0; font-size:14.5px; } .br-s{ white-space:nowrap; font-size:15px; }
+.br-g[open]>summary .br-s b{ color:var(--accent); } .br-det{ padding:4px 0 12px; } .br-t td:first-child{ color:var(--muted); }
+.br-h3{ font:600 13px var(--font-display); text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:14px 0 4px; }
+.br-sc{ display:grid; grid-template-columns:1fr 1fr; gap:14px; } .br-sh{ font-weight:600; font-size:14px; } .br-sc .list li{ font-size:13.5px; }
+.br-g.pk-own{ margin:0 -8px; padding:0 8px; }
 .lg-own{ color:var(--accent); font-weight:600; }
 .lg-h1{ font:700 30px/1.15 var(--font-display); margin:0 0 4px; } .lg-h1 span{ color:var(--accent); }
 .lg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
@@ -359,6 +368,10 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
       <a class="more" href="#" id="avBack" style="margin:0 0 12px">← Zurück zum Team-Board</a>
       <div id="avRoot"></div>
     </div>
+    <div id="berichteView" hidden>
+      <a class="more" href="#" id="brBack" style="margin:0 0 12px">← Zurück zum Team-Board</a>
+      <div id="brRoot"></div>
+    </div>
     <div id="pokalView" hidden>
       <a class="more" href="#" id="pvBack" style="margin:0 0 12px">← Zurück zum Team-Board</a>
       <div id="pvRoot"></div>
@@ -373,7 +386,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.22 · letzte Aktualisierung 13.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.23 · letzte Aktualisierung 14.11.2026</footer>
 
 <script>
 window.MKFB=(function(){
@@ -1255,7 +1268,7 @@ async function showDash(){
   $("tilesWrap").hidden=false;$("tTraining").hidden=!isCoach();$("tAnalyse").hidden=!isCoach();$("tMine").hidden=!(SES.role==="spielerin");
   $("lastLink").hidden=!isCoach();$("adminBox").hidden=!isAdmin();
   var q="";
-  if(isCoach()){q+='<a class="qbtn" href="analyse/#erfassung"><span class="dot"></span>Spiel erfassen</a><a class="qbtn" href="training/"><span class="dot"></span>Kader fürs nächste Spiel</a><a class="qbtn" href="#gegner" id="qBericht"><span class="dot"></span>Bericht</a><a class="qbtn" href="#liga"><span class="dot"></span>Ligastatistik</a>';
+  if(isCoach()){q+='<a class="qbtn" href="analyse/#erfassung"><span class="dot"></span>Spiel erfassen</a><a class="qbtn" href="training/"><span class="dot"></span>Kader fürs nächste Spiel</a><a class="qbtn" href="#gegner" id="qBericht"><span class="dot"></span>Bericht</a><a class="qbtn" href="#liga"><span class="dot"></span>Ligastatistik</a><a class="qbtn" href="#berichte"><span class="dot"></span>Spielberichte</a>';
     q+=isAdmin()?'<button class="qbtn" type="button" id="qAdmin"><span class="dot"></span>Zugänge verwalten</button>':""}
   $("quick").innerHTML=q;if($("qBericht"))$("qBericht").onclick=function(){if(window.MKOpp&&MKOpp.select)MKOpp.select("Moskitos 2")};["tGegner","nextLink"].forEach(function(id){if($(id))$(id).onclick=function(){if(window.MKOpp&&MKOpp.select)MKOpp.select(null)}});if($("qAdmin"))$("qAdmin").onclick=function(){$("adminBox").scrollIntoView({behavior:"smooth"});openAdmin()};
   PUB=await fetch("gegner_daten.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null});
@@ -1721,6 +1734,60 @@ function renderPokal(){var R=pkRounds();if(!R.length){$("pvRoot").innerHTML='<di
       (real.length?'<ul class="list">'+real.map(pkLine).join("")+'</ul>':'<p class="sub">Paarungen stehen noch nicht fest ('+r.games.length+' Spiel'+(r.games.length===1?'':'e')+').</p>')+'</section>'});
   h+='<p class="sub" style="margin-top:10px">Aus den offiziellen Spielberichten (handball360), aktualisiert mit dem Montags-Abruf. „kampflos“: ohne Spiel entschieden, der Sieger steht in der nächsten Runde.</p>';
   $("pvRoot").innerHTML=h}
+/* ---------- Seite #berichte: alle Ligaspiele aus den offiziellen Spielberichten ---------- */
+var BV={st:"",team:""};
+function brSide(g,sd){var od=sd==="home"?"away":"home",i=sd==="home"?0:1,S=lgStrength(g),r={tore:g.score[i],ht:g.ht[i],pg:0,pa:0,two:0,warn:0,disq:0,to:[],s10:0,e10:0,maxLead:0,run:0,us:0,uf:0,ua:0},d=0,cur=null,n=0;
+  lgSorted(g.events).forEach(function(e){var own=e.side===sd;
+    if(own){if(e.type==="pen_goal"){r.pg++;r.pa++}else if(e.type==="pen_miss")r.pa++;else if(e.type==="two_min")r.two++;else if(e.type==="warning")r.warn++;else if(e.type==="disq")r.disq++;else if(e.type==="timeout")r.to.push(Math.floor(e.s/60))}
+    if(GOAL[e.type]){d+=own?1:-1;r.maxLead=Math.max(r.maxLead,d);if(own){if(e.s<600)r.s10++;if(e.s>=3000)r.e10++}
+      if(own===cur)n++;else{cur=own;n=1}if(own)r.run=Math.max(r.run,n);
+      var a=S.off(sd,e.s),b=S.off(od,e.s);if(a>b){if(own)r.uf++;else r.ua++}}});
+  var marks={};["home","away"].forEach(function(x){S.P[x].forEach(function(i){marks[i[0]]=1;marks[i[1]]=1})});var ts=Object.keys(marks).map(Number).sort(function(a,b){return a-b});
+  for(var k=0;k<ts.length-1;k++){if(S.off(sd,ts[k])>S.off(od,ts[k]))r.us+=ts[k+1]-ts[k]}
+  return r}
+function brLeadChanges(g){var lead=0,lc=0;lgCurve(g).forEach(function(p){var l=p[1]>0?1:p[1]<0?-1:0;if(l&&lead&&l!==lead)lc++;if(l)lead=l});return lc}
+function brCurve(g){var c=lgCurve(g),W=640,H=190,L=44,lo=Math.min.apply(null,[-3].concat(c.map(function(p){return p[1]}))),hi=Math.max.apply(null,[3].concat(c.map(function(p){return p[1]})));
+  function X(s){return L+s/3600*(W-L-14)}function Y(v){return 10+(hi-v)/(hi-lo)*(H-38)}var mu=cssv("--muted"),ln=cssv("--line"),ink=cssv("--ink"),ac=cssv("--accent"),sv="";
+  var stp=Math.max(2,Math.ceil((hi-lo)/5/2)*2);for(var v=Math.ceil(lo/stp)*stp;v<=hi;v+=stp){sv+='<line x1="'+L+'" x2="'+(W-8)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="'+(v===0?ink:ln)+'"/><text x="'+(L-5)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="17" fill="'+mu+'">'+(v>0?"+":"")+v+'</text>'}
+  [0,10,20,30,40,50,60].forEach(function(m){sv+='<text x="'+X(m*60)+'" y="'+(H-4)+'" text-anchor="middle" font-size="17" fill="'+mu+'">'+m+"'</text>"});
+  sv+='<line x1="'+X(1800)+'" x2="'+X(1800)+'" y1="4" y2="'+(H-26)+'" stroke="'+ink+'" stroke-dasharray="3 4"/>';
+  var dd2="M"+X(0)+","+Y(0);c.forEach(function(p){dd2+=" H"+X(p[0])+" V"+Y(p[1])});dd2+=" H"+X(3600);
+  sv+='<path d="'+dd2+'" fill="none" stroke="'+ac+'" stroke-width="3"/>';
+  g.events.forEach(function(e){if(e.type==="timeout"){var y=Y(c.filter(function(p){return p[0]<=e.s}).map(function(p){return p[1]}).pop()||0);sv+='<circle cx="'+X(e.s)+'" cy="'+y+'" r="4" fill="'+cssv("--panel")+'" stroke="'+(e.side==="home"?ac:mu)+'" stroke-width="2"/>'}});
+  return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Spielverlauf aus Sicht der Heimmannschaft">'+sv+'</svg><p class="sub" style="margin:2px 0 0">Verlauf aus Sicht von '+esc(shortName(g.home))+' (oben = Heim führt) · ○ Auszeit</p>'}
+function brScorers(g,sd){var ro=(g.roster||{})[sd]||{},c={};g.events.forEach(function(e){if(e.side!==sd||e.nr==null||!GOAL[e.type])return;var k=e.nr,x=c[k]||(c[k]={name:ro[k]||("Nr. "+k),t:0,p:0});x.t++;if(e.type==="pen_goal")x.p++});
+  return Object.keys(c).map(function(k){return c[k]}).sort(function(a,b){return b.t-a.t}).slice(0,5)}
+function brDetail(g){var H=brSide(g,"home"),A=brSide(g,"away"),lc=brLeadChanges(g);
+  function mn(s){var m=Math.floor(s/60),x=s%60;return m+":"+(x<10?"0":"")+x}
+  function q(p,a){return a?p+"/"+a:"–"}
+  var R=[["Halbzeit",H.ht,A.ht],["7m",q(H.pg,H.pa),q(A.pg,A.pa)],["Zeitstrafen",H.two,A.two],["Verwarnungen",H.warn,A.warn],["Disqualifikationen",H.disq,A.disq],
+    ["Auszeiten (Minute)",H.to.length?H.to.join(", "):"–",A.to.length?A.to.join(", "):"–"],["Unterzahl (Min. · Tore)",H.us?mn(H.us)+" · "+H.uf+":"+H.ua:"–",A.us?mn(A.us)+" · "+A.uf+":"+A.ua:"–"],
+    ["Tore 1.–10. Min.",H.s10,A.s10],["Tore 51.–60. Min.",H.e10,A.e10],["Höchste Führung",H.maxLead?"+"+H.maxLead:"–",A.maxLead?"+"+A.maxLead:"–"],["Längste Torserie",H.run+":0",A.run+":0"]];
+  var showH=g.home!==OWN||isCoach(),showA=g.away!==OWN||isCoach();
+  function sc(list,show,team){return '<div><div class="br-sh">'+esc(shortName(team))+'</div>'+(show?(list.length?'<ul class="list" style="margin-top:2px">'+list.map(function(p){return '<li><span>'+esc(p.name)+(p.p?' <span class="sub">('+p.p+'× 7m)</span>':'')+'</span><b>'+p.t+'</b></li>'}).join("")+'</ul>':'<p class="sub">–</p>'):'<p class="sub">nur für den Trainerstab</p>')+'</div>'}
+  return '<div class="br-det">'+brCurve(g)+
+    '<div style="overflow-x:auto;margin-top:8px"><table class="lgt br-t"><tr><th></th><th class="n">'+esc(shortName(g.home))+'</th><th class="n">'+esc(shortName(g.away))+'</th></tr>'+
+    R.map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td></tr>'}).join("")+
+    '<tr><td>Führungswechsel</td><td class="n" colspan="2" style="text-align:center">'+lc+'</td></tr>'+
+    '</table></div><h3 class="br-h3">Torschützinnen</h3><div class="br-sc">'+sc(brScorers(g,"home"),showH,g.home)+sc(brScorers(g,"away"),showA,g.away)+'</div>'+
+    (g.pdf?'<a class="more" href="'+esc(g.pdf)+'" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px">Original-Spielbericht (PDF) →</a>':'')+'</div>'}
+function renderBerichte(){var all=((PUB&&PUB.games)||[]).filter(function(g){return g.score&&g.events&&g.comp!=="Pokal"});
+  if(!all.length){$("brRoot").innerHTML='<div class="panel"><p class="sub">Noch keine Spielberichte.</p></div>';return}
+  var sts=[],teams={};all.forEach(function(g){if(g.st&&sts.indexOf(g.st)<0)sts.push(g.st);teams[g.home]=1;teams[g.away]=1});sts.sort(function(a,b){return b-a});
+  var TL=Object.keys(teams).sort(function(a,b){return a===OWN?-1:b===OWN?1:a.localeCompare(b,"de")});
+  var gs=all.filter(function(g){return (!BV.st||String(g.st)===BV.st)&&(!BV.team||g.home===BV.team||g.away===BV.team)}).sort(function(a,b){return b.date.localeCompare(a.date)||(b.st||0)-(a.st||0)});
+  var h='<div class="panel"><h1 class="lg-h1">Spielberichte</h1><p class="sub">Alle Ligaspiele aus den offiziellen Spielberichten · '+all.length+' Spiele · Stand '+esc((PUB&&PUB.updated)||"–")+'</p>'+
+    '<div class="br-f"><label>Spieltag<select data-brst><option value="">Alle</option>'+sts.map(function(s){return '<option value="'+s+'"'+(String(s)===BV.st?" selected":"")+'>'+s+'. Spieltag</option>'}).join("")+'</select></label>'+
+    '<label>Mannschaft<select data-brteam><option value="">Alle</option>'+TL.map(function(t){return '<option'+(t===BV.team?" selected":"")+'>'+esc(t)+'</option>'}).join("")+'</select></label></div></div>';
+  var cur=null;
+  gs.forEach(function(g){var key=g.st?g.st+". Spieltag":"Spiele";if(key!==cur){if(cur!==null)h+='</div>';cur=key;h+='<div class="panel lg-sec"><h2>'+esc(key)+'</h2>'}
+    var w=g.score[0]>g.score[1]?0:g.score[0]<g.score[1]?1:-1,own=g.home===OWN||g.away===OWN;
+    h+='<details class="br-g'+(own?" pk-own":"")+'" data-brid="'+esc(g.id)+'"><summary><span class="br-m"><span class="sub">'+dd(g.date)+'</span> '+(w===0?'<b>':'')+esc(shortName(g.home))+(w===0?'</b>':'')+' – '+(w===1?'<b>':'')+esc(shortName(g.away))+(w===1?'</b>':'')+'</span><span class="br-s"><b>'+g.score[0]+':'+g.score[1]+'</b> <span class="sub">('+g.ht[0]+':'+g.ht[1]+')</span></span></summary><div class="br-body"></div></details>'});
+  if(cur!==null)h+='</div>';if(!gs.length)h+='<div class="panel"><p class="sub">Keine Spiele für diese Auswahl.</p></div>';
+  $("brRoot").innerHTML=h}
+document.addEventListener("toggle",function(e){var d=e.target;if(!d||!d.classList||!d.classList.contains("br-g")||!d.open)return;var b=d.querySelector(".br-body");if(b.innerHTML)return;
+  var g=((PUB&&PUB.games)||[]).filter(function(x){return String(x.id)===d.dataset.brid})[0];if(g)b.innerHTML=brDetail(g)},true);
+document.addEventListener("change",function(e){var t=e.target;if(!t||!t.hasAttribute)return;if(t.hasAttribute("data-brst")){BV.st=t.value;renderBerichte()}else if(t.hasAttribute("data-brteam")){BV.team=t.value;renderBerichte()}});
 function renderPublic(d){
   var games=(d.games||[]).filter(function(g){return g.score&&g.events&&g.comp!=="Pokal"}),heute=new Date().toISOString().slice(0,10);
   var tab=table(games),me=teamProfile(games,OWN),rs=me.games.map(function(g){return Object.assign(res(g,OWN),{g:g})});
@@ -2099,14 +2166,16 @@ function mountGegner(){
     sc.textContent=JSON.stringify(PUB);document.body.appendChild(sc);GA_MOUNTED=true}
   window.MKOpp.mount($("gaRoot"));
 }
-function route(){var on=!$("dash").hidden,g=on&&location.hash==="#gegner",a=on&&location.hash==="#auswertung",lv=on&&location.hash==="#liga",pv=on&&location.hash==="#pokal";
-  $("gegnerView").hidden=!g;$("auswView").hidden=!a;$("ligaView").hidden=!lv;$("pokalView").hidden=!pv;$("boardView").hidden=g||a||lv||pv;
+function route(){var on=!$("dash").hidden,g=on&&location.hash==="#gegner",a=on&&location.hash==="#auswertung",lv=on&&location.hash==="#liga",pv=on&&location.hash==="#pokal",bv=on&&location.hash==="#berichte";
+  $("gegnerView").hidden=!g;$("auswView").hidden=!a;$("ligaView").hidden=!lv;$("pokalView").hidden=!pv;$("berichteView").hidden=!bv;$("boardView").hidden=g||a||lv||pv||bv;
   if(pv){renderPokal();window.scrollTo(0,0)}
-  if(lv){renderLiga();window.scrollTo(0,0)}else if(!g&&!a&&!pv)lgFillSoon();
+  if(bv){renderBerichte();window.scrollTo(0,0)}
+  if(lv){renderLiga();window.scrollTo(0,0)}else if(!g&&!a&&!pv&&!bv)lgFillSoon();
   if(g){mountGegner();window.scrollTo(0,0)}else if(window.MKOpp)window.MKOpp.unmount();
   if(a){var P=isCoach()?CUR_P:MY_P;$("avRoot").innerHTML=P?fullAnalysis(P):'<div class="panel"><p class="sub">'+(isCoach()?"Bitte zuerst unter „Profilansicht prüfen“ eine Spielerin wählen.":"Für dein Profil liegen noch keine Daten vor.")+'</p></div>';window.scrollTo(0,0)}}
 window.addEventListener("hashchange",route);
 $("avBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
+$("brBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
 $("pvBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
 $("lvBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
 $("gvBack").onclick=function(e){e.preventDefault();history.pushState("",document.title,location.pathname+location.search);route()};
