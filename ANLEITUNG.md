@@ -86,6 +86,14 @@ Verband noch keinen Termin eingetragen hat, wird dieser automatisch angezeigt. *
 Das nächste Pokalspiel erscheint auch unter „Nächstes Spiel“ und in der Gegneranalyse. Die Daten kommen mit dem
 Montags-Abruf aus den offiziellen Spielberichten; Liga-Tabellen und -Statistiken bleiben reine Liga.
 
+## Spielberichte (alle Ligaspiele)
+
+Schnellzugriff **„Spielberichte“** (Trainer/Admin) bzw. Adresse `/moskitos2/#berichte`: alle Ligaspiele aus den offiziellen
+Spielberichten, nach Spieltag gruppiert, filterbar nach Spieltag und Mannschaft. Ein Tipp auf ein Spiel zeigt den
+Spielverlauf und die Kennzahlen Heim gegen Gast (Halbzeit, 7m, Zeitstrafen, Verwarnungen, Auszeiten, Unterzahl,
+Start-/Schlussphase, höchste Führung, längste Torserie, Führungswechsel) sowie die Torschützinnen – die von Moskitos 2
+nur für den Trainerstab. Ergänzt die Spielanalyse (eigene Erfassung) um alle Spiele der Liga.
+
 ## Rückmeldungen der Spielerinnen
 
 - Spielerinnen sagen in ihrem Dashboard bei den nächsten Spielen und Trainings zu oder ab.

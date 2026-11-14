@@ -367,3 +367,10 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   - Taktik & Disziplin: Unter-/Überzahl exakt (2-Min.-Logik), Auszeiten (Anzahl, Minute, Spielstand, Wirkung ±5), Disziplin, Heim/Auswärts.
   - Kader (nur bei Spielerinnenwerten sichtbar, eigene Mannschaft nur Trainerstab): Torverteilung, 7m-Schützinnen, Strafen, Torzeiten.
 - Team-Board 4.22, Spielanalyse 2.18.
+
+### 14.11.2026 – Seite „Spielberichte“ (#berichte)
+
+- Team-Board 4.23: Schnellzugriff „Spielberichte“ → `#berichteView` (`renderBerichte()`): alle Ligaspiele aus `gegner_daten.json`,
+  gruppiert nach Spieltag, Filter Spieltag/Mannschaft, je Spiel aufklappbar (`brDetail()`): Verlauf (`brCurve`), Kennzahlen Heim/Gast
+  (`brSide`: Halbzeit, 7m, Strafen, Auszeiten, Unterzahl exakt, Start/Schluss, höchste Führung, längste Serie), Führungswechsel,
+  Torschützinnen (eigene nur `isCoach()`), Link zum Original-PDF. Details werden erst beim Aufklappen berechnet.
