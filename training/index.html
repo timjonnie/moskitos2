@@ -270,6 +270,9 @@ body.ro .sheet input,body.ro .sheet select,body.ro .sheet textarea{pointer-event
 .note.warn{background:var(--warn-soft);color:var(--warn)}
 @media (max-width:420px){.stat{padding:9px 10px}.stat .k{font-size:10px}.seg button{width:32px}}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}@media (min-width:760px){.sheet{animation:none}}}
+
+/* Touch-Geräte (Handy/Tablet): keine sichtbaren Scrollbalken, Wischen bleibt möglich. Desktop mit Maus behält sie. */
+@media (hover:none) and (pointer:coarse){ html,body,*{ scrollbar-width:none; } ::-webkit-scrollbar{ display:none; width:0; height:0; } }
 </style><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
 <style id="kipper-ci">
 /* Kipper-CI: Farben und Schrift (überschreibt nur Variablen) */

@@ -398,3 +398,10 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Trainertool 1.4: Jede Kostenzeile unter „Pro Spiel“ ist jetzt komplett ein Knopf (`.srline.sredit`) mit sichtbarem ✎;
   öffnet wie bisher das Fenster mit Person, Betrag, Speichern und Löschen. Die eingebettete Vorlage `__MK2T_TPL__`
   (alter Netlify-/Export-Modus) unverändert.
+
+### 15.11.2026 – Keine Scrollbalken auf dem Handy
+
+- In allen drei Dateien (Team-Board 4.26, Spielanalyse 2.19, Trainertool 1.5) eine CSS-Regel ergänzt:
+  `@media (hover:none) and (pointer:coarse)` → `scrollbar-width:none` und `::-webkit-scrollbar{display:none}`.
+  Auf Touch-Geräten sind Scrollbalken (Seite, Tabellen, Spielleisten) unsichtbar, Wischen funktioniert weiter;
+  am Desktop mit Maus bleiben sie. Geprüft: alle Seiten/Reiter auf Pixel 7 und 1280 px ohne seitlichen Überlauf.

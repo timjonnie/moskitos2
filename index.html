@@ -224,6 +224,9 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
 .ga .ga-row select{font:inherit;font-size:14px;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);max-width:100%;flex:1 1 220px;min-width:0}
 .ga textarea{width:100%;min-height:120px;font:inherit;font-size:14px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);box-sizing:border-box}
 .ga .ga-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+/* Touch-Geräte (Handy/Tablet): keine sichtbaren Scrollbalken, Wischen bleibt möglich. Desktop mit Maus behält sie. */
+@media (hover:none) and (pointer:coarse){ html,body,*{ scrollbar-width:none; } ::-webkit-scrollbar{ display:none; width:0; height:0; } }
+
 </style>
 </head>
 <body>
@@ -387,7 +390,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.25 · letzte Aktualisierung 14.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.26 · letzte Aktualisierung 15.11.2026</footer>
 
 <script>
 window.MKFB=(function(){

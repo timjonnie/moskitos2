@@ -967,6 +967,9 @@ select.sel,input.inp{font:inherit;font-size:14px;padding:8px 10px;border-radius:
 .ga .ga-row select{font:inherit;font-size:14px;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);max-width:100%;flex:1 1 220px;min-width:0}
 .ga textarea{width:100%;min-height:120px;font:inherit;font-size:14px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);box-sizing:border-box}
 .ga .ga-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+
+/* Touch-Geräte (Handy/Tablet): keine sichtbaren Scrollbalken, Wischen bleibt möglich. Desktop mit Maus behält sie. */
+@media (hover:none) and (pointer:coarse){ html,body,*{ scrollbar-width:none; } ::-webkit-scrollbar{ display:none; width:0; height:0; } }
 </style><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
 <style id="kipper-ci">
 /* Kipper-CI: Farben und Schrift (überschreibt nur Variablen) */
@@ -1099,7 +1102,7 @@ h1,h2,h3{letter-spacing:-.01em}
   <main class="wrap" id="main">
     <div class="panel empty"><h2>Spiele werden geladen</h2><p>Die gespeicherten Spielauswertungen erscheinen hier gleich.</p></div>
   </main>
-  <footer class="site-foot"><div class="wrap"><span>Moskitos 2 · Spielanalyse</span><span>Version 2.18 · letzte Aktualisierung 13.11.2026</span></div></footer>
+  <footer class="site-foot"><div class="wrap"><span>Moskitos 2 · Spielanalyse</span><span>Version 2.19 · letzte Aktualisierung 15.11.2026</span></div></footer>
 </div>
 <div id="tip" hidden></div>
 <div class="login" id="login" hidden>
