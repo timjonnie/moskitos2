@@ -391,3 +391,10 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   - Nur Trainerstab, eigene Spiele (Spielanalyse): alle Kennzahlen mit Ø der übrigen erfassten Spiele (`BR_KPI`, `brKpiRows`),
     „Tempo & Abwehr“ (`BR_TEMPO`, nur wenn erfasst), Torhüterinnen nach Wurfposition (`brGkZones`), Plus/Minus je Spielerin (`brPlusMinus`).
 - Abgelehnt: Auszeiten im Detail je Spiel.
+
+### 15.11.2026 – SR-Kosten: Einträge sichtbar bearbeitbar
+
+- Nutzer fand keinen Weg, falsch eingetragene SR-Kosten zu ändern (bisher war nur der Name in der Zeile antippbar, unauffällig).
+- Trainertool 1.4: Jede Kostenzeile unter „Pro Spiel“ ist jetzt komplett ein Knopf (`.srline.sredit`) mit sichtbarem ✎;
+  öffnet wie bisher das Fenster mit Person, Betrag, Speichern und Löschen. Die eingebettete Vorlage `__MK2T_TPL__`
+  (alter Netlify-/Export-Modus) unverändert.
