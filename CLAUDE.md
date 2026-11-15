@@ -14,9 +14,9 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 
 | Pfad | Inhalt |
 |---|---|
-| `index.html` | Team-Board 4.26: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, `#pokal`, `#berichte`, Verwaltung, Ersteinrichtung/Umzug |
-| `analyse/index.html` | Spielanalyse 2.19 (Firebase-Modus, Präfix `a_`) |
-| `training/index.html` | Trainertool 1.5 (Firebase-Modus, Präfix `t_`) |
+| `index.html` | Team-Board 4.27: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, `#pokal`, `#berichte`, Verwaltung, Ersteinrichtung/Umzug |
+| `analyse/index.html` | Spielanalyse 2.20 (Firebase-Modus, Präfix `a_`) |
+| `training/index.html` | Trainertool 1.6 (Firebase-Modus, Präfix `t_`) |
 | `board.json`, `alt/` | Alte verschlüsselte Daten – **nur für den einmaligen Umzug**, danach löschen |
 | `gegner_daten.json` | Öffentliche Spielberichte (`games`) + Termine der Moskitos (`fixtures`); wird montags automatisch erneuert |
 | `spielberichte_abruf.js` | Node-Skript: zählt handball360-IDs ab `START_ID` hoch, lädt PDFs, schreibt `gegner_daten.json` |
@@ -36,7 +36,9 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
   `fb.js` (`window.MKFB`: Firebase Compat SDK 10.12.2, Benutzername → `u@moskitos2.team`, `ns()`-Wrapper mit
   Claude-DB-API, Dokumente als `{j: JSON.stringify(obj)}`, Bilder als Data-URL ≤ 450 KB),
   `fbmod.js` (stellt in den Modulen `window.claude.use(...)` bereit, nur wenn kein echtes `window.claude` da ist;
-  ohne Login/Rolle → `../?ziel=…`), `mksite.js` (`window.MKSite`, Leiste/Footer/Theme), `ga_module.js` (`MKOpp`).
+  ohne Login/Rolle → `../?ziel=…`), `mksite.js` (`window.MKSite`, Leiste/Footer/Theme), `ga_module.js` (`MKOpp`),
+  `mkfit` (`<style id="mkfit-css">` + `<script id="mkfit-js">`: auf dem Handy ≤ 700 px werden zu breite Tabellen
+  automatisch zu Karten, Klasse `mkst`; Tabelle mit `data-nofit` ausnehmen).
   Bausteine, die in mehreren Dateien stecken, **überall gleich halten**.
 - **Firestore:** `a_*`/`t_*`/`team/summary`/`profiles/{pid}` als `{j}`; `users/{uid}` `{u, role, pid}`, `config/owner`,
   `tb_settings/*`, `rsvp/*` roh (nur darauf greifen die Regeln). `publish()` im Team-Board berechnet Team-/Profildaten
@@ -49,7 +51,7 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 - **localStorage-Schlüssel** beginnen mit `mk2` (`mk2theme`, `mk2_gegner`, `mk2_gegner_notiz_…`).
 - **Design „Kipper-CI“:** Lexend; Nachtblau `#1B2A4A`, Orange `#C2410C`, Holz `#F6C98B`, Ink `#0E1B2C`,
   Hintergrund `#F7F5F1`; Überschriften mit orangem Punkt („Moskitos 2.“); Hell/Dunkel; mobil zuerst, kein
-  horizontaler Überlauf; Version + Datum im Footer; **kein Name/Logo des Admins**. Status nur als Klartext
+  horizontaler Überlauf und **kein seitliches Wischen auf dem Handy** (alles auf einen Blick, keine Scrollbalken); Version + Datum im Footer; **kein Name/Logo des Admins**. Status nur als Klartext
   (Dabei/Offen/Absage/Nicht nominiert).
 
 ## Arbeiten im Repo
