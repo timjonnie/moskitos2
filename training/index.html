@@ -197,6 +197,10 @@ details.grp .list{margin-top:6px}
 .srline{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-size:14px}
 .srline:first-of-type{border-top:0}
 .srline button{border:0;background:transparent;padding:0;text-align:left;color:var(--ink);font:inherit}
+.srline.sredit{width:100%;background:transparent;border:0;border-top:1px solid var(--line);color:var(--ink);font:inherit;font-size:14px;text-align:left;cursor:pointer;align-items:center;padding:9px 0}
+.srline.sredit:first-of-type{border-top:0}.srline.sredit .amount{display:inline-flex;align-items:center;gap:8px}
+.srline.sredit .pen{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:8px;border:1px solid var(--line);color:var(--accent,#C2410C);font-size:15px}
+body.ro .srline.sredit .pen{display:none}
 .amount{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .rest{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 /* Nav */
@@ -664,7 +668,7 @@ VIEWS.sr=()=>{
   withCost.forEach(g=>{const es=g.sr||[];const sum=es.reduce((a,e)=>a+(+e.amount||0),0);run-=sum;
     html+=`<div class="card ${g.date<TODAY?'':''}"><div class="row between" style="flex-wrap:nowrap;align-items:flex-start"><div class="row" style="flex-wrap:nowrap;gap:12px;align-items:flex-start">${dateBox(g.date,false)}<div style="min-width:0"><div class="row" style="gap:6px">${haTag(g)}${compTag(g)}</div><div class="t">${esc(g.opponent)}</div>${es.length?`<div class="rest">Rest danach ${eur(run)}</div>`:''}</div></div>
       <div style="text-align:right"><div class="mins num" style="font-size:20px">${eur(sum)}</div></div></div>
-      ${es.length?`<div style="margin-top:6px">${es.map((e,i)=>`<div class="srline"><button data-a="sr-edit" data-g="${g.id}" data-i="${i}">${esc((S.refs[e.ref]||{}).name||'Unbekannt')}</button><span class="amount">${eur(e.amount)}</span></div>`).join('')}</div>`:''}
+      ${es.length?`<div style="margin-top:6px">${es.map((e,i)=>`<button class="srline sredit" data-a="sr-edit" data-g="${g.id}" data-i="${i}" title="Eintrag bearbeiten"><span>${esc((S.refs[e.ref]||{}).name||'Unbekannt')}</span><span class="amount">${eur(e.amount)}<span class="pen" aria-hidden="true">✎</span></span></button>`).join('')}</div>`:''}
       <div class="row" style="margin-top:8px"><button class="btn sm" data-a="sr-new" data-g="${g.id}">+ Kosten erfassen</button></div></div>`});
   html+='</div>';
   const per={};gs.forEach(g=>(g.sr||[]).forEach(e=>{per[e.ref]=per[e.ref]||{n:0,s:0};per[e.ref].n++;per[e.ref].s+=+e.amount||0}));
