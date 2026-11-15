@@ -967,7 +967,61 @@ select.sel,input.inp{font:inherit;font-size:14px;padding:8px 10px;border-radius:
 .ga .ga-row select{font:inherit;font-size:14px;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);max-width:100%;flex:1 1 220px;min-width:0}
 .ga textarea{width:100%;min-height:120px;font:inherit;font-size:14px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);box-sizing:border-box}
 .ga .ga-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-</style><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
+
+/* Touch-Geräte (Handy/Tablet): keine sichtbaren Scrollbalken, Wischen bleibt möglich. Desktop mit Maus behält sie. */
+@media (hover:none) and (pointer:coarse){ html,body,*{ scrollbar-width:none; } ::-webkit-scrollbar{ display:none; width:0; height:0; } }
+
+/* Handy: Menü, Listen und Unterreiter umbrechen statt seitlich wischen */
+@media (max-width:700px){ .tabs .wrap{flex-wrap:wrap;overflow:visible;gap:0} .tabs a{flex:1 1 30%;text-align:center;padding:10px 6px 8px;font-size:13.5px} .tabs .right{flex:1 1 100%;justify-content:flex-end;padding:4px 0 6px}
+  .split .side .items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;padding-bottom:0} .split .side .item{max-width:none;width:100%;min-width:0;padding:6px} .split .side .item .av{display:none} .split .side .item .grow strong{white-space:normal;overflow-wrap:anywhere}
+  .subtabs{flex-wrap:wrap;overflow:visible} .subtabs button{padding:8px 9px 7px;font-size:13.5px}
+  body .ef .ctabs{overflow:visible;gap:0;flex-wrap:wrap} body .ef .ctabs button{flex:1 1 auto;padding:6px 4px;font-size:13px} body .ef .board .tm strong{font-size:13px;white-space:normal;overflow-wrap:normal;word-break:normal} }
+</style><style id="mkfit-css">
+/* mkfit: Handy – alles auf einen Blick, kein seitliches Wischen. Zu breite Tabellen werden zu Karten (Zeile = Karte). */
+@media (max-width:700px){
+  .lgt td,.lgt th{ white-space:normal; }
+  .lgt,.ga-tbl table,.tscroll table{ font-size:12.5px!important; }
+  .lgt td,.lgt th,.ga-tbl td,.ga-tbl th{ padding-left:3px!important; padding-right:3px!important; }
+  table.mkst,table.mkst>tbody,table.mkst>thead,table.mkst>tfoot,table.mkst tr,table.mkst td,table.mkst th{ display:block; width:auto!important; min-width:0!important; max-width:none!important; }
+  table.mkst{ width:100%!important; border:0!important; background:transparent!important; }
+  table.mkst tr.mkhd,table.mkst>thead{ display:none!important; }
+  table.mkst tr{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:16px; border:1px solid var(--line,#d9d6cf)!important; border-radius:10px; padding:6px 10px; margin:0 0 8px; background:var(--panel,transparent); }
+  table.mkst .mkti,table.mkst td[colspan]{ grid-column:1/-1; }
+  table.mkst td button{ width:auto!important; max-width:100%; flex:0 1 auto; }
+  table.mkst td input:not([type=checkbox]):not([type=radio]){ width:5em!important; min-width:0!important; flex:none; }
+  table.mkst td,table.mkst th,table.mkst td *{ white-space:normal!important; overflow-wrap:anywhere; }
+  table.mkst td>button:only-child{ min-height:34px!important; min-width:52px; border:1px solid var(--line,#d9d6cf)!important; border-radius:8px!important; background:var(--panel-2,rgba(0,0,0,.03))!important; }
+  table.mkst td,table.mkst th{ align-items:center!important; }
+  table.mkst td,table.mkst th{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; border:0!important; padding:3px 0!important; text-align:right!important; white-space:normal!important; position:static!important; height:auto!important; box-shadow:none!important; background:transparent!important; }
+  table.mkst td::before,table.mkst th::before{ content:attr(data-l); color:var(--muted,#6b7280); font-weight:400; font-size:.92em; text-align:left; flex:0 1 auto; text-transform:none; letter-spacing:0; }
+  table.mkst td[data-l=""]::before,table.mkst th[data-l=""]::before,table.mkst .mkti::before{ content:none; }
+  table.mkst .mkti{ justify-content:flex-start; text-align:left!important; font-weight:700; order:-1; }
+  table.mkst td:empty{ display:none; }
+}
+</style>
+<script id="mkfit-js">
+(function(){if(window.__mkfit)return;window.__mkfit=1;
+  var MQ=window.matchMedia?matchMedia("(max-width:700px)"):{matches:false},busy=0;
+  function txt(c){return (c.innerText||c.textContent||"").replace(/\s+/g," ").trim()}
+  function label(t){var rows=[].slice.call(t.rows),hr=null;
+    for(var i=0;i<rows.length;i++){if(rows[i].querySelector("th")&&!rows[i].querySelector("td")){hr=rows[i];break}if(rows[i].querySelector("td"))break}
+    var H=[];if(hr){hr.classList.add("mkhd");[].slice.call(hr.cells).forEach(function(c){for(var k=0;k<(c.colSpan||1);k++)H.push(k?"":txt(c))})}
+    var ti=0;for(var k=0;k<H.length;k++){if(/^(#|Nr\.?|ST|Pl\.?|)$/i.test(H[k]))continue;ti=k;break}
+    rows.forEach(function(r){if(r===hr)return;var ci=0;[].slice.call(r.cells).forEach(function(c){c.setAttribute("data-l",H[ci]||"");if(ci===ti)c.classList.add("mkti");else c.classList.remove("mkti");ci+=c.colSpan||1})})}
+  function fit(){busy=0;var on=MQ.matches;
+    [].forEach.call(document.querySelectorAll("table"),function(t){
+      if(!on||t.hasAttribute("data-nofit")){if(t.classList.contains("mkst"))t.classList.remove("mkst");return}
+      var was=t.classList.contains("mkst");if(was)t.classList.remove("mkst");
+      var b=t.getBoundingClientRect();if(!b.width||b.right<0){if(was)t.classList.add("mkst");return}
+      var p=t.parentElement,w=Math.min(p?p.clientWidth:innerWidth,innerWidth-b.left);
+      if(t.offsetWidth>w+1||t.scrollWidth>w+1){label(t);t.classList.add("mkst")}})}
+  function sched(){if(!busy){busy=1;(window.requestAnimationFrame||setTimeout)(fit)}}
+  function start(){new MutationObserver(sched).observe(document.documentElement,{childList:true,subtree:true});sched()}
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+  addEventListener("resize",sched);document.addEventListener("toggle",sched,true);
+  window.MKFit={run:fit};
+})();
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
 <style id="kipper-ci">
 /* Kipper-CI: Farben und Schrift (überschreibt nur Variablen) */
 :root{--bg:#F7F5F1;--panel:#FFFFFF;--panel-2:#F5F1EA;--ink:#0E1B2C;--muted:#556677;--faint:#7D8794;--line:#E4DED4;
@@ -1099,7 +1153,7 @@ h1,h2,h3{letter-spacing:-.01em}
   <main class="wrap" id="main">
     <div class="panel empty"><h2>Spiele werden geladen</h2><p>Die gespeicherten Spielauswertungen erscheinen hier gleich.</p></div>
   </main>
-  <footer class="site-foot"><div class="wrap"><span>Moskitos 2 · Spielanalyse</span><span>Version 2.18 · letzte Aktualisierung 13.11.2026</span></div></footer>
+  <footer class="site-foot"><div class="wrap"><span>Moskitos 2 · Spielanalyse</span><span>Version 2.20 · letzte Aktualisierung 15.11.2026</span></div></footer>
 </div>
 <div id="tip" hidden></div>
 <div class="login" id="login" hidden>

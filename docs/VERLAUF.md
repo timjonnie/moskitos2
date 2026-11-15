@@ -398,3 +398,23 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Trainertool 1.4: Jede Kostenzeile unter „Pro Spiel“ ist jetzt komplett ein Knopf (`.srline.sredit`) mit sichtbarem ✎;
   öffnet wie bisher das Fenster mit Person, Betrag, Speichern und Löschen. Die eingebettete Vorlage `__MK2T_TPL__`
   (alter Netlify-/Export-Modus) unverändert.
+
+### 15.11.2026 – Keine Scrollbalken auf dem Handy
+
+- In allen drei Dateien (Team-Board 4.26, Spielanalyse 2.19, Trainertool 1.5) eine CSS-Regel ergänzt:
+  `@media (hover:none) and (pointer:coarse)` → `scrollbar-width:none` und `::-webkit-scrollbar{display:none}`.
+  Auf Touch-Geräten sind Scrollbalken (Seite, Tabellen, Spielleisten) unsichtbar, Wischen funktioniert weiter;
+  am Desktop mit Maus bleiben sie. Geprüft: alle Seiten/Reiter auf Pixel 7 und 1280 px ohne seitlichen Überlauf.
+
+### 15.11.2026 – Handy: alles auf einen Blick, kein seitliches Wischen
+
+- Wunsch: auf dem Handy auch kein seitliches Wischen mehr. Neuer Baustein `mkfit` (identisch in allen drei Dateien):
+  CSS `#mkfit-css` + Skript `#mkfit-js` (MutationObserver, Resize, `toggle`). Bei ≤ 700 px werden Tabellen erst kompakter
+  (12,5 px, enge Abstände, Umbruch erlaubt); passt eine Tabelle dann immer noch nicht, wird sie zur Kartenliste
+  (`table.mkst`: Zeile = Karte, zweispaltig „Bezeichnung … Wert“, Namensspalte als Titel oben). Export-Host (links außerhalb)
+  bleibt unberührt, PDF unverändert. Ausnahme pro Tabelle mit `data-nofit`.
+- Spielanalyse: Menüleiste, Unterreiter, Erfassungs-Reiter brechen um; Spiel- und Spielerinnen-Liste als 2-Spalten-Raster
+  (ohne Initialen-Kreis); Erfassungs-Tabelle („wie in der Excel“) als Karten je Spielerin mit sichtbaren Tipp-Feldern.
+- Trainertool: Kategorie-Chips brechen um.
+- Geprüft auf 360 und 412 px: alle Seiten/Reiter ohne inneren oder äußeren seitlichen Überlauf; Desktop unverändert.
+- Team-Board 4.27, Spielanalyse 2.20, Trainertool 1.6.
