@@ -16,7 +16,7 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 |---|---|
 | `index.html` | Team-Board 4.27: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, `#pokal`, `#berichte`, Verwaltung, Ersteinrichtung/Umzug |
 | `analyse/index.html` | Spielanalyse 2.20 (Firebase-Modus, Präfix `a_`) |
-| `training/index.html` | Trainertool 1.6 (Firebase-Modus, Präfix `t_`) |
+| `training/index.html` | Trainertool 1.7 (Firebase-Modus, Präfix `t_`) |
 | `board.json`, `alt/` | Alte verschlüsselte Daten – **nur für den einmaligen Umzug**, danach löschen |
 | `gegner_daten.json` | Öffentliche Spielberichte (`games`) + Termine der Moskitos (`fixtures`); wird montags automatisch erneuert |
 | `spielberichte_abruf.js` | Node-Skript: zählt handball360-IDs ab `START_ID` hoch, lädt PDFs, schreibt `gegner_daten.json` |

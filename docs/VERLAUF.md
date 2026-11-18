@@ -418,3 +418,15 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Trainertool: Kategorie-Chips brechen um.
 - Geprüft auf 360 und 412 px: alle Seiten/Reiter ohne inneren oder äußeren seitlichen Überlauf; Desktop unverändert.
 - Team-Board 4.27, Spielanalyse 2.20, Trainertool 1.6.
+
+### 18.11.2026 – SR-Kosten: mehrere Vorschüsse mit Buchungsdatum und Prognose
+
+- Trainertool 1.7: `t_settings/main.srAdvances = [{id,date,amount,note}]` (sortiert nach Datum); `srAdvance` bleibt als Summe
+  erhalten. Ohne Liste wird der alte Einzelbetrag als „Vorschuss vor der Saison“ zum 1.7. übernommen (`srAdv()`).
+- Kachel „Rest vom SR-Vorschuss“ → Fenster „SR-Vorschüsse“ (Liste, „+ Vorschuss hinzufügen“, Max. Spielerinnen);
+  Fenster `advitem` für Datum/Betrag/Notiz, Löschen solange mehr als ein Vorschuss existiert.
+- „Verlauf“ statt „Pro Spiel“: Vorschüsse und Heimspiele/Spiele mit Kosten chronologisch, jeweils Stand danach.
+- „Prognose bis Saisonende“ (`srForecast`): Ø je Spiel mit Kosten × offene Heimspiele (ohne Eintrag, auch schon gespielte),
+  voraussichtlich übrig/fehlt, Spanne, ungünstigster Fall (teuerstes Spiel), Hinweis ab welchem Heimspiel es nicht mehr reicht.
+- Achtung beim Bearbeiten: `training/index.html` enthält in `__MK2T_TPL__` eine eingebettete Kopie (alter Export-Modus);
+  Ersetzungen nie global ausführen, sonst bricht dieses Skript (ist hier einmal passiert und wurde zurückgesetzt).

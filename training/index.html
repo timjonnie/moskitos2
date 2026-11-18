@@ -203,6 +203,11 @@ details.grp .list{margin-top:6px}
 body.ro .srline.sredit .pen{display:none}
 .amount{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .rest{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.fcst .k{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}.fcst .v{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.1}.fcst .v.ok,.num.ok{color:var(--ok)}.fcst .v.bad,.fcst .bad{color:var(--bad)}
+.fcst .fgrid{display:grid;grid-template-columns:auto auto;gap:2px 12px;margin-top:10px;font-size:13.5px}.fcst .fgrid span:nth-child(3n){grid-column:1/-1;font-size:12px;color:var(--muted);margin-bottom:6px}.fcst .fgrid b{text-align:right}
+.pill.fok{background:color-mix(in oklab,var(--ok) 15%,transparent);color:var(--ok)}.pill.fbad{background:color-mix(in oklab,var(--bad) 15%,transparent);color:var(--bad)}
+.advcard{display:block;width:100%;font:inherit;color:inherit;text-align:left;cursor:pointer}.advcard .pen,.item .pen{display:inline-grid;place-items:center;width:28px;height:28px;margin-top:4px;border-radius:8px;border:1px solid var(--line);color:var(--accent);font-size:14px}
+body.ro [data-a="adv-item"]{pointer-events:none}body.ro .advcard .pen{display:none}
 /* Nav */
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);
   padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:max(6px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -702,21 +707,47 @@ VIEWS.zn=()=>{
   return html;
 };
 
+// SR-Vorschüsse mit Buchungsdatum (früher ein einzelner Betrag srAdvance → wird als erster Vorschuss übernommen)
+const srAdv=()=>{const m=S.settings.main||{};if(Array.isArray(m.srAdvances))return m.srAdvances.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  const y=((gamesSorted()[0]||{}).date||TODAY).slice(0,4);return [{id:'adv-start',date:y+'-07-01',amount:m.srAdvance!=null?+m.srAdvance||0:1000,note:'Vorschuss vor der Saison'}]};
+function saveAdv(list){const m=Object.assign({},S.settings.main||{});m.srAdvances=list.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||''));m.srAdvance=m.srAdvances.reduce((s,a)=>s+(+a.amount||0),0);put('settings','main',m)}
+const srSum=g=>(g.sr||[]).reduce((x,e)=>x+(+e.amount||0),0);
+// Prognose: Ø Kosten je Spiel mit Kosten × offene Heimspiele (Heimspiele ohne Eintrag)
+function srForecast(gs,rest){const costG=gs.filter(g=>srSum(g)>0),sums=costG.map(srSum);const avg=sums.length?sums.reduce((a,b)=>a+b,0)/sums.length:0;
+  const open=gs.filter(g=>g.home===true&&!(g.sr||[]).length);const past=open.filter(g=>g.date<TODAY).length;
+  const need=avg*open.length,end=rest-need,worst=rest-(sums.length?Math.max(...sums):0)*open.length;let bal=rest,until=null;
+  for(const g of open){bal-=avg;if(bal<0&&!until){until=g;break}}
+  return {n:sums.length,avg,min:sums.length?Math.min(...sums):0,max:sums.length?Math.max(...sums):0,open:open.length,past,need,end,worst,until}}
 VIEWS.sr=()=>{
-  const c=cfg();const gs=gamesSorted();
+  const gs=gamesSorted();const adv=srAdv();const total=adv.reduce((s,a)=>s+(+a.amount||0),0);
   const withCost=gs.filter(g=>(g.sr||[]).length||(g.home===true));
-  const spent=gs.reduce((a,g)=>a+(g.sr||[]).reduce((x,e)=>x+(+e.amount||0),0),0);
-  const rest=c.srAdvance-spent;const games=gs.filter(g=>(g.sr||[]).some(e=>+e.amount>0)).length;
-  let run=c.srAdvance;
+  const spent=gs.reduce((a,g)=>a+srSum(g),0);
+  const rest=total-spent;const games=gs.filter(g=>srSum(g)>0).length;const fc=srForecast(gs,rest);
   let html=`<div class="stats"><button class="stat hero" data-a="adv-edit" style="text-align:left;font:inherit;color:inherit;cursor:pointer">
      <div><div class="k">Rest vom SR-Vorschuss</div><div class="v num ${rest<0?'bad':''}" style="font-size:40px">${eur(rest)}</div></div>
-     <div class="sub num" style="text-align:right">Vorschuss ${eur(c.srAdvance)}<br>tippen zum Ändern</div>
-     <div class="bar" style="width:100%;height:8px"><i class="${rest<0?'over':''}" style="width:${Math.min(100,c.srAdvance?spent/c.srAdvance*100:0)}%"></i></div></button>
+     <div class="sub num" style="text-align:right">Vorschüsse ${eur(total)}${adv.length>1?' ('+adv.length+'×)':''}<br>tippen zum Verwalten</div>
+     <div class="bar" style="width:100%;height:8px"><i class="${rest<0?'over':''}" style="width:${Math.min(100,total?spent/total*100:0)}%"></i></div></button>
    <div class="stat"><div class="k">Ausgegeben</div><div class="v num">${eur(spent)}</div></div>
    <div class="stat"><div class="k">Spiele mit Kosten</div><div class="v num">${games}</div></div>
-   <div class="stat"><div class="k">Ø pro Spiel</div><div class="v num">${eur(games?spent/games:0)}</div></div></div>
-  <h2 class="sec">Pro Spiel</h2><div class="list">`;
-  withCost.forEach(g=>{const es=g.sr||[];const sum=es.reduce((a,e)=>a+(+e.amount||0),0);run-=sum;
+   <div class="stat"><div class="k">Ø pro Spiel</div><div class="v num">${eur(games?spent/games:0)}</div></div></div>`;
+  // Prognose
+  html+=`<h2 class="sec">Prognose bis Saisonende</h2><div class="card fcst">`+(fc.n?
+    `<div class="row between" style="flex-wrap:nowrap;align-items:flex-end;gap:12px"><div><div class="k">Voraussichtlich ${fc.end>=0?'übrig':'fehlen'}</div><div class="v num ${fc.end>=0?'ok':'bad'}">${eur(Math.abs(fc.end))}</div></div>
+      <div class="pill ${fc.end>=0?'fok':'fbad'}">${fc.end>=0?(fc.worst>=0?'Reicht sicher':'Reicht voraussichtlich'):'Reicht nicht'}</div></div>
+     <div class="fgrid"><span>Ø Kosten je Spiel</span><b class="num">${eur(fc.avg)}</b><span>aus ${fc.n} Spiel${fc.n===1?'':'en'} (${eur(fc.min)} bis ${eur(fc.max)})</span>
+      <span>Offene Heimspiele</span><b class="num">${fc.open}</b><span>${fc.past?fc.past+' davon schon gespielt, Kosten noch nicht eingetragen':'ohne eingetragene Kosten'}</span>
+      <span>Voraussichtlicher Bedarf</span><b class="num">${eur(fc.need)}</b><span>${fc.open} × ${eur(fc.avg)}</span>
+      <span>Ungünstigster Fall</span><b class="num ${fc.worst<0?'bad':''}">${eur(fc.worst)}</b><span>jedes offene Spiel so teuer wie das bisher teuerste</span></div>
+     ${fc.until?`<p class="note warn" style="margin:8px 0 0">Geld reicht voraussichtlich nur bis vor dem Heimspiel gegen ${esc(fc.until.opponent)} am ${fmtDL(fc.until.date)}.</p>`:''}`
+    :`<p class="sub" style="margin:0">Sobald Kosten für ein Spiel eingetragen sind, steht hier, ob der Vorschuss bis Saisonende reicht.</p>`)+`</div>`;
+  html+=`<h2 class="sec">Verlauf</h2><div class="list">`;
+  // Vorschüsse und Spiele chronologisch, Kontostand jeweils danach
+  const ev=adv.map(a=>({t:'a',d:a.date||'',a})).concat(withCost.map(g=>({t:'g',d:g.date||'',g}))).sort((x,y)=>x.d.localeCompare(y.d)||(x.t==='a'?-1:1));
+  let run=0;
+  ev.forEach(x=>{if(x.t==='a'){run+=+x.a.amount||0;
+      html+=`<button class="card advcard" data-a="adv-item" data-id="${esc(x.a.id)}"><div class="row between" style="flex-wrap:nowrap;align-items:center"><div class="row" style="flex-wrap:nowrap;gap:12px;align-items:center">${x.a.date?dateBox(x.a.date,false):''}<div style="min-width:0;text-align:left"><span class="pill fok">Vorschuss erhalten</span><div class="t">${esc(x.a.note||'SR-Vorschuss')}</div><div class="rest">Stand danach ${eur(run)}</div></div></div>
+        <div style="text-align:right"><div class="mins num ok" style="font-size:20px">+${eur(x.a.amount)}</div><span class="pen" aria-hidden="true">✎</span></div></div></button>`;return}
+    const g=x.g,es=g.sr||[];const sum=srSum(g);run-=sum;
     html+=`<div class="card ${g.date<TODAY?'':''}"><div class="row between" style="flex-wrap:nowrap;align-items:flex-start"><div class="row" style="flex-wrap:nowrap;gap:12px;align-items:flex-start">${dateBox(g.date,false)}<div style="min-width:0"><div class="row" style="gap:6px">${haTag(g)}${compTag(g)}</div><div class="t">${esc(g.opponent)}</div>${es.length?`<div class="rest">Rest danach ${eur(run)}</div>`:''}</div></div>
       <div style="text-align:right"><div class="mins num" style="font-size:20px">${eur(sum)}</div></div></div>
       ${es.length?`<div style="margin-top:6px">${es.map((e,i)=>`<button class="srline sredit" data-a="sr-edit" data-g="${g.id}" data-i="${i}" title="Eintrag bearbeiten"><span>${esc((S.refs[e.ref]||{}).name||'Unbekannt')}</span><span class="amount">${eur(e.amount)}<span class="pen" aria-hidden="true">✎</span></span></button>`).join('')}</div>`:''}
@@ -860,8 +891,17 @@ const SHEETS={
    if(mode==='static')h+=`<div class="row"><button class="btn" data-a="logout">Abmelden</button></div>`;
    return h},
   save:()=>{}},
- adv:{title:()=>'SR-Vorschuss',body:()=>F('Vorschuss für die Saison (€)',inp('srAdvance',ui.draft.srAdvance,'number','inputmode="decimal" step="50"'))+F('Max. Spielerinnen im Spielbericht',inp('maxSquad',ui.draft.maxSquad,'number','inputmode="numeric"')),
-  save:()=>{put('settings','main',Object.assign({},S.settings.main||{},{srAdvance:+ui.draft.srAdvance||0,maxSquad:+ui.draft.maxSquad||16}));toast('Gespeichert')}},
+ adv:{title:()=>'SR-Vorschüsse',
+  body:()=>{const L=srAdv(),t=L.reduce((s,a)=>s+(+a.amount||0),0);
+   return `<div class="list" style="margin-bottom:10px">${L.map(a=>`<button class="item" data-a="adv-item" data-id="${esc(a.id)}" style="align-items:center"><div class="grow"><div class="t">${esc(a.note||'SR-Vorschuss')}</div><div class="sub">${a.date?fmtDL(a.date):'ohne Datum'}</div></div><span class="num" style="font-weight:700">${eur(a.amount)}</span><span class="pen" aria-hidden="true">✎</span></button>`).join('')}</div>
+    <div class="row between" style="margin-bottom:14px"><span class="sub">Summe <b class="num">${eur(t)}</b></span><button class="btn sm" data-a="adv-new">+ Vorschuss hinzufügen</button></div>`+
+    F('Max. Spielerinnen im Spielbericht',inp('maxSquad',ui.draft.maxSquad,'number','inputmode="numeric"'))},
+  save:()=>{put('settings','main',Object.assign({},S.settings.main||{},{maxSquad:+ui.draft.maxSquad||16}));toast('Gespeichert')}},
+ advitem:{title:()=>ui.draft.isNew?'Neuer SR-Vorschuss':'SR-Vorschuss',canDelete:()=>!ui.draft.isNew&&srAdv().length>1,
+  body:()=>F('Buchungsdatum',inp('date',ui.draft.date,'date'))+F('Betrag (€)',inp('amount',ui.draft.amount,'number','inputmode="decimal" step="0.01" min="0"'))+F('Notiz',inp('note',ui.draft.note,'text','placeholder="z. B. zweiter Vorschuss"')),
+  save:()=>{const d=ui.draft,amt=parseFloat(String(d.amount).replace(',','.'));if(!d.date)return 'Bitte das Buchungsdatum eingeben.';if(isNaN(amt)||amt<=0)return 'Bitte einen gültigen Betrag eingeben.';
+   const L=srAdv().filter(a=>a.id!==d.id);L.push({id:d.id||uid('adv'),date:d.date,amount:amt,note:(d.note||'').trim()});saveAdv(L);toast(d.isNew?'Vorschuss hinzugefügt':'Vorschuss gespeichert')},
+  del:()=>{saveAdv(srAdv().filter(a=>a.id!==ui.draft.id));toast('Vorschuss gelöscht')}},
  copytext:{title:()=>'Kader-Text',saveLabel:()=>'Fertig',body:()=>`<p class="sub">Kopieren hat nicht geklappt. Text markieren und kopieren:</p><textarea class="input" id="f-copy" readonly style="min-height:240px">${esc(ui.draft.text)}</textarea>`,save:()=>{}}
 };
 function seriesDates(d){if(!d.from||!d.to||!d.days.length)return[];const ex=new Set(all('sessions').map(s=>s.date));
@@ -1023,6 +1063,8 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!
   case 'sr-new':openSheet('sr',{g:el.dataset.g,i:null,ref:'',newRef:'',amount:''});break;
   case 'sr-edit':{const g=S.games[el.dataset.g];const i=+el.dataset.i;const en=g.sr[i];openSheet('sr',{g:el.dataset.g,i,ref:en.ref,newRef:'',amount:en.amount});break}
   case 'adv-edit':{const c=cfg();openSheet('adv',{srAdvance:c.srAdvance,maxSquad:c.maxSquad});break}
+  case 'adv-new':openSheet('advitem',{isNew:true,id:null,date:TODAY,amount:'',note:''});break;
+  case 'adv-item':{const x=srAdv().find(a=>a.id===id);if(x)openSheet('advitem',Object.assign({isNew:false},x));break}
   case 'close':closeSheet();break;
   case 'save':{const r=SHEETS[ui.sheet].save();if(typeof r==='string'){toast(r);break}if(r===false)break;closeSheet();break}
   case 'export-sess':exportPdf(Object.assign({},ui.draft));break;

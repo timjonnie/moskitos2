@@ -145,6 +145,16 @@ Spielberichte genauso aus wie die der Gegner: Bilanz, Torphasen, Spielverläufe,
 - Beim Export enthält die Version für die Mannschaft nur Mannschaftswerte. Mit Haken bei
   „Das fällt auf und Werte einzelner Spielerinnen“ entsteht die Version für den Trainerstab.
 
+## SR-Kosten und Vorschüsse (Trainer, Reiter „SR-Kosten“)
+
+- **Kosten erfassen/ändern:** beim Spiel „+ Kosten erfassen“, einen vorhandenen Eintrag über ✎ ändern oder löschen.
+- **Vorschüsse:** oben auf die Kachel „Rest vom SR-Vorschuss“ tippen → Liste aller Vorschüsse, **„+ Vorschuss hinzufügen“**
+  mit Buchungsdatum, Betrag und Notiz. Der frühere einzelne Vorschuss steht dort als „Vorschuss vor der Saison“ (1.7.).
+  Im „Verlauf“ stehen Vorschüsse und Spiele nach Datum, jeweils mit dem Stand danach.
+- **Prognose bis Saisonende:** Ø Kosten je Spiel (aus allen Spielen mit eingetragenen Kosten) × offene Heimspiele
+  (Heimspiele ohne Kosteneintrag, auch bereits gespielte). Zeigt, ob das Geld voraussichtlich reicht, den Betrag, der übrig
+  bleibt bzw. fehlt, und den ungünstigsten Fall (jedes offene Spiel so teuer wie das bisher teuerste).
+
 ## Als App aufs Handy
 
 - iPhone (Safari): Teilen → „Zum Home-Bildschirm“.
