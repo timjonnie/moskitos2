@@ -159,7 +159,7 @@ Spielberichte genauso aus wie die der Gegner: Bilanz, Torphasen, Spielverläufe,
   Spiel wählen oder **„+ Spiel anlegen“** (z. B. Testspiel), Foto/PDF, Datum auf dem Beleg, Status (offen/geprüft/abgelehnt),
   je Schiedsrichter/in Name, Spielleitung, km einzeln (× 0,30), km Gespann (× 0,32), ÖPNV, Sonstiges, Summe laut Beleg und
   Unterschrift, dazu Gesamt laut Beleg, Korrekturen, Notiz und **offene Fragen**. Die App rechnet live nach („nachgerechnet … ✓/≠“).
-  Optional: **„Kosten beim Spiel aus diesem Beleg übernehmen“**. Belege stehen als 📄/📝 beim Spiel (antippen = bearbeiten).
+  Optional: **„Kosten beim Spiel aus diesem Beleg übernehmen“**. Beim Spiel: **„📄 Beleg anzeigen“** öffnet nur das Foto im Vollbild (zoomen, „In neuem Tab“, „Bearbeiten“), **✎** öffnet das Bearbeiten-Fenster; „📝 Beleg (ohne Foto)“ öffnet direkt das Bearbeiten.
 - **Prüfung & offene Fragen:** alle Hinweise (Rechenfehler, fehlende Unterschrift/Summe, Datum, Korrekturen, Kilometer oder
   Spielleitung auffällig, fehlende Belege/Fotos, Abweichung zu den eingetragenen Kosten, Prognose) und die eigenen Fragen.
   Je Hinweis: **Bearbeiten**, **✓ Geklärt**, **✕ Ablehnen**, **Ignorieren**; antippen = Notiz ergänzen. Reiter Offen/Geklärt/
