@@ -145,6 +145,26 @@ Spielberichte genauso aus wie die der Gegner: Bilanz, Torphasen, Spielverläufe,
 - Beim Export enthält die Version für die Mannschaft nur Mannschaftswerte. Mit Haken bei
   „Das fällt auf und Werte einzelner Spielerinnen“ entsteht die Version für den Trainerstab.
 
+## SR-Kosten und Vorschüsse (Trainer, Reiter „SR-Kosten“)
+
+- **Kosten erfassen/ändern:** beim Spiel „+ Kosten erfassen“, einen vorhandenen Eintrag über ✎ ändern oder löschen.
+- **Vorschüsse:** oben auf die Kachel „Rest vom SR-Vorschuss“ tippen → Liste aller Vorschüsse, **„+ Vorschuss hinzufügen“**
+  mit Buchungsdatum, Betrag und Notiz. Der frühere einzelne Vorschuss steht dort als „Vorschuss vor der Saison“ (1.7.).
+  Im „Verlauf“ stehen Vorschüsse und Spiele nach Datum, jeweils mit dem Stand danach.
+- **Prognose bis Saisonende:** Ø Kosten je Spiel (aus allen Spielen mit eingetragenen Kosten) × offene Heimspiele
+  (Heimspiele ohne Kosteneintrag, auch bereits gespielte). Zeigt, ob das Geld voraussichtlich reicht, den Betrag, der übrig
+  bleibt bzw. fehlt, und den ungünstigsten Fall (jedes offene Spiel so teuer wie das bisher teuerste).
+
+- **Belege (Abrechnungen der Schiedsrichter):** beim Spiel **„+ Beleg“** oder oben **„+ Beleg (Foto/PDF)“** → Spiel wählen,
+  Foto machen oder PDF wählen (bis 6 Seiten), optional den **Betrag laut Beleg** eintragen. Belege erscheinen als 📄 beim Spiel
+  (antippen = ansehen, Betrag ändern, löschen). Gespeichert in der Datenbank (`t_srbelege`), nur für den Trainerstab.
+- **Prüfung:** zeigt automatisch, ob zu jedem Spiel mit Kosten ein Beleg da ist, ob der Betrag laut Beleg zu den Einträgen passt,
+  Heimspiele ohne Kosten, doppelte Einträge, Ausreißer (mehr als 40 % über/unter dem Schnitt) und ob der Vorschuss reicht.
+  Die Belege selbst werden nicht automatisch gelesen – für eine inhaltliche Prüfung die Fotos an Claude schicken.
+- **Abrechnung für die Kassenwartin:** **„Abrechnung teilen …“** (Handy: direkt per WhatsApp/Mail) oder **„Abrechnung als PDF“**.
+  Inhalt: Kennzahlen, Prognose, Vorschüsse, alle Spiele mit Schiedsrichtern, Beträgen, Stand und Beleg-Status, Summen je
+  Schiedsrichter/in, Prüfung und dahinter alle Belege als eigene Seiten.
+
 ## Als App aufs Handy
 
 - iPhone (Safari): Teilen → „Zum Home-Bildschirm“.
