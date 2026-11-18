@@ -430,3 +430,17 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   voraussichtlich übrig/fehlt, Spanne, ungünstigster Fall (teuerstes Spiel), Hinweis ab welchem Heimspiel es nicht mehr reicht.
 - Achtung beim Bearbeiten: `training/index.html` enthält in `__MK2T_TPL__` eine eingebettete Kopie (alter Export-Modus);
   Ersetzungen nie global ausführen, sonst bricht dieses Skript (ist hier einmal passiert und wurde zurückgesetzt).
+
+### 18.11.2026 – SR-Belege, Prüfung und Export für die Kassenwartin
+
+- Trainertool 1.8. Belege: Foto oder PDF (pdf.js, max. 6 Seiten) → je Seite JPEG, zusammen ≤ ~860 KB, gespeichert in
+  `t_srbelege/{id}` = `{g,file,pages:[DataURL]}` (wird erst beim Ansehen/Export geladen); am Spiel `belege=[{id,file,pages,amount,note,added}]`.
+  Sheets `beleg` (neu) und `belegview` (ansehen, Betrag/Notiz ändern, löschen).
+- Prüfung (`srChecks`): Belege x von y, Heimspiel ohne Kosten, Kosten ohne Beleg, Beleg ohne Kosten, Betrag laut Beleg ≠ Einträge,
+  doppelte Schiedsrichter, Eintrag ohne Betrag, Ausreißer (> ±40 % vom Ø, ab 3 Spielen), Vorschuss überzogen, Prognose negativ.
+- Export (`srExport`, jsPDF): „Abrechnung teilen …“ (Web Share) bzw. „Abrechnung als PDF“ – Kennzahlen, Prognose, Vorschüsse,
+  Tabelle Spiele/Vorschüsse mit Stand und Beleg-Status, je Schiedsrichter/in, Prüfung, danach alle Belegseiten.
+- Keine KI im Firebase-Modus (`claude.use('sample')` gibt es dort nicht): Belege werden nicht automatisch gelesen.
+- Offen: Firestore-Regeln müssen `t_srbelege` für Trainer/Admin erlauben (falls die Regeln Sammlungen einzeln aufzählen) –
+  beim ersten Speichern prüfen; Fehlermeldung „keine Berechtigung für SR-Belege“.
+- CSS-Klasse `.chk` ist im Trainertool schon vergeben (Häkchen) → Prüfung nutzt `.srchk`.

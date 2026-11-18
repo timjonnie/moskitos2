@@ -16,7 +16,7 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 |---|---|
 | `index.html` | Team-Board 4.27: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, `#pokal`, `#berichte`, Verwaltung, Ersteinrichtung/Umzug |
 | `analyse/index.html` | Spielanalyse 2.20 (Firebase-Modus, Präfix `a_`) |
-| `training/index.html` | Trainertool 1.7 (Firebase-Modus, Präfix `t_`) |
+| `training/index.html` | Trainertool 1.8 (Firebase-Modus, Präfix `t_`) |
 | `board.json`, `alt/` | Alte verschlüsselte Daten – **nur für den einmaligen Umzug**, danach löschen |
 | `gegner_daten.json` | Öffentliche Spielberichte (`games`) + Termine der Moskitos (`fixtures`); wird montags automatisch erneuert |
 | `spielberichte_abruf.js` | Node-Skript: zählt handball360-IDs ab `START_ID` hoch, lädt PDFs, schreibt `gegner_daten.json` |
@@ -41,7 +41,7 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
   automatisch zu Karten, Klasse `mkst`; Tabelle mit `data-nofit` ausnehmen).
   Bausteine, die in mehreren Dateien stecken, **überall gleich halten**.
 - **Firestore:** `a_*`/`t_*`/`team/summary`/`profiles/{pid}` als `{j}`; `users/{uid}` `{u, role, pid}`, `config/owner`,
-  `tb_settings/*`, `rsvp/*` roh (nur darauf greifen die Regeln). `publish()` im Team-Board berechnet Team-/Profildaten
+  `tb_settings/*`, `rsvp/*` roh; SR-Belege als Bilder in `t_srbelege/{id}` (`{j}` mit `pages`), Metadaten am Spiel `belege` (nur darauf greifen die Regeln). `publish()` im Team-Board berechnet Team-/Profildaten
   im Browser eines Trainers (keine Cloud Functions im Spark-Tarif), schreibt nur bei geändertem Hash.
 - **Rollen:** Admin (alles + Verwaltung), Trainer (Board, Training, Analyse, Gegner, alle Profile),
   Spielerin (nur eigenes Profil, `team/summary`, Gegneranalyse – **keine fremden Daten, keine Rankings**,
