@@ -444,3 +444,17 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Offen: Firestore-Regeln müssen `t_srbelege` für Trainer/Admin erlauben (falls die Regeln Sammlungen einzeln aufzählen) –
   beim ersten Speichern prüfen; Fehlermeldung „keine Berechtigung für SR-Belege“.
 - CSS-Klasse `.chk` ist im Trainertool schon vergeben (Häkchen) → Prüfung nutzt `.srchk`.
+
+### 18.11.2026 – Belege komplett in der App verwalten, Hinweise bearbeiten
+
+- Nutzer schickte 8 Fotos von SR-Reisekostenabrechnungen (HVS-Formular); Claude hat sie im Chat geprüft (Rechnung, Datum,
+  Unterschriften, Korrekturen, Kilometer). Wunsch: alles in der App bearbeiten, Hinweise zusagen/ablehnen/ignorieren.
+- Trainertool 1.9: Beleg = `{id,file,pages,added,status,bdate,total,corr,note,sr:[{ref,sle,km,gkm,oepnv,sonst,sum,sig}×2],qs:[{id,t,s,n}]}`.
+  Fenster `beleg` (anlegen/bearbeiten, Spiel neu anlegen, Foto, Live-Nachrechnung `srCalc` = Spielleitung + km×0,30 + Gespann-km×0,32
+  + ÖPNV + Sonstiges, Kosten übernehmen). Alter Einzelbetrag `amount` bleibt lesbar.
+- `srIssues()` ersetzt `srChecks()`: Hinweise mit stabilem Schlüssel; Status über `t_settings/main.srDec[key]` bzw. bei eigenen
+  Fragen `beleg.qs[].s`. Werte: open/ok/rej/ign. Ausreißer getrennt nach Testspielen und Liga/Pokal; Prognose nur aus Liga/Pokal.
+- „Prüfung von Claude übernehmen“ (`climpRun`): JSON `{belege:[{datum,gegner,heim,wettbewerb,belegdatum,gesamt,korrektur,notiz,
+  sr:[{name,sle,km,gkm,oepnv,sonst,summe,unterschrift}],fragen:[…]}]}`; Zuordnung über Datum, Schiedsrichter über Namen
+  (Reihenfolge egal, `nameKey`), fehlende Spiele werden als Testspiel angelegt. Namen nur im Chat, nicht im Repo.
+- PDF: neuer Abschnitt „Belege im Detail“ (Einzelwerte, nachgerechnet, Unterschrift), Prüfung gruppiert nach Offen/Geklärt/Abgelehnt.

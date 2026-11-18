@@ -206,6 +206,14 @@ body.ro .srline.sredit .pen{display:none}
 .fcst .k{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}.fcst .v{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.1}.fcst .v.ok,.num.ok{color:var(--ok)}.fcst .v.bad,.fcst .bad{color:var(--bad)}
 .fcst .fgrid{display:grid;grid-template-columns:auto auto;gap:2px 12px;margin-top:10px;font-size:13.5px}.fcst .fgrid span:nth-child(3n){grid-column:1/-1;font-size:12px;color:var(--muted);margin-bottom:6px}.fcst .fgrid b{text-align:right}
 .pill.fok{background:color-mix(in oklab,var(--ok) 15%,transparent);color:var(--ok)}.pill.fbad{background:color-mix(in oklab,var(--bad) 15%,transparent);color:var(--bad)}
+.isstabs{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0 2px}.isstabs button{font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:4px 10px;cursor:pointer}.isstabs button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}.isstabs b{font-variant-numeric:tabular-nums}
+.srchkl .grow{flex:1;min-width:0}.isst{font:inherit;text-align:left;background:none;border:0;padding:0;color:var(--ink);cursor:pointer}.issn{font-size:12px;color:var(--muted);margin-top:2px}.issb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:6px}.issb .btn{padding:5px 2px;font-size:12px;min-width:0;justify-content:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.issb .btn:only-child{grid-column:span 2}.issb .iok{color:var(--ok);border-color:color-mix(in oklab,var(--ok) 40%,var(--line))}.issb .irej{color:var(--bad);border-color:color-mix(in oklab,var(--bad) 40%,var(--line))}
+.srchkl li.q span.ic{background:#1B2A4A}.srchkl li span.ic{flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font-size:12px;font-weight:700;color:#fff;background:var(--muted)}.srchkl li.warn span.ic{background:#C2410C}.srchkl li.bad span.ic{background:var(--bad)}
+.srblk{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0;display:flex;flex-direction:column;gap:8px}.calc{font-size:12.5px;font-weight:600}.calc.ok{color:var(--ok)}.calc.bad,.sub .bad{color:var(--bad)}
+.tog{font:inherit;font-size:13.5px;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:8px 10px;cursor:pointer}.tog[aria-pressed="false"]{color:var(--bad);border-color:color-mix(in oklab,var(--bad) 40%,var(--line))}.tog[data-v="take"][aria-pressed="false"]{color:var(--muted);border-color:var(--line)}
+.qrow{display:flex;gap:8px;align-items:center;font-size:13.5px}.pill.q-ok{color:var(--ok)}.pill.q-rej{color:var(--bad)}
+.bchip.st-geprueft{border-color:color-mix(in oklab,var(--ok) 50%,var(--line));color:var(--ok)}.bchip.st-abgelehnt{border-color:color-mix(in oklab,var(--bad) 50%,var(--line));color:var(--bad);text-decoration:line-through}
+body.ro .issb,body.ro [data-a="climp"]{display:none!important}
 .srchk .k{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}.srchkl{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}.srchkl li{display:flex;gap:8px;align-items:flex-start}.srchkl li span{flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font-size:12px;font-weight:700;color:#fff;background:var(--muted)}.srchkl li.warn span{background:#C2410C}.srchkl li.bad span{background:var(--bad)}
 .srbar{flex-wrap:wrap;gap:8px;margin:12px 0 0}.bchip{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 10px;cursor:pointer}
 .bthumbs{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 6px}.bthumbs img{height:90px;border:1px solid var(--line);border-radius:6px}.bpages{display:flex;flex-direction:column;gap:8px;margin:6px 0 10px}.bpages img{width:100%;border:1px solid var(--line);border-radius:8px}
@@ -717,101 +725,200 @@ const srAdv=()=>{const m=S.settings.main||{};if(Array.isArray(m.srAdvances))retu
 function saveAdv(list){const m=Object.assign({},S.settings.main||{});m.srAdvances=list.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||''));m.srAdvance=m.srAdvances.reduce((s,a)=>s+(+a.amount||0),0);put('settings','main',m)}
 const srSum=g=>(g.sr||[]).reduce((x,e)=>x+(+e.amount||0),0);
 // Prognose: Ø Kosten je Spiel mit Kosten × offene Heimspiele (Heimspiele ohne Eintrag)
-function srForecast(gs,rest){const costG=gs.filter(g=>srSum(g)>0),sums=costG.map(srSum);const avg=sums.length?sums.reduce((a,b)=>a+b,0)/sums.length:0;
+function srForecast(gs,rest){const all_=gs.filter(g=>srSum(g)>0),lg=all_.filter(g=>!/test/i.test(g.comp||'')),costG=lg.length?lg:all_,sums=costG.map(srSum);const avg=sums.length?sums.reduce((a,b)=>a+b,0)/sums.length:0;
   const open=gs.filter(g=>g.home===true&&!(g.sr||[]).length);const past=open.filter(g=>g.date<TODAY).length;
   const need=avg*open.length,end=rest-need,worst=rest-(sums.length?Math.max(...sums):0)*open.length;let bal=rest,until=null;
   for(const g of open){bal-=avg;if(bal<0&&!until){until=g;break}}
-  return {n:sums.length,avg,min:sums.length?Math.min(...sums):0,max:sums.length?Math.max(...sums):0,open:open.length,past,need,end,worst,until}}
-/* ---------- SR-Belege (Foto/PDF der Abrechnungen) ----------
-   Metadaten am Spiel: g.belege=[{id,file,pages,amount,note,added}]; Bilder je Beleg in t_srbelege/{id} = {g,pages:[DataURL…]} (nur bei Bedarf geladen) */
-const BELEG_CACHE={};
+  return {lg:lg.length>0&&lg.length<all_.length,n:sums.length,avg,min:sums.length?Math.min(...sums):0,max:sums.length?Math.max(...sums):0,open:open.length,past,need,end,worst,until}}
+/* ---------- SR-Belege (Abrechnungen der Schiedsrichter) ----------
+   Metadaten am Spiel: g.belege=[{id,file,pages,added,status,bdate,total,corr,note,sr:[{ref,sle,km,gkm,oepnv,sonst,sum,sig}],qs:[{id,t,s,n}]}]
+   Bilder je Beleg in t_srbelege/{id} = {g,file,pages:[DataURL…]} (nur bei Bedarf geladen).
+   Entscheidungen zu automatischen Hinweisen: t_settings/main.srDec[key]={s:'ok'|'rej'|'ign',n,d} */
+const BELEG_CACHE={};const SR_KM=0.30,SR_GKM=0.32;
+const nz=x=>x===''||x==null||isNaN(parseFloat(String(x).replace(',','.')))?null:parseFloat(String(x).replace(',','.'));
+const r2=x=>Math.round(x*100)/100;
 async function canvasJpeg(c,max){let cv=c;for(let k=0;k<6;k++){for(const q of [0.8,0.65,0.5]){const d=cv.toDataURL('image/jpeg',q);if(d.length<=max)return d}
   const s=document.createElement('canvas');s.width=Math.round(cv.width*0.75);s.height=Math.round(cv.height*0.75);const x=s.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,s.width,s.height);x.drawImage(cv,0,0,s.width,s.height);cv=s}
   return cv.toDataURL('image/jpeg',0.45)}
 async function belegPages(file){const cs=(await fileToPages(file)).slice(0,6);const budget=Math.floor(860000/Math.max(cs.length,1));const out=[];for(const c of cs)out.push(await canvasJpeg(c,budget));return out}
 async function belegLoad(id){if(BELEG_CACHE[id])return BELEG_CACHE[id];if(mode!=='db'||!db)return null;const d=await db.collection('srbelege').doc(id).get();const v=d.exists?d.data():null;if(v)BELEG_CACHE[id]=v;return v}
 const belegMeta=g=>Array.isArray(g.belege)?g.belege:[];
-const belegSum=g=>belegMeta(g).reduce((s,b)=>s+(b.amount!=null&&b.amount!==''?+b.amount:0),0);
-const belegHasAmt=g=>belegMeta(g).some(b=>b.amount!=null&&b.amount!=='');
+const refName=id=>(S.refs[id]||{}).name||'Unbekannt';
+// Schiedsrichter/in einer Abrechnung: berechnet und laut Beleg
+const srUsed=r=>r&&(r.ref||[r.sle,r.km,r.gkm,r.oepnv,r.sonst,r.sum].some(x=>nz(x)));
+const srCalc=r=>r2((nz(r.sle)||0)+(nz(r.km)||0)*SR_KM+(nz(r.gkm)||0)*SR_GKM+(nz(r.oepnv)||0)+(nz(r.sonst)||0));
+const srDecl=r=>nz(r.sum)!=null?nz(r.sum):srCalc(r);
+const bSRs=b=>(b.sr||[]).filter(srUsed);
+// Betrag des Belegs: Gesamt laut Beleg, sonst Summen der SR, sonst alter Einzelbetrag
+function bAmount(b){if(nz(b.total)!=null)return nz(b.total);const L=bSRs(b);if(L.length)return r2(L.reduce((s,r)=>s+srDecl(r),0));return nz(b.amount)}
+const bStatusL={offen:'offen',geprueft:'geprüft',abgelehnt:'abgelehnt'};
 function srSeason(gs){const d=(gs[0]||{}).date||TODAY;const y=+d.slice(0,4),m=+d.slice(5,7);const a=m>=7?y:y-1;return a+'/'+String(a+1).slice(2)}
-// Prüfung: Hinweise je Spiel und gesamt
-function srChecks(gs,fc,rest){const R=[],costG=gs.filter(g=>srSum(g)>0);const avg=fc.avg;
-  gs.forEach(g=>{const s=srSum(g),B=belegMeta(g),nm=`${fmtDY(g.date)} ${g.opponent||''}`;
-    if(g.home===true&&g.date<TODAY&&!(g.sr||[]).length)R.push(['warn',`${nm}: Heimspiel ohne eingetragene SR-Kosten.`]);
-    if(s>0&&!B.length)R.push(['warn',`${nm}: Kosten ${eur(s)} eingetragen, aber noch kein Beleg.`]);
-    if(B.length&&!(g.sr||[]).length)R.push(['warn',`${nm}: Beleg vorhanden, aber keine Kosten eingetragen.`]);
-    if(B.length&&belegHasAmt(g)&&Math.abs(belegSum(g)-s)>0.005)R.push(['bad',`${nm}: Beleg weist ${eur(belegSum(g))} aus, eingetragen sind ${eur(s)}.`]);
-    const refs={};(g.sr||[]).forEach(e=>{if(!(+e.amount>0))R.push(['warn',`${nm}: Eintrag ohne Betrag (${(S.refs[e.ref]||{}).name||'Unbekannt'}).`]);if(e.ref){if(refs[e.ref])R.push(['warn',`${nm}: ${(S.refs[e.ref]||{}).name||'Schiedsrichter/in'} ist doppelt eingetragen.`]);refs[e.ref]=1}});
-    if(costG.length>=3&&s>0&&avg&&(s>avg*1.4||s<avg*0.6))R.push(['info',`${nm}: ${eur(s)} – deutlich ${s>avg?'über':'unter'} dem Schnitt (${eur(avg)}).`])});
-  if(rest<0)R.push(['bad',`Der Vorschuss ist um ${eur(-rest)} überzogen.`]);
-  if(fc.n&&fc.end<0)R.push(['bad',`Prognose: Bis Saisonende fehlen voraussichtlich ${eur(-fc.end)}.`]);
-  const withB=costG.filter(g=>belegMeta(g).length).length;
+const isTest=g=>/test/i.test(g.comp||'');
+/* ---------- Hinweise & offene Fragen ---------- */
+let ISS={};
+function srIssues(gs,fc,rest){const R=[],dec=(S.settings.main||{}).srDec||{};const costG=gs.filter(g=>srSum(g)>0);
+  const add=(k,lvl,t,ctx)=>{const d=dec[k]||{};R.push(Object.assign({k,lvl,t,s:d.s||'open',n:d.n||'',d:d.d||''},ctx||{}))};
+  // Vergleichswerte: km je Schiedsrichter/in, übliche Spielleitung je Art (Liga/Pokal vs. Test)
+  const kmBy={},sleBy={liga:{},test:{}};
+  gs.forEach(g=>belegMeta(g).forEach(b=>bSRs(b).forEach(r=>{const km=nz(r.km);if(r.ref&&km)(kmBy[r.ref]=kmBy[r.ref]||[]).push({km,b:b.id});const s=nz(r.sle);if(s!=null){const m=sleBy[isTest(g)?'test':'liga'];m[s]=(m[s]||0)+1}})));
+  const usual=m=>{const e=Object.entries(m).sort((a,b)=>b[1]-a[1]);return e.length&&e[0][1]>=2?+e[0][0]:null};
+  gs.forEach(g=>{const s=srSum(g),B=belegMeta(g),nm=`${fmtDY(g.date)} ${g.opponent||''}`,ctx={g:g.id};
+    if(g.home===true&&g.date<TODAY&&!(g.sr||[]).length&&!B.length)add('nocost|'+g.id,'warn',`${nm}: Heimspiel ohne SR-Kosten und ohne Beleg.`,Object.assign({act:'beleg-new'},ctx));
+    if(s>0&&!B.length)add('nobeleg|'+g.id,'warn',`${nm}: Kosten ${eur(s)} eingetragen, aber noch kein Beleg.`,Object.assign({act:'beleg-new'},ctx));
+    const BV=B.filter(b=>b.status!=='abgelehnt');
+    if(BV.length&&!(g.sr||[]).length)add('belegnocost|'+g.id,'warn',`${nm}: Beleg vorhanden, aber keine Kosten beim Spiel eingetragen.`,Object.assign({act:'beleg',b:BV[0].id},ctx));
+    const bs=BV.map(bAmount).filter(x=>x!=null);if(BV.length&&bs.length&&(g.sr||[]).length&&Math.abs(r2(bs.reduce((a,b)=>a+b,0))-s)>0.005)
+      add('diff|'+g.id,'bad',`${nm}: Laut Beleg ${eur(r2(bs.reduce((a,b)=>a+b,0)))}, beim Spiel eingetragen ${eur(s)}.`,Object.assign({act:'beleg',b:BV[0].id},ctx));
+    const refs={};(g.sr||[]).forEach(e=>{if(!(+e.amount>0))add('zero|'+g.id+'|'+e.ref,'warn',`${nm}: Eintrag ohne Betrag (${refName(e.ref)}).`,Object.assign({act:'sr'},ctx));
+      if(e.ref){if(refs[e.ref])add('dup|'+g.id+'|'+e.ref,'warn',`${nm}: ${refName(e.ref)} ist doppelt eingetragen.`,Object.assign({act:'sr'},ctx));refs[e.ref]=1}});
+    {const grp=costG.filter(x=>isTest(x)===isTest(g)),ga=grp.length?grp.reduce((t,x)=>t+srSum(x),0)/grp.length:0;if(grp.length>=3&&s>0&&ga&&(s>ga*1.4||s<ga*0.6))add('out|'+g.id,'info',`${nm}: ${eur(s)} – deutlich ${s>ga?'über':'unter'} dem Schnitt${isTest(g)?' der Testspiele':''} (${eur(ga)}).`,ctx)}
+    // je Beleg
+    B.forEach(b=>{const bc=Object.assign({act:'beleg',b:b.id},ctx),L=b.sr||[],ab=['A','B'];
+      L.forEach((r,i)=>{if(!srUsed(r))return;const who=`SR ${ab[i]||i+1}${r.ref?' ('+refName(r.ref)+')':''}`,c=srCalc(r),sm=nz(r.sum);
+        if(sm==null&&c>0)add(`nosum|${b.id}|${i}`,'warn',`${nm}: ${who} – Summe auf dem Beleg fehlt (berechnet ${eur(c)}).`,bc);
+        else if(sm!=null&&Math.abs(sm-c)>0.005)add(`calc|${b.id}|${i}`,'bad',`${nm}: ${who} – laut Beleg ${eur(sm)}, nachgerechnet ${eur(c)}.`,bc);
+        if(!r.sig)add(`sig|${b.id}|${i}`,'warn',`${nm}: ${who} – Unterschrift fehlt.`,bc);
+        const km=nz(r.km);if(r.ref&&km){const o=(kmBy[r.ref]||[]).filter(x=>x.b!==b.id).map(x=>x.km);if(o.length){const m=o.reduce((a,x)=>a+x,0)/o.length;if(Math.abs(km-m)>10&&Math.abs(km-m)/m>0.25)add(`km|${b.id}|${i}`,'info',`${nm}: ${who} – ${km} km, sonst Ø ${Math.round(m)} km.`,bc)}}
+        const sl=nz(r.sle),u=usual(sleBy[isTest(g)?'test':'liga']);if(sl!=null&&u!=null&&sl!==u)add(`sle|${b.id}|${i}`,'info',`${nm}: ${who} – Spielleitung ${eur(sl)}, üblich ${eur(u)}${isTest(g)?' bei Testspielen':''}.`,bc)});
+      const U=bSRs(b);if(U.length){const sum=r2(U.reduce((a,r)=>a+srDecl(r),0)),t=nz(b.total);
+        if(t==null)add(`notot|${b.id}`,'info',`${nm}: Gesamtbetrag auf dem Beleg fehlt (Summe der Schiedsrichter ${eur(sum)}).`,bc);
+        else if(Math.abs(t-sum)>0.005)add(`tot|${b.id}`,'bad',`${nm}: Gesamt laut Beleg ${eur(t)}, Summe der Schiedsrichter ${eur(sum)}.`,bc)}
+      if(b.bdate&&b.bdate!==g.date)add(`date|${b.id}`,'warn',`${nm}: Datum auf dem Beleg ${fmtDY(b.bdate)} passt nicht zum Spieltag.`,bc);
+      if(b.corr)add(`corr|${b.id}`,'warn',`${nm}: Beleg enthält Korrekturen, die nicht abgezeichnet sind.`,bc);
+      if(!b.pages)add(`nopic|${b.id}`,'info',`${nm}: Beleg ohne Foto/PDF.`,bc);
+      (b.qs||[]).forEach(q=>R.push({k:`q|${b.id}|${q.id}`,lvl:'q',t:`${nm}: ${q.t}`,s:q.s||'open',n:q.n||'',d:q.d||'',q:1,g:g.id,b:b.id,qid:q.id,act:'beleg'}))})});
+  if(rest<0)add('over','bad',`Der Vorschuss ist um ${eur(-rest)} überzogen.`,{act:'adv'});
+  if(fc.n&&fc.end<0)add('fc','bad',`Prognose: Bis Saisonende fehlen voraussichtlich ${eur(-fc.end)}.`,{act:'adv'});
+  const withB=costG.filter(g=>belegMeta(g).length).length;ISS={};R.forEach(x=>ISS[x.k]=x);
   return {list:R,belegOk:withB,belegOf:costG.length}}
-function srChecksHtml(ck){const ic={bad:'✕',warn:'!',info:'i'};
-  return `<div class="card srchk"><div class="row between"><span class="k">Belege</span><b class="num ${ck.belegOk<ck.belegOf?'':'ok'}">${ck.belegOk} von ${ck.belegOf} Spielen</b></div>`+
-    (ck.list.length?`<ul class="srchkl">${ck.list.map(r=>`<li class="${r[0]}"><span aria-hidden="true">${ic[r[0]]}</span>${esc(r[1])}</li>`).join('')}</ul>`:`<p class="sub" style="margin:6px 0 0">Alles stimmig: Beträge, Belege und Einträge passen zusammen.</p>`)+`</div>`}
+const ISS_S={open:'offen',ok:'geklärt',rej:'abgelehnt',ign:'ignoriert'};
+function issSet(k,s,n){const it=ISS[k];if(!it)return;
+  if(it.q){const g=clone(S.games[it.g]);g.belege=belegMeta(g).map(b=>b.id!==it.b?b:Object.assign({},b,{qs:(b.qs||[]).map(q=>q.id!==it.qid?q:Object.assign({},q,{s,n:n!=null?n:q.n,d:TODAY}))}));put('games',it.g,g);return}
+  const m=Object.assign({},S.settings.main||{});const D=Object.assign({},m.srDec||{});if(s==='open'&&!n)delete D[k];else D[k]={s,n:n!=null?n:(D[k]||{}).n||'',d:TODAY};m.srDec=D;put('settings','main',m)}
+function srIssuesHtml(ck){const tab=ui.srIss||'open',L=ck.list,cnt=s=>L.filter(x=>x.s===s).length,ic={bad:'✕',warn:'!',info:'i',q:'?'};
+  const shown=L.filter(x=>x.s===tab);
+  return `<div class="card srchk"><div class="row between"><span class="k">Belege</span><b class="num ${ck.belegOk<ck.belegOf?'':'ok'}">${ck.belegOk} von ${ck.belegOf} Spielen</b></div>
+    <div class="isstabs">${['open','ok','rej','ign'].map(s=>`<button data-a="iss-tab" data-v="${s}" aria-pressed="${tab===s}">${s==='open'?'Offen':ISS_S[s][0].toUpperCase()+ISS_S[s].slice(1)} <b>${cnt(s)}</b></button>`).join('')}</div>`+
+    (shown.length?`<ul class="srchkl">${shown.map(x=>`<li class="${x.lvl}"><span class="ic" aria-hidden="true">${ic[x.lvl]}</span><div class="grow"><button class="isst" data-a="iss-note" data-k="${esc(x.k)}">${esc(x.t)}</button>${x.n?`<div class="issn">Notiz: ${esc(x.n)}</div>`:''}
+      <div class="issb">${x.act?`<button class="btn sm" data-a="iss-edit" data-k="${esc(x.k)}">Bearbeiten</button>`:''}${x.s==='open'?`<button class="btn sm iok" data-a="iss-set" data-k="${esc(x.k)}" data-v="ok">✓ Geklärt</button><button class="btn sm irej" data-a="iss-set" data-k="${esc(x.k)}" data-v="rej">✕ Ablehnen</button><button class="btn sm ghost" data-a="iss-set" data-k="${esc(x.k)}" data-v="ign">Ignorieren</button>`:`<button class="btn sm ghost" data-a="iss-set" data-k="${esc(x.k)}" data-v="open">Wieder öffnen</button>`}</div></div></li>`).join('')}</ul>`
+      :`<p class="sub" style="margin:8px 0 0">${tab==='open'?(L.length?'Keine offenen Punkte.':'Alles stimmig: Beträge, Belege und Einträge passen zusammen.'):'Keine Einträge.'}</p>`)+`</div>`}
 // Datei gewählt → Seiten verkleinern und im Entwurf merken
-document.addEventListener('change',async e=>{const el=e.target;if(!el||el.id!=='f-belegfile'||!ui.draft||ui.sheet!=='beleg')return;const f=el.files&&el.files[0];if(!f)return;
+document.addEventListener('change',async e=>{const el=e.target;if(!el||!ui.draft||ui.sheet!=='beleg')return;
+  if(el.id!=='f-belegfile')return;const f=el.files&&el.files[0];if(!f)return;
   if(f.size>25*1024*1024){toast('Datei ist größer als 25 MB.');return}const dr=ui.draft;dr.busy=true;drawSheet();
   try{dr.pages=await belegPages(f);dr.file=f.name||'Beleg';if(dr.pages.length>=6)toast('Nur die ersten 6 Seiten werden übernommen.')}catch(err){toast('Datei konnte nicht gelesen werden.')}
   dr.busy=false;if(ui.draft===dr)drawSheet()});
-async function belegSave(d){const g=S.games[d.g];if(!g)return;const id=d.id||uid('beleg');const amt=String(d.amount||'').trim()===''?null:parseFloat(String(d.amount).replace(',','.'));
-  try{if(d.pages&&d.pages.length){const data={g:d.g,file:d.file||'',pages:d.pages};await db.collection('srbelege').doc(id).set(data);BELEG_CACHE[id]=data}
-    const gg=clone(S.games[d.g]);const L=belegMeta(gg).filter(b=>b.id!==id);const old=belegMeta(gg).find(b=>b.id===id)||{};
-    L.push({id,file:d.file||old.file||'',pages:d.pages&&d.pages.length?d.pages.length:(old.pages||0),amount:amt,note:(d.note||'').trim(),added:old.added||TODAY});gg.belege=L;put('games',d.g,gg);toast(d.id?'Beleg gespeichert':'Beleg hinzugefügt')}
-  catch(e){toast('Beleg konnte nicht gespeichert werden'+(e&&e.code==='permission-denied'?' (keine Berechtigung für SR-Belege in der Datenbank).':'.'))}}
-async function belegDelete(gid,id){try{await db.collection('srbelege').doc(id).delete()}catch(e){}delete BELEG_CACHE[id];const gg=clone(S.games[gid]);gg.belege=belegMeta(gg).filter(b=>b.id!==id);put('games',gid,gg);toast('Beleg gelöscht')}
-// PDF für die Kassenwartin: Übersicht, Verlauf, Schiedsrichter, Prüfung, alle Belege
+// Nachrechnung live aktualisieren, ohne das Fenster neu zu zeichnen
+document.addEventListener('input',e=>{const el=e.target;if(ui.sheet!=='beleg'||!ui.draft||!el.dataset||!el.dataset.f)return;ui.draft[el.dataset.f]=el.value;belegLive()});
+function belegLive(){const d=ui.draft;let sum=0;['A','B'].forEach(X=>{const r=draftSR(d,X),c=srCalc(r),sm=nz(r.sum),el=document.getElementById('calc-'+X);if(srUsed(r))sum+=srDecl(r);if(!el)return;
+    const bad=sm!=null&&Math.abs(sm-c)>0.005;el.className='calc '+(bad?'bad':'ok');el.textContent=srUsed(r)?`nachgerechnet ${eur(c)}${sm!=null?(bad?' ≠ Beleg':' ✓'):''}`:''});
+  const s=document.getElementById('calc-sum');if(s){const t=nz(d.total);s.innerHTML=`Summe der Schiedsrichter: <b>${eur(r2(sum))}</b>${t!=null&&Math.abs(t-r2(sum))>0.005?' · <span class="bad">weicht vom Gesamtbetrag ab</span>':''}`}}
+// Entwurf für das Beleg-Fenster
+function belegDraft(gid,b){b=b||{};const g=S.games[gid]||{};const d={id:b.id||null,g:gid||'',pages:[],file:b.file||'',oldPages:b.pages||0,busy:false,bdate:b.bdate||'',status:b.status||'offen',
+  total:b.total??(b.amount??''),corr:!!b.corr,note:b.note||'',qs:clone(b.qs||[]),qnew:'',ng_date:TODAY,ng_opp:'',ng_ha:'H',ng_comp:'Test',take:!b.id&&!(g.sr||[]).length};
+  ['A','B'].forEach((X,i)=>{const r=(b.sr||[])[i]||{};Object.assign(d,{[X+'_ref']:r.ref||'',[X+'_new']:'',[X+'_sle']:r.sle??'',[X+'_km']:r.km??'',[X+'_gkm']:r.gkm??'',[X+'_oepnv']:r.oepnv??'',[X+'_sonst']:r.sonst??'',[X+'_sum']:r.sum??'',[X+'_sig']:r.sig!=null?!!r.sig:true})});
+  if(!b.id&&(g.sr||[]).length){(g.sr||[]).slice(0,2).forEach((e,i)=>{const X='AB'[i];d[X+'_ref']=e.ref||'';d[X+'_sum']=e.amount??''})}
+  return d}
+function draftSR(d,X){return {ref:d[X+'_ref']==='__new'?'':d[X+'_ref'],sle:d[X+'_sle'],km:d[X+'_km'],gkm:d[X+'_gkm'],oepnv:d[X+'_oepnv'],sonst:d[X+'_sonst'],sum:d[X+'_sum'],sig:d[X+'_sig']}}
+function belegSRBlock(d,X){const refs=all('refs').sort((a,b)=>a.name.localeCompare(b.name,'de')),r=draftSR(d,X),c=srCalc(r),sm=nz(r.sum),used=srUsed(r)||d[X+'_ref']==='__new';
+  return `<div class="srblk"><div class="row between"><b>SR ${X}</b><span id="calc-${X}" class="calc ${sm!=null&&Math.abs(sm-c)>0.005?'bad':'ok'}">${used?`nachgerechnet ${eur(c)}${sm!=null?(Math.abs(sm-c)>0.005?' ≠ Beleg':' ✓'):''}`:''}</span></div>`+
+    F('Name',sel(X+'_ref',d[X+'_ref'],[['','—'],...refs.map(x=>[x.id,x.name]),['__new','+ Neue/r Schiedsrichter/in …']]))+(d[X+'_ref']==='__new'?F('Name neu',inp(X+'_new',d[X+'_new'],'text','placeholder="Vor- und Nachname"')):'')+
+    `<div class="grid2">${F('Spielleitung €',inp(X+'_sle',d[X+'_sle'],'number','inputmode="decimal" step="0.01"'))}${F('ÖPNV €',inp(X+'_oepnv',d[X+'_oepnv'],'number','inputmode="decimal" step="0.01"'))}</div>
+    <div class="grid2">${F('km einzeln (× 0,30)',inp(X+'_km',d[X+'_km'],'number','inputmode="decimal"'))}${F('km Gespann (× 0,32)',inp(X+'_gkm',d[X+'_gkm'],'number','inputmode="decimal"'))}</div>
+    <div class="grid2">${F('Sonstiges €',inp(X+'_sonst',d[X+'_sonst'],'number','inputmode="decimal" step="0.01"'))}${F('Summe laut Beleg €',inp(X+'_sum',d[X+'_sum'],'number','inputmode="decimal" step="0.01"'))}</div>
+    <button class="tog" data-a="bl-tog" data-v="${X}_sig" aria-pressed="${!!d[X+'_sig']}">${d[X+'_sig']?'✓ unterschrieben':'✗ Unterschrift fehlt'}</button></div>`}
+function refFor(d,X){if(d[X+'_ref']!=='__new')return d[X+'_ref']||'';const n=(d[X+'_new']||'').trim();if(!n)return '';const ex=refByName(n);if(ex)return ex;const id=uid('r');put('refs',id,{name:n});return id}
+const nameKey=n=>String(n||'').toLowerCase().replace(/[,.]/g,' ').split(/\s+/).filter(Boolean).sort().join(' ');
+function refByName(n){const k=nameKey(n);const r=all('refs').find(x=>nameKey(x.name)===k);return r?r.id:null}
+function belegCommit(d){let gid=d.g;
+  if(gid==='__new'){if(!d.ng_date)return 'Bitte das Datum des Spiels eingeben.';gid='g-'+d.ng_date+(S.games['g-'+d.ng_date]?'-'+Math.random().toString(36).slice(2,5):'');
+    put('games',gid,{squad:{},zn:[],sr:[],opponent:(d.ng_opp||'').trim()||'Gegner offen',date:d.ng_date,time:'',home:d.ng_ha==='H'?true:d.ng_ha==='A'?false:null,comp:d.ng_comp||'Test',venue:'',znNeed:0,note:''})}
+  const g=clone(S.games[gid]);if(!g)return 'Spiel nicht gefunden.';
+  const id=d.id||uid('beleg'),old=belegMeta(g).find(b=>b.id===id)||{};
+  const sr=['A','B'].map(X=>{const r=draftSR(d,X);r.ref=refFor(d,X);['sle','km','gkm','oepnv','sonst','sum'].forEach(k=>r[k]=nz(r[k]));r.sig=!!r.sig;return r});
+  const b={id,file:d.pages.length?d.file:(old.file||d.file||''),pages:d.pages.length?d.pages.length:(old.pages||0),added:old.added||TODAY,status:d.status||'offen',bdate:d.bdate||'',total:nz(d.total),corr:!!d.corr,note:(d.note||'').trim(),sr,qs:d.qs||[]};
+  g.belege=belegMeta(g).filter(x=>x.id!==id).concat([b]);
+  if(d.take){g.sr=sr.filter(srUsed).filter(r=>r.ref).map(r=>({ref:r.ref,amount:srDecl(r)}))}
+  put('games',gid,g);
+  if(d.pages.length){const data={g:gid,file:d.file||'',pages:d.pages};BELEG_CACHE[id]=data;
+    if(mode==='db'&&db)db.collection('srbelege').doc(id).set(data).then(()=>toast('Foto gespeichert')).catch(e=>{toast('Foto konnte nicht gespeichert werden'+(e&&e.code==='permission-denied'?' (keine Berechtigung für SR-Belege).':'.'));const gg=clone(S.games[gid]);gg.belege=belegMeta(gg).map(x=>x.id===id?Object.assign({},x,{pages:old.pages||0}):x);put('games',gid,gg)})}
+  toast(d.id?'Beleg gespeichert':'Beleg angelegt')}
+async function belegDelete(gid,id){try{if(mode==='db'&&db)await db.collection('srbelege').doc(id).delete()}catch(e){}delete BELEG_CACHE[id];const gg=clone(S.games[gid]);gg.belege=belegMeta(gg).filter(b=>b.id!==id);put('games',gid,gg);toast('Beleg gelöscht')}
+// Prüfung von Claude übernehmen: JSON {belege:[{datum,gegner,heim,wettbewerb,belegdatum,gesamt,korrektur,status,notiz,sr:[{name,sle,km,gkm,oepnv,sonst,summe,unterschrift}],fragen:[…]}]}
+function climpRun(txt){let J;try{J=JSON.parse(String(txt||'').trim().replace(/^```(json)?|```$/g,''))}catch(e){return 'Der Text ist kein gültiges JSON.'}
+  const L=Array.isArray(J)?J:J.belege;if(!Array.isArray(L)||!L.length)return 'Keine Belege im Text gefunden.';let nb=0,ng=0,nu=0;
+  for(const x of L){if(!x||!x.datum)continue;const cand=all('games').filter(g=>g.date===x.datum);
+    let g=cand.find(g=>x.gegner&&g.opponent&&g.opponent.toLowerCase().split(/\s+/).some(w=>w.length>3&&x.gegner.toLowerCase().includes(w)))||cand.find(g=>g.home===true)||cand[0];
+    let gid;if(!g){gid='g-'+x.datum+(S.games['g-'+x.datum]?'-'+Math.random().toString(36).slice(2,5):'');put('games',gid,{squad:{},zn:[],sr:[],opponent:x.gegner||'Gegner offen',date:x.datum,time:'',home:x.heim!==false,comp:x.wettbewerb||'Test',venue:'',znNeed:0,note:''});ng++}else gid=g.id;
+    const gg=clone(S.games[gid]);
+    const sr=(x.sr||[]).slice(0,2).map(r=>{let ref=r.name?refByName(r.name):'';if(r.name&&!ref){ref=uid('r');put('refs',ref,{name:r.name})}return {ref,sle:nz(r.sle),km:nz(r.km),gkm:nz(r.gkm),oepnv:nz(r.oepnv),sonst:nz(r.sonst),sum:nz(r.summe),sig:r.unterschrift!==false}});
+    const qs=(x.fragen||[]).map(t=>({id:uid('q'),t:String(t),s:'open',n:''}));
+    const B=belegMeta(gg);const tgt=B.find(b=>!(b.sr||[]).some(srUsed))||null;
+    const b=Object.assign({},tgt||{id:uid('beleg'),file:'',pages:0,added:TODAY},{status:x.status||'offen',bdate:x.belegdatum||'',total:nz(x.gesamt),corr:!!x.korrektur,note:x.notiz||(tgt&&tgt.note)||'',sr,qs:((tgt&&tgt.qs)||[]).concat(qs)});
+    if(tgt)nu++;else nb++;gg.belege=B.filter(y=>y!==tgt).concat([b]);
+    if(!(gg.sr||[]).length)gg.sr=sr.filter(r=>r.ref&&srUsed(r)).map(r=>({ref:r.ref,amount:srDecl(r)}));put('games',gid,gg)}
+  toast(`${nb+nu} Belege übernommen`+(ng?`, ${ng} Spiel${ng===1?'':'e'} angelegt`:'')+'. Fotos bitte beim jeweiligen Beleg ergänzen.')}
+// PDF für die Kassenwartin: Übersicht, Verlauf, Belege im Detail, Schiedsrichter, Prüfung, alle Belegbilder
 let srExporting=false;
-async function srExport(kind){if(srExporting)return;srExporting=true;toast('PDF wird erstellt …');
-  const E=n=>eur(n).replace(/\s?€/,'');try{await loadScript(CDN.jspdf);const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});
+async function srExport(kind){if(srExporting)return;srExporting=true;toast('PDF wird erstellt …');const E=n=>eur(n).replace(/\s?€/,'');
+  try{await loadScript(CDN.jspdf);const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});
     const W=210,H=297,M=15,CW=W-2*M,BOT=H-16;let y=M;const ink=[20,32,46],mute=[90,104,120],acc=[194,65,12],ok=[21,128,61],bad=[185,28,28],line=[213,220,229];
-    const gs=gamesSorted(),adv=srAdv(),total=adv.reduce((s,a)=>s+(+a.amount||0),0),spent=gs.reduce((a,g)=>a+srSum(g),0),rest=total-spent,fc=srForecast(gs,rest),ck=srChecks(gs,fc,rest);
+    const gs=gamesSorted(),adv=srAdv(),total=adv.reduce((s,a)=>s+(+a.amount||0),0),spent=gs.reduce((a,g)=>a+srSum(g),0),rest=total-spent,fc=srForecast(gs,rest),ck=srIssues(gs,fc,rest);
     const withCost=gs.filter(g=>(g.sr||[]).length||belegMeta(g).length);
     const need=h=>{if(y+h>BOT){doc.addPage();y=M}};
-    const h2=t=>{need(14);y+=4;doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(...ink);doc.text(T(t),M,y);doc.setDrawColor(...acc);doc.setLineWidth(0.8);doc.line(M,y+2,M+12,y+2);y+=8};
+    const h2=t=>{need(16);y+=4;doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(...ink);doc.text(T(t),M,y);doc.setDrawColor(...acc);doc.setLineWidth(0.8);doc.line(M,y+2,M+12,y+2);y+=8};
     doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...acc);doc.text('MOSKITOS 2 · SR-KOSTEN',M,y+3);
     doc.setFontSize(20);doc.setTextColor(...ink);doc.text(T('Schiedsrichter-Abrechnung '+srSeason(gs)),M,y+12);
     doc.setFont('helvetica','normal');doc.setFontSize(10.5);doc.setTextColor(...mute);doc.text(T('Stand '+fmtDY(TODAY)+' · Oberliga Frauen · alle Beträge in Euro'),M,y+19);y+=27;
-    // Kennzahlen
-    const K=[['Vorschüsse',E(total)],['Ausgegeben',E(spent)],['Rest',E(rest)],['Spiele mit Kosten',String(gs.filter(g=>srSum(g)>0).length)]];const kw=(CW-9)/4;
+    const K=[['Vorschüsse',E(total)],['Ausgegeben',E(spent)],['Rest',E(rest)],['Belege',ck.belegOk+' / '+ck.belegOf]];const kw=(CW-9)/4;
     K.forEach((k,i)=>{const x=M+i*(kw+3);doc.setFillColor(246,243,238);doc.roundedRect(x,y,kw,18,2,2,'F');doc.setFontSize(7.5);doc.setTextColor(...mute);doc.setFont('helvetica','bold');doc.text(T(k[0].toUpperCase()),x+3,y+6);
       doc.setFontSize(13);doc.setTextColor(...(k[0]==='Rest'?(rest<0?bad:ok):ink));doc.text(T(k[1]),x+3,y+14)});y+=24;
     if(fc.n){doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(...ink);
       const pl=doc.splitTextToSize(T(`Prognose bis Saisonende: Ø ${E(fc.avg)} je Spiel (aus ${fc.n} Spielen) × ${fc.open} offene Heimspiele = ${E(fc.need)}. Voraussichtlich ${fc.end>=0?'übrig':'fehlen'}: ${E(Math.abs(fc.end))}; ungünstigster Fall: ${E(fc.worst)}.`),CW);doc.text(pl,M,y);y+=pl.length*4.6+2}
-    // Vorschüsse
     h2('Vorschüsse');doc.setFontSize(10);adv.forEach(a=>{need(6);doc.setFont('helvetica','normal');doc.setTextColor(...ink);doc.text(T(fmtDY(a.date)),M,y);doc.text(T(a.note||'SR-Vorschuss'),M+28,y);doc.setFont('helvetica','bold');doc.text(T(E(a.amount)),W-M,y,{align:'right'});y+=5.5});
     doc.setDrawColor(...line);doc.setLineWidth(0.3);doc.line(M,y-3,W-M,y-3);doc.setFont('helvetica','bold');doc.text('Summe',M+28,y+1);doc.text(T(E(total)),W-M,y+1,{align:'right'});y+=6;
-    // Verlauf-Tabelle
+    // Spiele und Kosten
     h2('Spiele und Kosten');const C=[[M,'Datum',18],[M+18,'Spiel',50],[M+68,'Schiedsrichter',56],[M+124,'Betrag',18,1],[M+142,'Stand',22,1],[M+164,'Beleg',16,1]];
     const head=()=>{doc.setFillColor(238,234,227);doc.rect(M,y-4,CW,6.5,'F');doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(...mute);C.forEach(c=>doc.text(c[1],c[3]?c[0]+c[2]-1:c[0]+1,y,{align:c[3]?'right':'left'}));y+=6};
     head();const ev=adv.map(a=>({t:'a',d:a.date||'',a})).concat(withCost.map(g=>({t:'g',d:g.date||'',g}))).sort((x,z)=>x.d.localeCompare(z.d)||(x.t==='a'?-1:1));let run=0,zebra=0;
-    ev.forEach(x=>{doc.setFontSize(9);let rows;
-      if(x.t==='a'){run+=+x.a.amount||0;rows=[[fmtDY(x.a.date),'Vorschuss: '+(x.a.note||'SR-Vorschuss'),'','+'+E(x.a.amount),E(run),'']]}
-      else{const g=x.g,s=srSum(g);run-=s;const refs=(g.sr||[]).map(e=>((S.refs[e.ref]||{}).name||'Unbekannt')+' '+E(e.amount));
-        rows=[[fmtDY(g.date),(g.home===true?'Heim: ':g.home===false?'Ausw.: ':'')+(g.opponent||'')+(g.comp&&g.comp!=='Liga'?' ('+g.comp+')':''),refs.join('\n')||'–',E(s),E(run),belegMeta(g).length?'ja ('+belegMeta(g).length+')':(s>0?'fehlt':'–')]]}
-      const r=rows[0];const sp=doc.splitTextToSize(T(r[1]),C[1][2]-2),rf=doc.splitTextToSize(T(r[2]),C[2][2]-2);const hh=Math.max(sp.length,rf.length)*4+2.5;
+    ev.forEach(x=>{doc.setFontSize(9);let r;
+      if(x.t==='a'){run+=+x.a.amount||0;r=[fmtDY(x.a.date),'Vorschuss: '+(x.a.note||'SR-Vorschuss'),'','+'+E(x.a.amount),E(run),'']}
+      else{const g=x.g,s=srSum(g);run-=s;const refs=(g.sr||[]).map(e=>refName(e.ref)+' '+E(e.amount));const B=belegMeta(g);
+        r=[fmtDY(g.date),(g.home===true?'Heim: ':g.home===false?'Ausw.: ':'')+(g.opponent||'')+(g.comp&&g.comp!=='Liga'?' ('+g.comp+')':''),refs.join('\n')||'-',E(s),E(run),B.length?B.map(b=>bStatusL[b.status||'offen']).join(', '):(s>0?'fehlt':'-')]}
+      const sp=doc.splitTextToSize(T(r[1]),C[1][2]-2),rf=doc.splitTextToSize(T(r[2]),C[2][2]-2);const hh=Math.max(sp.length,rf.length)*4+2.5;
       if(y+hh>BOT){doc.addPage();y=M+4;head()}
       if(zebra++%2){doc.setFillColor(251,249,245);doc.rect(M,y-3.6,CW,hh,'F')}
       doc.setFont('helvetica','normal');doc.setTextColor(...ink);doc.text(T(r[0]),M+1,y);doc.text(sp,C[1][0]+1,y);doc.setTextColor(...mute);doc.text(rf,C[2][0]+1,y);
       doc.setFont('helvetica','bold');doc.setTextColor(...(x.t==='a'?ok:ink));doc.text(T(r[3]),C[3][0]+C[3][2]-1,y,{align:'right'});doc.setFont('helvetica','normal');doc.setTextColor(...ink);doc.text(T(r[4]),C[4][0]+C[4][2]-1,y,{align:'right'});
-      doc.setTextColor(...(r[5]==='fehlt'?bad:mute));doc.text(T(r[5]),C[5][0]+C[5][2]-1,y,{align:'right'});y+=hh});
+      doc.setTextColor(...(r[5]==='fehlt'||r[5].includes('abgelehnt')?bad:mute));doc.setFontSize(8);doc.text(doc.splitTextToSize(T(r[5]),C[5][2]),C[5][0]+C[5][2]-1,y,{align:'right'});y+=hh});
     doc.setDrawColor(...ink);doc.setLineWidth(0.4);doc.line(M,y-2.5,W-M,y-2.5);doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...ink);doc.text('Summe Kosten',C[1][0]+1,y+1.5);doc.text(T(E(spent)),C[3][0]+C[3][2]-1,y+1.5,{align:'right'});doc.text(T(E(rest)),C[4][0]+C[4][2]-1,y+1.5,{align:'right'});y+=8;
-    // je Schiedsrichter
-    const per={};gs.forEach(g=>(g.sr||[]).forEach(e=>{const n=(S.refs[e.ref]||{}).name||'Unbekannt';per[n]=per[n]||{n:0,s:0};per[n].n++;per[n].s+=+e.amount||0}));
+    // Belege im Detail
+    const BL=[];withCost.forEach(g=>belegMeta(g).forEach(b=>BL.push([g,b])));
+    if(BL.length){h2('Belege im Detail');const D=[[M,'Schiedsrichter/in',50],[M+50,'Spielleit.',18,1],[M+68,'km',12,1],[M+80,'Gesp.-km',16,1],[M+96,'ÖPNV/Sonst.',22,1],[M+118,'Beleg',20,1],[M+138,'nachger.',20,1],[M+158,'Unterschr.',22,1]];
+      for(const [g,b] of BL){const U=bSRs(b);need(14+U.length*5);doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...ink);
+        doc.text(doc.splitTextToSize(T(`${fmtDY(g.date)} ${g.opponent||''}`),78)[0],M,y);doc.setFont('helvetica','normal');doc.setTextColor(...(b.status==='abgelehnt'?bad:b.status==='geprueft'?ok:mute));doc.text(T(`Status: ${bStatusL[b.status||'offen']}`+(nz(b.total)!=null?` · Gesamt laut Beleg ${E(b.total)}`:'')+(b.bdate?` · Belegdatum ${fmtDY(b.bdate)}`:'')),W-M,y,{align:'right'});y+=4.5;
+        if(U.length){doc.setFontSize(7.5);doc.setTextColor(...mute);D.forEach(c=>doc.text(T(c[1]),c[3]?c[0]+c[2]-1:c[0],y,{align:c[3]?'right':'left'}));y+=4;doc.setFontSize(9);
+          U.forEach(rr=>{const c=srCalc(rr),sm=nz(rr.sum);doc.setTextColor(...ink);doc.text(T(rr.ref?refName(rr.ref):'-'),M,y);
+            const v=[E(nz(rr.sle)||0),String(nz(rr.km)||'-'),String(nz(rr.gkm)||'-'),E((nz(rr.oepnv)||0)+(nz(rr.sonst)||0)),sm!=null?E(sm):'-',E(c),rr.sig?'ja':'fehlt'];
+            v.forEach((t,i)=>{const cc=D[i+1];doc.setTextColor(...((i===5&&sm!=null&&Math.abs(sm-c)>0.005)||(i===6&&!rr.sig)?bad:ink));doc.text(T(t),cc[0]+cc[2]-1,y,{align:'right'})});y+=4.6})}
+        else{doc.setFontSize(9);doc.setTextColor(...mute);doc.text(T(nz(b.amount)!=null?`Betrag laut Beleg ${E(b.amount)} (ohne Einzelaufstellung)`:'Ohne Einzelaufstellung'),M,y);y+=4.6}
+        if(b.note){doc.setFontSize(8.5);doc.setTextColor(...mute);const l=doc.splitTextToSize(T('Notiz: '+b.note),CW);need(l.length*4);doc.text(l,M,y);y+=l.length*4}
+        doc.setDrawColor(...line);doc.setLineWidth(0.2);doc.line(M,y-1.5,W-M,y-1.5);y+=3}}
+    const per={};gs.forEach(g=>(g.sr||[]).forEach(e=>{const n=refName(e.ref);per[n]=per[n]||{n:0,s:0};per[n].n++;per[n].s+=+e.amount||0}));
     const pr=Object.entries(per).sort((a,b)=>b[1].s-a[1].s);if(pr.length){h2('Je Schiedsrichter/in');doc.setFontSize(9.5);pr.forEach(([n,v])=>{need(5.5);doc.setFont('helvetica','normal');doc.setTextColor(...ink);doc.text(T(n),M,y);doc.setTextColor(...mute);doc.text(T(v.n+' Spiel'+(v.n===1?'':'e')),M+110,y);doc.setFont('helvetica','bold');doc.setTextColor(...ink);doc.text(T(E(v.s)),W-M,y,{align:'right'});y+=5.2})}
     // Prüfung
-    h2('Prüfung');doc.setFontSize(9.5);doc.setFont('helvetica','normal');doc.setTextColor(...ink);doc.text(T(`Belege: ${ck.belegOk} von ${ck.belegOf} Spielen mit Kosten.`),M,y);y+=5.5;
-    if(!ck.list.length){doc.setTextColor(...ok);doc.text(T('Alles stimmig: Beträge, Belege und Einträge passen zusammen.'),M,y);y+=5.5}
-    ck.list.forEach(r=>{const l=doc.splitTextToSize(T(r[1]),CW-6);need(l.length*4.4+1.5);doc.setTextColor(...(r[0]==='bad'?bad:r[0]==='warn'?acc:mute));doc.text(r[0]==='info'?'i':'!',M+1,y);doc.setTextColor(...ink);doc.text(l,M+6,y);y+=l.length*4.4+1.2});
-    // Belege
-    let nb=0;for(const g of withCost){for(const b of belegMeta(g)){let data=null;try{data=await belegLoad(b.id)}catch(e){}const P=(data&&data.pages)||[];
+    h2('Prüfung und offene Fragen');doc.setFontSize(9.5);doc.setFont('helvetica','normal');doc.setTextColor(...ink);doc.text(T(`Belege: ${ck.belegOk} von ${ck.belegOf} Spielen mit Kosten.`),M,y);y+=6;
+    const grp=[['open','Offen',acc],['ok','Geklärt',ok],['rej','Abgelehnt',bad]];let any=false;
+    grp.forEach(([s,lab,col])=>{const L=ck.list.filter(x=>x.s===s);if(!L.length)return;any=true;need(8);doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...col);doc.text(T(lab+' ('+L.length+')'),M,y);y+=5;doc.setFont('helvetica','normal');
+      L.forEach(r=>{const l=doc.splitTextToSize(T(r.t+(r.n?' - Notiz: '+r.n:'')),CW-6);need(l.length*4.4+1.5);doc.setTextColor(...col);doc.text('-',M+1,y);doc.setTextColor(...ink);doc.text(l,M+6,y);y+=l.length*4.4+1.2});y+=2});
+    if(!any){doc.setTextColor(...ok);doc.text(T('Alles stimmig: Beträge, Belege und Einträge passen zusammen.'),M,y);y+=5.5}
+    // Belegbilder
+    let nb=0;for(const [g,b] of BL){let data=null;if(b.pages){try{data=await belegLoad(b.id)}catch(e){}}const P=(data&&data.pages)||[];
         for(let i=0;i<P.length;i++){doc.addPage();nb++;y=M;doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...acc);doc.text('BELEG',M,y+3);
           doc.setFontSize(12);doc.setTextColor(...ink);doc.text(T(`${fmtDY(g.date)} · ${g.home===true?'Heim':'Auswärts'} gegen ${g.opponent||''}`),M,y+9);
-          doc.setFont('helvetica','normal');doc.setFontSize(9.5);doc.setTextColor(...mute);doc.text(T([`eingetragen ${E(srSum(g))}`,b.amount!=null&&b.amount!==''?`laut Beleg ${E(b.amount)}`:'',b.note||'',P.length>1?`Seite ${i+1}/${P.length}`:''].filter(Boolean).join(' · ')),M,y+14.5);
+          doc.setFont('helvetica','normal');doc.setFontSize(9.5);doc.setTextColor(...mute);doc.text(T([`eingetragen ${E(srSum(g))}`,bAmount(b)!=null?`laut Beleg ${E(bAmount(b))}`:'','Status '+bStatusL[b.status||'offen'],P.length>1?`Seite ${i+1}/${P.length}`:''].filter(Boolean).join(' · ')),M,y+14.5);
           const im=await new Promise(res=>{const m=new Image();m.onload=()=>res(m);m.onerror=()=>res(null);m.src=P[i]});
-          if(im){const top=y+19,mh=BOT-top-2;let w=CW,h=w*im.height/im.width;if(h>mh){h=mh;w=h*im.width/im.height}doc.addImage(P[i],'JPEG',M+(CW-w)/2,top,w,h);doc.setDrawColor(...line);doc.setLineWidth(0.2);doc.rect(M+(CW-w)/2,top,w,h)}}}}
-    if(ck.belegOf&&ck.belegOk<ck.belegOf){doc.setPage(1)}
+          if(im){const top=y+19,mh=BOT-top-2;let w=CW,h=w*im.height/im.width;if(h>mh){h=mh;w=h*im.width/im.height}doc.addImage(P[i],'JPEG',M+(CW-w)/2,top,w,h);doc.setDrawColor(...line);doc.setLineWidth(0.2);doc.rect(M+(CW-w)/2,top,w,h)}}}
     const n=doc.getNumberOfPages();for(let p=1;p<=n;p++){doc.setPage(p);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(...mute);doc.text(T('Moskitos 2 · SR-Abrechnung '+srSeason(gs)+' · Stand '+fmtDY(TODAY)),M,H-8);doc.text('Seite '+p+' / '+n,W-M,H-8,{align:'right'})}
     const name='SR-Abrechnung_Moskitos2_'+TODAY+'.pdf',blob=doc.output('blob');
     if(kind==='share'){const f=new File([blob],name,{type:'application/pdf'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'SR-Abrechnung Moskitos 2'});srExporting=false;return}}
@@ -835,15 +942,15 @@ VIEWS.sr=()=>{
   html+=`<h2 class="sec">Prognose bis Saisonende</h2><div class="card fcst">`+(fc.n?
     `<div class="row between" style="flex-wrap:nowrap;align-items:flex-end;gap:12px"><div><div class="k">Voraussichtlich ${fc.end>=0?'übrig':'fehlen'}</div><div class="v num ${fc.end>=0?'ok':'bad'}">${eur(Math.abs(fc.end))}</div></div>
       <div class="pill ${fc.end>=0?'fok':'fbad'}">${fc.end>=0?(fc.worst>=0?'Reicht sicher':'Reicht voraussichtlich'):'Reicht nicht'}</div></div>
-     <div class="fgrid"><span>Ø Kosten je Spiel</span><b class="num">${eur(fc.avg)}</b><span>aus ${fc.n} Spiel${fc.n===1?'':'en'} (${eur(fc.min)} bis ${eur(fc.max)})</span>
+     <div class="fgrid"><span>Ø Kosten je Spiel</span><b class="num">${eur(fc.avg)}</b><span>aus ${fc.n} Spiel${fc.n===1?'':'en'}${fc.lg?' ohne Testspiele':''} (${eur(fc.min)} bis ${eur(fc.max)})</span>
       <span>Offene Heimspiele</span><b class="num">${fc.open}</b><span>${fc.past?fc.past+' davon schon gespielt, Kosten noch nicht eingetragen':'ohne eingetragene Kosten'}</span>
       <span>Voraussichtlicher Bedarf</span><b class="num">${eur(fc.need)}</b><span>${fc.open} × ${eur(fc.avg)}</span>
       <span>Ungünstigster Fall</span><b class="num ${fc.worst<0?'bad':''}">${eur(fc.worst)}</b><span>jedes offene Spiel so teuer wie das bisher teuerste</span></div>
      ${fc.until?`<p class="note warn" style="margin:8px 0 0">Geld reicht voraussichtlich nur bis vor dem Heimspiel gegen ${esc(fc.until.opponent)} am ${fmtDL(fc.until.date)}.</p>`:''}`
     :`<p class="sub" style="margin:0">Sobald Kosten für ein Spiel eingetragen sind, steht hier, ob der Vorschuss bis Saisonende reicht.</p>`)+`</div>`;
-  const ck=srChecks(gs,fc,rest);
-  html+=`<h2 class="sec">Prüfung</h2>`+srChecksHtml(ck);
-  html+=`<div class="row srbar"><button class="btn sm" data-a="beleg-new">+ Beleg (Foto/PDF)</button>${navigator.canShare?'<button class="btn sm primary" data-a="sr-export" data-v="share">Abrechnung teilen …</button>':''}<button class="btn sm${navigator.canShare?'':' primary'}" data-a="sr-export" data-v="pdf">Abrechnung als PDF</button></div>`;
+  const ck=srIssues(gs,fc,rest);
+  html+=`<h2 class="sec">Prüfung &amp; offene Fragen</h2>`+srIssuesHtml(ck);
+  html+=`<div class="row srbar"><button class="btn sm" data-a="beleg-new">+ Beleg erfassen</button><button class="btn sm" data-a="climp">Prüfung von Claude übernehmen</button>${navigator.canShare?'<button class="btn sm primary" data-a="sr-export" data-v="share">Abrechnung teilen …</button>':''}<button class="btn sm${navigator.canShare?'':' primary'}" data-a="sr-export" data-v="pdf">Abrechnung als PDF</button></div>`;
   html+=`<h2 class="sec">Verlauf</h2><div class="list">`;
   // Vorschüsse und Spiele chronologisch, Kontostand jeweils danach
   const ev=adv.map(a=>({t:'a',d:a.date||'',a})).concat(withCost.map(g=>({t:'g',d:g.date||'',g}))).sort((x,y)=>x.d.localeCompare(y.d)||(x.t==='a'?-1:1));
@@ -855,7 +962,7 @@ VIEWS.sr=()=>{
     html+=`<div class="card ${g.date<TODAY?'':''}"><div class="row between" style="flex-wrap:nowrap;align-items:flex-start"><div class="row" style="flex-wrap:nowrap;gap:12px;align-items:flex-start">${dateBox(g.date,false)}<div style="min-width:0"><div class="row" style="gap:6px">${haTag(g)}${compTag(g)}</div><div class="t">${esc(g.opponent)}</div>${es.length?`<div class="rest">Rest danach ${eur(run)}</div>`:''}</div></div>
       <div style="text-align:right"><div class="mins num" style="font-size:20px">${eur(sum)}</div></div></div>
       ${es.length?`<div style="margin-top:6px">${es.map((e,i)=>`<button class="srline sredit" data-a="sr-edit" data-g="${g.id}" data-i="${i}" title="Eintrag bearbeiten"><span>${esc((S.refs[e.ref]||{}).name||'Unbekannt')}</span><span class="amount">${eur(e.amount)}<span class="pen" aria-hidden="true">✎</span></span></button>`).join('')}</div>`:''}
-      ${belegMeta(g).length?`<div class="row" style="margin-top:6px;gap:6px">${belegMeta(g).map(b=>`<button class="bchip" data-a="beleg-view" data-g="${g.id}" data-id="${esc(b.id)}">📄 Beleg${b.pages>1?' · '+b.pages+' S.':''}${b.amount!=null&&b.amount!==''?' · '+eur(b.amount):''}</button>`).join('')}</div>`:''}
+      ${belegMeta(g).length?`<div class="row" style="margin-top:6px;gap:6px">${belegMeta(g).map(b=>`<button class="bchip st-${b.status||'offen'}" data-a="beleg-view" data-g="${g.id}" data-id="${esc(b.id)}">${b.pages?'📄':'📝'} Beleg · ${bStatusL[b.status||'offen']}${bAmount(b)!=null?' · '+eur(bAmount(b)):''}</button>`).join('')}</div>`:''}
       <div class="row" style="margin-top:8px"><button class="btn sm" data-a="sr-new" data-g="${g.id}">+ Kosten erfassen</button><button class="btn sm" data-a="beleg-new" data-g="${g.id}">+ Beleg</button></div></div>`});
   html+='</div>';
   const per={};gs.forEach(g=>(g.sr||[]).forEach(e=>{per[e.ref]=per[e.ref]||{n:0,s:0};per[e.ref].n++;per[e.ref].s+=+e.amount||0}));
@@ -1002,23 +1109,32 @@ const SHEETS={
     <div class="row between" style="margin-bottom:14px"><span class="sub">Summe <b class="num">${eur(t)}</b></span><button class="btn sm" data-a="adv-new">+ Vorschuss hinzufügen</button></div>`+
     F('Max. Spielerinnen im Spielbericht',inp('maxSquad',ui.draft.maxSquad,'number','inputmode="numeric"'))},
   save:()=>{put('settings','main',Object.assign({},S.settings.main||{},{maxSquad:+ui.draft.maxSquad||16}));toast('Gespeichert')}},
- beleg:{title:()=>ui.draft.id?'Beleg':'Beleg hinzufügen',saveDisabled:()=>!!ui.draft.busy,
-  body:()=>{const d=ui.draft;const opts=gamesSorted().filter(g=>(g.sr||[]).length||g.home===true||belegMeta(g).length).slice().reverse().map(g=>[g.id,fmtDY(g.date)+' · '+(g.home===true?'Heim':g.home===false?'Ausw.':'')+' · '+(g.opponent||'')+((g.sr||[]).length?' · '+eur(srSum(g)):'')]);
-   return F('Spiel',sel('g',d.g,[['','— auswählen —'],...opts]))+
-    `<label class="fld"><span>Foto oder PDF der Abrechnung</span><input type="file" id="f-belegfile" accept="image/*,application/pdf" class="input"></label>`+
-    (d.busy?'<p class="sub">Datei wird verarbeitet …</p>':d.pages&&d.pages.length?`<div class="bthumbs">${d.pages.map(u=>`<img src="${u}" alt="Seite">`).join('')}</div><p class="sub">${esc(d.file||'')} · ${d.pages.length} Seite${d.pages.length===1?'':'n'}</p>`:'<p class="sub">Tipp: Am Handy kannst du direkt fotografieren. Mehrseitige PDFs gehen auch (bis 6 Seiten).</p>')+
-    F('Betrag laut Beleg (€, optional – für die Prüfung)',inp('amount',d.amount,'number','inputmode="decimal" step="0.01" min="0"'))+F('Notiz',inp('note',d.note,'text','placeholder="z. B. inkl. Fahrtkosten"'))},
-  save:()=>{const d=ui.draft;if(!d.g)return 'Bitte das Spiel auswählen.';if(!d.pages||!d.pages.length)return 'Bitte ein Foto oder PDF wählen.';if(mode!=='db'||!db)return 'Belege lassen sich nur online im Team-Board speichern.';
-   belegSave(Object.assign({},d));toast('Beleg wird gespeichert …')}},
- belegview:{title:()=>'Beleg',canDelete:()=>true,
-  body:()=>{const d=ui.draft,g=S.games[d.g]||{},b=belegMeta(g).find(x=>x.id===d.id)||{};const data=BELEG_CACHE[d.id];
-   if(!data&&!d.loading){d.loading=true;belegLoad(d.id).then(()=>{if(ui.draft===d)drawSheet()}).catch(()=>{d.err=1;if(ui.draft===d)drawSheet()})}
-   return `<p class="sub">${fmtDL(g.date)} · ${esc(g.opponent||'')} · eingetragen ${eur(srSum(g))}</p>`+
-    (data?`<div class="bpages">${data.pages.map(u=>`<a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="Beleg"></a>`).join('')}</div>`:`<p class="sub">${d.err?'Beleg konnte nicht geladen werden.':'Beleg wird geladen …'}</p>`)+
-    F('Betrag laut Beleg (€)',inp('amount',d.amount,'number','inputmode="decimal" step="0.01" min="0"'))+F('Notiz',inp('note',d.note,'text'))},
-  save:()=>{const d=ui.draft;const g=clone(S.games[d.g]);const amt=String(d.amount||'').trim()===''?null:parseFloat(String(d.amount).replace(',','.'));
-   g.belege=belegMeta(g).map(b=>b.id===d.id?Object.assign({},b,{amount:amt,note:(d.note||'').trim()}):b);put('games',d.g,g);toast('Beleg gespeichert')},
+ beleg:{title:()=>ui.draft.id?'Beleg bearbeiten':'Beleg erfassen',canDelete:()=>!!ui.draft.id,saveDisabled:()=>!!ui.draft.busy,
+  body:()=>{const d=ui.draft;const gsel=gamesSorted().filter(g=>(g.sr||[]).length||g.home===true||belegMeta(g).length||isTest(g)).slice().reverse().map(g=>[g.id,fmtDY(g.date)+' · '+(g.home===true?'Heim':g.home===false?'Ausw.':'')+' · '+(g.opponent||'')+(isTest(g)?' (Test)':'')]);
+   let h=F('Spiel',sel('g',d.g,[['','— auswählen —'],...gsel,['__new','+ Spiel anlegen (z. B. Testspiel)']]));
+   if(d.g==='__new')h+=`<div class="grid2">${F('Datum',inp('ng_date',d.ng_date,'date'))}${F('Gegner',inp('ng_opp',d.ng_opp,'text'))}</div><div class="grid2">${F('Heim / Auswärts',sel('ng_ha',d.ng_ha,[['H','Heim'],['A','Auswärts']]))}${F('Wettbewerb',sel('ng_comp',d.ng_comp,['Test','Liga','Pokal R1','Pokal R2','Pokal R3','Pokal Final4']))}</div>`;
+   const data=d.id?BELEG_CACHE[d.id]:null;if(d.id&&d.oldPages&&!data&&!d.loading){d.loading=true;belegLoad(d.id).then(()=>{if(ui.draft===d)drawSheet()}).catch(()=>{d.lerr=1;if(ui.draft===d)drawSheet()})}
+   h+=`<label class="fld"><span>Foto oder PDF${d.oldPages?' (neue Datei ersetzt das vorhandene)':''}</span><input type="file" id="f-belegfile" accept="image/*,application/pdf" class="input"></label>`;
+   h+=d.busy?'<p class="sub">Datei wird verarbeitet …</p>':d.pages.length?`<div class="bthumbs">${d.pages.map(u=>`<img src="${u}" alt="Seite">`).join('')}</div><p class="sub">${esc(d.file||'')} · ${d.pages.length} Seite${d.pages.length===1?'':'n'}</p>`
+     :data?`<div class="bthumbs">${data.pages.map(u=>`<a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="Beleg"></a>`).join('')}</div>`:d.oldPages?`<p class="sub">${d.lerr?'Foto konnte nicht geladen werden.':'Foto wird geladen …'}</p>`:'<p class="sub">Noch kein Foto. Am Handy kannst du direkt fotografieren; PDFs bis 6 Seiten.</p>';
+   h+=`<div class="grid2">${F('Datum auf dem Beleg',inp('bdate',d.bdate,'date'))}${F('Status',sel('status',d.status,[['offen','offen'],['geprueft','geprüft'],['abgelehnt','abgelehnt']]))}</div>`;
+   h+=belegSRBlock(d,'A')+belegSRBlock(d,'B');
+   h+=`<div class="grid2">${F('Gesamt laut Beleg €',inp('total',d.total,'number','inputmode="decimal" step="0.01"'))}<div class="fld"><span>Korrekturen</span><button class="tog" data-a="bl-tog" data-v="corr" aria-pressed="${!d.corr}">${d.corr?'✗ nicht abgezeichnet':'✓ keine offenen'}</button></div></div><p class="sub" id="calc-sum"></p>`;
+   h+=F('Notiz',inp('note',d.note,'text','placeholder="z. B. zwei Spiele am selben Tag"'));
+   h+=`<div class="fld"><span>Offene Fragen zu diesem Beleg</span>${(d.qs||[]).map((q,i)=>`<div class="qrow"><span class="pill q-${q.s||'open'}">${ISS_S[q.s||'open']}</span><span class="grow">${esc(q.t)}</span><button class="btn sm ghost" data-a="bl-qdel" data-v="${i}" aria-label="Frage entfernen">✕</button></div>`).join('')}
+     <div class="row" style="flex-wrap:nowrap;gap:6px">${inp('qnew',d.qnew,'text','placeholder="z. B. Betrag mit SR klären"')}<button class="btn sm" data-a="bl-qadd">+ Frage</button></div></div>`;
+   const hasSR=((S.games[d.g]||{}).sr||[]).length;
+   h+=`<button class="tog" data-a="bl-tog" data-v="take" aria-pressed="${!!d.take}">${d.take?'✓':'○'} Kosten beim Spiel aus diesem Beleg übernehmen${hasSR?' (ersetzt die bisherigen Einträge)':''}</button>`;
+   setTimeout(()=>{if(ui.sheet==='beleg')belegLive()},0);return h},
+  save:()=>{const d=ui.draft;if(d.busy)return false;if(!d.g)return 'Bitte das Spiel auswählen.';return belegCommit(d)},
   del:()=>{belegDelete(ui.draft.g,ui.draft.id)}},
+ issue:{title:()=>'Hinweis',
+  body:()=>{const d=ui.draft;return `<p style="margin:0 0 10px">${esc(d.t)}</p>`+F('Status',sel('s',d.s,[['open','offen'],['ok','geklärt'],['rej','abgelehnt'],['ign','ignoriert']]))+F('Notiz (steht im PDF)',inp('n',d.n,'text','placeholder="z. B. mit Selina geklärt: 124 €"'))},
+  save:()=>{issSet(ui.draft.k,ui.draft.s,ui.draft.n||'');toast('Gespeichert')}},
+ climp:{title:()=>'Prüfung von Claude übernehmen',saveLabel:()=>'Übernehmen',
+  body:()=>`<p class="sub" style="margin:0 0 8px">Füge hier den Text ein, den Claude dir zu den Belegen gegeben hat (beginnt mit <b>{"belege"</b>). Belege werden den Spielen über das Datum zugeordnet; fehlende Testspiele werden angelegt. Die Fotos ergänzt du danach beim jeweiligen Beleg.</p>
+   <textarea class="input" id="f-json" data-f="json" rows="10" style="font:12px/1.4 ui-monospace,monospace;width:100%">${esc(ui.draft.json||'')}</textarea>`,
+  save:()=>climpRun(ui.draft.json)},
  advitem:{title:()=>ui.draft.isNew?'Neuer SR-Vorschuss':'SR-Vorschuss',canDelete:()=>!ui.draft.isNew&&srAdv().length>1,
   body:()=>F('Buchungsdatum',inp('date',ui.draft.date,'date'))+F('Betrag (€)',inp('amount',ui.draft.amount,'number','inputmode="decimal" step="0.01" min="0"'))+F('Notiz',inp('note',ui.draft.note,'text','placeholder="z. B. zweiter Vorschuss"')),
   save:()=>{const d=ui.draft,amt=parseFloat(String(d.amount).replace(',','.'));if(!d.date)return 'Bitte das Buchungsdatum eingeben.';if(isNaN(amt)||amt<=0)return 'Bitte einen gültigen Betrag eingeben.';
@@ -1185,8 +1301,21 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!
   case 'sr-new':openSheet('sr',{g:el.dataset.g,i:null,ref:'',newRef:'',amount:''});break;
   case 'sr-edit':{const g=S.games[el.dataset.g];const i=+el.dataset.i;const en=g.sr[i];openSheet('sr',{g:el.dataset.g,i,ref:en.ref,newRef:'',amount:en.amount});break}
   case 'adv-edit':{const c=cfg();openSheet('adv',{srAdvance:c.srAdvance,maxSquad:c.maxSquad});break}
-  case 'beleg-new':openSheet('beleg',{g:el.dataset.g||'',pages:[],file:'',amount:'',note:'',busy:false});break;
-  case 'beleg-view':{const g=S.games[el.dataset.g]||{};const b=belegMeta(g).find(x=>x.id===id)||{};openSheet('belegview',{g:el.dataset.g,id,amount:b.amount??'',note:b.note||''});break}
+  case 'beleg-new':openSheet('beleg',belegDraft(el.dataset.g||'',null));break;
+  case 'beleg-view':{const g=S.games[el.dataset.g]||{};const b=belegMeta(g).find(x=>x.id===id);if(b)openSheet('beleg',belegDraft(el.dataset.g,b));break}
+  case 'bl-tog':ui.draft[v]=!ui.draft[v];drawSheet();break;
+  case 'bl-qadd':{const t=(ui.draft.qnew||'').trim();if(t){ui.draft.qs=(ui.draft.qs||[]).concat([{id:uid('q'),t,s:'open',n:''}]);ui.draft.qnew=''}drawSheet();break}
+  case 'bl-qdel':ui.draft.qs.splice(+v,1);drawSheet();break;
+  case 'iss-tab':ui.srIss=v;render();break;
+  case 'iss-set':issSet(el.dataset.k,v);toast(v==='open'?'Wieder geöffnet':v==='ign'?'Ignoriert':v==='ok'?'Als geklärt markiert':'Abgelehnt');break;
+  case 'iss-note':{const it=ISS[el.dataset.k];if(it)openSheet('issue',{k:it.k,t:it.t,s:it.s,n:it.n});break}
+  case 'iss-edit':{const it=ISS[el.dataset.k];if(!it)break;const g=S.games[it.g]||{};
+    if(it.act==='adv'){const c=cfg();openSheet('adv',{srAdvance:c.srAdvance,maxSquad:c.maxSquad})}
+    else if(it.act==='beleg'&&it.b){const b=belegMeta(g).find(x=>x.id===it.b);if(b)openSheet('beleg',belegDraft(it.g,b))}
+    else if(it.act==='beleg-new')openSheet('beleg',belegDraft(it.g,null));
+    else if(it.act==='sr'){const ref=it.k.split('|')[2];const i=(g.sr||[]).findIndex(e=>e.ref===ref);if(i>=0){const en=g.sr[i];openSheet('sr',{g:it.g,i,ref:en.ref,newRef:'',amount:en.amount})}else openSheet('sr',{g:it.g,i:null,ref:'',newRef:'',amount:''})}
+    break}
+  case 'climp':openSheet('climp',{json:''});break;
   case 'sr-export':srExport(v);break;
   case 'adv-new':openSheet('advitem',{isNew:true,id:null,date:TODAY,amount:'',note:''});break;
   case 'adv-item':{const x=srAdv().find(a=>a.id===id);if(x)openSheet('advitem',Object.assign({isNew:false},x));break}
