@@ -216,6 +216,8 @@ body.ro .srline.sredit .pen{display:none}
 body.ro .issb,body.ro [data-a="climp"]{display:none!important}
 .srchk .k{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}.srchkl{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}.srchkl li{display:flex;gap:8px;align-items:flex-start}.srchkl li span{flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font-size:12px;font-weight:700;color:#fff;background:var(--muted)}.srchkl li.warn span{background:#C2410C}.srchkl li.bad span{background:var(--bad)}
 .srbar{flex-wrap:wrap;gap:8px;margin:12px 0 0}.bchip{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 10px;cursor:pointer}
+.bgrp{display:inline-flex;gap:4px;align-items:center}.bchip.bedit{padding:4px 9px;color:var(--accent)}.bthumbs img{cursor:zoom-in}
+#bviewer{position:fixed;inset:0;z-index:200;background:#0E1B2C;color:#fff;display:flex;flex-direction:column}#bviewer .bvh{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 10px;border-bottom:1px solid rgba(255,255,255,.15)}#bviewer .bvt{display:flex;flex-direction:column;min-width:0;font-size:14px}#bviewer .bvt span{font-size:12.5px;opacity:.75}#bviewer .bva{display:flex;gap:6px;flex-wrap:wrap}#bviewer .bva .btn:not(.primary){background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.35)}#bviewer .bvb{flex:1;overflow:auto;padding:10px 10px calc(env(safe-area-inset-bottom,0px) + 20px);display:flex;flex-direction:column;gap:10px;align-items:center;touch-action:pan-x pan-y pinch-zoom}#bviewer img{width:100%;max-width:1100px;height:auto;background:#fff;border-radius:6px}#bviewer .bvm{margin:8px 0;font-size:14px;opacity:.85;text-align:center}
 .bthumbs{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 6px}.bthumbs img{height:90px;border:1px solid var(--line);border-radius:6px}.bpages{display:flex;flex-direction:column;gap:8px;margin:6px 0 10px}.bpages img{width:100%;border:1px solid var(--line);border-radius:8px}
 body.ro [data-a="beleg-new"]{display:none!important}
 .advcard{display:block;width:100%;font:inherit;color:inherit;text-align:left;cursor:pointer}.advcard .pen,.item .pen{display:inline-grid;place-items:center;width:28px;height:28px;margin-top:4px;border-radius:8px;border:1px solid var(--line);color:var(--accent);font-size:14px}
@@ -742,6 +744,21 @@ async function canvasJpeg(c,max){let cv=c;for(let k=0;k<6;k++){for(const q of [0
   return cv.toDataURL('image/jpeg',0.45)}
 async function belegPages(file){const cs=(await fileToPages(file)).slice(0,6);const budget=Math.floor(860000/Math.max(cs.length,1));const out=[];for(const c of cs)out.push(await canvasJpeg(c,budget));return out}
 async function belegLoad(id){if(BELEG_CACHE[id])return BELEG_CACHE[id];if(mode!=='db'||!db)return null;const d=await db.collection('srbelege').doc(id).get();const v=d.exists?d.data():null;if(v)BELEG_CACHE[id]=v;return v}
+// Vollbild-Ansicht eines Belegs (nur Foto/PDF-Seiten, ohne Bearbeiten-Fenster)
+async function belegShow(gid,bid,pagesOverride){const g=S.games[gid]||{},b=belegMeta(g).find(x=>x.id===bid)||{};
+  let v=document.getElementById('bviewer');if(v)v.remove();v=document.createElement('div');v.id='bviewer';v.setAttribute('role','dialog');v.setAttribute('aria-modal','true');
+  const head=`<div class="bvh"><div class="bvt"><b>${esc(fmtDY(g.date)+' · '+(g.opponent||''))}</b><span>${bAmount(b)!=null?eur(bAmount(b))+' · ':''}${bStatusL[b.status||'offen']}</span></div>
+    <div class="bva">${pagesOverride?'':`<button class="btn sm" data-bv="edit">Bearbeiten</button>`}<button class="btn sm" data-bv="open">In neuem Tab</button><button class="btn sm primary" data-bv="close">Schließen</button></div></div>`;
+  v.innerHTML=head+'<div class="bvb"><p class="bvm">Beleg wird geladen …</p></div>';document.body.appendChild(v);document.body.style.overflow='hidden';
+  let P=pagesOverride||null;
+  if(!P){try{const d=await belegLoad(bid);P=d&&d.pages}catch(e){v.querySelector('.bvb').innerHTML=`<p class="bvm">Foto konnte nicht geladen werden${e&&e.code?' ('+esc(e.code)+')':''}.</p>`;P=null;return}}
+  if(!P||!P.length){v.querySelector('.bvb').innerHTML=`<p class="bvm">Zu diesem Beleg ist kein Foto gespeichert.${b.pages?' (Das Foto wurde vermutlich nicht hochgeladen – bitte im Beleg erneut auswählen.)':''}</p>`;return}
+  v.querySelector('.bvb').innerHTML=P.map((u,i)=>`${P.length>1?`<p class="bvm">Seite ${i+1} von ${P.length}</p>`:''}<img src="${u}" alt="Beleg Seite ${i+1}">`).join('');
+  v.onclick=async e=>{const a=e.target.closest&&e.target.closest('[data-bv]');if(!a)return;const k=a.dataset.bv;
+    if(k==='close'){v.remove();document.body.style.overflow='';}
+    else if(k==='edit'){v.remove();document.body.style.overflow='';openSheet('beleg',belegDraft(gid,b))}
+    else if(k==='open'){try{for(const u of P){const bl=await (await fetch(u)).blob();window.open(URL.createObjectURL(bl),'_blank')}}catch(err){toast('Konnte nicht geöffnet werden.')}}}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const v=document.getElementById('bviewer');if(v){v.remove();document.body.style.overflow=''}}});
 const belegMeta=g=>Array.isArray(g.belege)?g.belege:[];
 const refName=id=>(S.refs[id]||{}).name||'Unbekannt';
 // Schiedsrichter/in einer Abrechnung: berechnet und laut Beleg
@@ -962,7 +979,7 @@ VIEWS.sr=()=>{
     html+=`<div class="card ${g.date<TODAY?'':''}"><div class="row between" style="flex-wrap:nowrap;align-items:flex-start"><div class="row" style="flex-wrap:nowrap;gap:12px;align-items:flex-start">${dateBox(g.date,false)}<div style="min-width:0"><div class="row" style="gap:6px">${haTag(g)}${compTag(g)}</div><div class="t">${esc(g.opponent)}</div>${es.length?`<div class="rest">Rest danach ${eur(run)}</div>`:''}</div></div>
       <div style="text-align:right"><div class="mins num" style="font-size:20px">${eur(sum)}</div></div></div>
       ${es.length?`<div style="margin-top:6px">${es.map((e,i)=>`<button class="srline sredit" data-a="sr-edit" data-g="${g.id}" data-i="${i}" title="Eintrag bearbeiten"><span>${esc((S.refs[e.ref]||{}).name||'Unbekannt')}</span><span class="amount">${eur(e.amount)}<span class="pen" aria-hidden="true">✎</span></span></button>`).join('')}</div>`:''}
-      ${belegMeta(g).length?`<div class="row" style="margin-top:6px;gap:6px">${belegMeta(g).map(b=>`<button class="bchip st-${b.status||'offen'}" data-a="beleg-view" data-g="${g.id}" data-id="${esc(b.id)}">${b.pages?'📄':'📝'} Beleg · ${bStatusL[b.status||'offen']}${bAmount(b)!=null?' · '+eur(bAmount(b)):''}</button>`).join('')}</div>`:''}
+      ${belegMeta(g).length?`<div class="row" style="margin-top:6px;gap:6px">${belegMeta(g).map(b=>`<span class="bgrp"><button class="bchip st-${b.status||'offen'}" data-a="${b.pages?'beleg-show':'beleg-view'}" data-g="${g.id}" data-id="${esc(b.id)}">${b.pages?'📄 Beleg anzeigen':'📝 Beleg (ohne Foto)'} · ${bStatusL[b.status||'offen']}${bAmount(b)!=null?' · '+eur(bAmount(b)):''}</button><button class="bchip bedit" data-a="beleg-view" data-g="${g.id}" data-id="${esc(b.id)}" aria-label="Beleg bearbeiten">✎</button></span>`).join('')}</div>`:''}
       <div class="row" style="margin-top:8px"><button class="btn sm" data-a="sr-new" data-g="${g.id}">+ Kosten erfassen</button><button class="btn sm" data-a="beleg-new" data-g="${g.id}">+ Beleg</button></div></div>`});
   html+='</div>';
   const per={};gs.forEach(g=>(g.sr||[]).forEach(e=>{per[e.ref]=per[e.ref]||{n:0,s:0};per[e.ref].n++;per[e.ref].s+=+e.amount||0}));
@@ -1115,8 +1132,8 @@ const SHEETS={
    if(d.g==='__new')h+=`<div class="grid2">${F('Datum',inp('ng_date',d.ng_date,'date'))}${F('Gegner',inp('ng_opp',d.ng_opp,'text'))}</div><div class="grid2">${F('Heim / Auswärts',sel('ng_ha',d.ng_ha,[['H','Heim'],['A','Auswärts']]))}${F('Wettbewerb',sel('ng_comp',d.ng_comp,['Test','Liga','Pokal R1','Pokal R2','Pokal R3','Pokal Final4']))}</div>`;
    const data=d.id?BELEG_CACHE[d.id]:null;if(d.id&&d.oldPages&&!data&&!d.loading){d.loading=true;belegLoad(d.id).then(()=>{if(ui.draft===d)drawSheet()}).catch(()=>{d.lerr=1;if(ui.draft===d)drawSheet()})}
    h+=`<label class="fld"><span>Foto oder PDF${d.oldPages?' (neue Datei ersetzt das vorhandene)':''}</span><input type="file" id="f-belegfile" accept="image/*,application/pdf" class="input"></label>`;
-   h+=d.busy?'<p class="sub">Datei wird verarbeitet …</p>':d.pages.length?`<div class="bthumbs">${d.pages.map(u=>`<img src="${u}" alt="Seite">`).join('')}</div><p class="sub">${esc(d.file||'')} · ${d.pages.length} Seite${d.pages.length===1?'':'n'}</p>`
-     :data?`<div class="bthumbs">${data.pages.map(u=>`<a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="Beleg"></a>`).join('')}</div>`:d.oldPages?`<p class="sub">${d.lerr?'Foto konnte nicht geladen werden.':'Foto wird geladen …'}</p>`:'<p class="sub">Noch kein Foto. Am Handy kannst du direkt fotografieren; PDFs bis 6 Seiten.</p>';
+   h+=d.busy?'<p class="sub">Datei wird verarbeitet …</p>':d.pages.length?`<div class="bthumbs">${d.pages.map(u=>`<img src="${u}" alt="Seite" data-a="bl-show">`).join('')}</div><p class="sub">${esc(d.file||'')} · ${d.pages.length} Seite${d.pages.length===1?'':'n'}</p>`
+     :data?`<div class="bthumbs">${data.pages.map(u=>`<img src="${u}" alt="Beleg" data-a="bl-show">`).join('')}</div><button class="btn sm" data-a="bl-show">Beleg groß anzeigen</button>`:d.oldPages?`<p class="sub">${d.lerr?'Foto konnte nicht geladen werden.':'Foto wird geladen …'}</p>`:'<p class="sub">Noch kein Foto. Am Handy kannst du direkt fotografieren; PDFs bis 6 Seiten.</p>';
    h+=`<div class="grid2">${F('Datum auf dem Beleg',inp('bdate',d.bdate,'date'))}${F('Status',sel('status',d.status,[['offen','offen'],['geprueft','geprüft'],['abgelehnt','abgelehnt']]))}</div>`;
    h+=belegSRBlock(d,'A')+belegSRBlock(d,'B');
    h+=`<div class="grid2">${F('Gesamt laut Beleg €',inp('total',d.total,'number','inputmode="decimal" step="0.01"'))}<div class="fld"><span>Korrekturen</span><button class="tog" data-a="bl-tog" data-v="corr" aria-pressed="${!d.corr}">${d.corr?'✗ nicht abgezeichnet':'✓ keine offenen'}</button></div></div><p class="sub" id="calc-sum"></p>`;
@@ -1303,6 +1320,8 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!
   case 'adv-edit':{const c=cfg();openSheet('adv',{srAdvance:c.srAdvance,maxSquad:c.maxSquad});break}
   case 'beleg-new':openSheet('beleg',belegDraft(el.dataset.g||'',null));break;
   case 'beleg-view':{const g=S.games[el.dataset.g]||{};const b=belegMeta(g).find(x=>x.id===id);if(b)openSheet('beleg',belegDraft(el.dataset.g,b));break}
+  case 'beleg-show':belegShow(el.dataset.g,id);break;
+  case 'bl-show':{const d=ui.draft;if(d.pages&&d.pages.length)belegShow(d.g,d.id,d.pages);else if(d.id)belegShow(d.g,d.id,(BELEG_CACHE[d.id]||{}).pages);break}
   case 'bl-tog':ui.draft[v]=!ui.draft[v];drawSheet();break;
   case 'bl-qadd':{const t=(ui.draft.qnew||'').trim();if(t){ui.draft.qs=(ui.draft.qs||[]).concat([{id:uid('q'),t,s:'open',n:''}]);ui.draft.qnew=''}drawSheet();break}
   case 'bl-qdel':ui.draft.qs.splice(+v,1);drawSheet();break;

@@ -458,3 +458,10 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   sr:[{name,sle,km,gkm,oepnv,sonst,summe,unterschrift}],fragen:[…]}]}`; Zuordnung über Datum, Schiedsrichter über Namen
   (Reihenfolge egal, `nameKey`), fehlende Spiele werden als Testspiel angelegt. Namen nur im Chat, nicht im Repo.
 - PDF: neuer Abschnitt „Belege im Detail“ (Einzelwerte, nachgerechnet, Unterschrift), Prüfung gruppiert nach Offen/Geklärt/Abgelehnt.
+
+### 18.11.2026 – Beleg anzeigen (Vollbild)
+
+- Problem: Vorschaubilder im Beleg-Fenster verlinkten auf `data:`-URLs; Browser blockieren das Öffnen solcher Adressen → „Ansehen
+  funktioniert nicht“. Trainertool 1.10: `belegShow(gid,bid)` – eigene Vollbild-Ansicht (`#bviewer`, z-index 200, über Fenstern)
+  mit allen Seiten, Knöpfen „Bearbeiten“, „In neuem Tab“ (Blob-URL) und „Schließen“ (auch Esc); Ladefehler mit Fehlercode.
+- Beim Spiel je Beleg zwei Knöpfe: „📄 Beleg anzeigen“ (nur Foto) und „✎“ (bearbeiten); ohne Foto „📝 Beleg (ohne Foto)“ → bearbeiten.
