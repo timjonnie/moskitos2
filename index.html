@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Team-Board · Moskitos 2</title>
 <meta name="theme-color" content="#1B2A4A">
@@ -229,6 +229,9 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
 
 </style>
 <style id="mkfit-css">
+/* iPhone: kein automatisches Hineinzoomen (Felder mind. 16 px), kein Doppeltipp-/Zwei-Finger-Zoom */
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; touch-action:manipulation; }
+@media (hover:none) and (pointer:coarse){ input:not([type=checkbox]):not([type=radio]):not([type=file]),select,textarea{ font-size:16px!important; } }
 /* mkfit: Handy – alles auf einen Blick, kein seitliches Wischen. Zu breite Tabellen werden zu Karten (Zeile = Karte). */
 @media (max-width:700px){
   .lgt td,.lgt th{ white-space:normal; }
@@ -253,6 +256,8 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
 </style>
 <script id="mkfit-js">
 (function(){if(window.__mkfit)return;window.__mkfit=1;
+  ["gesturestart","gesturechange","gestureend"].forEach(function(t){document.addEventListener(t,function(e){e.preventDefault()},{passive:false})});
+  document.addEventListener("touchmove",function(e){if(e.touches&&e.touches.length>1&&!(e.target.closest&&e.target.closest("#bviewer")))e.preventDefault()},{passive:false});
   var MQ=window.matchMedia?matchMedia("(max-width:700px)"):{matches:false},busy=0;
   function txt(c){return (c.innerText||c.textContent||"").replace(/\s+/g," ").trim()}
   function label(t){var rows=[].slice.call(t.rows),hr=null;
@@ -436,7 +441,7 @@ footer{ color:var(--muted); font-size:13px; padding:0 0 26px; }
     </div>
   </div>
 </main>
-<footer class="wrap">Team-Board · Version 4.27 · letzte Aktualisierung 15.11.2026</footer>
+<footer class="wrap">Team-Board · Version 4.28 · letzte Aktualisierung 22.11.2026</footer>
 
 <script>
 window.MKFB=(function(){

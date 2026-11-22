@@ -465,3 +465,13 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
   funktioniert nicht“. Trainertool 1.10: `belegShow(gid,bid)` – eigene Vollbild-Ansicht (`#bviewer`, z-index 200, über Fenstern)
   mit allen Seiten, Knöpfen „Bearbeiten“, „In neuem Tab“ (Blob-URL) und „Schließen“ (auch Esc); Ladefehler mit Fehlercode.
 - Beim Spiel je Beleg zwei Knöpfe: „📄 Beleg anzeigen“ (nur Foto) und „✎“ (bearbeiten); ohne Foto „📝 Beleg (ohne Foto)“ → bearbeiten.
+
+### 22.11.2026 – iPhone: kein Zoom mehr
+
+- Problem: Beim Antippen von Eingabefeldern zoomte iOS Safari automatisch hinein (Schrift < 16 px), dazu Doppeltipp-/Zwei-
+  Finger-Zoom → Layout „zerschossen“. Lösung in allen drei Dateien: Viewport `maximum-scale=1, user-scalable=no`; im Baustein
+  `mkfit`: Eingabefelder auf Touch-Geräten 16 px, `touch-action:manipulation`, `gesturestart/-change/-end` und Zwei-Finger-
+  `touchmove` blockiert (außer in der Beleg-Ansicht `#bviewer`). Beleg-Ansicht: Antippen des Bilds vergrößert auf 250 % (scrollbar).
+- Spielanalyse: KPI-Kachel-Überschrift darf umbrechen (sonst 360 px zu breit).
+- Team-Board 4.28, Spielanalyse 2.21, Trainertool 1.11.
+- Weitere 3 SR-Belege im Chat geprüft (14.11. Perl, 04.10. Quierschied, 22.11. Pokal Quierschied); Übernahme-Text im Chat.
