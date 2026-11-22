@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Moskitos 2 Spielanalyse</title>
 <script>window.MKSite=(function(){
   try{var th=localStorage.getItem("mk2theme");if(th)document.documentElement.setAttribute("data-theme",th)}catch(e){}
@@ -972,11 +972,15 @@ select.sel,input.inp{font:inherit;font-size:14px;padding:8px 10px;border-radius:
 @media (hover:none) and (pointer:coarse){ html,body,*{ scrollbar-width:none; } ::-webkit-scrollbar{ display:none; width:0; height:0; } }
 
 /* Handy: Menü, Listen und Unterreiter umbrechen statt seitlich wischen */
+.kpi .top{min-width:0}.kpi .top .eyebrow{min-width:0;white-space:normal;overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto}
 @media (max-width:700px){ .tabs .wrap{flex-wrap:wrap;overflow:visible;gap:0} .tabs a{flex:1 1 30%;text-align:center;padding:10px 6px 8px;font-size:13.5px} .tabs .right{flex:1 1 100%;justify-content:flex-end;padding:4px 0 6px}
   .split .side .items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;padding-bottom:0} .split .side .item{max-width:none;width:100%;min-width:0;padding:6px} .split .side .item .av{display:none} .split .side .item .grow strong{white-space:normal;overflow-wrap:anywhere}
   .subtabs{flex-wrap:wrap;overflow:visible} .subtabs button{padding:8px 9px 7px;font-size:13.5px}
   body .ef .ctabs{overflow:visible;gap:0;flex-wrap:wrap} body .ef .ctabs button{flex:1 1 auto;padding:6px 4px;font-size:13px} body .ef .board .tm strong{font-size:13px;white-space:normal;overflow-wrap:normal;word-break:normal} }
 </style><style id="mkfit-css">
+/* iPhone: kein automatisches Hineinzoomen (Felder mind. 16 px), kein Doppeltipp-/Zwei-Finger-Zoom */
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; touch-action:manipulation; }
+@media (hover:none) and (pointer:coarse){ input:not([type=checkbox]):not([type=radio]):not([type=file]),select,textarea{ font-size:16px!important; } }
 /* mkfit: Handy – alles auf einen Blick, kein seitliches Wischen. Zu breite Tabellen werden zu Karten (Zeile = Karte). */
 @media (max-width:700px){
   .lgt td,.lgt th{ white-space:normal; }
@@ -1001,6 +1005,8 @@ select.sel,input.inp{font:inherit;font-size:14px;padding:8px 10px;border-radius:
 </style>
 <script id="mkfit-js">
 (function(){if(window.__mkfit)return;window.__mkfit=1;
+  ["gesturestart","gesturechange","gestureend"].forEach(function(t){document.addEventListener(t,function(e){e.preventDefault()},{passive:false})});
+  document.addEventListener("touchmove",function(e){if(e.touches&&e.touches.length>1&&!(e.target.closest&&e.target.closest("#bviewer")))e.preventDefault()},{passive:false});
   var MQ=window.matchMedia?matchMedia("(max-width:700px)"):{matches:false},busy=0;
   function txt(c){return (c.innerText||c.textContent||"").replace(/\s+/g," ").trim()}
   function label(t){var rows=[].slice.call(t.rows),hr=null;
@@ -1153,7 +1159,7 @@ h1,h2,h3{letter-spacing:-.01em}
   <main class="wrap" id="main">
     <div class="panel empty"><h2>Spiele werden geladen</h2><p>Die gespeicherten Spielauswertungen erscheinen hier gleich.</p></div>
   </main>
-  <footer class="site-foot"><div class="wrap"><span>Moskitos 2 · Spielanalyse</span><span>Version 2.20 · letzte Aktualisierung 15.11.2026</span></div></footer>
+  <footer class="site-foot"><div class="wrap"><span>Moskitos 2 · Spielanalyse</span><span>Version 2.21 · letzte Aktualisierung 22.11.2026</span></div></footer>
 </div>
 <div id="tip" hidden></div>
 <div class="login" id="login" hidden>

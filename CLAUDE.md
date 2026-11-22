@@ -14,9 +14,9 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
 
 | Pfad | Inhalt |
 |---|---|
-| `index.html` | Team-Board 4.27: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, `#pokal`, `#berichte`, Verwaltung, Ersteinrichtung/Umzug |
-| `analyse/index.html` | Spielanalyse 2.20 (Firebase-Modus, Präfix `a_`) |
-| `training/index.html` | Trainertool 1.10 (Firebase-Modus, Präfix `t_`) |
+| `index.html` | Team-Board 4.28: Firebase-Login, Dashboard, `#gegner`, `#auswertung`, `#liga`, `#pokal`, `#berichte`, Verwaltung, Ersteinrichtung/Umzug |
+| `analyse/index.html` | Spielanalyse 2.21 (Firebase-Modus, Präfix `a_`) |
+| `training/index.html` | Trainertool 1.11 (Firebase-Modus, Präfix `t_`) |
 | `board.json`, `alt/` | Alte verschlüsselte Daten – **nur für den einmaligen Umzug**, danach löschen |
 | `gegner_daten.json` | Öffentliche Spielberichte (`games`) + Termine der Moskitos (`fixtures`); wird montags automatisch erneuert |
 | `spielberichte_abruf.js` | Node-Skript: zählt handball360-IDs ab `START_ID` hoch, lädt PDFs, schreibt `gegner_daten.json` |
@@ -38,7 +38,7 @@ Die Vorgeschichte aus Claude Chat und Cowork steht in `docs/VERLAUF.md` – vor 
   `fbmod.js` (stellt in den Modulen `window.claude.use(...)` bereit, nur wenn kein echtes `window.claude` da ist;
   ohne Login/Rolle → `../?ziel=…`), `mksite.js` (`window.MKSite`, Leiste/Footer/Theme), `ga_module.js` (`MKOpp`),
   `mkfit` (`<style id="mkfit-css">` + `<script id="mkfit-js">`: auf dem Handy ≤ 700 px werden zu breite Tabellen
-  automatisch zu Karten, Klasse `mkst`; Tabelle mit `data-nofit` ausnehmen).
+  automatisch zu Karten, Klasse `mkst`; Tabelle mit `data-nofit` ausnehmen; außerdem iPhone-Zoom aus: Felder ≥ 16 px, `touch-action:manipulation`, Gesten blockiert).
   Bausteine, die in mehreren Dateien stecken, **überall gleich halten**.
 - **Firestore:** `a_*`/`t_*`/`team/summary`/`profiles/{pid}` als `{j}`; `users/{uid}` `{u, role, pid}`, `config/owner`,
   `tb_settings/*`, `rsvp/*` roh; SR-Belege als Bilder in `t_srbelege/{id}` (`{j}` mit `pages`), Metadaten am Spiel `belege` (Einzelwerte je SR, Status, Fragen), Entscheidungen zu Hinweisen in `t_settings/main.srDec` (nur darauf greifen die Regeln). `publish()` im Team-Board berechnet Team-/Profildaten
