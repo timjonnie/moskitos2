@@ -86,7 +86,15 @@ Verband noch keinen Termin eingetragen hat, wird dieser automatisch angezeigt. *
 Das nächste Pokalspiel erscheint auch unter „Nächstes Spiel“ und in der Gegneranalyse. Die Daten kommen mit dem
 Montags-Abruf aus den offiziellen Spielberichten; Liga-Tabellen und -Statistiken bleiben reine Liga.
 
-## Spielberichte (alle Ligaspiele)
+## Spielberichte (Liga und Pokal)
+
+Oben auf der Seite **Wettbewerb** wählen: **Liga (Oberliga)** oder **Pokal (Opel Deckert Cup)**. Beim Pokal steht über den
+Spielen die **Pokalanalyse** (wie die Ligastatistik): Weg von Moskitos 2, Übersicht und Rekorde, Runden (Spiele, Tore Ø,
+Heimsiege, höchster Sieg, ohne Spiel entschieden), Phasen, Spannung, Disziplin, Auszeiten, Unter-/Überzahl und – nur Trainerstab –
+Ranglisten. Darunter alle Pokalspiele je Runde mit derselben Komplettauswertung und Export wie in der Liga („Einordnung (Liga)“
+zeigt Liga-Platz und Saisonschnitt der Oberliga). Der Export oben enthält die ganze Pokalanalyse. Von der Seite **Pokal** führt
+„Pokalanalyse und alle Spielberichte →“ direkt dorthin.
+
 
 Schnellzugriff **„Spielberichte“** (Trainer/Admin) bzw. Adresse `/moskitos2/#berichte`: alle Ligaspiele aus den offiziellen
 Spielberichten, nach Spieltag gruppiert, filterbar nach Spieltag und Mannschaft. Ein Tipp auf ein Spiel zeigt den
