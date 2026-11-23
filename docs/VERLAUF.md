@@ -475,3 +475,13 @@ alt/ + board.json          Nur für den einmaligen Umzug, danach löschen
 - Spielanalyse: KPI-Kachel-Überschrift darf umbrechen (sonst 360 px zu breit).
 - Team-Board 4.28, Spielanalyse 2.21, Trainertool 1.11.
 - Weitere 3 SR-Belege im Chat geprüft (14.11. Perl, 04.10. Quierschied, 22.11. Pokal Quierschied); Übernahme-Text im Chat.
+
+### 23.11.2026 – Pokalanalyse bei den Spielberichten
+
+- Team-Board 4.29: Seite `#berichte` mit Auswahl **Wettbewerb** (`BV.comp` = liga/pokal). Pokalspiele aus `PUB.cup.games[].game`
+  (`brCupGames`, mit `round`, `cup:1`), Gruppierung/Filter nach Runde statt Spieltag, `brFind` sucht in beiden.
+- Pokalanalyse (`pkSections`): Weg von Moskitos 2 (`pkWeg`, inkl. offener Pokal-Termine aus `fixtures`), Übersicht und Rekorde
+  (`ligaRows` auf Pokalspiele mit umgesetztem `comp`, „in der Saison“ → „im Pokal“; `ligaStats` bewusst nicht, setzt globales LIGA),
+  Runden (`pkRunden`), Phasen/Spannung/Disziplin/Auszeiten/Unter-Überzahl (Liga-Bausteine), Ranglisten nur `isCoach()`.
+- Einzelspiel: Einordnung bei Pokalspielen als „Einordnung (Liga)“ – nur Liga-Platz vorher und Oberliga-Schnitt, kein „Platz danach“.
+- Export: Pokalbericht je Spiel („POKAL · RUNDE“), Seiten-Export „Pokalanalyse“ mit allen Abschnitten. Link von `#pokal` (`data-brgo`).
